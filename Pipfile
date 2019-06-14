@@ -13,6 +13,8 @@ django-allauth = "==0.39.1"
 pep8 = "*"
 flake8 = "*"
 pylint = "*"
+ipython = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"
