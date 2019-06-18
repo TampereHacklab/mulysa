@@ -44,6 +44,35 @@ Most of this works around our "User" model which can do multiple things
 
 
 
+# examples
+
+## register new user:
+
+## deactivate user:
+
+```
+curl -X PATCH \
+  http://127.0.0.1:8000/api/v1/users/2/set_activation/ \
+  -H 'Authorization: Token FILL_WITH_YOUR_ADMIN_USER_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -d '{
+ "is_active": false
+}'
+```
+
+## get list of new users
+
+TODO
+
+## push new payment for user
+
+TODO
+
+
+TODO: more examples
+
+
+
 # Based on DRFx, see below:
 
 
