@@ -20,7 +20,6 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
     If it did send our activate_user or deactivate_user signals for others
     to handle
     """
-    print("pre_save")
     if raw:
         # probably loading fixtures, don't do it
         return
