@@ -1,4 +1,6 @@
 import os
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
 # import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -29,6 +31,7 @@ INSTALLED_APPS = [
 
     # nice to have, mainly shell_plus :)
     'django_extensions',
+    'log_request_id',
 
     # drf and its authentication friends
     'rest_framework',
@@ -50,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'log_request_id.middleware.RequestIDMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -153,7 +157,45 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 OLD_PASSWORD_FIELD_ENABLED = True
 
-# custom serializers for all auth
-# REST_AUTH_SERIALIZERS = {
-# 'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
-# }
+LOGGING_CONFIG = None
+LOGLEVEL = os.environ.get('LOGLEVEL', 'info').upper()
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'request_id': {
+            '()': 'log_request_id.filters.RequestIDFilter'
+        }
+    },
+    'formatters': {
+        'default': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{asctime}] {request_id} {levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'filters': ['request_id', ],
+        },
+    },
+    'loggers': {
+        # default for all undefined Python modules
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console', ],
+        },
+        'users': {
+            'level': LOGLEVEL,
+            'handlers': ['console', ],
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['console', ],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+})
