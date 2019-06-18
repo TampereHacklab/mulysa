@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
+    # filters
+    'django_filters',
+    'rest_framework_filters',
+
     # ready made registration please
     # todo: we probably want to write our own
     'rest_auth.registration',
@@ -146,7 +150,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_filters.backends.RestFrameworkFilterBackend',
+    ),
 }
 
 
