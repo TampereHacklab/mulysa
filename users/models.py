@@ -27,11 +27,34 @@ class CustomUser(AbstractUser):
     email = models.EmailField(
         unique=True,
         blank=False,
-        verbose_name=_('email address'),
+        verbose_name=_('Email address'),
         help_text=_(
             'Your email address will be used for important notifications about your membership'),
         max_length=255,
     )
+
+    municipality = models.CharField(
+        blank=False,
+        verbose_name=_("Municipality"),
+        max_length=255,
+    )
+
+    nick = models.CharField(
+        blank=False,
+        verbose_name=_("Nick"),
+        help_text=_("IRC / Matric nick or callsign"),
+        max_length=255,
+    )
+
+    wants_access_rights = models.BooleanField(
+        verbose_name=_("I want to have access right"),
+        help_text=_("Access right grants 24/7 access and costs more than regular membership"),
+    )
+
+    birthday = models.DateField(
+        blank=False,
+        verbose_name=_('Birthday'),
+        )
 
     phone = models.CharField(
         blank=False,
