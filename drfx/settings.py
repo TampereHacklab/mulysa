@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     # our api and other apps
     'api',
     'users',
+
+    'dooractivator',
 ]
 
 MIDDLEWARE = [
