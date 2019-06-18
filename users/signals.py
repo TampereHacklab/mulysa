@@ -1,8 +1,12 @@
+import logging
+
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.dispatch import Signal
 
 from . import models
+
+logger = logging.getLogger(__name__)
 
 #
 # Signal for other modules to activate user
@@ -30,9 +34,11 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         return
 
     if instance.is_active:
-        print("User getting activated")
+        logger.info("User becoming active {}".format(instance))
         activate_user.send(instance.__class__, instance=instance)
+        logger.info("User activation done {}".format(instance))
 
     else:
-        print("User getting deactivated")
+        logger.info("User becoming deactive {}".format(instance))
         deactivate_user.send(instance.__class__, instance=instance)
+        logger.info("User deactivation done {}".format(instance))

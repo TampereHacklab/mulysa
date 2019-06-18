@@ -1,6 +1,5 @@
 import os
 import logging.config
-from django.utils.log import DEFAULT_LOGGING
 # import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
