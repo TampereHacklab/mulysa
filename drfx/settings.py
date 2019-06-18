@@ -27,15 +27,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # nice to have, mainly shell_plus :)
     'django_extensions',
+
+    # drf and its authentication friends
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+
+    # ready made registration please
+    # todo: we probably want to write our own
     'rest_auth.registration',
 
+    # our api and other apps
     'api',
     'users',
 ]
@@ -128,10 +135,23 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        # by default we don't want to give any permissions to anyone
+        'rest_framework.permissions.IsAdminUser',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+
+# tell all auth to use email as username
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+OLD_PASSWORD_FIELD_ENABLED = True
+
+# custom serializers for all auth
+# REST_AUTH_SERIALIZERS = {
+# 'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
+# }
