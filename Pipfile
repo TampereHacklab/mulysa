@@ -16,6 +16,7 @@ djangorestframework = "==3.9.4"
 django-rest-auth = "==0.9.5"
 django-allauth = "==0.39.1"
 django-extensions = "*"
+coreapi = "*"
 
 [requires]
 python_version = "3.7"
