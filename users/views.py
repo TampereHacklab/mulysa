@@ -7,7 +7,7 @@ from rest_framework import status
 from . import models
 from . import serializers
 from . import permissions
-
+from . import filters
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -19,6 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (
         permissions.IsStaffOrSelf,
     )
+    filter_class = filters.UserFilter
 
     # limit available methods, we don't want users to be able to create new
     # users or delete themself

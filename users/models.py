@@ -22,16 +22,39 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
         verbose_name="username not used",
-        help_text="django expects that we have this field..."
+        help_text="django expects that we have this field... TODO: figure out if we can get rid of this completely"
     )
     email = models.EmailField(
         unique=True,
         blank=False,
-        verbose_name=_('email address'),
+        verbose_name=_('Email address'),
         help_text=_(
             'Your email address will be used for important notifications about your membership'),
         max_length=255,
     )
+
+    municipality = models.CharField(
+        blank=False,
+        verbose_name=_("Municipality"),
+        max_length=255,
+    )
+
+    nick = models.CharField(
+        blank=False,
+        verbose_name=_("Nick"),
+        help_text=_("IRC / Matric nick or callsign"),
+        max_length=255,
+    )
+
+    wants_access_rights = models.BooleanField(
+        verbose_name=_("I want to have access right"),
+        help_text=_("Access right grants 24/7 access and costs more than regular membership"),
+    )
+
+    birthday = models.DateField(
+        blank=False,
+        verbose_name=_('Birthday'),
+        )
 
     phone = models.CharField(
         blank=False,
@@ -71,7 +94,8 @@ class CustomUser(AbstractUser):
             "Filled if the user has marked themself as wanting to end their membership"),
     )
 
-    # we don't really want to get any nicknames, plain email will do better as our username
+    # we don't really want to get any nicknames, plain email will do better
+    # as our username
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 

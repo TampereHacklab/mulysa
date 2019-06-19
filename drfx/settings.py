@@ -1,4 +1,5 @@
 import os
+import logging.config
 # import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -14,7 +15,7 @@ SECRET_KEY = 'qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*', ]
 
 
 # Application definition
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
 
     # nice to have, mainly shell_plus :)
     'django_extensions',
+    'log_request_id',
 
     # drf and its authentication friends
     'rest_framework',
@@ -38,6 +40,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
+    # filters
+    'django_filters',
+    'rest_framework_filters',
+
     # ready made registration please
     # todo: we probably want to write our own
     'rest_auth.registration',
@@ -45,9 +51,12 @@ INSTALLED_APPS = [
     # our api and other apps
     'api',
     'users',
+
+    'dooractivator',
 ]
 
 MIDDLEWARE = [
+    'log_request_id.middleware.RequestIDMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -141,7 +150,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_filters.backends.RestFrameworkFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
 }
 
 
@@ -151,7 +165,45 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 OLD_PASSWORD_FIELD_ENABLED = True
 
-# custom serializers for all auth
-# REST_AUTH_SERIALIZERS = {
-# 'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
-# }
+LOGGING_CONFIG = None
+LOGLEVEL = os.environ.get('LOGLEVEL', 'info').upper()
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'request_id': {
+            '()': 'log_request_id.filters.RequestIDFilter'
+        }
+    },
+    'formatters': {
+        'default': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{asctime}] {request_id} {levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'filters': ['request_id', ],
+        },
+    },
+    'loggers': {
+        # default for all undefined Python modules
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console', ],
+        },
+        'users': {
+            'level': LOGLEVEL,
+            'handlers': ['console', ],
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['console', ],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+})
