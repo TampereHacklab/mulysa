@@ -9,6 +9,8 @@ flake8 = "*"
 pylint = "*"
 ipython = "*"
 autopep8 = "*"
+coverage = "*"
+tox-pipenv = "*"
 
 [packages]
 django = "*"

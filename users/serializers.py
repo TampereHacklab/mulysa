@@ -21,8 +21,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'birthday',
                   'nick',
                   'municipality',
-
-        )
+                  )
         read_only_fields = ('is_active', 'is_staff', 'created',
                             'last_modified', 'marked_for_deletion_on')
 

@@ -1,4 +1,13 @@
-notes.md
+# editors
 .vscode
 
-db.sqlite3
+# python caches
+*.py[cod]
+*.sqlite
+
+# unit tests / reports
+.tox
+.coverage
+
+# databases etc dev data
+*.sqlite3
