@@ -1,3 +1,5 @@
+[![Updates](https://pyup.io/repos/github/TampereHacklab/mylysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mylysa/)
+
 # Mylysa
 
 asylym[::-1] is a member management system for Tampere Hacklab.
