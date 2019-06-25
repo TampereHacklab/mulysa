@@ -1,8 +1,7 @@
 import logging
 
 from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from django.dispatch import Signal
+from django.dispatch import Signal, receiver
 
 from . import models
 

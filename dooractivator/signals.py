@@ -1,9 +1,10 @@
 import logging
 
-from users.signals import activate_user, deactivate_user
 from django.dispatch import receiver
+
 from api.exceptions import NotImplementedYet
 from users.models import CustomUser
+from users.signals import activate_user, deactivate_user
 
 logger = logging.getLogger(__name__)
 

@@ -54,7 +54,7 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(
         blank=False,
         verbose_name=_('Birthday'),
-    )
+        )
 
     phone = models.CharField(
         blank=False,
