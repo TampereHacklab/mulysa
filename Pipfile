@@ -11,6 +11,7 @@ ipython = "*"
 autopep8 = "*"
 coverage = "*"
 tox = "*"
+isort = "*"
 
 [packages]
 django = "*"
