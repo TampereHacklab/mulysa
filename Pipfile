@@ -10,7 +10,7 @@ pylint = "*"
 ipython = "*"
 autopep8 = "*"
 coverage = "*"
-tox-pipenv = "*"
+tox = "*"
 
 [packages]
 django = "*"

@@ -10,11 +10,11 @@ logger = logging.getLogger(__name__)
 #
 # Signal for other modules to activate user
 #
-activate_user = Signal(providing_args=["instance", "args", "kwargs"])
+activate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 #
 # Signal for other modules to deactivate user
 #
-deactivate_user = Signal(providing_args=["instance", "args", "kwargs"])
+deactivate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 
 @receiver(pre_save, sender=models.CustomUser)
 def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
@@ -33,11 +33,11 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         return
 
     if instance.is_active:
-        logger.info("User becoming active {}".format(instance))
+        logger.info('User becoming active {}'.format(instance))
         activate_user.send(instance.__class__, instance=instance)
-        logger.info("User activation done {}".format(instance))
+        logger.info('User activation done {}'.format(instance))
 
     else:
-        logger.info("User becoming deactive {}".format(instance))
+        logger.info('User becoming deactive {}'.format(instance))
         deactivate_user.send(instance.__class__, instance=instance)
-        logger.info("User deactivation done {}".format(instance))
+        logger.info('User deactivation done {}'.format(instance))

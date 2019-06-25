@@ -21,8 +21,8 @@ class CustomUser(AbstractUser):
         unique=False,
         blank=True,
         null=True,
-        verbose_name="username not used",
-        help_text="django expects that we have this field... TODO: figure out if we can get rid of this completely"
+        verbose_name='username not used',
+        help_text='django expects that we have this field... TODO: figure out if we can get rid of this completely'
     )
     email = models.EmailField(
         unique=True,
@@ -35,26 +35,26 @@ class CustomUser(AbstractUser):
 
     municipality = models.CharField(
         blank=False,
-        verbose_name=_("Municipality"),
+        verbose_name=_('Municipality'),
         max_length=255,
     )
 
     nick = models.CharField(
         blank=False,
-        verbose_name=_("Nick"),
-        help_text=_("IRC / Matric nick or callsign"),
+        verbose_name=_('Nick'),
+        help_text=_('IRC / Matric nick or callsign'),
         max_length=255,
     )
 
     wants_access_rights = models.BooleanField(
-        verbose_name=_("I want to have access right"),
-        help_text=_("Access right grants 24/7 access and costs more than regular membership"),
+        verbose_name=_('I want to have access right'),
+        help_text=_('Access right grants 24/7 access and costs more than regular membership'),
     )
 
     birthday = models.DateField(
         blank=False,
         verbose_name=_('Birthday'),
-        )
+    )
 
     phone = models.CharField(
         blank=False,
@@ -67,21 +67,21 @@ class CustomUser(AbstractUser):
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="User creation date",
-        help_text="Automatically set to now when user is create"
+        verbose_name='User creation date',
+        help_text='Automatically set to now when user is create'
     )
     last_modified = models.DateTimeField(
         auto_now=True,
-        verbose_name=_("Last modified datetime"),
-        help_text=_("Last time this user was modified"),
+        verbose_name=_('Last modified datetime'),
+        help_text=_('Last time this user was modified'),
     )
     # datetime of last payment, the payment information itself will be in its own table
     last_payment_on = models.DateTimeField(
         blank=True,
         null=True,
-        verbose_name=_("Last payment"),
+        verbose_name=_('Last payment'),
         help_text=_(
-            "Last datetime this user had a payment transaction happen. TODO: should probably be dynamic"),
+            'Last datetime this user had a payment transaction happen. TODO: should probably be dynamic'),
     )
 
     # when the member wants to leave we will mark now to this field and then have a cleanup script
@@ -89,9 +89,9 @@ class CustomUser(AbstractUser):
     marked_for_deletion_on = models.DateTimeField(
         blank=True,
         null=True,
-        verbose_name=_("Marked for deletion"),
+        verbose_name=_('Marked for deletion'),
         help_text=_(
-            "Filled if the user has marked themself as wanting to end their membership"),
+            'Filled if the user has marked themself as wanting to end their membership'),
     )
 
     # we don't really want to get any nicknames, plain email will do better

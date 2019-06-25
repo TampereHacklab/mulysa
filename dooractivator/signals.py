@@ -13,7 +13,7 @@ def activate_door_access(sender, instance: CustomUser, **kwargs):
     """
     Send sms to door to activate access for this user
     """
-    logger.info("Sending door activation message for user {}".format(instance))
+    logger.info('Sending door activation message for user {}'.format(instance))
     # TODO write sms sending to door (twilio or infobip)
 
 
@@ -22,6 +22,6 @@ def deactivate_door_access(sender, instance: CustomUser, **kwargs):
     """
     Send sms to door to activate access for this user
     """
-    logger.info("Sending door deactivation message for user {}".format(instance))
+    logger.info('Sending door deactivation message for user {}'.format(instance))
     raise NotImplementedYet
     # TODO write sms sending to door (twilio or infobip)
