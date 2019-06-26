@@ -1,7 +1,12 @@
 import logging
 
-from django.db.models.signals import pre_save
+from django.conf import settings
+from django.core.mail import send_mail
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.utils.translation import ugettext_lazy as _
 
 from . import models
 
@@ -15,6 +20,35 @@ activate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 # Signal for other modules to deactivate user
 #
 deactivate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
+
+@receiver(post_save, sender=models.CustomUser)
+def send_new_user(sender, instance: models.CustomUser, created, raw, **kwargs):
+    """
+    Send email to the user with information about how to proceed next
+
+    Mainly contains information about where to pay and how much and what
+    happens next.
+    """
+    if raw:
+        return
+
+    if not created:
+        return
+
+    logger.info('New user created, send what next email {}'.format(instance))
+
+    context = {
+        'user': instance,
+        'settings': settings,
+    }
+    # TODO: maybe move this subject to settings?
+    subject = _('Welcome and next steps')
+    from_email = settings.NOREPLY_FROM_ADDRESS
+    to = instance.email
+    html_content = render_to_string('mail/welcome_and_next_steps.html', context)
+    plaintext_content = strip_tags(html_content)
+
+    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 
 @receiver(pre_save, sender=models.CustomUser)
 def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
