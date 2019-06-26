@@ -3,6 +3,6 @@ python:
   - "3.7"
 install:
   - pip install pipenv
-  - pipenv install
+  - pipenv install --dev
 script:
   - tox
