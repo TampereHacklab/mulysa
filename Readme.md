@@ -1,6 +1,6 @@
-[![Updates](https://pyup.io/repos/github/TampereHacklab/mylysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mylysa/)
+[![Updates](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
 
-# Mylysa
+# Mulysa
 
 asylym[::-1] is a member management system for Tampere Hacklab.
 
@@ -13,17 +13,17 @@ Most of this works around our "User" model which can do multiple things
 * Member can register as a new member
   * Member has to accept terms and conditions
   * Member will fill in their basic information like name, email, phone and address
-  * Mylysa will generate a member id and bank reference number for this member
-  * Mylysa will send an email to the new member stating how to pay their membership fee
+  * Mulysa will generate a member id and bank reference number for this member
+  * Mulysa will send an email to the new member stating how to pay their membership fee
 * Treasurer can fetch information about new members
   * a simple list of all new members
   * a simple update call for treasurer to mark the members as being "watched"
 * Treasurer can update "active" information of the member
-  * when the member has paid their fees normally Treasurer will send a message to Mylysa to set the member active = true
+  * when the member has paid their fees normally Treasurer will send a message to Mulysa to set the member active = true
   * when the member has not paid their fees Treasurer will set the member as active = false
 * Member can request to leave Tampere Hacklab
   * Member fills in their email address
-  * Mylysa sends email with a confirmation link and information to the Member
+  * Mulysa sends email with a confirmation link and information to the Member
   * If member uses the activation link within X days the member will be MarkedForDeletion and deleted after XX days
 
 # Member state changes will trigger things
