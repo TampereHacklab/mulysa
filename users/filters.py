@@ -16,7 +16,6 @@ class UserFilter(filters.FilterSet):
             'created': ['exact', 'lt', 'gt', 'gte', 'lte', 'range', 'date', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter', 'isnull'],
             'last_modified': ['exact', 'lt', 'gt', 'gte', 'lte', 'range', 'date', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter', 'isnull'],
             'marked_for_deletion_on': ['exact', 'lt', 'gt', 'gte', 'lte', 'range', 'date', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter', 'isnull'],
-            'wants_access_rights': ['isnull', 'exact'],
             'birthday': ['exact', 'lt', 'gt', 'gte', 'lte', 'range', 'year', 'iso_year', 'month', 'day', 'week', 'week_day', 'quarter', 'isnull'],
             'nick': ['exact', 'iexact', 'contains', 'icontains', 'startswith', 'istartswith', 'endswith', 'iendswith', 'isnull', 'regex', 'iregex'],
             'municipality': ['exact', 'iexact', 'contains', 'icontains', 'startswith', 'istartswith', 'endswith', 'iendswith', 'isnull', 'regex', 'iregex'],

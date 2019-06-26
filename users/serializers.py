@@ -17,7 +17,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                   'created',
                   'last_modified',
                   'marked_for_deletion_on',
-                  'wants_access_rights',
                   'birthday',
                   'nick',
                   'municipality',
