@@ -15,6 +15,14 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    # Current membership plans available
+    MEMBER_ONLY = 'MO'
+    ACCESS_RIGHTS = 'AR'
+    MEMBERSHIP_PLAN_CHOICES = [
+        (MEMBER_ONLY, 'Membership only'),
+        (ACCESS_RIGHTS, 'Member with access rights'),
+    ]
+
     # django kinda expects username field to exists even if we don't use it
     username = models.CharField(
         max_length=30,
@@ -35,20 +43,24 @@ class CustomUser(AbstractUser):
 
     municipality = models.CharField(
         blank=False,
-        verbose_name=_('Municipality'),
+        verbose_name=_('Municipality / City'),
         max_length=255,
     )
 
     nick = models.CharField(
         blank=False,
         verbose_name=_('Nick'),
-        help_text=_('IRC / Matric nick or callsign'),
+        help_text=_('IRC / Matrix nick or callsign'),
         max_length=255,
     )
 
-    wants_access_rights = models.BooleanField(
-        verbose_name=_('I want to have access right'),
+    membership_plan = models.CharField(
+        blank=False,
+        verbose_name=_('Membership plan'),
         help_text=_('Access right grants 24/7 access and costs more than regular membership'),
+        max_length=2,
+        choices=MEMBERSHIP_PLAN_CHOICES,
+        default=ACCESS_RIGHTS
     )
 
     birthday = models.DateField(
