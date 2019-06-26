@@ -28,7 +28,12 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         return
 
     # if is active didn't change don't do anything
-    previous = models.CustomUser.objects.get(id=instance.id)
+    try:
+        previous = models.CustomUser.objects.get(id=instance.id)
+    except models.CustomUser.DoesNotExist:
+        # new user, it wont be activated or deactived yet
+        return
+
     if previous.is_active == instance.is_active:
         return
 

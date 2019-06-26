@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -10,6 +12,12 @@ class CustomUserManager(BaseUserManager):
         user.set_password(password)
         user.is_staff = True
         user.is_superuser = True
+
+        # fill in some dummy data as they are required.
+        # when registration works this wont be needed (we just need a way
+        # of elevating a user to staff status)
+        user.birthday = datetime.datetime.now()
+
         user.save(using=self.db)
         return user
 
