@@ -266,11 +266,10 @@
         },
         "tox": {
             "hashes": [
-                "sha256:2316d3f56339173c6d45e600dabcfac6fbed7fff82a7d35f4107152e9191a766",
-                "sha256:66d9ccf81b383ab1edc1619410223eec0e046178304728797a850302092ed975"
+                "sha256:45a265e953368fb372cca3eac33b69fdb1b1453e5b114be231c84fc3dfadceed",
+                "sha256:f5cb0b5b8d14f2100982b0981c750d840228180a348e6bad355aa38e949fbc3f"
             ],
-            "index": "pypi",
-            "version": "==3.13.0"
+            "version": "==3.13.1"
         },
         "uritemplate": {
             "hashes": [
