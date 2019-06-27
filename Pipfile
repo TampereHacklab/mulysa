@@ -12,6 +12,7 @@ autopep8 = "*"
 coverage = "*"
 tox = "*"
 isort = "*"
+rope = "*"
 
 [packages]
 django = "*"
