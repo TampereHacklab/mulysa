@@ -81,7 +81,6 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
     to handle
     """
     if raw:
-        # probably loading fixtures, don't do it
         return
 
     # if is active didn't change don't do anything

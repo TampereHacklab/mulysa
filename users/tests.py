@@ -1,7 +1,9 @@
 import datetime
+import time
 
 from django.core import mail
 from django.db.utils import IntegrityError
+from django.dispatch import receiver
 from django.urls import reverse
 
 from rest_framework import status
@@ -9,7 +11,7 @@ from rest_framework.test import APITestCase
 
 from utils import referencenumber
 
-from . import models
+from . import models, signals
 
 
 class UserManagerTests(APITestCase):
@@ -31,6 +33,9 @@ class UsersTests(APITestCase):
             u.save()
 
     def test_create_user(self):
+        """
+        Basic model testing
+        """
         u = models.CustomUser()
         u.email = 'test@example.com'
         u.birthday = datetime.datetime.now()
@@ -48,9 +53,53 @@ class UsersTests(APITestCase):
         self.assertEqual(u.email, u.get_short_name())
         self.assertEqual(u.email, u.natural_key())
 
+    def test_signals(self):
+        u = models.CustomUser()
+        u.email = 'signaltest@example.com'
+        u.birthday = datetime.datetime.now()
+        u.save()
+
+        self.activate_call_counter = 0
+        self.activate_instance_id = None
+
+        self.deactivate_call_counter = 0
+        self.deactivate_instance_id = None
+
+        self.assertTrue(u.is_active, 'user is active')
+
+        # dummy listeners
+        @receiver(signals.deactivate_user, sender=models.CustomUser)
+        def dummy_activate_listener(sender, instance: models.CustomUser, **kwargs):
+            self.activate_instance_id = instance.id
+            self.activate_call_counter += 1
+
+        @receiver(signals.deactivate_user, sender=models.CustomUser)
+        def dummy_deactivate_listener(sender, instance: models.CustomUser, **kwargs):
+            self.deactivate_instance_id = instance.id
+            self.deactivate_call_counter += 1
+
+        # deactivation triggers signal
+        u.is_active = False
+        u.save()
+
+        time.sleep(1)
+
+        # user activation triggers signal
+        u.is_active = True
+        u.save()
+
+        time.sleep(1)
+
+        # and check that our receivers were called
+        self.assertEqual(self.activate_call_counter, 1, 'activate signal was called once')
+        self.assertEqual(self.deactivate_call_counter, 1, 'deactivate signal was called once')
+        self.assertEqual(u.id, self.activate_instance_id, 'signal instance id matches')
+        self.assertEqual(u.id, self.deactivate_instance_id, 'signal instance id matches')
+
+class UsersAPITests(APITestCase):
     def test_get_users(self):
         """
-        get users
+        get users api call
         """
         url = reverse('customuser-list')
         response = self.client.get(url, format='json')
