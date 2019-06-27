@@ -1,3 +1,6 @@
+# migrations for now
+*/migrations/00*.py
+
 # editors
 .vscode
 
