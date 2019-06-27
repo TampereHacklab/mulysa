@@ -114,6 +114,14 @@ class CustomUser(AbstractUser):
             'Filled if the user has marked themself as wanting to end their membership'),
     )
 
+    # this will be autofilled in post_save
+    reference_number = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name=_('Reference number of membership fee payments'),
+        help_text=_('Remember to always use your unique reference number for membership fee payments'),
+    )
+
     # we don't really want to get any nicknames, plain email will do better
     # as our username
     USERNAME_FIELD = 'email'

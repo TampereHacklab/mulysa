@@ -8,6 +8,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
+from utils import referencenumber
+
 from . import models
 
 logger = logging.getLogger(__name__)
@@ -20,22 +22,43 @@ activate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 # Signal for other modules to deactivate user
 #
 deactivate_user = Signal(providing_args=['instance', 'args', 'kwargs'])
+#
+# Signal for other modules to handle new users
+#
+create_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 
 @receiver(post_save, sender=models.CustomUser)
-def send_new_user(sender, instance: models.CustomUser, created, raw, **kwargs):
+def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
+    """
+    After user creation generate required extra information like reference number from the user id
+
+    This is for the models internal use, others should listen to create_user signal which is triggered after
+    all the internal things have been done
+    """
+    if raw:
+        return
+
+    if created:
+        # now we have the users id and we can generate reference number from it
+        # saving it will trigger a new post_save but created will be False (at least I hope so :)
+        # as instance id:s start from 1 they will be first multiplied by 100
+        instance.reference_number = referencenumber.generate(instance.id * 100)
+        instance.save()
+
+        logger.info('User created {}'.format(instance))
+        create_user.send(instance.__class__, instance=instance)
+        logger.info('User creation done {}'.format(instance))
+
+# TODO: move me to "emails" app
+@receiver(create_user, sender=models.CustomUser)
+def send_welcome_email(sender, instance: models.CustomUser, **kwargs):
     """
     Send email to the user with information about how to proceed next
 
     Mainly contains information about where to pay and how much and what
     happens next.
     """
-    if raw:
-        return
-
-    if not created:
-        return
-
-    logger.info('New user created, send what next email {}'.format(instance))
+    logger.info('Sending welcome email to {}'.format(instance))
 
     context = {
         'user': instance,
