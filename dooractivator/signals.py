@@ -2,7 +2,6 @@ import logging
 
 from django.dispatch import receiver
 
-from api.exceptions import NotImplementedYet
 from users.models import CustomUser
 from users.signals import activate_user, deactivate_user
 
@@ -23,5 +22,4 @@ def deactivate_door_access(sender, instance: CustomUser, **kwargs):
     Send sms to door to activate access for this user
     """
     logger.info('Sending door deactivation message for user {}'.format(instance))
-    raise NotImplementedYet
     # TODO write sms sending to door (twilio or infobip)
