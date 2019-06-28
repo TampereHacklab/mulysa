@@ -1,0 +1,14 @@
+{% extends "www/base.html" %}
+{% block content %}
+<h1>
+Register
+</h1>
+<form action="/www/register" method="post">
+    {% csrf_token %}
+    <table border="0">
+        {{ userform.as_table }}
+        {{ applicationform.as_table }}
+    </table>
+    <input type="submit" value="Register">
+</form>
+{% endblock %}

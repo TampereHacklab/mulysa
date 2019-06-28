@@ -145,7 +145,7 @@ Extra fields for applying membership
 class MembershipApplication(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     message = models.CharField(
-        blank=False,
+        blank=True,
         verbose_name=_('Message'),
         help_text=_('Free-form message to hacklab board'),
         max_length=1024,

@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     # our api and other apps
     'api',
     'users',
-
+    'www',
     'dooractivator',
 ]
 
