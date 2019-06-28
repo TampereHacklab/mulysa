@@ -137,3 +137,24 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+"""
+Extra fields for applying membership
+"""
+class MembershipApplication(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    message = models.CharField(
+        blank=False,
+        verbose_name=_('Message'),
+        help_text=_('Free-form message to hacklab board'),
+        max_length=1024,
+    )
+
+    agreement = models.BooleanField(
+        blank=False,
+        verbose_name=_('I agree to the terms presented'),
+    )
+
+    def __str__(self):
+        return 'Membership application for ' + str(self.user)
