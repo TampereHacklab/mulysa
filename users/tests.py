@@ -1,5 +1,4 @@
 import datetime
-import time
 
 from django.core import mail
 from django.db.utils import IntegrityError
@@ -82,13 +81,9 @@ class UsersTests(APITestCase):
         u.is_active = False
         u.save()
 
-        time.sleep(1)
-
         # user activation triggers signal
         u.is_active = True
         u.save()
-
-        time.sleep(1)
 
         # and check that our receivers were called
         self.assertEqual(self.activate_call_counter, 1, 'activate signal was called once')
