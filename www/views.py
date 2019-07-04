@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from www.forms import RegistrationUserForm, RegistrationApplicationForm
+
+from www.forms import RegistrationApplicationForm, RegistrationUserForm
+
 
 def register(request):
     if request.method == 'POST':
@@ -13,8 +14,15 @@ def register(request):
             new_user.save()
             new_application.user = new_user
             new_application.save()
-            return render(request, 'www/thanks.html', {  }, content_type='text/html')
+            return render(request, 'www/thanks.html', {}, content_type='text/html')
     else:
         userform = RegistrationUserForm()
         applicationform = RegistrationApplicationForm()
-    return render(request, 'www/register.html', { 'userform': userform, 'applicationform': applicationform }, content_type='text/html')
+    return render(request,
+                  'www/register.html',
+                  {
+                      'userform': userform,
+                      'applicationform': applicationform
+                  },
+                  content_type='text/html'
+                  )
