@@ -1,5 +1,6 @@
 [![Updates](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
 [![Build Status](https://travis-ci.org/TampereHacklab/mulysa.svg?branch=master)](https://travis-ci.org/TampereHacklab/mulysa)
+[![Coverage Status](https://coveralls.io/repos/github/TampereHacklab/mulysa/badge.svg?branch=master)](https://coveralls.io/github/TampereHacklab/mulysa?branch=master)
 
 # Mulysa
 
