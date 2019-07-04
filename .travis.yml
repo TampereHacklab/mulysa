@@ -6,5 +6,5 @@ install:
   - pipenv install --dev
 script:
   - tox
-after_success.
+after_success:
   - coveralls
