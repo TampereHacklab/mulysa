@@ -1,0 +1,15 @@
+{% extends "www/base.html" %}
+{% block content %}
+<h1>
+Import member csv
+</h1>
+<form action="/www/dataimport" method="post" enctype=multipart/form-data>
+    {% csrf_token %}
+    {{ form }}
+    <br/>
+    <input type="submit" value="Import">
+</form>
+{% if import_message %}
+<p>{{ import_message }}</p>
+{% endif %}
+{% endblock %}

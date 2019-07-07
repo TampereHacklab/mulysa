@@ -21,6 +21,24 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self.db)
         return user
 
+    def create_customuser(self, email, first_name, last_name, phone, reference_number, birthday, municipality, nick, membership_plan):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=email, 
+            first_name=first_name,
+            last_name=last_name, 
+            phone=phone,
+            reference_number=reference_number,
+            birthday=birthday,
+            municipality=municipality,
+            nick=nick,
+            membership_plan=membership_plan
+            )
+
+        user.save(using=self.db)
+        return user
 
 class CustomUser(AbstractUser):
     # Current membership plans available

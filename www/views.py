@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
-from www.forms import RegistrationApplicationForm, RegistrationUserForm
+from www.forms import RegistrationApplicationForm, RegistrationUserForm, MemberImportForm
 
+from utils.dataimport import DataImport
 
 def register(request):
     if request.method == 'POST':
@@ -26,3 +27,15 @@ def register(request):
                   },
                   content_type='text/html'
                   )
+
+def dataimport(request):
+    import_message = "Select file to import"
+    if request.method == 'POST':
+        form = MemberImportForm(request.POST, request.FILES)
+        if form.is_valid():
+            dataimport = DataImport()
+            dataimport.importmembers(request.FILES['file'])
+            import_message = "Imported data"
+    else:
+        form = MemberImportForm()
+    return render(request, 'www/import.html', {'form': form, 'import_message': import_message })

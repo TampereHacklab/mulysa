@@ -13,3 +13,6 @@ class RegistrationApplicationForm(forms.ModelForm):
     class Meta:
         model = models.MembershipApplication
         fields = ['message', 'agreement']
+
+class MemberImportForm(forms.Form):
+    file = forms.FileField()
