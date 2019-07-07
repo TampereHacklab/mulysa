@@ -3,6 +3,7 @@ from django.shortcuts import render
 from www.forms import RegistrationApplicationForm, RegistrationUserForm, MemberImportForm
 
 from utils.dataimport import DataImport
+from users.models import CustomUser
 
 def register(request):
     if request.method == 'POST':
@@ -34,8 +35,11 @@ def dataimport(request):
         form = MemberImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
-            dataimport.importmembers(request.FILES['file'])
-            import_message = "Imported data"
+            report = dataimport.importmembers(request.FILES['file'])
+            import_message = "Import result: " + str(report)
     else:
         form = MemberImportForm()
     return render(request, 'www/import.html', {'form': form, 'import_message': import_message })
+
+def users(request):
+    return render(request, 'www/users.html', {'users': CustomUser.objects.all() })

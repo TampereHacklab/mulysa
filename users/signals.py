@@ -58,6 +58,7 @@ def send_welcome_email(sender, instance: models.CustomUser, **kwargs):
     Mainly contains information about where to pay and how much and what
     happens next.
     """
+    return
     logger.info('Sending welcome email to {}'.format(instance))
 
     context = {

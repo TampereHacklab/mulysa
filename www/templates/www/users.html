@@ -1,0 +1,17 @@
+{% extends "www/base.html" %}
+{% block content %}
+<h2>
+User list
+</h2>
+<table width="90%"">
+{% for user in users %}
+<tr>
+<td>{{ user.first_name }}</td> 
+<td>{{ user.last_name }}</td> 
+<td>{{ user.email }}</td>
+<td>{{ user.phone }}</td>
+<td>{{ user.membership_plan }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

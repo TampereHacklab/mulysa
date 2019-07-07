@@ -80,6 +80,13 @@ class CustomUser(AbstractUser):
         max_length=255,
     )
 
+    mxid = models.CharField(
+        null=True,
+        verbose_name=_('Matrix ID'),
+        help_text=_('Matrix ID (@user:example.org)'),
+        max_length=255,
+    )
+
     membership_plan = models.CharField(
         blank=False,
         verbose_name=_('Membership plan'),
