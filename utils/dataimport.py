@@ -1,8 +1,9 @@
 import datetime
 
+from django.db.utils import IntegrityError
+
 from users.models import CustomUser
 
-from django.db.utils import IntegrityError
 
 class DataImport:
     def importmembers(self, f):
@@ -29,7 +30,7 @@ class DataImport:
                 try:
                     birthday = datetime.date.fromisoformat(fields[5])
                 except ValueError as err:
-                    print("Unable to parse ISO date: ", fields[5])
+                    print('Unable to parse ISO date: {}, error: {}', fields[5], str(err))
 
                 # Todo: how to really interpret these
                 membership_plan = 'MO'
@@ -37,22 +38,22 @@ class DataImport:
                     membership_plan = 'AR'
 
                 CustomUser.objects.create_customuser(
-                    reference_number = fields[1],
-                    first_name = first_name,
-                    last_name = last_name,
-                    email = fields[4],
-                    birthday = birthday,
-                    municipality = fields[6],
-                    nick = fields[7],
-                    phone = fields[8],
-                    membership_plan = membership_plan
+                    reference_number=fields[1],
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=fields[4],
+                    birthday=birthday,
+                    municipality=fields[6],
+                    nick=fields[7],
+                    phone=fields[8],
+                    membership_plan=membership_plan
                 )
                 imported = imported + 1
             except IntegrityError as err:
-                print("User already exists ", str(err))
+                print('User already exists ', str(err))
                 exists = exists + 1
             except ValueError as err:
-                print("Value error importing user: ", str(err))
+                print('Value error importing user: ', str(err))
                 error = error + 1
 
-        return { "imported": imported, "exists": exists, "error": error }
+        return {'imported': imported, 'exists': exists, 'error': error}
