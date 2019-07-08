@@ -1,12 +1,12 @@
 #!/bin/bash
-python manage.py cretedb
-python manage.py makemigrations users
+set +x
+pipenv run python manage.py makemigrations
 
 echo "Applying database migrations"
-python manage.py migrate --run-syncdb
+pipenv run python manage.py migrate
 
 echo "Creating superuser"
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(username='${ADMIN_USER:-admin}', email='${ADMIN_EMAIL:-admin@email.invalid}', password='${ADMIN_PASSWORD:-password}',phone='+358000')" | python manage.py shell
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser(first_name='Admin', last_name='User', email='${ADMIN_EMAIL:-admin@email.invalid}', password='${ADMIN_PASSWORD:-password}',phone='+358000')" | pipenv run python manage.py shell
 
 echo "Starting server"
-python manage.py runserver 0.0.0.0:8000
+pipenv run python manage.py runserver 0.0.0.0:8000

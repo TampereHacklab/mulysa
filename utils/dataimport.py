@@ -10,6 +10,7 @@ class DataImport:
         csv = f.read().decode('utf8')
         lines = csv.split('\n')
         imported = exists = error = 0
+        failedrows = []
 
         # Ignore header line
         for line in lines[1:]:
@@ -55,5 +56,6 @@ class DataImport:
             except ValueError as err:
                 print('Value error importing user: ', str(err))
                 error = error + 1
+                failedrows.append(line)
 
-        return {'imported': imported, 'exists': exists, 'error': error}
+        return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
