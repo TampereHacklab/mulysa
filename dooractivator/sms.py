@@ -41,7 +41,7 @@ class SMSBase:
         """
         raise NotImplementedError('Subclasses should implement this!')
 
-    def sendsms(self, fromnumber, tonumber, message, *argv, **kwargs):
+    def send_sms(self, fromnumber, tonumber, message, *argv, **kwargs):
         """
         Implement in subclass. Send sms message. Should return something for the caller to check that it was ok
         """
