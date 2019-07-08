@@ -3,7 +3,7 @@ from django.shortcuts import render
 from www.forms import RegistrationApplicationForm, RegistrationUserForm, MemberImportForm
 
 from utils.dataimport import DataImport
-from users.models import CustomUser
+from users.models import CustomUser, MembershipApplication
 
 def register(request):
     if request.method == 'POST':
@@ -43,3 +43,6 @@ def dataimport(request):
 
 def users(request):
     return render(request, 'www/users.html', {'users': CustomUser.objects.all() })
+
+def applications(request):
+    return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all() })

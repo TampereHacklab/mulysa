@@ -3,7 +3,25 @@ import datetime
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ValidationError
 
+def validate_mxid(value):
+    # Empty is ok
+    if len(value) == 0:
+        return
+
+    if len(value) < 3 or value[0] != "@" or not ":" in value:
+        raise ValidationError(
+            _('%(value)s is not a valid Matrix id. It must be in format @user:example.org'),
+            params={'value': value},
+        )
+
+def validate_phone(value):
+    if len(value) < 3 or value[0] != '+':
+        raise ValidationError(
+            _('%(value)s is not a valid phone number. It must be in international format +35840123567'),
+            params={'value': value},
+        )
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, first_name, last_name, phone, password):
@@ -76,15 +94,17 @@ class CustomUser(AbstractUser):
     nick = models.CharField(
         blank=False,
         verbose_name=_('Nick'),
-        help_text=_('IRC / Matrix nick or callsign'),
+        help_text=_('Nickname you are known with on Internet'),
         max_length=255,
     )
 
     mxid = models.CharField(
         null=True,
+        blank=True,
         verbose_name=_('Matrix ID'),
         help_text=_('Matrix ID (@user:example.org)'),
         max_length=255,
+        validators=[validate_mxid],
     )
 
     membership_plan = models.CharField(
@@ -99,14 +119,16 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(
         blank=False,
         verbose_name=_('Birthday'),
+        help_text=_('Format: DD.MM.YYYY'),
     )
 
     phone = models.CharField(
         blank=False,
         verbose_name=_('Mobile phone number'),
         help_text=_(
-            'This number will also be the one that gets access to the hacklab premises'),
+            'This number will also be the one that gets access to the hacklab premises. International format (+35840123567).'),
         max_length=255,
+        validators=[validate_phone],
     )
 
     # some datetime bits

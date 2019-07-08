@@ -1,0 +1,19 @@
+{% extends "www/base.html" %}
+{% block content %}
+<h2>
+Member applications
+</h2>
+<table width="90%"">
+{% for application in applications %}
+<tr>
+<td>{{ application.user.first_name }}</td> 
+<td>{{ application.user.last_name }}</td> 
+<td>{{ application.user.email }}</td>
+<td>{{ application.user.phone }}</td>
+<td>{{ application.user.membership_plan }}</td>
+<td>{{ application.message }}</td>
+<td>{{ application.agreement }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
