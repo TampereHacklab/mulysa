@@ -1,0 +1,12 @@
+version: '3' 
+
+services: 
+  mulysa: 
+    build: . 
+    container_name: mulysa
+    volumes:
+     - ${PWD}/data:/code/data
+    ports:
+     - "8000:8000"
+    env_file:
+      - docker-environment.env
