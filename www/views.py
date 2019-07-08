@@ -1,9 +1,10 @@
 from django.shortcuts import render
 
-from www.forms import RegistrationApplicationForm, RegistrationUserForm, MemberImportForm
+from users.models import CustomUser, MembershipApplication
+from www.forms import MemberImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils.dataimport import DataImport
-from users.models import CustomUser, MembershipApplication
+
 
 def register(request):
     if request.method == 'POST':
@@ -30,19 +31,19 @@ def register(request):
                   )
 
 def dataimport(request):
-    import_message = "Select file to import"
+    import_message = 'Select file to import'
     if request.method == 'POST':
         form = MemberImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
             report = dataimport.importmembers(request.FILES['file'])
-            import_message = "Import result: " + str(report)
+            import_message = 'Import result: ' + str(report)
     else:
         form = MemberImportForm()
-    return render(request, 'www/import.html', {'form': form, 'import_message': import_message })
+    return render(request, 'www/import.html', {'form': form, 'import_message': import_message})
 
 def users(request):
-    return render(request, 'www/users.html', {'users': CustomUser.objects.all() })
+    return render(request, 'www/users.html', {'users': CustomUser.objects.all()})
 
 def applications(request):
-    return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all() })
+    return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all()})

@@ -1,6 +1,6 @@
 import datetime
 
-from django.core import mail
+# from django.core import mail
 from django.db.utils import IntegrityError
 from django.dispatch import receiver
 from django.urls import reverse

@@ -1,16 +1,17 @@
 import datetime
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
+
 
 def validate_mxid(value):
     # Empty is ok
     if len(value) == 0:
         return
 
-    if len(value) < 3 or value[0] != "@" or not ":" in value:
+    if len(value) < 3 or value[0] != '@' or ':' not in value:
         raise ValidationError(
             _('%(value)s is not a valid Matrix id. It must be in format @user:example.org'),
             params={'value': value},
@@ -39,21 +40,22 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self.db)
         return user
 
-    def create_customuser(self, email, first_name, last_name, phone, reference_number, birthday, municipality, nick, membership_plan):
+    def create_customuser(self, email, first_name, last_name, phone, reference_number,
+                          birthday, municipality, nick, membership_plan):
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=email, 
+            email=email,
             first_name=first_name,
-            last_name=last_name, 
+            last_name=last_name,
             phone=phone,
             reference_number=reference_number,
             birthday=birthday,
             municipality=municipality,
             nick=nick,
             membership_plan=membership_plan
-            )
+        )
 
         user.save(using=self.db)
         return user
@@ -125,8 +127,8 @@ class CustomUser(AbstractUser):
     phone = models.CharField(
         blank=False,
         verbose_name=_('Mobile phone number'),
-        help_text=_(
-            'This number will also be the one that gets access to the hacklab premises. International format (+35840123567).'),
+        help_text=_('This number will also be the one that gets access to the'
+                    ' hacklab premises. International format (+35840123567).'),
         max_length=255,
         validators=[validate_phone],
     )
