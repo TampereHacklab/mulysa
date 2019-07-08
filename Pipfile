@@ -25,6 +25,7 @@ coreapi = "*"
 django-log-request-id = "*"
 django-filter = "*"
 djangorestframework-filters = "*"
+twilio = "*"
 
 [requires]
 python_version = "3.7"
