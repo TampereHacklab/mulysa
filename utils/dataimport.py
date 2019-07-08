@@ -1,6 +1,7 @@
 import datetime
 
 from users.models import CustomUser
+
 from django.db.utils import IntegrityError
 
 class DataImport:

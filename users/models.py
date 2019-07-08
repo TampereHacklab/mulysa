@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 def validate_mxid(value):
     # Empty is ok
@@ -205,3 +206,101 @@ class MembershipApplication(models.Model):
 
     def __str__(self):
         return 'Membership application for ' + str(self.user)
+
+"""
+Class that represents a service for members. For example:
+ - Yearly membership
+ - Access rights
+"""
+class MemberService(models.Model):
+    name = models.CharField(
+        verbose_name=_('Service name'),
+        help_text=_('Name of the service'),
+        max_length=512,
+    )
+    cost = models.IntegerField(
+        name="Cost normal",
+        verbose_name="Normal cost of the service",
+        validators=[MinValueValidator(0)],
+    )
+    # cost is used if not set
+    cost_min = models.IntegerField(
+        blank=True,
+        null=True,
+        name="Cost minimum",
+        verbose_name="Minimum payment",
+        validators=[MinValueValidator(0)],
+    )
+    # Can be left out if no maximum needed
+    cost_max = models.IntegerField(
+        blank=True,
+        null=True,
+        name="Cost maximum",
+        verbose_name="Maximum payment",
+        validators=[MinValueValidator(0)],
+    )
+    days_per_payment = models.IntegerField(
+        name="Days per payment",
+        verbose_name="How many days of service member gets for a valid payment",
+        validators=[MinValueValidator(0)],
+    )
+    days_bonus_for_first = models.IntegerField(
+        default=0,
+        name="Bonus days for first payment of this service",
+        verbose_name="How many extra days of service member gets when paying for first time",
+        validators=[MinValueValidator(0)],
+    )
+    days_before_warning = models.IntegerField(
+        blank=True,
+        null=True,
+        name="Days before warning",
+        verbose_name="How many days befor payment expiration a warning message shall be sent",
+        validators=[MinValueValidator(0)],
+    )
+    def __str__(self):
+        return 'Member service ' + str(self.name)
+
+"""
+Represents user subscribing to a paid service. 
+"""
+class ServiceSubscription(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service = models.ForeignKey(MemberService, on_delete=models.CASCADE)
+
+    #   Service states:
+    # Service is active, paid_until > current_date
+    ACTIVE = 'ACTIVE'
+    # Service suspended, user must contact administration to continue.
+    # This is used for example if a member wants to pause paying for
+    # certain time due to travel or other reason.
+    # Also the initial state before membership is approved.
+    #
+    # Note: service must be paid fully until moving to suspended state.
+    SUSPENDED = 'SUSPENDED'
+    # Payment overdue, user must pay to activate service
+    OVERDUE = 'OVERDUE'
+
+    SERVICE_STATES = [
+        (ACTIVE, 'Active'),
+        (OVERDUE, 'Payment overdue'),
+        (SUSPENDED, 'Suspended'),
+    ]
+
+    state = models.CharField(
+        blank=False,
+        verbose_name=_('Service state'),
+        help_text=_('State of this service'),
+        max_length=16,
+        choices=SERVICE_STATES,
+        default=SUSPENDED,
+    )
+    # The important paid until date. If this is not set, service has not been used yet or
+    # has been suspended.
+    paid_until = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name=_('Paid until'),
+        help_text=_('The service will stay active until this date'),
+    )
+    def __str__(self):
+        return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' '+ self.user.last_name
