@@ -8,7 +8,9 @@ asylym[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
-Tampere hacklab has been groving and member management has become pretty labor intensive. This project tries to automate the borin parts by automating communication with the member, managing door access and managing ldap account creation.
+Tampere hacklab has been groving and member management has become pretty labor intensive.
+This project tries to automate the borin parts by automating communication with the member,
+managing door access and managing ldap account creation.
 
 Most of this works around our "User" model which can do multiple things
 
@@ -45,8 +47,6 @@ Most of this works around our "User" model which can do multiple things
 # Future improvements
 
 * Automate fetching and processing of member payment data from bank
-
-
 
 # examples
 

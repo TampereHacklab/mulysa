@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser, MemberService, MembershipApplication, ServiceSubscription
+from .models import CustomUser, MemberService, MembershipApplication, ServiceSubscription, BankTransaction
 
 
 class CustomUserAdmin(UserAdmin):
@@ -10,10 +10,11 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = CustomUser
     list_display = ['email', 'first_name', 'last_name', 'birthday',
-                    'municipality', 'phone', 'membership_plan', 'is_active']
+                    'municipality', 'phone', 'reference_number', 'membership_plan', 'is_active']
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
 admin.site.register(MemberService)
 admin.site.register(ServiceSubscription)
+admin.site.register(BankTransaction)

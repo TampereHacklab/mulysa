@@ -2,7 +2,7 @@ import datetime
 
 from django.db.utils import IntegrityError
 
-from users.models import CustomUser
+from users.models import CustomUser, BankTransaction
 
 
 class DataImport:
@@ -55,6 +55,60 @@ class DataImport:
                 exists = exists + 1
             except ValueError as err:
                 print('Value error importing user: ', str(err))
+                error = error + 1
+                failedrows.append(line)
+
+        return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
+
+    def importnordea(self, f):
+        csv = f.read().decode('utf8')
+        lines = csv.split('\n')
+        imported = exists = error = 0
+        failedrows = []
+
+        # Ignore header line
+        for line in lines[1:]:
+            try:
+                line = line.replace('"', '')
+                fields = line.split(',')
+                print(fields)
+                if len(fields) < 4:
+                    raise ValueError('Not enough fields on this row')
+                transaction_date = None
+                try:
+                    transaction_date = datetime.datetime.fromisoformat(fields[0])
+                except ValueError as err:
+                    print('Unable to parse ISO date: {}, error: {}', fields[0], str(err))
+
+                transaction_sender = fields[1]
+                # Fix encoding
+                transaction_sender = transaction_sender.replace('[', 'Ä')
+                transaction_sender = transaction_sender.replace(']', 'Å')
+                transaction_sender = transaction_sender.replace('\\\\', 'Ö')
+
+                transaction_user = None
+                reference = int(fields[4])
+                if reference > 0:
+                    try:
+                        print('reference ', reference, ' searching..')
+                        transaction_user = CustomUser.objects.get(reference_number=reference)
+                        print('FOUND!')
+                    except CustomUser.DoesNotExist:
+                        pass
+
+                BankTransaction.objects.create(
+                    user = transaction_user,
+                    date = transaction_date,
+                    amount = fields[3],
+                    reference_number = reference,
+                    sender = transaction_sender
+                )
+                imported = imported + 1
+            except IntegrityError as err:
+                print('Transaction already exists ', str(err))
+                exists = exists + 1
+            except ValueError as err:
+                print('Value error: ', str(err))
                 error = error + 1
                 failedrows.append(line)
 

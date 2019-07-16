@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from users.models import CustomUser, MembershipApplication
-from www.forms import MemberImportForm, RegistrationApplicationForm, RegistrationUserForm
+from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils.dataimport import DataImport
 
@@ -33,13 +33,16 @@ def register(request):
 def dataimport(request):
     import_message = 'Select file to import'
     if request.method == 'POST':
-        form = MemberImportForm(request.POST, request.FILES)
+        form = FileImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
-            report = dataimport.importmembers(request.FILES['file'])
+            if request.POST['filetype'] == 'M':
+                report = dataimport.importmembers(request.FILES['file'])
+            if request.POST['filetype'] == 'T':
+                report = dataimport.importnordea(request.FILES['file'])
             import_message = 'Import result: ' + str(report)
     else:
-        form = MemberImportForm()
+        form = FileImportForm()
     return render(request, 'www/import.html', {'form': form, 'import_message': import_message})
 
 def users(request):

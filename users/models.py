@@ -306,6 +306,13 @@ class BankTransaction(models.Model):
         help_text=_('Message attached to transaction by sender. Should not normally be used.'),
         max_length=512,
     )
+    sender = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name=_('Sender'),
+        help_text=_('Sender of the transaction, if known.'),
+        max_length=512,
+    )
     reference_number = models.IntegerField(
         blank=True,
         null=True,
@@ -314,8 +321,10 @@ class BankTransaction(models.Model):
     )
 
     def __str__(self):
-        return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user')
-        + ' ' + self.amount + '€, reference ' + self.reference_number + ', message ' + self.message
+        return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
+         + ' from ' + self.sender \
+         + ' ' + str(self.amount) + '€, reference ' + str(self.reference_number) \
+         + (', message ' + self.message if self.message else '')
 
 
 """

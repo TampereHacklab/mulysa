@@ -15,5 +15,9 @@ class RegistrationApplicationForm(forms.ModelForm):
         model = models.MembershipApplication
         fields = ['message', 'agreement']
 
-class MemberImportForm(forms.Form):
+class FileImportForm(forms.Form):
+    filetype = forms.ChoiceField(label='File type',
+        choices=[
+                ('M', 'Members (csv)'), ('T', 'Transactions (Nordea csv)')
+                ])
     file = forms.FileField()
