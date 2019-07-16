@@ -148,18 +148,11 @@ class CustomUser(AbstractUser):
         verbose_name='User creation date',
         help_text='Automatically set to now when user is create'
     )
+
     last_modified = models.DateTimeField(
         auto_now=True,
         verbose_name=_('Last modified datetime'),
         help_text=_('Last time this user was modified'),
-    )
-    # datetime of last payment, the payment information itself will be in its own table
-    last_payment_on = models.DateTimeField(
-        blank=True,
-        null=True,
-        verbose_name=_('Last payment'),
-        help_text=_(
-            'Last datetime this user had a payment transaction happen. TODO: should probably be dynamic'),
     )
 
     # when the member wants to leave we will mark now to this field and then have a cleanup script
@@ -236,6 +229,16 @@ class MemberService(models.Model):
         validators=[MinValueValidator(0)],
     )
 
+    """
+    Defines another service that can fulfill the payment of this
+    service. If the referenced service is paid, then this service
+    is also marked as paid for days_per_payment after the payment date.
+
+    Can be used to make service chains so that if a more expensive
+    service is paid, the user can automatically receive cheaper ones.
+    """
+    fullfilled_by = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
+
     # cost is used if not set
     cost_min = models.IntegerField(
         blank=True,
@@ -280,6 +283,42 @@ class MemberService(models.Model):
 
 
 """
+Represents a incoming money transaction on the club's account.
+
+Mapped to user instance if possible.
+"""
+class BankTransaction(models.Model):
+
+    # User this transaction was made by, or null if unknown
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    date = models.DateField(
+        verbose_name=_('Date'),
+        help_text=_('Date of the transaction'),
+    )
+    amount = models.DecimalField(
+        verbose_name=_('Amount'),
+        help_text=_('Amount of money transferred to account'),
+        max_digits=6,
+        decimal_places=2
+    )
+    message = models.CharField(
+        verbose_name=_('Message'),
+        help_text=_('Message attached to transaction by sender. Should not normally be used.'),
+        max_length=512,
+    )
+    reference_number = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name=_('Reference number of transaction'),
+        help_text=_('Reference number is set by transaction sender and should normally always be used.'),
+    )
+
+    def __str__(self):
+        return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user')
+        + ' ' + self.amount + '€, reference ' + self.reference_number + ', message ' + self.message
+
+
+"""
 Represents user subscribing to a paid service.
 """
 class ServiceSubscription(models.Model):
@@ -321,6 +360,13 @@ class ServiceSubscription(models.Model):
         null=True,
         verbose_name=_('Paid until'),
         help_text=_('The service will stay active until this date'),
+    )
+
+    # Points to the latest payment that caused paid_until to update
+    last_payment = models.ForeignKey(
+        BankTransaction,
+        on_delete=models.SET_NULL,
+        null=True
     )
 
     def __str__(self):
