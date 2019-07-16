@@ -134,6 +134,14 @@ class CustomUser(AbstractUser):
         validators=[validate_phone],
     )
 
+    bank_account = models.CharField(
+        null=True,
+        blank=True,
+        verbose_name=_('Bank account'),
+        help_text=_('Bank account for paying invoices (IBAN format: FI123567890)'),
+        max_length=255
+    )
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
