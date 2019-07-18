@@ -9,5 +9,6 @@ urlpatterns = [
     path('register', views.register),
     path('dataimport', views.dataimport),
     path('users', views.users),
+    path('user/<int:id>/', views.user, name='user'),
     path('applications', views.applications),
 ]

@@ -9,7 +9,19 @@ Import member csv
     <br/>
     <input type="submit" value="Import">
 </form>
-{% if import_message %}
-<pre>{{ import_message }}</pre>
+{% if report %}
+<h2>Import results:</h2>
+<ul>
+<li> Imported: {{ report.imported }} </li>
+<li> Already exists: {{ report.exists }} </li>
+<li> Errored: {{ report.error }} </li>
+</ul>
+<h3>Failed rows:</h3>
+<pre>
+{% for row in report.failedrows %}
+{{ row }}
+{% endfor %}    
+</pre>
+
 {% endif %}
 {% endblock %}

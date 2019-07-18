@@ -13,7 +13,10 @@ class DataImport:
         failedrows = []
 
         # Ignore header line
+        ln = 1
         for line in lines[1:]:
+            print('importing line', line, ln, len(lines))
+            ln = ln + 1
             try:
                 line = line.replace('"', '')
                 fields = line.split(',')
@@ -24,14 +27,21 @@ class DataImport:
                 first_name = ''
                 last_name = ''
 
-                if len(name) == 2:
-                    first_name = name[0]
-                    last_name = name[1]
+                if len(name) < 2:
+                    raise ValueError('No proper name supplied: ' + name)
+
+                first_name = name[0]
+                last_name = name[len(name)-1]
+
                 birthday = None
                 try:
                     birthday = datetime.date.fromisoformat(fields[5])
                 except ValueError as err:
                     print('Unable to parse ISO date: {}, error: {}', fields[5], str(err))
+                try:
+                    birthday = datetime.datetime.strptime(fields[5], '%Y/%m/%d')
+                except ValueError as err:
+                    print('Unable to parse other date: {}, error: {}', fields[5], str(err))
 
                 # Todo: how to really interpret these
                 membership_plan = 'MO'
@@ -51,12 +61,13 @@ class DataImport:
                 )
                 imported = imported + 1
             except IntegrityError as err:
-                print('User already exists ', str(err))
+                print('Integrity error:', str(err))
                 exists = exists + 1
+                failedrows.append(line + ' (' + str(err) + ')')
             except ValueError as err:
-                print('Value error importing user: ', str(err))
+                print('Value error: ', str(err))
                 error = error + 1
-                failedrows.append(line)
+                failedrows.append(line + ' (' + str(err) + ')')
 
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
 
@@ -103,11 +114,12 @@ class DataImport:
                 )
                 imported = imported + 1
             except IntegrityError as err:
-                print('Transaction already exists ', str(err))
+                print('Integrity error: ', str(err))
                 exists = exists + 1
+                failedrows.append(line + ' (' + str(err) + ')')
             except ValueError as err:
                 print('Value error: ', str(err))
                 error = error + 1
-                failedrows.append(line)
+                failedrows.append(line + ' (' + str(err) + ')')
 
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
