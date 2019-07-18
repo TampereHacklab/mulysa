@@ -13,10 +13,7 @@ class DataImport:
         failedrows = []
 
         # Ignore header line
-        ln = 1
         for line in lines[1:]:
-            print('importing line', line, ln, len(lines))
-            ln = ln + 1
             try:
                 line = line.replace('"', '')
                 fields = line.split(',')
@@ -28,7 +25,7 @@ class DataImport:
                 last_name = ''
 
                 if len(name) < 2:
-                    raise ValueError('No proper name supplied: ' + name)
+                    raise ValueError('No proper name supplied: ' + str(name))
 
                 first_name = name[0]
                 last_name = name[len(name)-1]
@@ -41,14 +38,18 @@ class DataImport:
                 try:
                     birthday = datetime.datetime.strptime(fields[5], '%Y/%m/%d')
                 except ValueError as err:
-                    print('Unable to parse other date: {}, error: {}', fields[5], str(err))
+                    print('Unable to parse / separated date: {}, error: {}', fields[5], str(err))
+                try:
+                    birthday = datetime.datetime.strptime(fields[5], '%Y-%m-%d')
+                except ValueError as err:
+                    print('Unable to parse - separated date: {}, error: {}', fields[5], str(err))
 
                 # Todo: how to really interpret these
                 membership_plan = 'MO'
                 if fields[2] == '1':
                     membership_plan = 'AR'
 
-                CustomUser.objects.create_customuser(
+                newuser = CustomUser.objects.create_customuser(
                     reference_number=fields[1],
                     first_name=first_name,
                     last_name=last_name,
@@ -59,6 +60,7 @@ class DataImport:
                     phone=fields[8],
                     membership_plan=membership_plan
                 )
+                newuser.log('User imported')
                 imported = imported + 1
             except IntegrityError as err:
                 print('Integrity error:', str(err))
@@ -112,6 +114,9 @@ class DataImport:
                     reference_number=reference,
                     sender=transaction_sender
                 )
+                if transaction_user:
+                    transaction_user.log('Bank transaction of ' + str(fields[3]) + '€ dated ' + str(transaction_date))
+
                 imported = imported + 1
             except IntegrityError as err:
                 print('Integrity error: ', str(err))

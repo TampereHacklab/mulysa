@@ -15,6 +15,13 @@ User data for {{ user.first_name }} {{ user.last_name }}
     <td>Reference number</td> <td>{{ user.reference_number }}</td>
 </tr>
 </table>
+<h2>Activity log</h2>
+
+<ul>
+{% for entry in userslog %}
+<li>{{ entry.date }} - {{ entry.message }}</li>
+{% endfor %}
+</ul>
 
 <h2>Bank transactions</h2>
 

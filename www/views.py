@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from users.models import CustomUser, MembershipApplication, BankTransaction
+from users.models import CustomUser, MembershipApplication, BankTransaction, UsersLog
 from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils.dataimport import DataImport
@@ -52,6 +52,6 @@ def applications(request):
 
 def user(request, id):
     user = CustomUser.objects.get(id=id)
-    transactions = BankTransaction.objects.filter(user=user)
-    print('found', len(transactions), transactions)
-    return render(request, 'www/user.html', {'user': user , 'transactions': transactions })
+    transactions = BankTransaction.objects.filter(user=user).order_by('-date')
+    userslog = UsersLog.objects.filter(user=user).order_by('-date')
+    return render(request, 'www/user.html', {'user': user, 'transactions': transactions, 'userslog': userslog})

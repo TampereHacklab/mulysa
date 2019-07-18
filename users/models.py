@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
@@ -6,6 +7,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+logger = logging.getLogger(__name__)
 
 def validate_mxid(value):
     # Empty is ok
@@ -185,6 +187,11 @@ class CustomUser(AbstractUser):
 
     def natural_key(self):
         return self.email
+
+    def log(self, message):
+        logevent = UsersLog.objects.create(user=self, message=message)
+        logevent.save()
+        logger.info("User {}'s log: {}".format(logevent.user, message))
 
     def __str__(self):
         return self.email
@@ -381,13 +388,14 @@ class ServiceSubscription(models.Model):
     def __str__(self):
         return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' ' + self.user.last_name
 
+
 """
 A text log message for user activities (status changes, payments, etc)
 """
 class UsersLog(models.Model):
     # User this log message is associated with
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    created = models.DateTimeField(
+    date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Date of this log event'
     )
