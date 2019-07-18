@@ -43,12 +43,6 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
         return
 
     if created:
-        # now we have the users id and we can generate reference number from it
-        # saving it will trigger a new post_save but created will be False (at least I hope so :)
-        # as instance id:s start from 1 they will be first multiplied by 100
-        instance.reference_number = referencenumber.generate(instance.id * 100)
-        instance.save()
-
         logger.info('User created {}'.format(instance))
         create_user.send(instance.__class__, instance=instance)
         logger.info('User creation done {}'.format(instance))

@@ -90,18 +90,16 @@ class DataImport:
                 reference = int(fields[4])
                 if reference > 0:
                     try:
-                        print('reference ', reference, ' searching..')
                         transaction_user = CustomUser.objects.get(reference_number=reference)
-                        print('FOUND!')
                     except CustomUser.DoesNotExist:
                         pass
 
                 BankTransaction.objects.create(
-                    user = transaction_user,
-                    date = transaction_date,
-                    amount = fields[3],
-                    reference_number = reference,
-                    sender = transaction_sender
+                    user=transaction_user,
+                    date=transaction_date,
+                    amount=fields[3],
+                    reference_number=reference,
+                    sender=transaction_sender
                 )
                 imported = imported + 1
             except IntegrityError as err:
