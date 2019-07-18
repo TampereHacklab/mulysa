@@ -380,3 +380,19 @@ class ServiceSubscription(models.Model):
 
     def __str__(self):
         return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' ' + self.user.last_name
+
+"""
+A text log message for user activities (status changes, payments, etc)
+"""
+class UsersLog(models.Model):
+    # User this log message is associated with
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Date of this log event'
+    )
+    message = models.CharField(
+        blank=False,
+        verbose_name=_('Message'),
+        max_length=1024,
+    )
