@@ -2,7 +2,7 @@ import datetime
 
 from django.db.utils import IntegrityError
 
-from users.models import CustomUser, BankTransaction
+from users.models import BankTransaction, CustomUser
 
 
 class DataImport:

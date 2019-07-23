@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser, MemberService, MembershipApplication, ServiceSubscription, BankTransaction
+from .models import BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription
 
 
 class CustomUserAdmin(UserAdmin):

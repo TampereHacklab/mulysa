@@ -1,6 +1,4 @@
-import datetime
-
-from users.models import BankTransaction, ServiceSubscription, MemberService
+from users.models import BankTransaction, ServiceSubscription
 
 
 """

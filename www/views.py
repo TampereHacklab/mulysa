@@ -1,12 +1,12 @@
 from django.shortcuts import render
 
-from users.models import CustomUser, MembershipApplication, BankTransaction, UsersLog, \
-    MemberService, ServiceSubscription
+from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
+                          UsersLog)
 from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
+from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
 
-from utils.businesslogic import BusinessLogic
 
 def register(request):
     if request.method == 'POST':
