@@ -3,7 +3,14 @@
 <h2>
 User list
 </h2>
-<table width="90%"">
+<table width="90%"" border="1">
+<tr>
+<th>Name</th><th>Email</th><th>Phone</th><th>Reference</th><th>Plan</th>
+{% for service in services %}
+<th>{{ service.name }}</th>
+{% endfor %}
+
+</tr>
 {% for user in users %}
 <tr>
 <td>
@@ -15,6 +22,15 @@ User list
 <td>{{ user.phone }}</td>
 <td>{{ user.reference_number }}</td>
 <td>{{ user.membership_plan }}</td>
+{% for service in services %}
+<td>
+        {% for subscription in user.servicesubscriptions %}
+                {% if service == subscription.service %}
+                <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.state }}</span>
+                {% endif %}
+        {% endfor %}
+</td>
+{% endfor %}
 </tr>
 {% endfor %}
 </table>

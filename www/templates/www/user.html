@@ -15,6 +15,13 @@ User data for {{ user.first_name }} {{ user.last_name }}
     <td>Reference number</td> <td>{{ user.reference_number }}</td>
 </tr>
 </table>
+<h2>Service subscriptions</h2>
+<ul>
+    {% for subscription in user.servicesubscriptions %}
+    <li>{{ subscription.service.name }} - {{ subscription.state }} - Paid until {{ subscription.paid_until }} - last payment {{ subscription.last_payment }}</li>
+    {% endfor %}
+</ul>
+        
 <h2>Activity log</h2>
 
 <ul>

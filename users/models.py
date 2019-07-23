@@ -244,7 +244,7 @@ class MemberService(models.Model):
     Can be used to make service chains so that if a more expensive
     service is paid, the user can automatically receive cheaper ones.
     """
-    fullfilled_by = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
+    fullfilled_by = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
 
     # cost is used if not set
     cost_min = models.IntegerField(
@@ -329,9 +329,9 @@ class BankTransaction(models.Model):
 
     def __str__(self):
         return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
-         + ' from ' + self.sender \
-         + ' ' + str(self.amount) + '€, reference ' + str(self.reference_number) \
-         + (', message ' + self.message if self.message else '')
+            + ' from ' + self.sender \
+            + ' ' + str(self.amount) + '€, reference ' + str(self.reference_number) \
+            + (', message ' + self.message if self.message else '')
 
 
 """
@@ -384,6 +384,16 @@ class ServiceSubscription(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    SERVICE_STATE_COLORS = {
+        ACTIVE: 'green',
+        OVERDUE: 'yellow',
+        SUSPENDED: 'red',
+    }
+
+    # Convenince method to get color of the state for ui
+    def statecolor(self):
+        return self.SERVICE_STATE_COLORS[self.state]
 
     def __str__(self):
         return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' ' + self.user.last_name

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-from users.models import CustomUser, MembershipApplication, BankTransaction, UsersLog
+from users.models import CustomUser, MembershipApplication, BankTransaction, UsersLog, \
+    MemberService, ServiceSubscription
 from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils.dataimport import DataImport
@@ -45,13 +46,23 @@ def dataimport(request):
     return render(request, 'www/import.html', {'form': form, 'report': report})
 
 def users(request):
-    return render(request, 'www/users.html', {'users': CustomUser.objects.all()})
+    users = CustomUser.objects.all()
+    services = MemberService.objects.all()
+
+    for user in users:
+        user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
+
+    return render(request, 'www/users.html', {
+        'users': users,
+        'services': services
+    })
 
 def applications(request):
     return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all()})
 
 def user(request, id):
     user = CustomUser.objects.get(id=id)
+    user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
     transactions = BankTransaction.objects.filter(user=user).order_by('-date')
     userslog = UsersLog.objects.filter(user=user).order_by('-date')
     return render(request, 'www/user.html', {'user': user, 'transactions': transactions, 'userslog': userslog})
