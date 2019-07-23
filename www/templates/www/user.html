@@ -3,7 +3,9 @@
 <h1>
 User data for {{ user.first_name }} {{ user.last_name }}
 </h1>
-
+<p>
+<a href="{% url 'updateuser' user.id %}">Update user's data</a>
+</p>
 <table width=90% border="1">
 <tr>
     <td>Name</td> <td>{{ user.first_name }} {{ user.last_name }}</td>

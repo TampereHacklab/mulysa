@@ -6,6 +6,7 @@ from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationU
 
 from utils.dataimport import DataImport
 
+from utils.businesslogic import BusinessLogic
 
 def register(request):
     if request.method == 'POST':
@@ -60,9 +61,14 @@ def users(request):
 def applications(request):
     return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all()})
 
-def user(request, id):
+def userdetails(request, id):
     user = CustomUser.objects.get(id=id)
     user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
     transactions = BankTransaction.objects.filter(user=user).order_by('-date')
     userslog = UsersLog.objects.filter(user=user).order_by('-date')
     return render(request, 'www/user.html', {'user': user, 'transactions': transactions, 'userslog': userslog})
+
+def updateuser(request, id):
+    user = CustomUser.objects.get(id=id)
+    BusinessLogic.updateuser(user)
+    return userdetails(request, id)

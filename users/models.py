@@ -231,7 +231,6 @@ class MemberService(models.Model):
     )
 
     cost = models.IntegerField(
-        name='Cost normal',
         verbose_name='Normal cost of the service',
         validators=[MinValueValidator(0)],
     )
@@ -250,7 +249,6 @@ class MemberService(models.Model):
     cost_min = models.IntegerField(
         blank=True,
         null=True,
-        name='Cost minimum',
         verbose_name='Minimum payment',
         validators=[MinValueValidator(0)],
     )
@@ -259,20 +257,17 @@ class MemberService(models.Model):
     cost_max = models.IntegerField(
         blank=True,
         null=True,
-        name='Cost maximum',
         verbose_name='Maximum payment',
         validators=[MinValueValidator(0)],
     )
 
     days_per_payment = models.IntegerField(
-        name='Days per payment',
         verbose_name='How many days of service member gets for a valid payment',
         validators=[MinValueValidator(0)],
     )
 
     days_bonus_for_first = models.IntegerField(
         default=0,
-        name='Bonus days for first payment of this service',
         verbose_name='How many extra days of service member gets when paying for first time',
         validators=[MinValueValidator(0)],
     )
@@ -280,7 +275,6 @@ class MemberService(models.Model):
     days_before_warning = models.IntegerField(
         blank=True,
         null=True,
-        name='Days before warning',
         verbose_name='How many days befor payment expiration a warning message shall be sent',
         validators=[MinValueValidator(0)],
     )
@@ -382,6 +376,7 @@ class ServiceSubscription(models.Model):
     last_payment = models.ForeignKey(
         BankTransaction,
         on_delete=models.SET_NULL,
+        blank=True,
         null=True
     )
 
