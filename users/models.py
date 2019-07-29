@@ -236,14 +236,13 @@ class MemberService(models.Model):
     )
 
     """
-    Defines another service that can fulfill the payment of this
-    service. If the referenced service is paid, then this service
-    is also marked as paid for days_per_payment after the payment date.
+    Defines another service that this this service pays for. If this service is paid, the referenced
+    service is also marked as paid for days_per_payment after the payment date.
 
     Can be used to make service chains so that if a more expensive
     service is paid, the user can automatically receive cheaper ones.
     """
-    fullfilled_by = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
+    pays_also_service = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
 
     # cost is used if not set
     cost_min = models.IntegerField(
@@ -325,7 +324,8 @@ class BankTransaction(models.Model):
         return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
             + ' from ' + self.sender \
             + ' ' + str(self.amount) + '€, reference ' + str(self.reference_number) \
-            + (', message ' + self.message if self.message else '')
+            + (', message ' + self.message if self.message else '') \
+            + ' at ' + str(self.date)
 
 
 """
