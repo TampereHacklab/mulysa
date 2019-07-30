@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 
-from users.models import BankTransaction, ServiceSubscription, MemberService
+from users.models import BankTransaction, MemberService, ServiceSubscription
 
 
 """
@@ -27,8 +27,8 @@ class BusinessLogic:
                 print(str(subscription) + ' is now paid until today so changing state to ACTIVE')
                 subscription.state = ServiceSubscription.ACTIVE
                 subscription.save()
-                subscription.user.log(subscription.service.name + ' is now ACTIVE until '
-                                + str(subscription.paid_until))
+                subscription.user.log(subscription.service.name + ' is now ACTIVE until ' +
+                                      str(subscription.paid_until))
 
             # Check if the service becomes overdue
             if subscription.state == ServiceSubscription.ACTIVE \
@@ -114,15 +114,16 @@ class BusinessLogic:
         servicesubscription.paid_until = (servicesubscription.paid_until + days_to_add)
         servicesubscription.last_payment = transaction
         servicesubscription.save()
-        servicesubscription.user.log(str(servicesubscription) + ' is now paid until '
-                    + str(servicesubscription.paid_until) + ' due to payment ' + str(transaction))
+        servicesubscription.user.log(str(servicesubscription) + ' is now paid until ' +
+                                     str(servicesubscription.paid_until) + ' due to payment ' + str(transaction))
 
         # Todo: emit signals?
 
         # Handle case where this service also pays for another service
         if servicesubscription.service.pays_also_service:
             # All subscription for current user paid by this service
-            paid_servicesubscriptions = ServiceSubscription.objects.filter(user=servicesubscription.user, service=servicesubscription.service.pays_also_service)
+            paid_servicesubscriptions = ServiceSubscription.objects.filter(
+                user=servicesubscription.user, service=servicesubscription.service.pays_also_service)
             for paid_servicesubscription in paid_servicesubscriptions:
                 print(str(servicesubscription) + ' also pays for ' + str(paid_servicesubscription))
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
@@ -132,5 +133,6 @@ class BusinessLogic:
                     paid_servicesubscription.paid_until = transaction.date + extra_days
                     paid_servicesubscription.last_payment = transaction
                     paid_servicesubscription.save()
-                    servicesubscription.user.log(str(paid_servicesubscription) + ' is now paid until '
-                            + str(paid_servicesubscription.paid_until) + ' due to ' + str(servicesubscription.service) + ' was paid')
+                    servicesubscription.user.log(str(paid_servicesubscription) + ' is now paid until ' +
+                                                 str(paid_servicesubscription.paid_until) + ' due to ' +
+                                                 str(servicesubscription.service) + ' was paid')
