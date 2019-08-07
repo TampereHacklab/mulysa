@@ -136,3 +136,12 @@ class BusinessLogic:
                     servicesubscription.user.log(str(paid_servicesubscription) + ' is now paid until ' +
                                                  str(paid_servicesubscription.paid_until) + ' due to ' +
                                                  str(servicesubscription.service) + ' was paid')
+
+                    # Check if the service has been overdue and can be activated
+                    # Todo: this is copypaste, make a function
+                    if paid_servicesubscription.state == ServiceSubscription.OVERDUE \
+                            and paid_servicesubscription.paid_until \
+                            and paid_servicesubscription.paid_until > date.today():
+                        print(str(paid_servicesubscription) + ' is now paid until today so changing state to ACTIVE')
+                        paid_servicesubscription.state = ServiceSubscription.ACTIVE
+                        paid_servicesubscription.save()
