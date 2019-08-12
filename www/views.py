@@ -40,8 +40,8 @@ def dataimport(request):
             dataimport = DataImport()
             if request.POST['filetype'] == 'M':
                 report = dataimport.importmembers(request.FILES['file'])
-            if request.POST['filetype'] == 'T':
-                report = dataimport.importnordea(request.FILES['file'])
+            if request.POST['filetype'] == 'TITO':
+                report = dataimport.import_tito(request.FILES['file'])
     else:
         form = FileImportForm()
     return render(request, 'www/import.html', {'form': form, 'report': report})

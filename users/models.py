@@ -291,6 +291,15 @@ class BankTransaction(models.Model):
 
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+
+    # Unique archival reference number that all transactions have
+    archival_reference = models.CharField(
+        blank=False,
+        null=False,
+        unique=True,
+        verbose_name=_('Archival reference'),
+        max_length=18,
+    )
     date = models.DateField(
         verbose_name=_('Date'),
         help_text=_('Date of the transaction'),
