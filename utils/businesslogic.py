@@ -9,6 +9,13 @@ Implements business logic for the membership services.
 Not mature but seems to do the trick more or less right.
 """
 class BusinessLogic:
+    @staticmethod
+    def new_transaction(transaction):
+        print('New transaction', transaction)
+        if transaction.user:
+            transaction.user.log('Bank transaction of ' +
+                            str(transaction.amount) + '€ dated ' + str(transaction.date))
+            BusinessLogic.updateuser(transaction.user)
 
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod

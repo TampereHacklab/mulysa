@@ -3,16 +3,20 @@
         <title>Mulysa</title>
     </head>
     <body>
-        Mulysa placeholder UI 
+        <center>
+        ^^^ Mulysa placeholder UI ^^^
         | <a href="{% url 'index' %}">Front page</a> 
         | <a href="{% url 'users' %}">Users</a> 
         | <a href="{% url 'applications' %}">Member applications</a> 
         | <a href="{% url 'register' %}">Register</a> 
         | <a href="{% url 'dataimport' %}">Import</a>
         | <a href="../accounts/password_reset/">Reset password</a>
+        </center>
         <br/>
 
         {% block content %}{% endblock content %}
-
+        <p>
+            <center>Web design by cos - help wanted! Make a pr at <a href="https://github.com/TampereHacklab/mulysa">GitHub</a></center>
+        </p>
     </body>
 </html>

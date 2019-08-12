@@ -31,6 +31,7 @@ create_user = Signal(providing_args=['instance', 'args', 'kwargs'])
 #
 create_application = Signal(providing_args=['instance', 'args', 'kwargs'])
 
+
 @receiver(post_save, sender=models.CustomUser)
 def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
     """
