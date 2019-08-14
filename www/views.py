@@ -12,7 +12,6 @@ def register(request):
     if request.method == 'POST':
         userform = RegistrationUserForm(request.POST)
         applicationform = RegistrationApplicationForm(request.POST)
-        print('POST', userform.is_valid(), applicationform.is_valid(), userform.errors)
         if userform.is_valid() and applicationform.is_valid():
             new_user = userform.save(commit=False)
             new_application = applicationform.save(commit=False)
@@ -56,6 +55,21 @@ def users(request):
     return render(request, 'www/users.html', {
         'users': users,
         'services': services
+    })
+
+
+def ledger(request):
+    filter = request.GET.get('filter')
+    transactions = []
+    if not filter:
+        transactions = BankTransaction.objects.all().order_by('-date')
+    elif filter=='unknown':
+        transactions = BankTransaction.objects.filter(user=None).order_by('-date')
+    elif filter=='paid':
+        transactions = BankTransaction.objects.filter(amount__lte=0).order_by('-date')
+
+    return render(request, 'www/ledger.html', {
+        'transactions': transactions
     })
 
 def applications(request):
