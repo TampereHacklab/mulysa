@@ -61,6 +61,11 @@ class DataImport:
                 if fields[2] == '1':
                     membership_plan = 'AR'
 
+                phone = fields[8]
+                # Fix missing international prefix
+                if len(phone) > 0 and phone[0]=='0':
+                    phone = '+358' + phone[1:]
+
                 newuser = CustomUser.objects.create_customuser(
                     reference_number=fields[1],
                     first_name=first_name,
@@ -69,7 +74,7 @@ class DataImport:
                     birthday=birthday,
                     municipality=fields[6],
                     nick=fields[7],
-                    phone=fields[8]
+                    phone=phone
                 )
                 newuser.log('User imported')
 
@@ -134,7 +139,7 @@ class DataImport:
                     peer = line[108:143]
                     peer = peer.replace('[', 'Ä')
                     peer = peer.replace(']', 'Å')
-                    peer = peer.replace('\\\\', 'Ö')
+                    peer = peer.replace('\\', 'Ö')
                     reference = line[159:179].strip()
                     if len(reference) > 0:
                         reference = int(reference)

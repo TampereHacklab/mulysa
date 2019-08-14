@@ -21,7 +21,7 @@ def validate_mxid(value):
         )
 
 def validate_phone(value):
-    if len(value) < 3 or value[0] != '+':
+    if len(value) < 3 or value[0] != '+' or not value[1:].isnumeric():
         raise ValidationError(
             _('%(value)s is not a valid phone number. It must be in international format +35840123567'),
             params={'value': value},
@@ -310,7 +310,12 @@ class BankTransaction(models.Model):
         verbose_name=_('Reference number of transaction'),
         help_text=_('Reference number is set by transaction sender and should normally always be used.'),
     )
-
+    has_been_used = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text=_("True, if this transaction has already been used to pay for service.")
+    )
     def __str__(self):
         return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
             + ' from ' + self.sender \

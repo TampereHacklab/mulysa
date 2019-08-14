@@ -9,6 +9,7 @@ Implements business logic for the membership services.
 Not mature but seems to do the trick more or less right.
 """
 class BusinessLogic:
+    # Called when a new transaction has been added into database
     @staticmethod
     def new_transaction(transaction):
         print('New transaction', transaction)
@@ -16,6 +17,9 @@ class BusinessLogic:
             transaction.user.log('Bank transaction of ' +
                             str(transaction.amount) + '€ dated ' + str(transaction.date))
             BusinessLogic.updateuser(transaction.user)
+    @staticmethod
+    def servicesubscription_state_changed(subscription, oldstate, newstate):
+        subscription.user.log('Service ' + subscription.service.name + ' state changed from ' + oldstate + ' to ' + newstate)
 
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod
@@ -26,27 +30,7 @@ class BusinessLogic:
         for subscription in servicesubscriptions:
             print('Examining', subscription)
             BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
-
-            # Check if the service has been overdue and can be activated
-            if subscription.state == ServiceSubscription.OVERDUE \
-                    and subscription.paid_until \
-                    and subscription.paid_until > date.today():
-                print(str(subscription) + ' is now paid until today so changing state to ACTIVE')
-                subscription.state = ServiceSubscription.ACTIVE
-                subscription.save()
-                subscription.user.log(subscription.service.name + ' is now ACTIVE until ' +
-                                      str(subscription.paid_until))
-
-            # Check if the service becomes overdue
-            if subscription.state == ServiceSubscription.ACTIVE \
-                    and subscription.paid_until \
-                    and subscription.paid_until < date.today():
-                print(str(subscription) + ' payment overdue so changing state to OVERDUE')
-                subscription.state = ServiceSubscription.OVERDUE
-                subscription.save()
-                subscription.user.log(subscription.service.name + ' is now OVERDUE')
-
-                # Todo: emit signal?
+            BusinessLogic.check_servicesubscription_state(subscription)
 
     # Updates a single subscription status for given user (used by updateuser)
     @staticmethod
@@ -62,26 +46,12 @@ class BusinessLogic:
                 print('Service is paid by ', service, ' which user is subscribed so skipping this service.')
                 return
 
-        transactions = BankTransaction.objects.filter(user=user).order_by('date')
+        transactions = BankTransaction.objects.filter(user=user,has_been_used=False).order_by('date')
 
         for transaction in transactions:
             if BusinessLogic.transaction_pays_service(transaction, subscription.service):
-                print('Examining transaction', transaction)
-                # Check if this transaction is new, ie it hasn't been used for paying service in history
-                new_transaction = False
-                # If no last payment, it's always new
-                if not subscription.last_payment:
-                    new_transaction = True
-                # If transaction date is newer or equal to last payment date and it's not the last payment, it's new
-                elif (transaction.date >= subscription.last_payment.date) \
-                        and (subscription.last_payment.id != transaction.id):
-                    new_transaction = True
-
-                if new_transaction:
-                    print('Transaction is new and pays for service', subscription.service)
-                    BusinessLogic.service_paid_by_transaction(subscription, transaction)
-                else:
-                    print('Transaction is older than last payment, skipping')
+                print('Transaction is new and pays for service', subscription.service)
+                BusinessLogic.service_paid_by_transaction(subscription, transaction)
             else:
                 print('Transaction does not pay service', subscription.service)
 
@@ -121,6 +91,11 @@ class BusinessLogic:
         servicesubscription.paid_until = (servicesubscription.paid_until + days_to_add)
         servicesubscription.last_payment = transaction
         servicesubscription.save()
+
+        # Mark transaction as used
+        transaction.has_been_used = True
+        transaction.save()
+
         servicesubscription.user.log(str(servicesubscription) + ' is now paid until ' +
                                      str(servicesubscription.paid_until) + ' due to payment ' + str(transaction))
 
@@ -144,11 +119,32 @@ class BusinessLogic:
                                                  str(paid_servicesubscription.paid_until) + ' due to ' +
                                                  str(servicesubscription.service) + ' was paid')
 
-                    # Check if the service has been overdue and can be activated
-                    # Todo: this is copypaste, make a function
-                    if paid_servicesubscription.state == ServiceSubscription.OVERDUE \
-                            and paid_servicesubscription.paid_until \
-                            and paid_servicesubscription.paid_until > date.today():
-                        print(str(paid_servicesubscription) + ' is now paid until today so changing state to ACTIVE')
-                        paid_servicesubscription.state = ServiceSubscription.ACTIVE
-                        paid_servicesubscription.save()
+                    BusinessLogic.check_servicesubscription_state(paid_servicesubscription)
+
+    """
+    Checks if the servicesubscription state needs to be changed due to paid_until changed.
+    """
+    @staticmethod
+    def check_servicesubscription_state(subscription):
+        # We do nothing if subscription is suspended
+        if subscription.state == ServiceSubscription.SUSPENDED:
+            return
+
+        oldstate = subscription.state
+
+        # Check if the service has been overdue and can be activated
+        if subscription.state == ServiceSubscription.OVERDUE \
+                and subscription.paid_until \
+                and subscription.paid_until > date.today():
+            subscription.state = ServiceSubscription.ACTIVE
+            subscription.save()
+            BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
+
+        # Check if the service becomes overdue
+        if subscription.state == ServiceSubscription.ACTIVE \
+                and subscription.paid_until \
+                and subscription.paid_until < date.today():
+            print(str(subscription) + ' payment overdue so changing state to OVERDUE')
+            subscription.state = ServiceSubscription.OVERDUE
+            subscription.save()
+            BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
