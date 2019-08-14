@@ -1,0 +1,7 @@
+[ 
+{% if user.is_authenticated %}
+Logged in as: {{ user.first_name }} {{ user.last_name }} <a href="{% url 'logout' %}">logout</a>
+{% else %}
+<a href="{% url 'login' %}">login</a>
+{% endif %}
+]

@@ -1,25 +1,30 @@
 {% extends "www/base.html" %}
 {% block content %}
 <h1>
-User data for {{ user.first_name }} {{ user.last_name }}
+User data for {{ userdetails.first_name }} {{ userdetails.last_name }}
 </h1>
+{% if user.is_staff %}
 <p>
-<a href="{% url 'updateuser' user.id %}">Update user's data</a>
+<a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
 </p>
+{% endif %}
 <table width=90% border="1">
 <tr>
-    <td>Name</td> <td>{{ user.first_name }} {{ user.last_name }}</td>
+    <td>Name</td> <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
 </tr>
 <tr>
-    <td>Email</td> <td>{{ user.email }}</td>
+    <td>Email</td> <td>{{ userdetails.email }}</td>
 </tr>
 <tr>
-    <td>Reference number</td> <td>{{ user.reference_number }}</td>
+    <td>Phone</td> <td>{{ userdetails.phone }}</td>
+</tr>
+<tr>
+    <td>Reference number</td> <td>{{ userdetails.reference_number }}</td>
 </tr>
 </table>
 <h2>Service subscriptions</h2>
 <ul>
-    {% for subscription in user.servicesubscriptions %}
+    {% for subscription in userdetails.servicesubscriptions %}
     <li>{{ subscription.service.name }} -  <span style="background-color: {{ subscription.statecolor }}">{{ subscription.state }}</span> - Paid until {{ subscription.paid_until }} - last payment {{ subscription.last_payment }}</li>
     {% endfor %}
 </ul>
@@ -27,7 +32,7 @@ User data for {{ user.first_name }} {{ user.last_name }}
 <h2>Activity log</h2>
 
 <ul>
-{% for entry in userslog %}
+{% for entry in userdetails.userslog %}
 <li>{{ entry.date }} - {{ entry.message }}</li>
 {% endfor %}
 </ul>
@@ -35,7 +40,7 @@ User data for {{ user.first_name }} {{ user.last_name }}
 <h2>Bank transactions</h2>
 
 <ul>
-{% for transaction in transactions %}
+{% for transaction in userdetails.transactions %}
 <li>{{ transaction.date }} - {{ transaction.amount }}</li>
 {% endfor %}
 </ul>

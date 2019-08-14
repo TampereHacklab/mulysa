@@ -1,12 +1,16 @@
 from django.shortcuts import render
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+
+from django.http import HttpResponseForbidden
+
 from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
                           UsersLog)
 from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
-
 
 def register(request):
     if request.method == 'POST':
@@ -31,6 +35,7 @@ def register(request):
                   content_type='text/html'
                   )
 
+@staff_member_required
 def dataimport(request):
     report = None
     if request.method == 'POST':
@@ -45,6 +50,7 @@ def dataimport(request):
         form = FileImportForm()
     return render(request, 'www/import.html', {'form': form, 'report': report})
 
+@staff_member_required
 def users(request):
     users = CustomUser.objects.all()
     services = MemberService.objects.all()
@@ -57,7 +63,7 @@ def users(request):
         'services': services
     })
 
-
+@staff_member_required
 def ledger(request):
     filter = request.GET.get('filter')
     transactions = []
@@ -67,21 +73,28 @@ def ledger(request):
         transactions = BankTransaction.objects.filter(user=None).order_by('-date')
     elif filter=='paid':
         transactions = BankTransaction.objects.filter(amount__lte=0).order_by('-date')
+    elif filter=='unused':
+        transactions = BankTransaction.objects.filter(has_been_used=False).order_by('-date')
 
     return render(request, 'www/ledger.html', {
         'transactions': transactions
     })
 
+@staff_member_required
 def applications(request):
     return render(request, 'www/applications.html', {'applications': MembershipApplication.objects.all()})
 
+@login_required
 def userdetails(request, id):
-    user = CustomUser.objects.get(id=id)
-    user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
-    transactions = BankTransaction.objects.filter(user=user).order_by('-date')
-    userslog = UsersLog.objects.filter(user=user).order_by('-date')
-    return render(request, 'www/user.html', {'user': user, 'transactions': transactions, 'userslog': userslog})
+    if not request.user.is_superuser and request.user.id != id:
+        return HttpResponseForbidden('Please login as this user or admin to see this')
+    userdetails = CustomUser.objects.get(id=id)
+    userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
+    userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('-date')
+    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('-date')
+    return render(request, 'www/user.html', { 'userdetails': userdetails })
 
+@staff_member_required
 def updateuser(request, id):
     user = CustomUser.objects.get(id=id)
     BusinessLogic.updateuser(user)

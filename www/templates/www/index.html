@@ -3,5 +3,14 @@
 <h1>
 Mulysa placeholder UI
 </h1>
-This is a placeholder UI for testing Mulysa. Click links above to do stuff.
+This is a placeholder UI for testing Mulysa.
+<p>
+{% if user.is_authenticated %}
+<a href="{% url 'userdetails' user.id %}">Show my user information</a>
+{% else %}
+<a href="{% url 'login' %}">Login to Mulysa</a>
+ or 
+<a href="{% url 'register' %}">apply membership in hacklab</a>
+{% endif %}
+</p>
 {% endblock %}
