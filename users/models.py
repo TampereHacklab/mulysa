@@ -263,7 +263,20 @@ class MemberService(models.Model):
     def __str__(self):
         return 'Member service ' + str(self.name)
 
+    # Returns the cost of the service in human-readable string
+    def cost_string(self):
+        cs = str(self.cost) + "€ "
+        if self.cost_min and self.cost_max:
+            cs = cs + "(" + str(self.cost_min) + "€ - " + str(self.cost_max) + "€)"
+        return cs
 
+    # Returns the period (days per payment) for the service in human-readable string
+    def period_string(self):
+        if self.days_per_payment == 31:
+            return _('month')
+        if self.days_per_payment == 365:
+            return _('year')
+        return str(self.days_per_payment) + ' ' + _('days')
 """
 Represents a incoming money transaction on the club's account.
 

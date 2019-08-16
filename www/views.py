@@ -16,6 +16,14 @@ def register(request):
     if request.method == 'POST':
         userform = RegistrationUserForm(request.POST)
         applicationform = RegistrationApplicationForm(request.POST)
+
+        memberservices = MemberService.objects.all()
+        for service in memberservices:
+            print('service', service)
+            if 'service-' + str(service.id) in request.POST:
+                print('service selected!')
+                # @todo continue here, create servicesubscritpions etc
+
         if userform.is_valid() and applicationform.is_valid():
             new_user = userform.save(commit=False)
             new_application = applicationform.save(commit=False)
@@ -30,7 +38,8 @@ def register(request):
                   'www/register.html',
                   {
                       'userform': userform,
-                      'applicationform': applicationform
+                      'applicationform': applicationform,
+                      'memberservices': MemberService.objects.all()
                   },
                   content_type='text/html'
                   )

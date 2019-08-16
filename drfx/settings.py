@@ -217,3 +217,9 @@ logging.config.dictConfig({
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Load non-default settings from settings_local.py if it exists
+try:
+    from settings_local import *
+except ImportError:
+    pass
