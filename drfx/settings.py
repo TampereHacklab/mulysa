@@ -220,6 +220,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Load non-default settings from settings_local.py if it exists
 try:
-    from settings_local import *
+    from settings_local import *  # noqa
 except ImportError:
     pass

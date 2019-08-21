@@ -15,11 +15,13 @@ class BusinessLogic:
         print('New transaction', transaction)
         if transaction.user:
             transaction.user.log('Bank transaction of ' +
-                            str(transaction.amount) + '€ dated ' + str(transaction.date))
+                                 str(transaction.amount) + '€ dated ' + str(transaction.date))
             BusinessLogic.updateuser(transaction.user)
+
     @staticmethod
     def servicesubscription_state_changed(subscription, oldstate, newstate):
-        subscription.user.log('Service ' + subscription.service.name + ' state changed from ' + oldstate + ' to ' + newstate)
+        subscription.user.log('Service ' + subscription.service.name +
+                              ' state changed from ' + oldstate + ' to ' + newstate)
 
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod
@@ -46,7 +48,7 @@ class BusinessLogic:
                 print('Service is paid by ', service, ' which user is subscribed so skipping this service.')
                 return
 
-        transactions = BankTransaction.objects.filter(user=user,has_been_used=False).order_by('date')
+        transactions = BankTransaction.objects.filter(user=user, has_been_used=False).order_by('date')
 
         for transaction in transactions:
             if BusinessLogic.transaction_pays_service(transaction, subscription.service):

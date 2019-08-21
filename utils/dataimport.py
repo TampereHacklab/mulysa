@@ -9,6 +9,7 @@ from users.models import BankTransaction, CustomUser, MemberService, ServiceSubs
 
 from utils.businesslogic import BusinessLogic
 
+
 class ParseError(Exception):
     """Raised when the data has invalid value"""
     pass
@@ -63,7 +64,7 @@ class DataImport:
 
                 phone = fields[8]
                 # Fix missing international prefix
-                if len(phone) > 0 and phone[0]=='0':
+                if len(phone) > 0 and phone[0] == '0':
                     phone = '+358' + phone[1:]
 
                 newuser = CustomUser.objects.create_customuser(
@@ -165,7 +166,9 @@ class DataImport:
                             amount=amount,
                             reference_number=reference,
                             sender=peer,
-                            archival_reference=archival_reference
+                            archival_reference=archival_reference,
+                            transaction_id=transaction_id,
+                            code=code,
                         )
                         BusinessLogic.new_transaction(transaction)
                         imported = imported + 1

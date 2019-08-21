@@ -1,9 +1,7 @@
-from django.shortcuts import render
-
-from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
+from django.shortcuts import render
 
 from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
                           UsersLog)
@@ -11,6 +9,7 @@ from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationU
 
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
+
 
 def register(request):
     if request.method == 'POST':
@@ -78,11 +77,11 @@ def ledger(request):
     transactions = []
     if not filter:
         transactions = BankTransaction.objects.all().order_by('-date')
-    elif filter=='unknown':
+    elif filter == 'unknown':
         transactions = BankTransaction.objects.filter(user=None).order_by('-date')
-    elif filter=='paid':
+    elif filter == 'paid':
         transactions = BankTransaction.objects.filter(amount__lte=0).order_by('-date')
-    elif filter=='unused':
+    elif filter == 'unused':
         transactions = BankTransaction.objects.filter(has_been_used=False).order_by('-date')
 
     return render(request, 'www/ledger.html', {
@@ -101,7 +100,7 @@ def userdetails(request, id):
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('-date')
     userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('-date')
-    return render(request, 'www/user.html', { 'userdetails': userdetails })
+    return render(request, 'www/user.html', {'userdetails': userdetails})
 
 @staff_member_required
 def updateuser(request, id):

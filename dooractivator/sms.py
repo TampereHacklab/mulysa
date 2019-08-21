@@ -43,7 +43,7 @@ class SMSBase:
 
         https://github.com/TampereHacklab/GSM-lock-system/blob/master/Gate_Control_1000_v3-13_EN_Manual_12-08-2013.pdf
         """
-        msg = "*n={number},{name},{auth},{period},{gate}#".format(
+        msg = '*n={number},{name},{auth},{period},{gate}#'.format(
             number=self.toe164(number, country=country),
             name=name,
             gate=gate,
@@ -60,7 +60,7 @@ class SMSBase:
 
         https://github.com/TampereHacklab/GSM-lock-system/blob/master/Gate_Control_1000_v3-13_EN_Manual_12-08-2013.pdf
         """
-        msg = "*d={number}#".format(
+        msg = '*d={number}#'.format(
             number=self.toe164(number, country=country),
             name=name,
         )

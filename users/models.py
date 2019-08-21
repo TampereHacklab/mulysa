@@ -265,9 +265,9 @@ class MemberService(models.Model):
 
     # Returns the cost of the service in human-readable string
     def cost_string(self):
-        cs = str(self.cost) + "€ "
+        cs = str(self.cost) + '€ '
         if self.cost_min and self.cost_max:
-            cs = cs + "(" + str(self.cost_min) + "€ - " + str(self.cost_max) + "€)"
+            cs = cs + '(' + str(self.cost_min) + '€ - ' + str(self.cost_max) + '€)'
         return cs
 
     # Returns the period (days per payment) for the service in human-readable string
@@ -277,12 +277,14 @@ class MemberService(models.Model):
         if self.days_per_payment == 365:
             return _('year')
         return str(self.days_per_payment) + ' ' + _('days')
-"""
-Represents a incoming money transaction on the club's account.
 
-Mapped to user instance if possible.
-"""
+
 class BankTransaction(models.Model):
+    """
+    Represents a incoming money transaction on the club's account.
+
+    Mapped to user instance if possible.
+    """
 
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
@@ -323,12 +325,28 @@ class BankTransaction(models.Model):
         verbose_name=_('Reference number of transaction'),
         help_text=_('Reference number is set by transaction sender and should normally always be used.'),
     )
+    transaction_id = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name=_('Transaction id'),
+        help_text=_('Bank transaction id'),
+        max_length=512,
+    )
+    code = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name=_('Code'),
+        help_text=_('Code'),
+        max_length=512,
+    )
+
     has_been_used = models.BooleanField(
         blank=False,
         null=False,
         default=False,
-        help_text=_("True, if this transaction has already been used to pay for service.")
+        help_text=_('True, if this transaction has already been used to pay for service.')
     )
+
     def __str__(self):
         return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
             + ' from ' + self.sender \
@@ -337,10 +355,10 @@ class BankTransaction(models.Model):
             + ' at ' + str(self.date)
 
 
-"""
-Represents user subscribing to a paid service.
-"""
 class ServiceSubscription(models.Model):
+    """
+    Represents user subscribing to a paid service.
+    """
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service = models.ForeignKey(MemberService, on_delete=models.CASCADE)
 
