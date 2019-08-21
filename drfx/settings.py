@@ -218,8 +218,17 @@ logging.config.dictConfig({
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# sms sending
+SMS = {
+    'ENABLED': os.environ.get('SMS_ENABLED', "False").lower() == "false",
+    'TWILIO_SID': os.environ.get('TWILIO_SID', ''),
+    'TWILIO_TOKEN': os.environ.get('TWILIO_TOKEN', ''),
+    'TWILIO_FROM': os.environ.get('TWILIO_FROM', ''),
+    'TO_NUMBER': os.environ.get('SMS_TO', ''),
+}
+
 # Load non-default settings from settings_local.py if it exists
 try:
-    from settings_local import *  # noqa
+    from .settings_local import *  # noqa
 except ImportError:
     pass
