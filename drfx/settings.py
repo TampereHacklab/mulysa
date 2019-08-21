@@ -220,7 +220,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 # sms sending
 SMS = {
-    'ENABLED': os.environ.get('SMS_ENABLED', "False").lower() == "false",
+    'ENABLED': os.environ.get('SMS_ENABLED', 'False').lower() == 'true',
     'TWILIO_SID': os.environ.get('TWILIO_SID', ''),
     'TWILIO_TOKEN': os.environ.get('TWILIO_TOKEN', ''),
     'TWILIO_FROM': os.environ.get('TWILIO_FROM', ''),
