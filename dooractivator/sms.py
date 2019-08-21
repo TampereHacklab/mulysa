@@ -35,6 +35,37 @@ class SMSBase:
 
         return formatted
 
+    def build_activate_access_message(self, number, name, gate='B', auth='C', period='L', country='fi', **kwargs):
+        """
+        Build message for activating door access for a number
+
+        The format is for GSM Gate Control 1000 (thats what we have right now)
+
+        https://github.com/TampereHacklab/GSM-lock-system/blob/master/Gate_Control_1000_v3-13_EN_Manual_12-08-2013.pdf
+        """
+        msg = "*n={number},{name},{auth},{period},{gate}#".format(
+            number=self.toe164(number, country=country),
+            name=name,
+            gate=gate,
+            auth=auth,
+            period=period,
+        )
+        return msg
+
+    def build_deactivate_access_message(self, number, name, country='fi', **kwargs):
+        """
+        Build message for deactivating door access for a number
+
+        The format is for GSM Gate Control 1000 (thats what we have right now)
+
+        https://github.com/TampereHacklab/GSM-lock-system/blob/master/Gate_Control_1000_v3-13_EN_Manual_12-08-2013.pdf
+        """
+        msg = "*d={number}#".format(
+            number=self.toe164(number, country=country),
+            name=name,
+        )
+        return msg
+
     def initialize(self, **kwargs):
         """
         Implement in subclass. Initialize whatever you need to
