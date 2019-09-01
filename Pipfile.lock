@@ -61,10 +61,9 @@
         },
         "django-allauth": {
             "hashes": [
-                "sha256:4444434c2f43188e16e0a7732c3638e12787ca7e5032f69b6d30b2912f53809e"
+                "sha256:6a189fc4d3ee23596c3fd6e9f49c59b5b15618980118171a50675dd6a27cc589"
             ],
-            "index": "pypi",
-            "version": "==0.39.1"
+            "version": "==0.40.0"
         },
         "django-extensions": {
             "hashes": [
