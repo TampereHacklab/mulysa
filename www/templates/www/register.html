@@ -1,7 +1,8 @@
 {% extends "www/base.html" %}
+{% load i18n %}
 {% block content %}
 <h1>
-Join Tampere Hacklab
+    {% trans 'Apply membership to Tampere Hacklab' %}
 </h1>
 <form action="/www/register" method="post">
     {% csrf_token %}
@@ -9,10 +10,10 @@ Join Tampere Hacklab
         {{ userform.as_table }}
         {{ applicationform.as_table }}
     </table>
-    <h2>Services</h2>
+    <h2>{% trans 'Services' %}</h2>
     {% for service in memberservices %}
     <input type="checkbox" name="service-{{service.id}}" value="True"> {{ service.name }} {{ service.cost_string }} / {{ service.period_string }}<br/>
     {% endfor %}
-    <input type="submit" value="Register">
+    <input type="submit" value="{% trans 'Register' %}">
 </form>
 {% endblock %}

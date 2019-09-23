@@ -2,6 +2,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
                           UsersLog)
@@ -95,7 +96,7 @@ def applications(request):
 @login_required
 def userdetails(request, id):
     if not request.user.is_superuser and request.user.id != id:
-        return HttpResponseForbidden('Please login as this user or admin to see this')
+        return HttpResponseForbidden(_('Please login as this user or admin to see this'))
     userdetails = CustomUser.objects.get(id=id)
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('-date')

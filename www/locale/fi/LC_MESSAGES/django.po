@@ -1,0 +1,160 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-23 16:34+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Language: fi\n"
+"X-Source-Language: en\n"
+
+#: templates/registration/login.html:6 templates/registration/login.html:10
+#: templates/www/usertools.html:7
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+#: templates/www/base.html:10 templates/www/index.html:5
+msgid "Tampere Hacklab member services"
+msgstr "Tampere Hacklabin jäsenrekisteri"
+
+#: templates/www/base.html:11
+msgid "Front page"
+msgstr "Etusivu"
+
+#: templates/www/base.html:12 templates/www/register.html:17
+msgid "Register"
+msgstr "Hae jäsenyyttä"
+
+#: templates/www/base.html:13
+msgid "Reset password"
+msgstr "Salasanan nollaus"
+
+#: templates/www/base.html:15
+msgid "Users"
+msgstr "Käyttäjät"
+
+#: templates/www/base.html:16
+msgid "Member applications"
+msgstr "Jäsenhakemukset"
+
+#: templates/www/base.html:17
+msgid "Import"
+msgstr "Tiedon tuonti"
+
+#: templates/www/base.html:18
+msgid "Bank Ledger"
+msgstr "Tiliote"
+
+#: templates/www/base.html:28
+msgid ""
+"Web design by cos - help wanted! Make a pr at <a href=\"https://github.com/"
+"TampereHacklab/mulysa\">GitHub</a>"
+msgstr ""
+"Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
+"href=\"https://github.com/TampereHacklab/mulysa\">GitHubissa</a>"
+
+#: templates/www/index.html:7
+msgid "Welcome! Choose what to do next"
+msgstr "Tervetuloa! Miten voimme palvella?"
+
+#: templates/www/index.html:11
+msgid "Show my user information"
+msgstr "Näytä tietoni"
+
+#: templates/www/index.html:13
+msgid "Login to Mulysa"
+msgstr "Kirjaudu sisään"
+
+#: templates/www/index.html:14
+msgid "Apply membership in hacklab"
+msgstr "Hae hacklabin jäsenyyttä"
+
+#: templates/www/register.html:5
+msgid "Apply membership to Tampere Hacklab"
+msgstr "Hae hacklabin jäsenyyttä"
+
+#: templates/www/register.html:13
+msgid "Services"
+msgstr "Jäsenpalvelut"
+
+#: templates/www/thanks.html:5
+msgid "Registration successful!"
+msgstr "Hakemus vastaanotettu!"
+
+#: templates/www/user.html:5
+#, python-format
+msgid "User data for %(userdetails.first_name)s %(userdetails.last_name)s"
+msgstr "%(userdetails.first_name)s %(userdetails.last_name)sn käyttäjätiedot"
+
+#: templates/www/user.html:14
+msgid "Name"
+msgstr "Nimi"
+
+#: templates/www/user.html:17
+msgid "Email"
+msgstr "Sähköposti"
+
+#: templates/www/user.html:20
+msgid "Phone"
+msgstr "Puhelin"
+
+#: templates/www/user.html:23
+msgid "Reference number"
+msgstr "Viitenumero"
+
+#: templates/www/user.html:26
+msgid "Service subscriptions"
+msgstr "Jäsenpalvelut"
+
+#: templates/www/user.html:29
+#, python-format
+msgid "Paid until %(subscription.paid_until)s"
+msgstr "Maksettu %(subscription.paid_until)s asti"
+
+#: templates/www/user.html:29
+#, python-format
+msgid "last payment %(subscription.last_payment)s"
+msgstr "viimeisin maksu %(subscription.last_payment)s"
+
+#: templates/www/user.html:33
+msgid "Activity log"
+msgstr "Loki"
+
+#: templates/www/user.html:41
+msgid "Bank transactions"
+msgstr "Tilisiirrot"
+
+#: templates/www/usertools.html:5
+msgid "Logged in as"
+msgstr "Kirjauduttu sisään käyttäjänä"
+
+#: templates/www/usertools.html:5
+msgid "log out"
+msgstr "kirjaudu ulos"
+
+#: templates/www/usertools.html:13
+msgid "Language"
+msgstr "Kieli"
+
+#: templates/www/usertools.html:24
+msgid "Change"
+msgstr "Vaihda"
+
+#: views.py:99
+msgid "Please login as this user or admin to see this"
+msgstr "Kirjaudu adminina nähdäksesi tämän"
+
+#~ msgid "User data for"
+#~ msgstr "Tiedot käyttäjälle "

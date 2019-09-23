@@ -1,5 +1,6 @@
 #!/bin/bash
 set +x
+pipenv run django-admin compilemessages
 pipenv run python manage.py makemigrations
 
 echo "Applying database migrations"

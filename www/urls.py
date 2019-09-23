@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 
 from . import views
@@ -13,4 +13,5 @@ urlpatterns = [
     path('userdetails/<int:id>/', views.userdetails, name='userdetails'),
     path('updateuser/<int:id>/', views.updateuser, name='updateuser'),
     path('applications', views.applications, name='applications'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

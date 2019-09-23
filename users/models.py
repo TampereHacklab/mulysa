@@ -7,6 +7,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from drfx import settings as drfx_settings
+
 logger = logging.getLogger(__name__)
 
 def validate_mxid(value):
@@ -46,7 +48,7 @@ class CustomUserManager(BaseUserManager):
     def create_customuser(self, email, first_name, last_name, phone, reference_number,
                           birthday, municipality, nick):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('User must have an email address'))
 
         user = self.model(
             email=email,
@@ -126,11 +128,17 @@ class CustomUser(AbstractUser):
         max_length=255
     )
 
+    language = models.CharField(max_length=10,
+                                verbose_name=_('Language'),
+                                help_text=_('Language preferred by user'),
+                                choices=drfx_settings.LANGUAGES,
+                                default=drfx_settings.LANGUAGE_CODE)
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='User creation date',
-        help_text='Automatically set to now when user is create'
+        verbose_name=_('User creation date'),
+        help_text=_('Automatically set to now when user is create')
     )
 
     last_modified = models.DateTimeField(
@@ -261,7 +269,7 @@ class MemberService(models.Model):
     )
 
     def __str__(self):
-        return 'Member service ' + str(self.name)
+        return _('Member service') + ' ' + str(self.name)
 
     # Returns the cost of the service in human-readable string
     def cost_string(self):

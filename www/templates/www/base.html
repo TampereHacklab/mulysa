@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -5,15 +7,15 @@
     </head>
     <body>
         <center>
-        ^^^ Mulysa placeholder UI ^^^
-        | <a href="{% url 'index' %}">Front page</a> 
-        | <a href="{% url 'register' %}">Register</a> 
-        | <a href="../accounts/password_reset/">Reset password</a>
+                {% trans 'Tampere Hacklab member services' %}
+        | <a href="{% url 'index' %}">{% trans 'Front page' %}</a> 
+        | <a href="{% url 'register' %}">{% trans 'Register' %}</a> 
+        | <a href="../accounts/password_reset/">{% trans 'Reset password' %}</a>
         {% if user.is_staff %}
-        | <a href="{% url 'users' %}">Users</a> 
-        | <a href="{% url 'applications' %}">Member applications</a> 
-        | <a href="{% url 'dataimport' %}">Import</a>
-        | <a href="{% url 'ledger' %}">Bank ledger</a>
+        | <a href="{% url 'users' %}">{% trans 'Users' %}</a> 
+        | <a href="{% url 'applications' %}">{% trans 'Member applications' %}</a> 
+        | <a href="{% url 'dataimport' %}">{% trans 'Import' %}</a>
+        | <a href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a>
         {% endif %}
 
 {% include 'www/usertools.html' %}
@@ -23,7 +25,7 @@
         {% block content %}{% endblock content %}
         
         <p>
-            <center>Web design by cos - help wanted! Make a pr at <a href="https://github.com/TampereHacklab/mulysa">GitHub</a></center>
+            <center>{% trans 'Web design by cos - help wanted! Make a pr at <a href="https://github.com/TampereHacklab/mulysa">GitHub</a>' %} </center>
         </p>
     </body>
 </html>
