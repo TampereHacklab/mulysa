@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-23 16:34+0300\n"
+"POT-Creation-Date: 2019-09-24 15:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr ""
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
+#: templates/www/applications.html:5 templates/www/base.html:16
+msgid "Member applications"
+msgstr "Jäsenhakemukset"
+
 #: templates/www/base.html:10 templates/www/index.html:5
 msgid "Tampere Hacklab member services"
 msgstr "Tampere Hacklabin jäsenrekisteri"
@@ -33,7 +37,7 @@ msgstr "Tampere Hacklabin jäsenrekisteri"
 msgid "Front page"
 msgstr "Etusivu"
 
-#: templates/www/base.html:12 templates/www/register.html:17
+#: templates/www/base.html:12 templates/www/register.html:29
 msgid "Register"
 msgstr "Hae jäsenyyttä"
 
@@ -45,10 +49,6 @@ msgstr "Salasanan nollaus"
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: templates/www/base.html:16
-msgid "Member applications"
-msgstr "Jäsenhakemukset"
-
 #: templates/www/base.html:17
 msgid "Import"
 msgstr "Tiedon tuonti"
@@ -59,8 +59,8 @@ msgstr "Tiliote"
 
 #: templates/www/base.html:28
 msgid ""
-"Web design by cos - help wanted! Make a pr at <a href=\"https://github.com/"
-"TampereHacklab/mulysa\">GitHub</a>"
+"Web design by cos - help wanted! Make a pr at <a "
+"href=\"https://github.com/TampereHacklab/mulysa\">GitHub</a>"
 msgstr ""
 "Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
 "href=\"https://github.com/TampereHacklab/mulysa\">GitHubissa</a>"
@@ -85,7 +85,36 @@ msgstr "Hae hacklabin jäsenyyttä"
 msgid "Apply membership to Tampere Hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: templates/www/register.html:13
+#: templates/www/register.html:21
+#, python-format
+msgid ""
+"Terms for membership: I have read and agree to <a "
+"href=\\\"https://wiki.tampere.hacklab.fi/member_s_guide\\\" "
+"target=\"_blank\">members guide</a> and <a "
+"href=\\\"https://tampere.hacklab.fi/pages/yhdistyksen-s%%C3%%A4%%C3%%A4nn%%C3%%B6t/\\\" "
+"target=\"_blank\">association rules</a>."
+msgstr ""
+"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
+"href=\\\"https://wiki.tampere.hacklab.fi/jasenen_ohje\\\" "
+"target=\"_blank\">jäsenen ohjeen</a> ja <a "
+"href=\\\"https://tampere.hacklab.fi/pages/yhdistyksen-s%%C3%%A4%%C3%%A4nn%%C3%%B6t/\\\" "
+"target=\"_blank\">yhdistyksen säännöt</a>."
+
+#: templates/www/register.html:22
+msgid ""
+"I promise to clean up any mess I have made at the lab and take "
+"responsibility for safety of myself and the premises."
+msgstr ""
+"Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
+"omasta ja labin turvallisuudesta."
+
+#: templates/www/register.html:23
+msgid "I use only power tools and machines I have training and permission for."
+msgstr ""
+"Käytän vain sellaisia työkaluja laitteita joiden käyttöön olen saanut luvan "
+"ja tarvittavan koulutuksen."
+
+#: templates/www/register.html:25
 msgid "Services"
 msgstr "Jäsenpalvelut"
 
@@ -152,7 +181,21 @@ msgstr "Kieli"
 msgid "Change"
 msgstr "Vaihda"
 
-#: views.py:99
+#: views.py:35
+msgid "Please select at least one member service"
+msgstr "Valitse vähintään yksi jäsenpalvelu"
+
+#: views.py:115
+#, python-format
+msgid "Rejected member application from %(name)s"
+msgstr "Hylätty %(name)s:n jäsenhakemus"
+
+#: views.py:118
+#, python-format
+msgid "Accepted member application from %(name)s"
+msgstr "Hyväksytty %(name)sn jäsenhakemus"
+
+#: views.py:133
 msgid "Please login as this user or admin to see this"
 msgstr "Kirjaudu adminina nähdäksesi tämän"
 

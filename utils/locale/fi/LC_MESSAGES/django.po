@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-23 16:36+0300\n"
+"POT-Creation-Date: 2019-09-24 15:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,11 +32,11 @@ msgstr ""
 "Jäsenpalvelun %(servicename)s tila muuttui %(oldstate)s:sta %(newstate)s:ksi"
 
 #: businesslogic.py:105
-#, python-format
+#, fuzzy, python-format
 msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
-"Jäsenpalvelu %(servicename)s on nyt maksettu %(until)s asti tilisiirron "
-"%(transaction)s ansiosta"
+"%(servicename)s on nyt maksettu %(until)s asti tilisiirron %(transaction)s "
+"ansiosta"
 
 #: businesslogic.py:124
 #, python-format
@@ -46,3 +46,7 @@ msgid ""
 msgstr ""
 "%(servicename)s on nyt maksettu  %(until)s asti koska %(anotherservicename)s "
 "on maksettu"
+
+#: businesslogic.py:175
+msgid "Accepted as member"
+msgstr "Hyväksytty jäseneksi"

@@ -90,7 +90,8 @@ class CustomUser(AbstractUser):
     )
 
     nick = models.CharField(
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name=_('Nick'),
         help_text=_('Nickname you are known with on Internet'),
         max_length=255,
@@ -184,8 +185,11 @@ class CustomUser(AbstractUser):
         logger.info("User {}'s log: {}".format(logevent.user, message))
 
     def __str__(self):
-        return self.email
+        return self.first_name + " " + self.last_name
 
+def validate_agreement(value):
+    if not value:
+        raise ValidationError(_("You must agree to the terms"))
 
 """
 Extra fields for applying membership
@@ -202,10 +206,11 @@ class MembershipApplication(models.Model):
     agreement = models.BooleanField(
         blank=False,
         verbose_name=_('I agree to the terms presented'),
+        validators=[validate_agreement]
     )
 
     def __str__(self):
-        return 'Membership application for ' + str(self.user)
+        return _('Membership application for %(name)s') % { 'name': str(self.user) }
 
 
 """
@@ -384,9 +389,9 @@ class ServiceSubscription(models.Model):
     OVERDUE = 'OVERDUE'
 
     SERVICE_STATES = [
-        (ACTIVE, 'Active'),
-        (OVERDUE, 'Payment overdue'),
-        (SUSPENDED, 'Suspended'),
+        (ACTIVE, _('Active')),
+        (OVERDUE, _('Payment overdue')),
+        (SUSPENDED, _('Suspended')),
     ]
 
     state = models.CharField(
@@ -426,8 +431,7 @@ class ServiceSubscription(models.Model):
         return self.SERVICE_STATE_COLORS[self.state]
 
     def __str__(self):
-        return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' ' + self.user.last_name
-
+        return _('Service %(servicename)s for %(username)s') % { 'servicename': self.service.name, 'username': str(self.user) }
 
 """
 A text log message for user activities (status changes, payments, etc)

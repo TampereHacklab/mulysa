@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from django.utils.translation import gettext as _
-from users.models import BankTransaction, MemberService, ServiceSubscription
+from users.models import BankTransaction, MemberService, ServiceSubscription, CustomUser, MembershipApplication
 from django.utils import translation
 
 """
@@ -153,3 +153,31 @@ class BusinessLogic:
             subscription.state = ServiceSubscription.OVERDUE
             subscription.save()
             BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
+
+    """
+    Rejects a membership application and deletes the user
+    """
+    @staticmethod
+    def reject_application(application):
+        print('Rejecting app ', application)
+        # TODO: Send mail and any other notifications to user?
+        # Should delete the application
+        application.user.delete()
+
+    """
+    Accepts a membership application
+    """
+    @staticmethod
+    def accept_application(application):
+        print('Accepting app ', application)
+        # TODO: Send mail and any other notifications to user?
+        user = application.user
+        user.log(_('Accepted as member'))
+        # Move user's subscriptions to overdue state
+        for subscription in ServiceSubscription.objects.filter(user=user):
+            subscription.state = ServiceSubscription.OVERDUE
+            subscription.save()
+            BusinessLogic.servicesubscription_state_changed(subscription, ServiceSubscription.SUSPENDED, subscription.state)
+
+        application.delete()
+        BusinessLogic.updateuser(user)

@@ -13,5 +13,6 @@ urlpatterns = [
     path('userdetails/<int:id>/', views.userdetails, name='userdetails'),
     path('updateuser/<int:id>/', views.updateuser, name='updateuser'),
     path('applications', views.applications, name='applications'),
+    path('applications/<int:application_id>/<str:operation>', views.application_operation, name='application_operation'),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
