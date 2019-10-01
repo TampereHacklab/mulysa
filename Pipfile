@@ -1,9 +1,12 @@
 [[source]]
+
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+
 [dev-packages]
+
 pep8 = "*"
 flake8 = "*"
 pylint = "*"
@@ -15,12 +18,14 @@ isort = "*"
 rope = "*"
 python-coveralls = "*"
 
+
 [packages]
+
 django = "*"
 djangorestframework = "*"
 django-rest-auth = "*"
 django-allauth = "*"
-django-extensions = "==2.1.9"
+django-extensions = "==2.2.1"
 coreapi = "*"
 django-log-request-id = "*"
 django-filter = "*"
@@ -28,8 +33,12 @@ djangorestframework-filters = "*"
 twilio = "*"
 django-user-language-middleware = "*"
 
+
 [requires]
+
 python_version = "3.7"
 
+
 [pipenv]
+
 allow_prereleases = true
