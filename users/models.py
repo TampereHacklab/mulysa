@@ -64,14 +64,6 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class CustomUser(AbstractUser):
-    # Current membership plans available
-    MEMBER_ONLY = 'MO'
-    ACCESS_RIGHTS = 'AR'
-    MEMBERSHIP_PLAN_CHOICES = [
-        (MEMBER_ONLY, 'Membership only'),
-        (ACCESS_RIGHTS, 'Member with access rights'),
-    ]
-
     # django kinda expects username field to exists even if we don't use it
     username = models.CharField(
         max_length=30,
@@ -110,15 +102,6 @@ class CustomUser(AbstractUser):
         help_text=_('Matrix ID (@user:example.org)'),
         max_length=255,
         validators=[validate_mxid],
-    )
-
-    membership_plan = models.CharField(
-        blank=False,
-        verbose_name=_('Membership plan'),
-        help_text=_('Access right grants 24/7 access and costs more than regular membership'),
-        max_length=2,
-        choices=MEMBERSHIP_PLAN_CHOICES,
-        default=ACCESS_RIGHTS
     )
 
     birthday = models.DateField(

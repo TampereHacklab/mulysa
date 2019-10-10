@@ -57,10 +57,10 @@ class DataImport:
                     birthday=birthday,
                     municipality=fields[6],
                     nick=fields[7],
-                    phone=fields[8],
-                    membership_plan=membership_plan
+                    phone=fields[8]
                 )
                 newuser.log('User imported')
+                DataImport.setup_user_services(newuser, membership_plan)
                 imported = imported + 1
             except IntegrityError as err:
                 print('Integrity error:', str(err))
@@ -72,6 +72,10 @@ class DataImport:
                 failedrows.append(line + ' (' + str(err) + ')')
 
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
+
+# Used by importmembers(); sets up memberships to services for a new user.
+    def setup_user_services(user, membership_plan):
+        print('Setting up membership plan for', str(user))
 
     def importnordea(self, f):
         csv = f.read().decode('utf8')
