@@ -30,6 +30,15 @@ Most of this works around our "User" model which can do multiple things
   * Mulysa sends email with a confirmation link and information to the Member
   * If member uses the activation link within X days the member will be MarkedForDeletion and deleted after XX days
 
+# Start developing
+
+* clone the repo
+* install pipenv
+* pipenv shell
+* pipenv install --dev
+* ./manage.py loaddata memberservices
+* ./manage.py runserver
+
 # Member state changes will trigger things
 
 * State == active
