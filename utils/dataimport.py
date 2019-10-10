@@ -118,7 +118,7 @@ class DataImport:
         for line in lines[1:]:
             try:
                 if len(line) == 0 or line[0] != 'T':
-                    raise ParseError('Empty line or not stating with T')
+                    raise ParseError('Empty line or not starting with T')
                 data_type = int(line[1:3])
                 # Currently handle only type 10 (basic transaction data)
                 if data_type == 10:
