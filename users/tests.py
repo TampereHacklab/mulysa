@@ -8,6 +8,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from utils import referencenumber
+
 from . import models, signals
 
 
@@ -36,12 +38,13 @@ class UsersTests(APITestCase):
         u = models.CustomUser()
         u.email = 'test@example.com'
         u.birthday = datetime.datetime.now()
+        u.first_name = 'FirstName'
+        u.last_name = 'LastName'
         u.save()
 
         # check that we got a reference number automatically and it matches
-        # TODO: fix reference number test
-#        ref = referencenumber.generate(u.id*100)
-#        self.assertEqual(u.reference_number, ref, 'auto generated reference number matches')
+        ref = referencenumber.generate(u.id*100)
+        self.assertEqual(u.reference_number, ref, 'auto generated reference number matches')
 
         # check the the welcome email was sent and contains the reference number
         # TODO: fix email tests
@@ -51,6 +54,17 @@ class UsersTests(APITestCase):
         # for completenes sake
 #        self.assertEqual(u.email, u.get_short_name())
 #        self.assertEqual(u.email, u.natural_key())
+
+    def test_create_user_with_existing_ref(self):
+        u = models.CustomUser()
+        u.email = 'test@example.com'
+        u.birthday = datetime.datetime.now()
+        u.first_name = 'FirstName'
+        u.last_name = 'LastName'
+        u.reference_number = 1231234
+        u.save()
+
+        self.assertEqual(u.reference_number, 1231234, 'user already had ref number, didnt overwrite it')
 
     def test_signals(self):
         u = models.CustomUser()

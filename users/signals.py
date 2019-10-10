@@ -44,9 +44,23 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
         return
 
     if created:
-        logger.info('User created {}'.format(instance))
+        logger.info('User created: {}'.format(instance))
         create_user.send(instance.__class__, instance=instance)
-        logger.info('User creation done {}'.format(instance))
+        logger.info('User creation done: {}'.format(instance))
+
+
+@receiver(create_user)
+def add_reference_number(sender, instance: models.CustomUser, **kwargs):
+    """
+    Catch create_user and if the user does not have reference number then add it
+    """
+    if instance.reference_number is None:
+        instance.reference_number = referencenumber.generate(instance.id * 100)
+        logger.info('User: {} got newly generated reference number {}'.format(instance.id, instance.reference_number))
+        instance.save()
+    else:
+        logger.info('User: {} already has reference number {}'.format(instance.id, instance.reference_number))
+
 
 @receiver(post_save, sender=models.MembershipApplication)
 def application_creation(sender, instance: models.MembershipApplication, created, raw, **kwargs):
