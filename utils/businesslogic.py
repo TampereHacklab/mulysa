@@ -1,7 +1,10 @@
 from datetime import date, timedelta
-from django.utils.translation import gettext as _
-from users.models import BankTransaction, MemberService, ServiceSubscription, CustomUser, MembershipApplication
+
 from django.utils import translation
+from django.utils.translation import gettext as _
+
+from users.models import BankTransaction, MemberService, ServiceSubscription
+
 
 """
 Implements business logic for the membership services.
@@ -15,14 +18,14 @@ class BusinessLogic:
         print('New transaction', transaction)
         if transaction.user:
             translation.activate(transaction.user.language)
-            transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)} )
+            transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)})
             BusinessLogic.updateuser(transaction.user)
 
     @staticmethod
     def servicesubscription_state_changed(subscription, oldstate, newstate):
         translation.activate(subscription.user.language)
-        subscription.user.log(_('Service %(servicename)s state changed from %(oldstate)s to %(newstate)s') % { 'servicename': subscription.service.name,
-                                'oldstate': oldstate, 'newstate': newstate } )
+        subscription.user.log(_('Service %(servicename)s state changed from %(oldstate)s to %(newstate)s') % {'servicename': subscription.service.name,
+                                                                                                              'oldstate': oldstate, 'newstate': newstate})
 
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod
@@ -103,7 +106,8 @@ class BusinessLogic:
         transaction.save()
 
         servicesubscription.user.log(_('%(servicename)s is now paid until %(until)s due to %(transaction)s') % {'servicename': str(servicesubscription),
-                                        'until': str(servicesubscription.paid_until), 'transaction': str(transaction)})
+                                                                                                                'until': str(servicesubscription.paid_until),
+                                                                                                                'transaction': str(transaction)})
 
         # Todo: emit signals?
 
@@ -121,8 +125,10 @@ class BusinessLogic:
                     paid_servicesubscription.paid_until = transaction.date + extra_days
                     paid_servicesubscription.last_payment = transaction
                     paid_servicesubscription.save()
-                    servicesubscription.user.log(_('%(servicename)s is now paid until %(until)s due to %(anotherservicename)s was paid') % 
-                                                {'servicename': str(paid_servicesubscription), 'until': str(paid_servicesubscription.paid_until), 'anotherservicename': str(servicesubscription.service) } )
+                    servicesubscription.user.log(_('%(servicename)s is now paid until %(until)s due to %(anotherservicename)s was paid') %
+                                                 {'servicename': str(paid_servicesubscription),
+                                                  'until': str(paid_servicesubscription.paid_until),
+                                                  'anotherservicename': str(servicesubscription.service)})
 
                     BusinessLogic.check_servicesubscription_state(paid_servicesubscription)
 
