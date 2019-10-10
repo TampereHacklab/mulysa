@@ -1,8 +1,8 @@
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
 from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
@@ -11,6 +11,7 @@ from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationU
 
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
+
 
 def register(request):
     if request.method == 'POST':
@@ -33,7 +34,7 @@ def register(request):
 
         if userform.is_valid() and len(subscribed_services) == 0:
             messages.error(request, _('Please select at least one member service'))
-        
+
         if userform.is_valid() and applicationform.is_valid():
             new_user = userform.save(commit=False)
             new_application = applicationform.save(commit=False)
@@ -42,7 +43,7 @@ def register(request):
             new_application.save()
 
             for service in subscribed_services:
-                subscription = ServiceSubscription(user=new_user, 
+                subscription = ServiceSubscription(user=new_user,
                                                    service=service,
                                                    state=ServiceSubscription.SUSPENDED)
                 subscription.save()
@@ -112,10 +113,10 @@ def application_operation(request, application_id, operation):
     name = str(application.user)
     if operation == 'reject':
         BusinessLogic.reject_application(application)
-        messages.success(request, _('Rejected member application from %(name)s') % { 'name': name } )
+        messages.success(request, _('Rejected member application from %(name)s') % {'name': name})
     if operation == 'accept':
         BusinessLogic.accept_application(application)
-        messages.success(request, _('Accepted member application from %(name)s') % { 'name': name } )
+        messages.success(request, _('Accepted member application from %(name)s') % {'name': name})
 
     return applications(request)
 

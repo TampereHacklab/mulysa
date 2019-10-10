@@ -185,11 +185,12 @@ class CustomUser(AbstractUser):
         logger.info("User {}'s log: {}".format(logevent.user, message))
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return self.first_name + ' ' + self.last_name
 
 def validate_agreement(value):
     if not value:
-        raise ValidationError(_("You must agree to the terms"))
+        raise ValidationError(_('You must agree to the terms'))
+
 
 """
 Extra fields for applying membership
@@ -210,7 +211,7 @@ class MembershipApplication(models.Model):
     )
 
     def __str__(self):
-        return _('Membership application for %(name)s') % { 'name': str(self.user) }
+        return _('Membership application for %(name)s') % {'name': str(self.user)}
 
 
 """
@@ -431,7 +432,8 @@ class ServiceSubscription(models.Model):
         return self.SERVICE_STATE_COLORS[self.state]
 
     def __str__(self):
-        return _('Service %(servicename)s for %(username)s') % { 'servicename': self.service.name, 'username': str(self.user) }
+        return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}
+
 
 """
 A text log message for user activities (status changes, payments, etc)
