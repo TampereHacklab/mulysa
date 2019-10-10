@@ -132,8 +132,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'fi'
 
 LANGUAGES = [
-  ('fi', ('Suomi')),
-  ('en', ('English')),
+    ('fi', ('Suomi')),
+    ('en', ('English')),
 ]
 
 LOCALE_PATHS = (
