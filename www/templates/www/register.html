@@ -1,14 +1,31 @@
 {% extends "www/base.html" %}
+{% load i18n %}
 {% block content %}
 <h1>
-Register
+    {% trans 'Apply membership to Tampere Hacklab' %}
 </h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <form action="/www/register" method="post">
     {% csrf_token %}
     <table border="0">
         {{ userform.as_table }}
         {{ applicationform.as_table }}
     </table>
-    <input type="submit" value="Register">
+
+    {% trans 'Terms for membership: I have read and agree to <a href=\"https://wiki.tampere.hacklab.fi/member_s_guide\" target="_blank">members guide</a> and <a href=\"https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/\" target="_blank">association rules</a>.' %}
+    {% trans 'I promise to clean up any mess I have made at the lab and take responsibility for safety of myself and the premises.' %}
+    {% trans 'I use only power tools and machines I have training and permission for.' %}
+
+    <h2>{% trans 'Services' %}</h2>
+    {% for service in memberservices %}
+    <input type="checkbox" name="service-{{service.id}}" value="True"> {% trans service.name %} {{ service.cost_string }} / {{ service.period_string }}<br/>
+    {% endfor %}
+    <input type="submit" value="{% trans 'Register' %}">
 </form>
 {% endblock %}

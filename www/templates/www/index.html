@@ -1,7 +1,18 @@
 {% extends "www/base.html" %}
+{% load i18n %}
 {% block content %}
 <h1>
-Mulysa placeholder UI
+    {% trans 'Tampere Hacklab member services' %}
 </h1>
-This is a placeholder UI for testing Mulysa. Click links above to do stuff.
+{% trans 'Welcome! Choose what to do next' %}
+<p>
+<ul>
+{% if user.is_authenticated %}
+<li> <a href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a>
+{% else %}
+<li> <a href="{% url 'login' %}">{% trans 'Login to Mulysa' %}</a>
+<li> <a href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a>
+{% endif %}
+</ul>
+</p>
 {% endblock %}

@@ -7,6 +7,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from drfx import settings as drfx_settings
+
 logger = logging.getLogger(__name__)
 
 def validate_mxid(value):
@@ -21,7 +23,7 @@ def validate_mxid(value):
         )
 
 def validate_phone(value):
-    if len(value) < 3 or value[0] != '+':
+    if len(value) < 3 or value[0] != '+' or not value[1:].isnumeric():
         raise ValidationError(
             _('%(value)s is not a valid phone number. It must be in international format +35840123567'),
             params={'value': value},
@@ -44,9 +46,9 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_customuser(self, email, first_name, last_name, phone, reference_number,
-                          birthday, municipality, nick, membership_plan):
+                          birthday, municipality, nick):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('User must have an email address'))
 
         user = self.model(
             email=email,
@@ -56,8 +58,7 @@ class CustomUserManager(BaseUserManager):
             reference_number=reference_number,
             birthday=birthday,
             municipality=municipality,
-            nick=nick,
-            membership_plan=membership_plan
+            nick=nick
         )
 
         user.save(using=self.db)
@@ -89,7 +90,8 @@ class CustomUser(AbstractUser):
     )
 
     nick = models.CharField(
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name=_('Nick'),
         help_text=_('Nickname you are known with on Internet'),
         max_length=255,
@@ -127,11 +129,17 @@ class CustomUser(AbstractUser):
         max_length=255
     )
 
+    language = models.CharField(max_length=10,
+                                verbose_name=_('Language'),
+                                help_text=_('Language preferred by user'),
+                                choices=drfx_settings.LANGUAGES,
+                                default=drfx_settings.LANGUAGE_CODE)
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='User creation date',
-        help_text='Automatically set to now when user is create'
+        verbose_name=_('User creation date'),
+        help_text=_('Automatically set to now when user is create')
     )
 
     last_modified = models.DateTimeField(
@@ -177,7 +185,11 @@ class CustomUser(AbstractUser):
         logger.info("User {}'s log: {}".format(logevent.user, message))
 
     def __str__(self):
-        return self.email
+        return self.first_name + ' ' + self.last_name
+
+def validate_agreement(value):
+    if not value:
+        raise ValidationError(_('You must agree to the terms'))
 
 
 """
@@ -195,10 +207,11 @@ class MembershipApplication(models.Model):
     agreement = models.BooleanField(
         blank=False,
         verbose_name=_('I agree to the terms presented'),
+        validators=[validate_agreement]
     )
 
     def __str__(self):
-        return 'Membership application for ' + str(self.user)
+        return _('Membership application for %(name)s') % {'name': str(self.user)}
 
 
 """
@@ -262,18 +275,42 @@ class MemberService(models.Model):
     )
 
     def __str__(self):
-        return 'Member service ' + str(self.name)
+        return _('Member service') + ' ' + str(self.name)
+
+    # Returns the cost of the service in human-readable string
+    def cost_string(self):
+        cs = str(self.cost) + '€ '
+        if self.cost_min and self.cost_max:
+            cs = cs + '(' + str(self.cost_min) + '€ - ' + str(self.cost_max) + '€)'
+        return cs
+
+    # Returns the period (days per payment) for the service in human-readable string
+    def period_string(self):
+        if self.days_per_payment == 31:
+            return _('month')
+        if self.days_per_payment == 365:
+            return _('year')
+        return str(self.days_per_payment) + ' ' + _('days')
 
 
-"""
-Represents a incoming money transaction on the club's account.
-
-Mapped to user instance if possible.
-"""
 class BankTransaction(models.Model):
+    """
+    Represents a incoming money transaction on the club's account.
+
+    Mapped to user instance if possible.
+    """
 
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+
+    # Unique archival reference number that all transactions have
+    archival_reference = models.CharField(
+        blank=False,
+        null=False,
+        unique=True,
+        verbose_name=_('Archival reference'),
+        max_length=18,
+    )
     date = models.DateField(
         verbose_name=_('Date'),
         help_text=_('Date of the transaction'),
@@ -302,6 +339,27 @@ class BankTransaction(models.Model):
         verbose_name=_('Reference number of transaction'),
         help_text=_('Reference number is set by transaction sender and should normally always be used.'),
     )
+    transaction_id = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name=_('Transaction id'),
+        help_text=_('Bank transaction id'),
+        max_length=512,
+    )
+    code = models.CharField(
+        blank=True,
+        null=True,
+        verbose_name=_('Code'),
+        help_text=_('Code'),
+        max_length=512,
+    )
+
+    has_been_used = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text=_('True, if this transaction has already been used to pay for service.')
+    )
 
     def __str__(self):
         return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
@@ -311,10 +369,10 @@ class BankTransaction(models.Model):
             + ' at ' + str(self.date)
 
 
-"""
-Represents user subscribing to a paid service.
-"""
 class ServiceSubscription(models.Model):
+    """
+    Represents user subscribing to a paid service.
+    """
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service = models.ForeignKey(MemberService, on_delete=models.CASCADE)
 
@@ -332,9 +390,9 @@ class ServiceSubscription(models.Model):
     OVERDUE = 'OVERDUE'
 
     SERVICE_STATES = [
-        (ACTIVE, 'Active'),
-        (OVERDUE, 'Payment overdue'),
-        (SUSPENDED, 'Suspended'),
+        (ACTIVE, _('Active')),
+        (OVERDUE, _('Payment overdue')),
+        (SUSPENDED, _('Suspended')),
     ]
 
     state = models.CharField(
@@ -374,7 +432,7 @@ class ServiceSubscription(models.Model):
         return self.SERVICE_STATE_COLORS[self.state]
 
     def __str__(self):
-        return 'Service ' + self.service.name + ' for ' + self.user.first_name + ' ' + self.user.last_name
+        return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}
 
 
 """

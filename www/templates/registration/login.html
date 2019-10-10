@@ -1,0 +1,13 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+
+{% block content %}
+<p>
+<h2>{% trans 'Log in' %}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans 'Log in' %}</button>
+</form>
+</p>
+{% endblock content %}

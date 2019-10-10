@@ -1,11 +1,12 @@
 {% extends "www/base.html" %}
+{% load i18n %}
 {% block content %}
 <h2>
 User list
 </h2>
 <table width="90%" border="1">
 <tr>
-<th>Name</th><th>Email</th><th>Phone</th><th>Reference</th><th>Plan</th>
+<th>Name</th><th>Email</th><th>Phone</th><th>Reference</th>
 {% for service in services %}
 <th>{{ service.name }}</th>
 {% endfor %}
@@ -21,7 +22,6 @@ User list
 <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
 <td>{{ user.phone }}</td>
 <td>{{ user.reference_number }}</td>
-<td>{{ user.membership_plan }}</td>
 {% for service in services %}
 <td>
         {% for subscription in user.servicesubscriptions %}

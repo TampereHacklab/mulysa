@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     # filters
     'django_filters',
@@ -65,11 +66,13 @@ MIDDLEWARE = [
     'log_request_id.middleware.RequestIDMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'user_language_middleware.UserLanguageMiddleware',
 ]
 
 ROOT_URLCONF = 'drfx.urls'
@@ -126,7 +129,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fi'
+
+LANGUAGES = [
+    ('fi', ('Suomi')),
+    ('en', ('English')),
+]
+
+LOCALE_PATHS = (
+    'locale',
+)
 
 TIME_ZONE = 'UTC'
 
@@ -164,7 +176,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
-
 
 # tell all auth to use email as username
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -214,3 +225,26 @@ logging.config.dictConfig({
         },
     },
 })
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# sms sending
+SMS = {
+    'ENABLED': os.environ.get('SMS_ENABLED', 'False').lower() == 'true',
+    'TWILIO_SID': os.environ.get('TWILIO_SID', ''),
+    'TWILIO_TOKEN': os.environ.get('TWILIO_TOKEN', ''),
+    'TWILIO_FROM': os.environ.get('TWILIO_FROM', ''),
+    'TO_NUMBER': os.environ.get('SMS_TO', ''),
+}
+
+
+# Import just to get in the translation context
+# from utils import businesslogic
+
+
+# Load non-default settings from settings_local.py if it exists
+try:
+    from .settings_local import *  # noqa
+except ImportError:
+    pass

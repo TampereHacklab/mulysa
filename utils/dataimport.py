@@ -1,31 +1,44 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import datetime
 
 from django.db.utils import IntegrityError
 
-from users.models import BankTransaction, CustomUser
+from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
 
+from utils.businesslogic import BusinessLogic
+
+
+class ParseError(Exception):
+    """Raised when the data has invalid value"""
+    pass
 
 class DataImport:
-    def importmembers(self, f):
+
+    @staticmethod
+    def importmembers(f):
         csv = f.read().decode('utf8')
         lines = csv.split('\n')
         imported = exists = error = 0
         failedrows = []
+
+        service_mo = MemberService.objects.get(name='Vuosimaksu')
+        service_ar = MemberService.objects.get(name='Tilankäyttöoikeus')
 
         # Ignore header line
         for line in lines[1:]:
             try:
                 line = line.replace('"', '')
                 fields = line.split(',')
-                print(fields)
                 if len(fields) < 13:
-                    raise ValueError('Not enough fields on this row')
+                    raise ParseError('Not enough fields on this row')
                 name = fields[3].split(' ')
                 first_name = ''
                 last_name = ''
 
                 if len(name) < 2:
-                    raise ValueError('No proper name supplied: ' + str(name))
+                    raise ParseError('No proper name supplied: ' + str(name))
 
                 first_name = name[0]
                 last_name = name[len(name)-1]
@@ -49,6 +62,11 @@ class DataImport:
                 if fields[2] == '1':
                     membership_plan = 'AR'
 
+                phone = fields[8]
+                # Fix missing international prefix
+                if len(phone) > 0 and phone[0] == '0':
+                    phone = '+358' + phone[1:]
+
                 newuser = CustomUser.objects.create_customuser(
                     reference_number=fields[1],
                     first_name=first_name,
@@ -57,14 +75,32 @@ class DataImport:
                     birthday=birthday,
                     municipality=fields[6],
                     nick=fields[7],
-                    phone=fields[8]
+                    phone=phone
                 )
                 newuser.log('User imported')
-                DataImport.setup_user_services(newuser, membership_plan)
+
+                # Setup member service subscriptions
+
+                ServiceSubscription.objects.create(
+                    user=newuser,
+                    service=service_mo,
+                    state=ServiceSubscription.OVERDUE
+                )
+                if membership_plan == 'AR':
+                    ServiceSubscription.objects.create(
+                        user=newuser,
+                        service=service_ar,
+                        state=ServiceSubscription.OVERDUE
+                    )
+
                 imported = imported + 1
             except IntegrityError as err:
                 print('Integrity error:', str(err))
                 exists = exists + 1
+                failedrows.append(line + ' (' + str(err) + ')')
+            except ParseError as err:
+                print('Parse error: ', str(err))
+                error = error + 1
                 failedrows.append(line + ' (' + str(err) + ')')
             except ValueError as err:
                 print('Value error: ', str(err))
@@ -73,62 +109,71 @@ class DataImport:
 
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
 
-# Used by importmembers(); sets up memberships to services for a new user.
-    def setup_user_services(user, membership_plan):
-        print('Setting up membership plan for', str(user))
-
-    def importnordea(self, f):
-        csv = f.read().decode('utf8')
-        lines = csv.split('\n')
+    @staticmethod
+    def import_tito(f):
+        tito = f.read().decode('utf8')
+        lines = tito.split('\n')
         imported = exists = error = 0
         failedrows = []
-
-        # Ignore header line
         for line in lines[1:]:
             try:
-                line = line.replace('"', '')
-                fields = line.split(',')
-                print(fields)
-                if len(fields) < 4:
-                    raise ValueError('Not enough fields on this row')
-                transaction_date = None
-                try:
-                    transaction_date = datetime.datetime.fromisoformat(fields[0])
-                except ValueError as err:
-                    print('Unable to parse ISO date: {}, error: {}', fields[0], str(err))
+                if len(line) == 0 or line[0] != 'T':
+                    raise ParseError('Empty line or not stating with T')
+                data_type = int(line[1:3])
+                # Currently handle only type 10 (basic transaction data)
+                if data_type == 10:
+                    if int(line[3:6]) != 188:
+                        raise ParseError('Length should be 188')
+                    transaction_id = line[6:12]
+                    archival_reference = line[12:30].strip()
+                    if(len(archival_reference) < 18):
+                        raise ParseError('Archival reference number invalid: ' + archival_reference)
+                    transaction_date = datetime.datetime.strptime(line[30:36], '%y%m%d')
+                    transaction_type = int(line[48])
+                    if transaction_type < 1 or transaction_type > 4:
+                        raise ParseError('Transaction type should be between 1 and 4, not ' + str(transaction_type))
+                    code = line[49:52]
+                    message = line[52:87].strip()
+                    if message == 'Viitemaksu':
+                        message = None
+                    amount = int(line[87:106]) / 100
+                    peer = line[108:143]
+                    peer = peer.replace('[', 'Ä')
+                    peer = peer.replace(']', 'Å')
+                    peer = peer.replace('\\', 'Ö')
+                    reference = line[159:179].strip()
+                    if len(reference) > 0:
+                        reference = int(reference)
+                    else:
+                        reference = None
 
-                transaction_sender = fields[1]
-                # Fix encoding
-                transaction_sender = transaction_sender.replace('[', 'Ä')
-                transaction_sender = transaction_sender.replace(']', 'Å')
-                transaction_sender = transaction_sender.replace('\\\\', 'Ö')
+                    # Done parsing, add the transaction
 
-                transaction_user = None
-                reference = int(fields[4])
-                if reference > 0:
                     try:
-                        transaction_user = CustomUser.objects.get(reference_number=reference)
-                    except CustomUser.DoesNotExist:
-                        pass
+                        BankTransaction.objects.get(archival_reference=archival_reference)
+                        exists = exists + 1
+                    except BankTransaction.DoesNotExist:
+                        transaction_user = None
+                        if reference and reference > 0:
+                            try:
+                                transaction_user = CustomUser.objects.get(reference_number=reference)
+                            except CustomUser.DoesNotExist:
+                                pass
 
-                BankTransaction.objects.create(
-                    user=transaction_user,
-                    date=transaction_date,
-                    amount=fields[3],
-                    reference_number=reference,
-                    sender=transaction_sender
-                )
-                if transaction_user:
-                    transaction_user.log('Bank transaction of ' + str(fields[3]) + '€ dated ' + str(transaction_date))
-
-                imported = imported + 1
-            except IntegrityError as err:
-                print('Integrity error: ', str(err))
-                exists = exists + 1
-                failedrows.append(line + ' (' + str(err) + ')')
-            except ValueError as err:
-                print('Value error: ', str(err))
+                        transaction = BankTransaction.objects.create(
+                            user=transaction_user,
+                            date=transaction_date,
+                            amount=amount,
+                            reference_number=reference,
+                            sender=peer,
+                            archival_reference=archival_reference,
+                            transaction_id=transaction_id,
+                            code=code,
+                        )
+                        BusinessLogic.new_transaction(transaction)
+                        imported = imported + 1
+            except ParseError as err:
+                print('Error parsing data: ', str(err))
                 error = error + 1
                 failedrows.append(line + ' (' + str(err) + ')')
-
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}

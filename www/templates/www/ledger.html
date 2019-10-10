@@ -1,0 +1,33 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<h2>
+Bank ledger
+</h2>
+<a href="{% url 'ledger' %}">All</a> |
+<a href="{% url 'ledger' %}?filter=unknown">Unknown user</a> |
+<a href="{% url 'ledger' %}?filter=paid">Paid from account</a> |
+<a href="{% url 'ledger' %}?filter=unused">Unused payments</a> |
+
+<table width="90%" border="1">
+<tr>
+<th>Date</th><th>Amount</th><th>Peer</th><th>Reference</th><th>Message</th><th>Has been used</th><th>User</th>
+</tr>
+{% for transaction in transactions %}
+<tr>
+    <td>{{ transaction.date }}</td>
+    <td>{{ transaction.amount }}</td>
+    <td>{{ transaction.sender }}</td>
+    <td>{{ transaction.reference_number }}</td>
+    <td>{{ transaction.message }}</td>
+    <td>{{ transaction.has_been_used }}</td>
+    <td>
+        {% if transaction.user %}
+        <a href="{% url 'userdetails' transaction.user.id %}">
+        {{ transaction.user.first_name }} {{ transaction.user.last_name }}
+        </a>
+        {% endif %}
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
