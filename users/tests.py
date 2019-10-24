@@ -1,6 +1,6 @@
 import datetime
 
-# from django.core import mail
+from django.core import mail
 from django.db.utils import IntegrityError
 from django.dispatch import receiver
 from django.urls import reverse
@@ -46,14 +46,13 @@ class UsersTests(APITestCase):
         ref = referencenumber.generate(u.id*100)
         self.assertEqual(u.reference_number, ref, 'auto generated reference number matches')
 
-        # check the the welcome email was sent and contains the reference number
-        # TODO: fix email tests
-#        self.assertEqual(len(mail.outbox), 1)
-#        self.assertIn(str(ref), mail.outbox[0].body, 'reference number found in welcome email')
+        # check that the reset password email was sent
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('accounts/reset', mail.outbox[0].body, 'link to reset found in email')
 
         # for completenes sake
-#        self.assertEqual(u.email, u.get_short_name())
-#        self.assertEqual(u.email, u.natural_key())
+        self.assertEqual(u.email, u.get_short_name())
+        self.assertEqual(u.email, u.natural_key())
 
     def test_create_user_with_existing_ref(self):
         u = models.CustomUser()

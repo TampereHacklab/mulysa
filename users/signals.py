@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
@@ -48,6 +49,16 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
         create_user.send(instance.__class__, instance=instance)
         logger.info('User creation done: {}'.format(instance))
 
+@receiver(create_user)
+def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
+    """
+    When user is created send the reset password email
+    """
+    form = PasswordResetForm({'email': instance.email})
+    from_email = getattr(settings, 'NOREPLY_FROM_ADDRESS', 'noreply@tampere.hacklab.fi')
+    template = 'registration/password_reset_email.html'
+    form.is_valid()
+    form.save(from_email=from_email, email_template_name=template)
 
 @receiver(create_user)
 def add_reference_number(sender, instance: models.CustomUser, **kwargs):
