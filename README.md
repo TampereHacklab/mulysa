@@ -8,13 +8,13 @@ asylym[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
-Tampere hacklab has been groving and member management has become pretty labor intensive.
-This project tries to automate the borin parts by automating communication with the member,
-managing door access and managing ldap account creation.
+Tampere Hacklab has been groving and member management has become pretty labor intensive.
+This project tries to automate the boring parts by automating the communication with members,
+managing the door access and managing the LDAP account creation.
 
 Most of this works around our "User" model which can do multiple things
 
-* Member can register as a new member
+* Member can be registered as a new member
   * Member has to accept terms and conditions
   * Member will fill in their basic information like name, email, phone and address
   * Mulysa will generate a member id and bank reference number for this member
@@ -36,6 +36,8 @@ Most of this works around our "User" model which can do multiple things
 * install pipenv
 * pipenv shell
 * pipenv install --dev
+* ./manage.py makemigrations
+* ./manage.py migrate
 * ./manage.py loaddata memberservices
 * ./manage.py runserver
 
