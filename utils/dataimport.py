@@ -57,6 +57,9 @@ class DataImport:
                 except ValueError as err:
                     print('Unable to parse - separated date: {}, error: {}', fields[5], str(err))
 
+                if not birthday:
+                    birthday = datetime.date(day=1, month=1, year=1970)
+
                 # Todo: how to really interpret these
                 membership_plan = 'MO'
                 if fields[2] == '1':
@@ -118,7 +121,7 @@ class DataImport:
         for line in lines[1:]:
             try:
                 if len(line) == 0 or line[0] != 'T':
-                    raise ParseError('Empty line or not stating with T')
+                    raise ParseError('Empty line or not starting with T')
                 data_type = int(line[1:3])
                 # Currently handle only type 10 (basic transaction data)
                 if data_type == 10:
