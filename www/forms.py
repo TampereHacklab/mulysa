@@ -18,6 +18,6 @@ class RegistrationApplicationForm(forms.ModelForm):
 class FileImportForm(forms.Form):
     filetype = forms.ChoiceField(label='File type',
                                  choices=[
-                                     ('M', 'Members (csv)'), ('TITO', 'Transactions (Nordea TITO)')
+                                     ('TITO', 'Transactions (Nordea TITO)'), ('M', 'Members (csv)')
                                  ])
     file = forms.FileField()
