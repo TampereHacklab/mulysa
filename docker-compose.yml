@@ -20,16 +20,18 @@ services:
       - db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`my.tampere.hacklab.fi`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myhttpchallenge"
+      - "traefik.http.services.my-app.loadbalancer.server.port=8000"
+      - "traefik.http.routers.mulysa.rule=Host(`my.tampere.hacklab.fi`)"
+      - "traefik.http.routers.mulysa.entrypoints=websecure"
+      - "traefik.http.routers.mulysa.tls.certresolver=myhttpchallenge"
+      
 
   proxy:
     image: "traefik:v2.0.0-rc3"
     restart: always
     container_name: proxy
     command:
-      #- "--log.level=DEBUG"
+      - "--log.level=DEBUG"
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
