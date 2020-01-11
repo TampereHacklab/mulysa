@@ -32,7 +32,7 @@ django-filter = "*"
 djangorestframework-filters = "*"
 twilio = "*"
 django-user-language-middleware = "*"
-
+pymysql = "*"
 
 [requires]
 
