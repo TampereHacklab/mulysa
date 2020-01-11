@@ -159,7 +159,7 @@ class CustomUser(AbstractUser):
     )
 
     # this will be autofilled in post_save
-    reference_number = models.IntegerField(
+    reference_number = models.BigIntegerField(
         blank=True,
         null=True,
         verbose_name=_('Reference number of membership fee payments'),
