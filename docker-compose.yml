@@ -3,9 +3,10 @@ version: '3'
 services:
   db:
     image: mariadb:10.4
+    container_name: db
     restart: always
     env_file:
-      - db-environment.env
+      - mulysa-environment.env
     volumes:
       - "./data/db:/var/lib/mysql"
 
@@ -26,6 +27,7 @@ services:
   proxy:
     image: "traefik:v2.0.0-rc3"
     restart: always
+    container_name: proxy
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
