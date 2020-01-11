@@ -1,9 +1,6 @@
 # local settings
 drfx/settings_local.py
 
-# migrations for now
-*/migrations/00*.py
-
 # editors
 .vscode
 
