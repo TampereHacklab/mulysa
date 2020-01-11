@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8'
-BIC = 'FI47 1146 3001 1288 31'
-IBAN = 'NDEAFIHH'
-NAME = 'Tampere Hacklab ry'
+ACCOUNT_BIC = 'FI12 3456 789'
+ACCOUNT_IBAN = 'IBANCODE'
+ACCOUNT_NAME = 'Account name'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -159,7 +159,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 SITE_ID = 1
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-NOREPLY_FROM_ADDRESS = 'noreply@tampere.hacklab.fi'
+NOREPLY_FROM_ADDRESS = 'noreply@mulysa.host.invalid'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
