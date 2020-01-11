@@ -1,10 +1,49 @@
-version: '3' 
+version: '3'
 
-services: 
-  mulysa: 
-    build: . 
+services:
+  db:
+    image: mariadb:10.4
+    restart: always
+    env_file:
+      - db-environment.env
+    volumes:
+      - "./data/db:/var/lib/mysql"
+
+  mulysa:
+    build: .
+    restart: always
     container_name: mulysa
-    ports:
-     - "8000:8000"
     env_file:
       - mulysa-environment.env
+    depends_on:
+      - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`my.tampere.hacklab.fi`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myhttpchallenge"
+
+  proxy:
+    image: "traefik:v2.0.0-rc3"
+    restart: always
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
+      - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
+      #- "--certificatesresolvers.myhttpchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myhttpchallenge.acme.email=postmaster@tampere.hacklab.fi"
+      - "--certificatesresolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json"
+    volumes:
+      - "./data/letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    depends_on:
+      - mulysa
