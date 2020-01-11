@@ -17,3 +17,4 @@ drfx/settings_local.py
 
 # databases etc dev data
 *.sqlite3
+/data
