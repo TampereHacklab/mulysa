@@ -156,7 +156,7 @@ class DataImport:
                     try:
                         BankTransaction.objects.get(archival_reference=archival_reference)
                         exists = exists + 1
-                    except (BankTransaction.DoesNotExist, DataError):
+                    except BankTransaction.DoesNotExist:
                         transaction_user = None
                         if reference and reference > 0:
                             try:

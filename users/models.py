@@ -333,7 +333,7 @@ class BankTransaction(models.Model):
         help_text=_('Sender of the transaction, if known.'),
         max_length=512,
     )
-    reference_number = models.IntegerField(
+    reference_number = models.BigIntegerField(
         blank=True,
         null=True,
         verbose_name=_('Reference number of transaction'),
