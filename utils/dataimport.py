@@ -119,6 +119,7 @@ class DataImport:
         imported = exists = error = 0
         failedrows = []
         for line in lines[1:]:
+            print('import_tito - Processing line:', str(line))
             try:
                 if len(line) == 0 or line[0] != 'T':
                     raise ParseError('Empty line or not starting with T')
@@ -155,7 +156,7 @@ class DataImport:
                     try:
                         BankTransaction.objects.get(archival_reference=archival_reference)
                         exists = exists + 1
-                    except BankTransaction.DoesNotExist:
+                    except (BankTransaction.DoesNotExist, DataError):
                         transaction_user = None
                         if reference and reference > 0:
                             try:
