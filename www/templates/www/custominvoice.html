@@ -1,0 +1,35 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>
+{% trans 'Custom invoices'%}
+</h1>
+<p>
+{% trans 'Note: You can always delete invoice if you choose not to pay it'%}
+</p>
+<form action="{% url 'custominvoice' %}" method="post" enctype=multipart/form-data>
+    {% csrf_token %}
+    <table border="0">
+    {{ form.as_table }}
+    </table>
+    <input type="submit" name="preview" value={% trans 'Preview..'%}>
+{% if days %}
+    <br/>
+    {% blocktrans %}This will pay {{days}} days of service {{servicename}} and costs {{amount}}€{% endblocktrans %}
+    <br/>
+    <input type="submit" name="create" value={% trans 'Create invoice' %}>
+{% endif %}
+</form>
+<h2>{% trans 'Pending invoices'%}</h2>
+<ul>
+    {% for invoice in unpaid_invoices %}
+    <li>{{ invoice }} - <a href="{% url 'custominvoice_action' action='delete' invoiceid=invoice.id %}">{% trans 'delete' %}</a></li>
+    {% endfor %}
+</ul>
+<h2>{% trans 'Paid invoices'%}</h2>
+<ul>
+    {% for invoice in paid_invoices %}
+    <li>{{ invoice }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

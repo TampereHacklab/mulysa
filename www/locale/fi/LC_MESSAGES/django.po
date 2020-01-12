@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 19:41+0200\n"
+"POT-Creation-Date: 2020-01-12 22:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
+
+#: forms.py:26
+msgid "Service"
+msgstr "Jäsenpalvelu"
+
+#: forms.py:26
+msgid "Choose service.."
+msgstr "Valitse palvelu.."
+
+#: forms.py:27
+msgid "How many units of service you want"
+msgstr "Montako kertaa haluat maksaa palvelun"
 
 #: templates/registration/login.html:6 templates/registration/login.html:10
 #: templates/www/usertools.html:7
@@ -65,6 +77,41 @@ msgstr ""
 "Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
 "href=\"https://github.com/TampereHacklab/mulysa\">GitHubissa</a>"
 
+#: templates/www/custominvoice.html:5
+msgid "Custom invoices"
+msgstr "Vapaamuotoiset laskut"
+
+#: templates/www/custominvoice.html:8
+msgid "Note: You can always delete invoice if you choose not to pay it"
+msgstr "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
+
+#: templates/www/custominvoice.html:15
+msgid "Preview.."
+msgstr "Esikatsele lasku.."
+
+#: templates/www/custominvoice.html:18
+#, python-format
+msgid ""
+"This will pay %(days)s days of service %(servicename)s and costs %(amount)s€"
+msgstr ""
+"Tämä maksaa %(days)s päivää palvelua %(servicename)s ja maksaa %(amount)s€"
+
+#: templates/www/custominvoice.html:20
+msgid "Create invoice"
+msgstr "Luo lasku"
+
+#: templates/www/custominvoice.html:23
+msgid "Pending invoices"
+msgstr "Maksamattomat laskut"
+
+#: templates/www/custominvoice.html:26
+msgid "delete"
+msgstr "poista"
+
+#: templates/www/custominvoice.html:29
+msgid "Paid invoices"
+msgstr "Maksetut laskut"
+
 #: templates/www/index.html:7
 msgid "Welcome! Choose what to do next"
 msgstr "Tervetuloa! Miten voimme palvella?"
@@ -73,11 +120,15 @@ msgstr "Tervetuloa! Miten voimme palvella?"
 msgid "Show my user information"
 msgstr "Näytä tietoni"
 
-#: templates/www/index.html:13
+#: templates/www/index.html:12
+msgid "Create and view custom invoices"
+msgstr "Luo ja katsele vapaamuotoisia laskuja"
+
+#: templates/www/index.html:14
 msgid "Login to Mulysa"
 msgstr "Kirjaudu sisään"
 
-#: templates/www/index.html:14
+#: templates/www/index.html:15
 msgid "Apply membership in hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
@@ -145,10 +196,12 @@ msgid "Service subscriptions"
 msgstr "Jäsenpalvelut"
 
 #: templates/www/user.html:29
+#, python-format
 msgid "Paid until %(paiduntil)s"
 msgstr "Maksettu %(paiduntil)s asti"
 
 #: templates/www/user.html:29
+#, python-format
 msgid "last payment %(lastpayment)s"
 msgstr "viimeisin maksu %(lastpayment)s"
 
@@ -176,20 +229,20 @@ msgstr "Kieli"
 msgid "Change"
 msgstr "Vaihda"
 
-#: views.py:36
+#: views.py:34
 msgid "Please select at least one member service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: views.py:116
+#: views.py:114
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: views.py:119
+#: views.py:117
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: views.py:134
+#: views.py:132
 msgid "Please login as this user or admin to see this"
 msgstr "Kirjaudu adminina nähdäksesi tämän"

@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.utils import translation
 from django.utils.translation import gettext as _
 
-from users.models import BankTransaction, MemberService, ServiceSubscription
+from users.models import BankTransaction, MemberService, ServiceSubscription, CustomInvoice
 
 
 """
@@ -16,10 +16,14 @@ class BusinessLogic:
     @staticmethod
     def new_transaction(transaction):
         print('New transaction', transaction)
+
+        BusinessLogic.check_transaction_pays_custominvoice(transaction)
+
         if transaction.user:
             translation.activate(transaction.user.language)
             transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)})
             BusinessLogic.updateuser(transaction.user)
+
 
     @staticmethod
     def servicesubscription_state_changed(subscription, oldstate, newstate):
@@ -30,6 +34,16 @@ class BusinessLogic:
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod
     def updateuser(user):
+        # Check for custom invoices..
+        invoices = CustomInvoice.objects.filter(user=user, payment_transaction__isnull=True)
+        for invoice in invoices:
+            try:
+                transaction = BankTransaction.objects.get(reference_number=invoice.reference_number, has_been_used=False)
+                BusinessLogic.check_transaction_pays_custominvoice(transaction)
+            except BankTransaction.DoesNotExist:
+                pass
+        
+        # Update user's servicesubscriptions
         servicesubscriptions = ServiceSubscription.objects.filter(user=user)
 
         print('Updating user data for', user)
@@ -37,6 +51,29 @@ class BusinessLogic:
             print('Examining', subscription)
             BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
             BusinessLogic.check_servicesubscription_state(subscription)
+        
+
+    @staticmethod
+    def check_transaction_pays_custominvoice(transaction):
+        invoices = CustomInvoice.objects.filter(reference_number=transaction.reference_number, payment_transaction__isnull=True)
+
+        for invoice in invoices:
+            if transaction.amount >= invoice.amount:
+                try:
+                    print('Transaction', transaction, 'pays invoice', invoice)
+                    subscription = ServiceSubscription.objects.get(user=invoice.user, id=invoice.subscription.id)
+                    subscription.paid_until = subscription.paid_until + timedelta(days=invoice.days)
+                    invoice.payment_transaction = transaction
+                    transaction.has_been_used = True
+                    transaction.user = invoice.user
+                    transaction.save()
+                    invoice.save()
+                    subscription.save()
+                    transaction.user.log(f'Paid {invoice.days} days of {subscription.service.name} with transaction {transaction}')
+                except ServiceSubscription.DoesNotExist:
+                    print('Transaction would pay for invoice but user has no servicesubscription??')
+            else:
+                print('Transaction', transaction, 'insufficient for invoice', invoice)
 
     # Updates a single subscription status for given user (used by updateuser)
     @staticmethod

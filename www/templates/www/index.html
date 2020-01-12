@@ -9,6 +9,7 @@
 <ul>
 {% if user.is_authenticated %}
 <li> <a href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a>
+<li> <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
 {% else %}
 <li> <a href="{% url 'login' %}">{% trans 'Login to Mulysa' %}</a>
 <li> <a href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a>

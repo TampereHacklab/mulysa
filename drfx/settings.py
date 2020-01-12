@@ -16,6 +16,8 @@ ACCOUNT_BIC = 'FI12 3456 789'
 ACCOUNT_IBAN = 'IBANCODE'
 ACCOUNT_NAME = 'Account name'
 
+CUSTOM_INVOICE_REFERENCE_BASE = 10000
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
