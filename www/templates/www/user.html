@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 <h1>
-    {% blocktrans %}User data for {{ userdetails.first_name }} {{ userdetails.last_name }}{% endblocktrans %}
+    {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
 </h1>
 {% if user.is_staff %}
 <p>
@@ -26,7 +26,7 @@
 <h2>{% trans 'Service subscriptions' %}</h2>
 <ul>
     {% for subscription in userdetails.servicesubscriptions %}
-    <li>{{ subscription.service.name }} -  <span style="background-color: {{ subscription.statecolor }}">{{ subscription.state }}</span> - {% blocktrans %}Paid until {{ subscription.paid_until }}{% endblocktrans %} - {% blocktrans %}last payment {{ subscription.last_payment }}{% endblocktrans %}</li>
+    <li>{{ subscription.service.name }} -  <span style="background-color: {{ subscription.statecolor }}">{{ subscription.state }}</span> - {% blocktrans with paiduntil=subscription.paid_until %}Paid until {{ paiduntil }}{% endblocktrans %} - {% blocktrans with lastpayment=subscription.last_payment %}last payment {{ lastpayment }}{% endblocktrans %}</li>
     {% endfor %}
 </ul>
 

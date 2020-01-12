@@ -41,6 +41,14 @@ Most of this works around our "User" model which can do multiple things
 * ./manage.py loaddata memberservices
 * ./manage.py runserver
 
+## To update localizations
+
+* django-admin makemessages
+* (edit .po files)
+* django-admin compilemessages
+
+Push only .po files to git, not .mo's!
+
 # Member state changes will trigger things
 
 * State == active
