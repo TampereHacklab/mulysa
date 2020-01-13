@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.utils import translation
 from django.utils.translation import gettext as _
 
-from users.models import BankTransaction, MemberService, ServiceSubscription, CustomInvoice
+from users.models import BankTransaction, CustomInvoice, MemberService, ServiceSubscription
 
 
 """
@@ -24,7 +24,6 @@ class BusinessLogic:
             transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)})
             BusinessLogic.updateuser(transaction.user)
 
-
     @staticmethod
     def servicesubscription_state_changed(subscription, oldstate, newstate):
         translation.activate(subscription.user.language)
@@ -42,7 +41,7 @@ class BusinessLogic:
                 BusinessLogic.check_transaction_pays_custominvoice(transaction)
             except BankTransaction.DoesNotExist:
                 pass
-        
+
         # Update user's servicesubscriptions
         servicesubscriptions = ServiceSubscription.objects.filter(user=user)
 
@@ -51,7 +50,6 @@ class BusinessLogic:
             print('Examining', subscription)
             BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
             BusinessLogic.check_servicesubscription_state(subscription)
-        
 
     @staticmethod
     def check_transaction_pays_custominvoice(transaction):

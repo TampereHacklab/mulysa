@@ -5,14 +5,15 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
-from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
-                          UsersLog, CustomInvoice)
-from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm, CustomInvoiceForm
 from drfx import settings
+from users.models import (BankTransaction, CustomInvoice, CustomUser, MemberService, MembershipApplication,
+                          ServiceSubscription, UsersLog)
+from www.forms import CustomInvoiceForm, FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
+from utils import referencenumber
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
-from utils import referencenumber
+
 
 def register(request):
     if request.method == 'POST':
@@ -146,7 +147,7 @@ def custominvoice(request):
 
     if request.method == 'POST':
         form = CustomInvoiceForm(request.POST)
-        form.fields['service'].queryset=ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
 
         if form.is_valid():
             count = int(form.cleaned_data['count'])
@@ -162,12 +163,23 @@ def custominvoice(request):
             if 'create' in request.POST:
                 invoice = CustomInvoice(user=request.user, subscription=subscription, amount=amount, days=days)
                 invoice.save()
-                invoice.reference_number=referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id)
+                invoice.reference_number = referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id)
                 invoice.save()
     else:
         form = CustomInvoiceForm()
-        form.fields['service'].queryset=ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
-    return render(request, 'www/custominvoice.html', {'form': form, 'paid_invoices': paid_invoices, 'unpaid_invoices': unpaid_invoices, 'days': days, 'amount': amount, 'servicename': servicename })
+        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+    return render(
+        request,
+        'www/custominvoice.html',
+        {
+            'form': form,
+            'paid_invoices': paid_invoices,
+            'unpaid_invoices': unpaid_invoices,
+            'days': days,
+            'amount': amount,
+            'servicename': servicename,
+        },
+    )
 
 @login_required
 def custominvoice_action(request, action, invoiceid):

@@ -457,8 +457,8 @@ class CustomInvoice(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     subscription = models.ForeignKey(ServiceSubscription, on_delete=models.CASCADE)
     days = models.IntegerField(
-        blank=False, 
-        null=False, 
+        blank=False,
+        null=False,
         verbose_name=_('How many days of service this invoice pays'),
         help_text=_('For example value 14 with access right service pays two weeks of access.'),
     )
@@ -482,11 +482,12 @@ class CustomInvoice(models.Model):
         blank=True,
         null=True
     )
+
     def __str__(self):
         return _('Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - %(amount)s€, reference: %(reference)s') % {
-            'days': self.days, 
-            'servicename': self.subscription.service.name, 
-            'username': str(self.user), 
-            'amount': self.amount, 
+            'days': self.days,
+            'servicename': self.subscription.service.name,
+            'username': str(self.user),
+            'amount': self.amount,
             'reference': self.reference_number
-            }
+        }
