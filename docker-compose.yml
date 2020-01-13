@@ -8,7 +8,7 @@ services:
     env_file:
       - mulysa-environment.env
     volumes:
-      - "./data/db:/var/lib/mysql"
+      - "./data/db:/var/lib/mysql:z"
 
   mulysa:
     build: .
@@ -20,11 +20,21 @@ services:
       - db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.my-app.loadbalancer.server.port=8000"
+      # our service is named mulysa and it is on port 8000
+      - "traefik.http.services.mulysa.loadbalancer.server.port=8000"
+      # router listens only on this host
       - "traefik.http.routers.mulysa.rule=Host(`my.tampere.hacklab.fi`)"
+      # listen on websecure entrypoint
       - "traefik.http.routers.mulysa.entrypoints=websecure"
+      # use le for tls
       - "traefik.http.routers.mulysa.tls.certresolver=myhttpchallenge"
-      - "traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https"
+
+      # defined middleware for redirects
+      - "traefik.http.middlewares.mulysa-redirect-web-secure.redirectscheme.scheme=https"
+      # listen on web also and use the middlware to do the redirect
+      - "traefik.http.routers.mulysa-redir.rule=host(`my.tampere.hacklab.fi`)"
+      - "traefik.http.routers.mulysa-redir.entrypoints=web"
+      - "traefik.http.routers.mulysa-redir.middlewares=mulysa-redirect-web-secure"
 
   proxy:
     image: "traefik:v2.0.0-rc3"
@@ -35,15 +45,17 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      # two entrypoints, web and websecure
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      # define lets encrypt tls resolver
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
       #- "--certificatesresolvers.myhttpchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.myhttpchallenge.acme.email=postmaster@tampere.hacklab.fi"
       - "--certificatesresolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json"
     volumes:
-      - "./data/letsencrypt:/letsencrypt"
+      - "./data/letsencrypt:/letsencrypt:z"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     ports:
       - "80:80"
