@@ -353,7 +353,6 @@ class BankTransaction(models.Model):
         help_text=_('Code'),
         max_length=512,
     )
-
     has_been_used = models.BooleanField(
         blank=False,
         null=False,
@@ -362,11 +361,11 @@ class BankTransaction(models.Model):
     )
 
     def __str__(self):
-        return 'Bank transaction for ' + (self.user.email if self.user else 'unknown user') \
-            + ' from ' + self.sender \
-            + ' ' + str(self.amount) + '€, reference ' + str(self.reference_number) \
-            + (', message ' + self.message if self.message else '') \
-            + ' at ' + str(self.date)
+        return f'Bank transaction for {self.user.email or "unknown user"}' \
+            + f' from {self.sender}' \
+            + f' {self.amount}€, reference {self.reference_number}' \
+            + f', message {self.message or "(none)"}' \
+            + f' at {self.date or "(no date)"}'
 
 
 class ServiceSubscription(models.Model):
@@ -450,3 +449,45 @@ class UsersLog(models.Model):
         verbose_name=_('Message'),
         max_length=1024,
     )
+
+class CustomInvoice(models.Model):
+    """
+    Single invoice that can be used to pay for N units of service
+    """
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    subscription = models.ForeignKey(ServiceSubscription, on_delete=models.CASCADE)
+    days = models.IntegerField(
+        blank=False,
+        null=False,
+        verbose_name=_('How many days of service this invoice pays'),
+        help_text=_('For example value 14 with access right service pays two weeks of access.'),
+    )
+    reference_number = models.BigIntegerField(
+        blank=True,
+        null=True,
+        unique=True,
+        verbose_name=_('Reference number for paying invoice'),
+        help_text=_('Reference number is set by transaction sender and must match this.'),
+    )
+    amount = models.DecimalField(
+        verbose_name=_('Amount'),
+        help_text=_('Minimum amount of money to satisfy this invoice.'),
+        max_digits=6,
+        decimal_places=2
+    )
+    # Points to the payment, if this invoice has been paid.
+    payment_transaction = models.ForeignKey(
+        BankTransaction,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return _('Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - %(amount)s€, reference: %(reference)s') % {
+            'days': self.days,
+            'servicename': self.subscription.service.name,
+            'username': str(self.user),
+            'amount': self.amount,
+            'reference': self.reference_number
+        }

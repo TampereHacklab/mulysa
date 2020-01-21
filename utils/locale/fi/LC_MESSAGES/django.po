@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-24 15:02+0300\n"
+"POT-Creation-Date: 2020-01-12 22:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,25 +20,25 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: businesslogic.py:18
+#: businesslogic.py:24
 #, python-format
 msgid "Bank transaction of %(amount)s€ dated %(date)s"
 msgstr "Tilisiirto %(amount)s€ päiväyksellä %(date)s"
 
-#: businesslogic.py:24
+#: businesslogic.py:31
 #, python-format
 msgid "Service %(servicename)s state changed from %(oldstate)s to %(newstate)s"
 msgstr ""
 "Jäsenpalvelun %(servicename)s tila muuttui %(oldstate)s:sta %(newstate)s:ksi"
 
-#: businesslogic.py:105
+#: businesslogic.py:145
 #, fuzzy, python-format
 msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
 "%(servicename)s on nyt maksettu %(until)s asti tilisiirron %(transaction)s "
 "ansiosta"
 
-#: businesslogic.py:124
+#: businesslogic.py:165
 #, python-format
 msgid ""
 "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s "
@@ -47,6 +47,6 @@ msgstr ""
 "%(servicename)s on nyt maksettu  %(until)s asti koska %(anotherservicename)s "
 "on maksettu"
 
-#: businesslogic.py:175
+#: businesslogic.py:218
 msgid "Accepted as member"
 msgstr "Hyväksytty jäseneksi"

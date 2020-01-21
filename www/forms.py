@@ -1,6 +1,8 @@
 from django import forms
+from django.utils.translation import gettext as _
 
 from users import models
+from users.models import ServiceSubscription
 
 
 class RegistrationUserForm(forms.ModelForm):
@@ -21,3 +23,7 @@ class FileImportForm(forms.Form):
                                      ('TITO', 'Transactions (Nordea TITO)'), ('M', 'Members (csv)')
                                  ])
     file = forms.FileField()
+
+class CustomInvoiceForm(forms.Form):
+    service = forms.ModelChoiceField(label=_(u'Service'), queryset=ServiceSubscription.objects.none(), empty_label=_(u'Choose service..'))
+    count = forms.IntegerField(label=_(u'How many units of service you want'), min_value=1, max_value=666)

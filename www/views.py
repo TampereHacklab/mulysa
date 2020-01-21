@@ -5,10 +5,12 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
-from users.models import (BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription,
-                          UsersLog)
-from www.forms import FileImportForm, RegistrationApplicationForm, RegistrationUserForm
+from drfx import settings
+from users.models import (BankTransaction, CustomInvoice, CustomUser, MemberService, MembershipApplication,
+                          ServiceSubscription, UsersLog)
+from www.forms import CustomInvoiceForm, FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
+from utils import referencenumber
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
 
@@ -21,12 +23,9 @@ def register(request):
         memberservices = MemberService.objects.all()
         subscribed_services = []
         for service in memberservices:
-            print('service', service)
             if 'service-' + str(service.id) in request.POST:
                 subscribed_services.append(service)
-                print('service selected!')
                 if service.pays_also_service:
-                    print('pays also ', service.pays_also_service)
                     subscribed_services.append(service.pays_also_service)
 
         # Convert to set for unique items
@@ -137,6 +136,62 @@ def userdetails(request, id):
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('-date')
     userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('-date')
     return render(request, 'www/user.html', {'userdetails': userdetails})
+
+@login_required
+def custominvoice(request):
+    days = 0
+    amount = 0
+    servicename = ''
+    paid_invoices = CustomInvoice.objects.filter(user=request.user, payment_transaction__isnull=False)
+    unpaid_invoices = CustomInvoice.objects.filter(user=request.user, payment_transaction__isnull=True)
+
+    if request.method == 'POST':
+        form = CustomInvoiceForm(request.POST)
+        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+
+        if form.is_valid():
+            count = int(form.cleaned_data['count'])
+            if count <= 0:
+                raise Exception('Invalid count, should never happen!')
+
+            service_subscription_id = int(request.POST['service'])
+            subscription = ServiceSubscription.objects.get(id=service_subscription_id)
+            days = subscription.service.days_per_payment * count
+            amount = subscription.service.cost * count
+            servicename = subscription.service.name
+
+            if 'create' in request.POST:
+                invoice = CustomInvoice(user=request.user, subscription=subscription, amount=amount, days=days)
+                invoice.save()
+                invoice.reference_number = referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id)
+                invoice.save()
+    else:
+        form = CustomInvoiceForm()
+        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+    return render(
+        request,
+        'www/custominvoice.html',
+        {
+            'form': form,
+            'paid_invoices': paid_invoices,
+            'unpaid_invoices': unpaid_invoices,
+            'days': days,
+            'amount': amount,
+            'servicename': servicename,
+        },
+    )
+
+@login_required
+def custominvoice_action(request, action, invoiceid):
+    # Todo: action is always delete
+    invoice = CustomInvoice.objects.get(user=request.user, id=invoiceid)
+    if invoice:
+        if invoice.payment_transaction:
+            print('Woot, custom invoice already paid, so wont delete!')
+        else:
+            invoice.delete()
+
+    return custominvoice(request)
 
 @staff_member_required
 def updateuser(request, id):
