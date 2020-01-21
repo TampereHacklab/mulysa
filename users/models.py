@@ -361,11 +361,11 @@ class BankTransaction(models.Model):
     )
 
     def __str__(self):
-        return f'Bank transaction for {self.user.email if self.user else "unknown user"}' \
+        return f'Bank transaction for {self.user.email or "unknown user"}' \
             + f' from {self.sender}' \
             + f' {self.amount}€, reference {self.reference_number}' \
-            + f', message {self.message if self.message else ""}' \
-            + f' at {self.date if self.date else ""}'
+            + f', message {self.message or "(none)"}' \
+            + f' at {self.date or "(no date)"}'
 
 
 class ServiceSubscription(models.Model):

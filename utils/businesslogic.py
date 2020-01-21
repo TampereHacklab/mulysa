@@ -67,7 +67,7 @@ class BusinessLogic:
                     transaction.save()
                     invoice.save()
                     subscription.save()
-                    transaction.user.log(f'Paid {invoice.days} days of {subscription.service.name} with transaction {transaction}')
+                    transaction.user.log(f'Paid {invoice.days} days of {subscription.service.name}, ending at {subscription.paid_until} with transaction {transaction}')
                 except ServiceSubscription.DoesNotExist:
                     print('Transaction would pay for invoice but user has no servicesubscription??')
             else:
