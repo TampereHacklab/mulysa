@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-
+from drfx import settings
 from django.utils import translation
 from django.utils.translation import gettext as _
 
@@ -16,11 +16,13 @@ class BusinessLogic:
     @staticmethod
     def new_transaction(transaction):
         print('New transaction', transaction)
+        # TODO: Handle user detection here!
+        if transaction.user:
+            translation.activate(transaction.user.language)
 
         BusinessLogic.check_transaction_pays_custominvoice(transaction)
 
         if transaction.user:
-            translation.activate(transaction.user.language)
             transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)})
             BusinessLogic.updateuser(transaction.user)
 
@@ -42,14 +44,17 @@ class BusinessLogic:
             except BankTransaction.DoesNotExist:
                 pass
 
-        # Update user's servicesubscriptions
-        servicesubscriptions = ServiceSubscription.objects.filter(user=user)
+        # Now we assume the transaction is done to user's default account
+        defaultservice = MemberService.objects.get(id=settings.DEFAULT_ACCOUNT_SERVICE)
 
-        print('Updating user data for', user)
-        for subscription in servicesubscriptions:
-            print('Examining', subscription)
-            BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
-            BusinessLogic.check_servicesubscription_state(subscription)
+        # Update user's servicesubscriptions
+        servicesubscriptions = ServiceSubscription.objects.filter(user=user, service=defaultservice)
+
+        if len(servicesubscriptions == 1):
+            for subscription in servicesubscriptions:
+                print('Examining default subscription', subscription)
+                BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
+                BusinessLogic.check_servicesubscription_state(subscription)
 
     @staticmethod
     def check_transaction_pays_custominvoice(transaction):
@@ -67,7 +72,10 @@ class BusinessLogic:
                     transaction.save()
                     invoice.save()
                     subscription.save()
-                    transaction.user.log(f'Paid {invoice.days} days of {subscription.service.name}, ending at {subscription.paid_until} with transaction {transaction}')
+                    transaction.user.log(_('Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s' % {'days': invoice.days, 
+                                                                                                                                     'name': subscription.service.name, 
+                                                                                                                                     'until': subscription.paid_until, 
+                                                                                                                                     'transaction': transaction}))
                 except ServiceSubscription.DoesNotExist:
                     print('Transaction would pay for invoice but user has no servicesubscription??')
             else:
@@ -101,8 +109,6 @@ class BusinessLogic:
     @staticmethod
     def transaction_pays_service(transaction, service):
         if service.cost_min and transaction.amount < service.cost_min:
-            return False
-        if service.cost_max and transaction.amount > service.cost_max:
             return False
         if not service.cost_min and transaction.amount < service.cost:
             return False
@@ -143,8 +149,6 @@ class BusinessLogic:
         servicesubscription.user.log(_('%(servicename)s is now paid until %(until)s due to %(transaction)s') % {'servicename': str(servicesubscription),
                                                                                                                 'until': str(servicesubscription.paid_until),
                                                                                                                 'transaction': str(transaction)})
-
-        # Todo: emit signals?
 
         # Handle case where this service also pays for another service
         if servicesubscription.service.pays_also_service:
@@ -190,7 +194,7 @@ class BusinessLogic:
         if subscription.state == ServiceSubscription.ACTIVE \
                 and subscription.paid_until \
                 and subscription.paid_until < date.today():
-            print(str(subscription) + ' payment overdue so changing state to OVERDUE')
+            print(f'{subscription} payment overdue so changing state to OVERDUE')
             subscription.state = ServiceSubscription.OVERDUE
             subscription.save()
             BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
