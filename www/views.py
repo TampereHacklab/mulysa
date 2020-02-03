@@ -6,8 +6,15 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
 
 from drfx import settings
-from users.models import (BankTransaction, CustomInvoice, CustomUser, MemberService, MembershipApplication,
-                          ServiceSubscription, UsersLog)
+from users.models import (
+    BankTransaction,
+    CustomInvoice,
+    CustomUser,
+    MemberService,
+    MembershipApplication,
+    ServiceSubscription,
+    UsersLog,
+)
 from www.forms import CustomInvoiceForm, FileImportForm, RegistrationApplicationForm, RegistrationUserForm
 
 from utils import referencenumber
