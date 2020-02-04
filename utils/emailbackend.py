@@ -1,5 +1,6 @@
-import django.core.mail.backends.smtp
 import logging
+
+import django.core.mail.backends.smtp
 
 logger = logging.getLogger(__name__)
 
