@@ -1,9 +1,10 @@
 from datetime import date, timedelta
-from drfx import settings
+
 from django.utils import translation
 from django.utils.translation import gettext as _
 
-from users.models import BankTransaction, CustomInvoice, MemberService, ServiceSubscription, CustomUser
+from drfx import settings
+from users.models import BankTransaction, CustomInvoice, CustomUser, MemberService, ServiceSubscription
 
 
 """
@@ -79,9 +80,9 @@ class BusinessLogic:
                     transaction.save()
                     invoice.save()
                     subscription.save()
-                    transaction.user.log(_('Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s' % {'days': invoice.days, 
-                                                                                                                                     'name': subscription.service.name, 
-                                                                                                                                     'until': subscription.paid_until, 
+                    transaction.user.log(_('Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s' % {'days': invoice.days,
+                                                                                                                                     'name': subscription.service.name,
+                                                                                                                                     'until': subscription.paid_until,
                                                                                                                                      'transaction': transaction}))
                 except ServiceSubscription.DoesNotExist:
                     print('Transaction would pay for invoice but user has no servicesubscription??')
