@@ -157,15 +157,7 @@ class DataImport:
                         BankTransaction.objects.get(archival_reference=archival_reference)
                         exists = exists + 1
                     except BankTransaction.DoesNotExist:
-                        transaction_user = None
-                        if reference and reference > 0:
-                            try:
-                                transaction_user = CustomUser.objects.get(reference_number=reference)
-                            except CustomUser.DoesNotExist:
-                                pass
-
                         transaction = BankTransaction.objects.create(
-                            user=transaction_user,
                             date=transaction_date,
                             amount=amount,
                             reference_number=reference,

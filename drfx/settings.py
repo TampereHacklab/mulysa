@@ -15,6 +15,8 @@ SECRET_KEY = 'qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8'
 ACCOUNT_BIC = 'FI12 3456 789'
 ACCOUNT_IBAN = 'IBANCODE'
 ACCOUNT_NAME = 'Account name'
+# The service ID that is paid by payments to user's personal account
+DEFAULT_ACCOUNT_SERVICE = 2
 
 CUSTOM_INVOICE_REFERENCE_BASE = 10000
 
