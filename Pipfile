@@ -1,12 +1,9 @@
 [[source]]
-
 name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-
 [dev-packages]
-
 pep8 = "*"
 flake8 = "*"
 pylint = "*"
@@ -17,10 +14,9 @@ tox = "*"
 isort = "*"
 rope = "*"
 python-coveralls = "*"
-
+black = "*"
 
 [packages]
-
 django = "*"
 djangorestframework = "*"
 django-rest-auth = "*"
@@ -35,10 +31,7 @@ django-user-language-middleware = "*"
 mysqlclient = "*"
 
 [requires]
-
 python_version = "3.7"
 
-
 [pipenv]
-
 allow_prereleases = true

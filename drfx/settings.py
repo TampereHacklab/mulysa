@@ -222,6 +222,11 @@ logging.config.dictConfig({
             'handlers': ['console', ],
             'propagate': False,
         },
+        'utils': {
+            'level': LOGLEVEL,
+            'handlers': ['console', ],
+            'propagate': False,
+        },
         'django.server': {
             'handlers': ['console', ],
             'level': 'INFO',
