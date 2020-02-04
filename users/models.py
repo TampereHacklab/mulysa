@@ -361,7 +361,7 @@ class BankTransaction(models.Model):
     )
 
     def __str__(self):
-        return f'Bank transaction for {self.user.email or "unknown user"}' \
+        return f'Bank transaction for {(self.user and self.user.email) or "unknown user"}' \
             + f' from {self.sender}' \
             + f' {self.amount}€, reference {self.reference_number}' \
             + f', message {self.message or "(none)"}' \

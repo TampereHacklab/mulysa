@@ -3,7 +3,7 @@ from drfx import settings
 from django.utils import translation
 from django.utils.translation import gettext as _
 
-from users.models import BankTransaction, CustomInvoice, MemberService, ServiceSubscription
+from users.models import BankTransaction, CustomInvoice, MemberService, ServiceSubscription, CustomUser
 
 
 """
@@ -16,7 +16,14 @@ class BusinessLogic:
     @staticmethod
     def new_transaction(transaction):
         print('New transaction', transaction)
-        # TODO: Handle user detection here!
+        transaction_user = None
+        if transaction.reference_number and transaction.reference_number > 0:
+            try:
+                transaction_user = CustomUser.objects.get(reference_number=transaction.reference_number)
+                transaction.user = transaction_user
+                transaction.save()
+            except CustomUser.DoesNotExist:
+                pass
         if transaction.user:
             translation.activate(transaction.user.language)
 
@@ -50,7 +57,7 @@ class BusinessLogic:
         # Update user's servicesubscriptions
         servicesubscriptions = ServiceSubscription.objects.filter(user=user, service=defaultservice)
 
-        if len(servicesubscriptions == 1):
+        if len(servicesubscriptions) == 1:
             for subscription in servicesubscriptions:
                 print('Examining default subscription', subscription)
                 BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
