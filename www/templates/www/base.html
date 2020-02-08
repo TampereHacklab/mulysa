@@ -1,31 +1,32 @@
 {% load i18n %}
 
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Mulysa</title>
-    </head>
-    <body>
-        <center>
-                {% trans 'Tampere Hacklab member services' %}
-        | <a href="{% url 'index' %}">{% trans 'Front page' %}</a>
-        | <a href="{% url 'register' %}">{% trans 'Register' %}</a>
-        | <a href="{% url 'password_reset' %}">{% trans 'Reset password' %}</a>
-        {% if user.is_staff %}
-        | <a href="{% url 'users' %}">{% trans 'Users' %}</a>
-        | <a href="{% url 'applications' %}">{% trans 'Member applications' %}</a>
-        | <a href="{% url 'dataimport' %}">{% trans 'Import' %}</a>
-        | <a href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a>
-        {% endif %}
-
-{% include 'www/usertools.html' %}
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mulysa</title>
+  </head>
+  <body>
+    <center>
+      {% trans 'Tampere Hacklab member services' %} |
+      <a href="{% url 'index' %}">{% trans 'Front page' %}</a> |
+      <a href="{% url 'register' %}">{% trans 'Register' %}</a> |
+      <a href="{% url 'password_reset' %}">{% trans 'Reset password' %}</a> {%
+      if user.is_staff %} |
+      <a href="{% url 'users' %}">{% trans 'Users' %}</a> |
+      <a href="{% url 'applications' %}">{% trans 'Member applications' %}</a> |
+      <a href="{% url 'dataimport' %}">{% trans 'Import' %}</a> |
+      <a href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a>
+      {% endif %} {% include 'www/usertools.html' %}
     </center>
-        <br/>
+    <br />
 
-        {% block content %}{% endblock content %}
+    {% block content %}{% endblock content %}
 
-        <p>
-            <center>{% trans 'Web design by cos - help wanted! Make a pr at <a href="https://github.com/TampereHacklab/mulysa">GitHub</a>' %} </center>
-        </p>
-    </body>
+    <p>
+      <center>
+        {% trans 'Web design by cos - help wanted! Make a pr at
+        <a href="https://github.com/TampereHacklab/mulysa">GitHub</a>' %}
+      </center>
+    </p>
+  </body>
 </html>
