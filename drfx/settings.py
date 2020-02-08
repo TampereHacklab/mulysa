@@ -25,9 +25,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*', ]
 
+# External urls, like links to members guide and rules
+ASSOCIATION_RULES_URL = "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
+MEMBERS_GUIDE_URL = "https://wiki.tampere.hacklab.fi/member_s_guide"
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -92,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'www.context_processors.external_urls'
             ],
         },
     },
