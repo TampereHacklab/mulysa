@@ -1,6 +1,9 @@
 # local settings
 drfx/settings_local.py
 
+# static files will be collected on startup
+/static
+
 # editors
 .vscode
 

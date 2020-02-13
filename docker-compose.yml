@@ -10,6 +10,13 @@ services:
     volumes:
       - "./data/db:/var/lib/mysql:z"
 
+  nginx:
+
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    depends_on:
+      - mulysa
+
   mulysa:
     build: .
     restart: always
@@ -18,6 +25,8 @@ services:
       - mulysa-environment.env
     depends_on:
       - db
+    volumes:
+      - static_files:/code/static/
     labels:
       - "traefik.enable=true"
       # our service is named mulysa and it is on port 8000
@@ -63,3 +72,6 @@ services:
       - "8080:8080"
     depends_on:
       - mulysa
+
+volumes:
+  static_files:
