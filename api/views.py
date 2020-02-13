@@ -55,7 +55,7 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         number = inserializer.validated_data.get("payload")
         number = normalize_number(number)
-        qs = CustomUser.objects.filter(phone__endswith=number)
+        qs = CustomUser.objects.filter(phone=number)
 
         # nothing found, 404
         if qs.count() == 0:
