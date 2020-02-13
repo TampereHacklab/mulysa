@@ -1,3 +1,107 @@
-# from django.shortcuts import render
+import logging
 
-# Create your views here.
+from api.serializers import AccessDataSerializer, UserAccessSerializer
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.throttling import AnonRateThrottle
+from rest_framework_tracking.mixins import LoggingMixin
+from users.models import CustomUser
+
+from utils.phonenumber import normalize_number
+
+logger = logging.getLogger(__name__)
+
+
+class VerySlowThrottle(AnonRateThrottle):
+    """
+    Throttle for access views
+    """
+
+    rate = "5/minute"
+
+
+class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
+    """
+    Access checker api
+
+    Currently only implements phone
+
+    Also throws erros for all default actions TODO: there is probably a cleaner way to do this
+    """
+
+    throttle_classes = [VerySlowThrottle]
+    permission_classes = []
+
+    def get_serializer_class(self):
+        pass
+
+    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
+    def phone(self, request, format=None):
+        """
+        Check if the phone number is allowed to access and return some user data
+        to caller.
+
+        call with something like this
+        http POST http://127.0.0.1:8000/api/v1/access/phone/ deviceid=asdf payload=0440431918
+
+        returns 200 ok with some user data if everything is fine and 4XX for other situations
+        """
+        inserializer = AccessDataSerializer(data=request.data)
+        inserializer.is_valid(raise_exception=True)
+
+        # phone number comes in payload, but it is in a wrong format
+        # the number will most probably start with 00 instead of +
+
+        number = inserializer.validated_data.get("payload")
+        number = normalize_number(number)
+        qs = CustomUser.objects.filter(phone__endswith=number)
+
+        # nothing found, 404
+        if qs.count() == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # multiple users found. this cannot work...
+        if qs.count() != 1:
+            logger.error(
+                f"Found multiple users with number: {number} this should not happen"
+            )
+            return Response(status=status.HTTP_409_CONFLICT)
+
+        # our user
+        user = qs.first()
+
+        # user does not have access rights
+        if not user.is_active:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        if not user.has_door_access():
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        outserializer = UserAccessSerializer(user)
+        return Response(outserializer.data)
+
+    #    @action(detail=False, method=["post"])
+    def nfc(self, request, format=None):
+        """
+        TODO: implement nfc reader serializer
+        """
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def list(self, request):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def create(self, request):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def retrieve(self, request, pk=None):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def update(self, request, pk=None):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def partial_update(self, request, pk=None):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    def destroy(self, request, pk=None):
+        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
