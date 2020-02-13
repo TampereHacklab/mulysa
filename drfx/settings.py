@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
 
+    # for logging some sensitive endpoints like access
+    'rest_framework_tracking',
+
     # filters
     'django_filters',
     'rest_framework_filters',

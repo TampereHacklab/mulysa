@@ -187,6 +187,21 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
+    def has_door_access(self):
+        """
+        helper method for checking if the user has access to open door
+        TODO: this should probably be checked by businesslogic
+        """
+        logger.info(self.servicesubscription_set.all())
+        try:
+            subscription = self.servicesubscription_set.get(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
+            if(subscription.state == ServiceSubscription.ACTIVE):
+                return True
+        except Exception as e:
+            logger.error(f"Tried to load servicesubscription that does not exists {e}")
+        return False
+
+
 def validate_agreement(value):
     if not value:
         raise ValidationError(_('You must agree to the terms'))
