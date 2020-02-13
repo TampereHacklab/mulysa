@@ -1,5 +1,7 @@
 import logging
 
+from django.shortcuts import get_object_or_404
+
 from api.serializers import AccessDataSerializer, UserAccessSerializer
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -9,6 +11,8 @@ from rest_framework_tracking.mixins import LoggingMixin
 from users.models import CustomUser
 
 from utils.phonenumber import normalize_number
+
+from .models import AccessDevice
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +53,12 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         """
         inserializer = AccessDataSerializer(data=request.data)
         inserializer.is_valid(raise_exception=True)
+
+        # check that we know which device this is
+        deviceqs = AccessDevice.objects.all()
+        deviceid = inserializer.validated_data.get("deviceid")
+        device = get_object_or_404(deviceqs, deviceid=deviceid)
+        logging.debug(f"found device {device}")
 
         # phone number comes in payload, but it is in a wrong format
         # the number will most probably start with 00 instead of +

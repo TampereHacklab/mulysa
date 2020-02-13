@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.urls import reverse
 
+from api.models import AccessDevice
 from drfx import settings
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -12,6 +13,9 @@ class TestAccess(APITestCase):
     fixtures = ["users/fixtures/memberservices.json"]
 
     def setUp(self):
+        self.device = AccessDevice.objects.create(
+            deviceid="testdevice",
+        )
         self.ok_user = CustomUser.objects.create(
             email="test1@example.com", birthday=datetime.now(), phone="+35844055066"
         )
@@ -37,7 +41,7 @@ class TestAccess(APITestCase):
         Test with missing payload
         """
         url = reverse("access-phone")
-        response = self.client.post(url, {"deviceid": "testid", "payload": ""})
+        response = self.client.post(url, {"deviceid": self.device.deviceid, "payload": ""})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_access_phone_ok(self):
@@ -46,16 +50,23 @@ class TestAccess(APITestCase):
         """
         url = reverse("access-phone")
         response = self.client.post(
-            url, {"deviceid": "testid", "payload": self.ok_user.phone}
+            url, {"deviceid": self.device.deviceid, "payload": self.ok_user.phone}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_access_phone_notok(self):
         url = reverse("access-phone")
         response = self.client.post(
-            url, {"deviceid": "testid", "payload": self.fail_user.phone}
+            url, {"deviceid": self.device.deviceid, "payload": self.fail_user.phone}
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_unknown_device(self):
+        url = reverse("access-phone")
+        response = self.client.post(
+            url, {"deviceid": "not_a_valid_device", "payload": self.ok_user.phone}
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def tearDown(self):
         for user in CustomUser.objects.all():
