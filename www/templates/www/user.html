@@ -24,11 +24,23 @@
 </tr>
 </table>
 <h2>{% trans 'Service subscriptions' %}</h2>
-<ul>
-    {% for subscription in userdetails.servicesubscriptions %}
-    <li>{{ subscription.service.name }} -  <span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span> - {% blocktrans with paiduntil=subscription.paid_until %}Paid until {{ paiduntil }}{% endblocktrans %} - {% blocktrans with lastpayment=subscription.last_payment %}last payment {{ lastpayment }}{% endblocktrans %}</li>
-    {% endfor %}
-</ul>
+{% for subscription in userdetails.servicesubscriptions %}
+<table width=50% border="1">
+    <tr><td colspan="2"><h3>{{ subscription.service.name }}</h3></td></tr>
+    <tr><td>{% trans 'State' %}</td><td><span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span></td></tr>
+    <tr><td>{% trans 'Paid until' %}</td><td>{{subscription.paid_until}}</td></tr>
+    <tr><td>{% trans 'Last payment' %}</td><td>{{subscription.last_payment}}</td></tr>
+    <tr><td colspan="2">
+        {% if subscription.service.id == defaultservice %}
+        {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal 
+        reference number {{ ref }} to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
+    {% else %}
+        {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
+        <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+    {% endif %}
+</td></tr>
+</table>
+{% endfor %}
 
 <h2>{% trans 'Activity log' %}</h2>
 
@@ -42,7 +54,7 @@
 
 <ul>
 {% for transaction in userdetails.transactions %}
-<li>{{ transaction.date }} - {{ transaction.amount }}</li>
+<li>{{ transaction.date }} {{ transaction.amount }}€ {% trans 'reference number' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}</li>
 {% endfor %}
 </ul>
 {% endblock %}

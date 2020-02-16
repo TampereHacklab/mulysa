@@ -43,7 +43,7 @@ Most of this works around our "User" model which can do multiple things
 
 ## To update localizations
 
-* django-admin makemessages
+* django-admin makemessages -l fi
 * (edit .po files)
 * django-admin compilemessages
 
@@ -54,6 +54,7 @@ Push only .po files to git, not .mo's!
 Before committing, run
 
 * flake8
+* tox
 
 # Member state changes will trigger things
 

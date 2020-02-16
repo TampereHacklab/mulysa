@@ -17,18 +17,14 @@
         {{ userform.as_table }}
         {{ applicationform.as_table }}
     </table>
-
-    {% blocktrans %}
-    <p>Terms for membership: I have read and agree to <a href="{{ MEMBERS_GUIDE_URL }}" target="_blank">members guide</a> and <a href="{{ ASSOCIATION_RULES_URL }}" target="_blank">association rules</a>.</p>
-    {% endblocktrans %}
-
-    {% blocktrans %}
     <p>
-    I promise to clean up any mess I have made at the lab and take responsibility for safety of myself and the premises.
-    I use only power tools and machines I have training and permission for.
+    {% blocktrans %}Terms for membership: I have read and agree to <a href="{{ MEMBERS_GUIDE_URL }}" target="_blank">members guide</a> 
+    and <a href="{{ ASSOCIATION_RULES_URL }}" target="_blank">association rules</a>.{% endblocktrans %}
     </p>
-    {% endblocktrans %}
-
+    <p>
+    {% blocktrans %}I promise to clean up any mess I have made at the lab and take responsibility for safety of myself and the premises.
+    I use only power tools and machines I have training and permission for.{% endblocktrans %}
+    </p>
     <h2>{% trans 'Services' %}</h2>
     {% for service in memberservices %}
     <input type="checkbox" name="service-{{service.id}}" value="True"> {% trans service.name %} {{ service.cost_string }} / {{ service.period_string }}<br/>

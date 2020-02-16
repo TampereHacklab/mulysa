@@ -140,9 +140,9 @@ def userdetails(request, id):
         return HttpResponseForbidden(_('Please login as this user or admin to see this'))
     userdetails = CustomUser.objects.get(id=id)
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
-    userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('-date')
-    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('-date')
-    return render(request, 'www/user.html', {'userdetails': userdetails})
+    userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('date')
+    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('date')
+    return render(request, 'www/user.html', {'userdetails': userdetails, 'defaultservice': settings.DEFAULT_ACCOUNT_SERVICE, 'bank_iban': settings.ACCOUNT_IBAN})
 
 @login_required
 def custominvoice(request):
