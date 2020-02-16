@@ -49,6 +49,12 @@ Most of this works around our "User" model which can do multiple things
 
 Push only .po files to git, not .mo's!
 
+## Style checks & tests
+
+Before committing, run
+
+* flake8
+
 # Member state changes will trigger things
 
 * State == active
