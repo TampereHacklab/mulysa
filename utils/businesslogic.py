@@ -73,6 +73,8 @@ class BusinessLogic:
                 try:
                     print('Transaction', transaction, 'pays invoice', invoice)
                     subscription = ServiceSubscription.objects.get(user=invoice.user, id=invoice.subscription.id)
+                    if not subscription.paid_until:
+                        subscription.paid_until = transaction.date
                     subscription.paid_until = subscription.paid_until + timedelta(days=invoice.days)
                     invoice.payment_transaction = transaction
                     transaction.has_been_used = True
