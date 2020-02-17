@@ -1,9 +1,13 @@
 {% load i18n %}
+{% load bootstrap4 %}
 
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Mulysa</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+
     <style type="text/css">
       div.header {
         display: flex;
