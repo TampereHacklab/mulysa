@@ -12,4 +12,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('docs/', include_docs_urls(title='mulysa docs')),
     path('www/', include('www.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

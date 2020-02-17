@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 22:50+0200\n"
+"POT-Creation-Date: 2020-02-16 22:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,229 +20,266 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: forms.py:26
+#: www/forms.py:28
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: forms.py:26
+#: www/forms.py:28
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: forms.py:27
+#: www/forms.py:29
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
-#: templates/registration/login.html:6 templates/registration/login.html:10
-#: templates/www/usertools.html:7
+#: www/templates/registration/login.html:6
+#: www/templates/registration/login.html:10 www/templates/www/usertools.html:7
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
-#: templates/www/applications.html:5 templates/www/base.html:16
+#: www/templates/www/applications.html:5 www/templates/www/base.html:43
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
-#: templates/www/base.html:10 templates/www/index.html:5
+#: www/templates/www/base.html:28
 msgid "Tampere Hacklab member services"
 msgstr "Tampere Hacklabin jäsenrekisteri"
 
-#: templates/www/base.html:11
+#: www/templates/www/base.html:36
 msgid "Front page"
 msgstr "Etusivu"
 
-#: templates/www/base.html:12 templates/www/register.html:29
-msgid "Register"
-msgstr "Hae jäsenyyttä"
+#: www/templates/www/base.html:39 www/templates/www/index.html:7
+msgid "Show my user information"
+msgstr "Näytä tietoni"
 
-#: templates/www/base.html:13
-msgid "Reset password"
-msgstr "Salasanan nollaus"
-
-#: templates/www/base.html:15
+#: www/templates/www/base.html:42
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: templates/www/base.html:17
+#: www/templates/www/base.html:44
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: templates/www/base.html:18
+#: www/templates/www/base.html:45
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: templates/www/base.html:28
+#: www/templates/www/base.html:50 www/templates/www/register.html:32
+msgid "Register"
+msgstr "Hae jäsenyyttä"
+
+#: www/templates/www/base.html:51
+msgid "Reset password"
+msgstr "Salasanan nollaus"
+
+#: www/templates/www/base.html:62
+#, python-format
 msgid ""
-"Web design by cos - help wanted! Make a pr at <a href=\"https://github.com/"
-"TampereHacklab/mulysa\">GitHub</a>"
+" Web design by cos - help wanted! Make a pr at\n"
+"        <a href=\"%(GITHUB_URL)s\">GitHub</a>\n"
+"        "
 msgstr ""
 "Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
-"href=\"https://github.com/TampereHacklab/mulysa\">GitHubissa</a>"
+"href=\"%(GITHUB_URL)s\">GitHubissa</a>"
 
-#: templates/www/custominvoice.html:5
+#: www/templates/www/custominvoice.html:5
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: templates/www/custominvoice.html:8
+#: www/templates/www/custominvoice.html:8
 msgid "Note: You can always delete invoice if you choose not to pay it"
 msgstr "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
 
-#: templates/www/custominvoice.html:15
+#: www/templates/www/custominvoice.html:15
 msgid "Preview.."
 msgstr "Esikatsele lasku.."
 
-#: templates/www/custominvoice.html:18
+#: www/templates/www/custominvoice.html:18
 #, python-format
 msgid ""
 "This will pay %(days)s days of service %(servicename)s and costs %(amount)s€"
 msgstr ""
 "Tämä maksaa %(days)s päivää palvelua %(servicename)s ja maksaa %(amount)s€"
 
-#: templates/www/custominvoice.html:20
+#: www/templates/www/custominvoice.html:20
 msgid "Create invoice"
 msgstr "Luo lasku"
 
-#: templates/www/custominvoice.html:23
+#: www/templates/www/custominvoice.html:23
 msgid "Pending invoices"
 msgstr "Maksamattomat laskut"
 
-#: templates/www/custominvoice.html:26
+#: www/templates/www/custominvoice.html:26
 msgid "delete"
 msgstr "poista"
 
-#: templates/www/custominvoice.html:29
+#: www/templates/www/custominvoice.html:29
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
 
-#: templates/www/index.html:7
+#: www/templates/www/index.html:4
 msgid "Welcome! Choose what to do next"
 msgstr "Tervetuloa! Miten voimme palvella?"
 
-#: templates/www/index.html:11
-msgid "Show my user information"
-msgstr "Näytä tietoni"
-
-#: templates/www/index.html:12
+#: www/templates/www/index.html:8 www/templates/www/user.html:39
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
-#: templates/www/index.html:14
+#: www/templates/www/index.html:10
 msgid "Login to Mulysa"
 msgstr "Kirjaudu sisään"
 
-#: templates/www/index.html:15
+#: www/templates/www/index.html:11
 msgid "Apply membership in hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: templates/www/register.html:5
+#: www/templates/www/register.html:5
 msgid "Apply membership to Tampere Hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: templates/www/register.html:21
+#: www/templates/www/register.html:21
 #, python-format
 msgid ""
-"Terms for membership: I have read and agree to <a href=\\\"https://wiki."
-"tampere.hacklab.fi/member_s_guide\\\" target=\"_blank\">members guide</a> "
-"and <a href=\\\"https://tampere.hacklab.fi/pages/yhdistyksen-s"
-"%%C3%%A4%%C3%%A4nn%%C3%%B6t/\\\" target=\"_blank\">association rules</a>."
+"Terms for membership: I have read and agree to <a "
+"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</a> \n"
+"    and <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">association "
+"rules</a>."
 msgstr ""
-"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a href=\\\"https://wiki."
-"tampere.hacklab.fi/jasenen_ohje\\\" target=\"_blank\">jäsenen ohjeen</a> ja "
-"<a href=\\\"https://tampere.hacklab.fi/pages/yhdistyksen-s%%C3%%A4%%C3%%A4nn"
-"%%C3%%B6t/\\\" target=\"_blank\">yhdistyksen säännöt</a>."
+"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
+"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">jäsenen ohjeen</a> ja <a "
+"href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
-#: templates/www/register.html:22
+#: www/templates/www/register.html:25
 msgid ""
 "I promise to clean up any mess I have made at the lab and take "
-"responsibility for safety of myself and the premises."
+"responsibility for safety of myself and the premises.\n"
+"    I use only power tools and machines I have training and permission for."
 msgstr ""
 "Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
 "omasta ja labin turvallisuudesta."
 
-#: templates/www/register.html:23
-msgid "I use only power tools and machines I have training and permission for."
-msgstr ""
-"Käytän vain sellaisia työkaluja laitteita joiden käyttöön olen saanut luvan "
-"ja tarvittavan koulutuksen."
-
-#: templates/www/register.html:25
+#: www/templates/www/register.html:28
 msgid "Services"
 msgstr "Jäsenpalvelut"
 
-#: templates/www/thanks.html:5
+#: www/templates/www/thanks.html:5
 msgid "Registration successful!"
 msgstr "Hakemus vastaanotettu!"
 
-#: templates/www/user.html:5
+#: www/templates/www/user.html:5
 msgid "User data for"
-msgstr "Tiedot käyttäjälle "
+msgstr "Tiedot käyttäjälle"
 
-#: templates/www/user.html:14
+#: www/templates/www/user.html:14
 msgid "Name"
 msgstr "Nimi"
 
-#: templates/www/user.html:17
+#: www/templates/www/user.html:17
 msgid "Email"
 msgstr "Sähköposti"
 
-#: templates/www/user.html:20
+#: www/templates/www/user.html:20
 msgid "Phone"
 msgstr "Puhelin"
 
-#: templates/www/user.html:23
+#: www/templates/www/user.html:23
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: templates/www/user.html:26
+#: www/templates/www/user.html:26
 msgid "Service subscriptions"
 msgstr "Jäsenpalvelut"
 
-#: templates/www/user.html:29
-#, python-format
-msgid "Paid until %(paiduntil)s"
-msgstr "Maksettu %(paiduntil)s asti"
+#: www/templates/www/user.html:30
+msgid "State"
+msgstr "Tila"
 
-#: templates/www/user.html:29
-#, python-format
-msgid "last payment %(lastpayment)s"
-msgstr "viimeisin maksu %(lastpayment)s"
+#: www/templates/www/user.html:31
+msgid "Paid until"
+msgstr "Voimassaoloaika"
 
-#: templates/www/user.html:33
+#: www/templates/www/user.html:32
+msgid "Last payment"
+msgstr "Viimeisin maksu"
+
+#: www/templates/www/user.html:35
+#, python-format
+#| msgid ""
+#| "\n"
+#| "        This service can be paid with your personal reference number "
+#| "%(ref)s to bank account %(bank_iban)s. Service price is %(cost)s \n"
+#| "        "
+msgid ""
+"This service can be paid with your personal \n"
+"        reference number %(ref)s to bank account %(bank_iban)s. Service "
+"price is %(cost)s"
+msgstr ""
+"Tämän palvelun voit maksaa henkilökohtaisella viitenumerollasi %(ref)s "
+"tilille %(bank_iban)s. Palvelun hinta on %(cost)s"
+
+#: www/templates/www/user.html:38
+#| msgid ""
+#| "\n"
+#| "        Please create a custom invoice to pay this service.\n"
+#| "        "
+msgid "Please create a custom invoice to pay this service."
+msgstr "Luo vapaamuotoinen lasku maksaaksesi tämän palvelun."
+
+#: www/templates/www/user.html:45
 msgid "Activity log"
 msgstr "Loki"
 
-#: templates/www/user.html:41
+#: www/templates/www/user.html:53
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: templates/www/usertools.html:5
+#: www/templates/www/user.html:57
+msgid "reference number"
+msgstr "viitenumero"
+
+#: www/templates/www/usertools.html:5
 msgid "Logged in as"
 msgstr "Kirjauduttu sisään käyttäjänä"
 
-#: templates/www/usertools.html:5
+#: www/templates/www/usertools.html:5
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: templates/www/usertools.html:13
+#: www/templates/www/usertools.html:13
 msgid "Language"
 msgstr "Kieli"
 
-#: templates/www/usertools.html:24
+#: www/templates/www/usertools.html:24
 msgid "Change"
 msgstr "Vaihda"
 
-#: views.py:34
+#: www/views.py:42
 msgid "Please select at least one member service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: views.py:114
+#: www/views.py:122
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: views.py:117
+#: www/views.py:125
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: views.py:132
+#: www/views.py:140
 msgid "Please login as this user or admin to see this"
 msgstr "Kirjaudu adminina nähdäksesi tämän"
+
+#~ msgid ""
+#~ "I use only power tools and machines I have training and permission for."
+#~ msgstr ""
+#~ "Käytän vain sellaisia työkaluja laitteita joiden käyttöön olen saanut "
+#~ "luvan ja tarvittavan koulutuksen."
+
+#~ msgid "Paid until %(paiduntil)s"
+#~ msgstr "Maksettu %(paiduntil)s asti"
+
+#~ msgid "last payment %(lastpayment)s"
+#~ msgstr "viimeisin maksu %(lastpayment)s"

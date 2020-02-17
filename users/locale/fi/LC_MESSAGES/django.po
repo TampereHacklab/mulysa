@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-24 14:54+0300\n"
+"POT-Creation-Date: 2020-02-16 22:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,15 +20,15 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: models.py:21
+#: users/models.py:21
 #, python-format
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa "
-"@kayttaja:esimerkko.org"
+"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa @kayttaja:"
+"esimerkko.org"
 
-#: models.py:28
+#: users/models.py:28
 #, python-format
 msgid ""
 "%(value)s is not a valid phone number. It must be in international format "
@@ -37,54 +37,54 @@ msgstr ""
 "%(value)s ei ole käypäinen puhelinnumero. Käytä kansainvälistä muotoa, "
 "esimerkiksi +35840123567"
 
-#: models.py:51
+#: users/models.py:51
 msgid "User must have an email address"
 msgstr "Sähköpostiosoite pitää olla"
 
-#: models.py:80
+#: users/models.py:80
 msgid "Email address"
 msgstr "Sähköpostiosoite"
 
-#: models.py:82
+#: users/models.py:82
 msgid ""
 "Your email address will be used for important notifications about your "
 "membership"
 msgstr ""
 "Sähköpostia käytetään labin toimintaan ja jäsenyyteen liittyvään viestintään"
 
-#: models.py:88
+#: users/models.py:88
 msgid "Municipality / City"
 msgstr "Kotikunta"
 
-#: models.py:95
+#: users/models.py:95
 msgid "Nick"
 msgstr "Kutsumanimi / nick"
 
-#: models.py:96
+#: users/models.py:96
 msgid "Nickname you are known with on Internet"
 msgstr "Kutsumanimi jolla sinut tunnetaan internetissä"
 
-#: models.py:103
+#: users/models.py:103
 msgid "Matrix ID"
 msgstr "Matrix ID"
 
-#: models.py:104
+#: users/models.py:104
 msgid "Matrix ID (@user:example.org)"
 msgstr "Matrix ID (@kayttaja:esimerkki.org)"
 
-#: models.py:111
+#: users/models.py:111
 msgid "Birthday"
 msgstr "Syntymäpäivä"
 
-#: models.py:112
+#: users/models.py:112
 msgid "Format: DD.MM.YYYY"
 msgstr "Muoto: PP.KK.VVVV"
 
-#: models.py:117
+#: users/models.py:117
 msgid "Mobile phone number"
 msgstr "Puhelinnumero"
 
-#: models.py:118
+#: users/models.py:118
 msgid ""
 "This number will also be the one that gets access to the hacklab premises. "
 "International format (+35840123567)."
@@ -92,195 +92,223 @@ msgstr ""
 "Tätä numeroa käytetään myös esim. hacklabin oven avaamiseen. Kansainvälinen "
 "muoto (+35840123567)."
 
-#: models.py:127
+#: users/models.py:127
 msgid "Bank account"
 msgstr "Pankkitili"
 
-#: models.py:128
+#: users/models.py:128
 msgid "Bank account for paying invoices (IBAN format: FI123567890)"
 msgstr "Pankkitili mahdolliseen laskujen maksamiseen (IBAN-muoto: FI123567890)"
 
-#: models.py:133
+#: users/models.py:133
 msgid "Language"
 msgstr "Kieli"
 
-#: models.py:134
+#: users/models.py:134
 msgid "Language preferred by user"
 msgstr "Käyttämäsi kieli"
 
-#: models.py:141
+#: users/models.py:141
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: models.py:142
+#: users/models.py:142
 msgid "Automatically set to now when user is create"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: models.py:147
+#: users/models.py:147
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
 
-#: models.py:148
+#: users/models.py:148
 msgid "Last time this user was modified"
 msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
-#: models.py:156
+#: users/models.py:156
 msgid "Marked for deletion"
 msgstr "Merkattu poistetuksi"
 
-#: models.py:158
+#: users/models.py:158
 msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
 
-#: models.py:165
+#: users/models.py:165
 msgid "Reference number of membership fee payments"
 msgstr "Viitenumero jäsenmaksujen maksamista varten"
 
-#: models.py:166
+#: users/models.py:166
 msgid ""
 "Remember to always use your unique reference number for membership fee "
 "payments"
 msgstr "Muista käyttää aina omaa viitenumeroasi jäsenmaksuja maksaessa"
 
-#: models.py:192
-#| msgid "I agree to the terms presented"
+#: users/models.py:207
 msgid "You must agree to the terms"
 msgstr "Hyväksyn jäsenyyden ehdot"
 
-#: models.py:201 models.py:324 models.py:448
+#: users/models.py:217 users/models.py:340 users/models.py:472
 msgid "Message"
 msgstr "Terveiset"
 
-#: models.py:202
+#: users/models.py:218
 msgid "Free-form message to hacklab board"
 msgstr "Vapaamuotoinen viesti hacklabin hallitukselle"
 
-#: models.py:208
+#: users/models.py:224
 msgid "I agree to the terms presented"
 msgstr "Hyväksyn annetut ehdot"
 
-#: models.py:213
+#: users/models.py:229
 #, python-format
 msgid "Membership application for %(name)s"
 msgstr "%(name)s:n jäsenhakemus"
 
-#: models.py:223
+#: users/models.py:239
 msgid "Service name"
 msgstr "Palvelun nimi"
 
-#: models.py:224
+#: users/models.py:240
 msgid "Name of the service"
 msgstr "Palvelun nimi"
 
-#: models.py:277
+#: users/models.py:293
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: models.py:289
+#: users/models.py:305
 msgid "month"
 msgstr "kuukausi"
 
-#: models.py:291
+#: users/models.py:307
 msgid "year"
 msgstr "vuosi"
 
-#: models.py:292
+#: users/models.py:308
 msgid "days"
 msgstr "päivää"
 
-#: models.py:310
+#: users/models.py:326
 msgid "Archival reference"
 msgstr "Arkistointitunnus"
 
-#: models.py:314
+#: users/models.py:330
 msgid "Date"
 msgstr "Päiväys"
 
-#: models.py:315
+#: users/models.py:331
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: models.py:318
+#: users/models.py:334 users/models.py:499
 msgid "Amount"
 msgstr "Määrä"
 
-#: models.py:319
+#: users/models.py:335
 msgid "Amount of money transferred to account"
 msgstr "Tilisiirron summa"
 
-#: models.py:325
+#: users/models.py:341
 msgid "Message attached to transaction by sender. Should not normally be used."
 msgstr "Tilisiirron maksajan kirjoittama viesti."
 
-#: models.py:331
+#: users/models.py:347
 msgid "Sender"
 msgstr "Maksaja"
 
-#: models.py:332
+#: users/models.py:348
 msgid "Sender of the transaction, if known."
 msgstr "Tilisiirron maksaja, jos tiedossa."
 
-#: models.py:338
+#: users/models.py:354
 msgid "Reference number of transaction"
 msgstr "Tilisiirron viitenumero"
 
-#: models.py:339
+#: users/models.py:355
 msgid ""
 "Reference number is set by transaction sender and should normally always be "
 "used."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: models.py:344
+#: users/models.py:360
 msgid "Transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: models.py:345
+#: users/models.py:361
 msgid "Bank transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: models.py:351 models.py:352
+#: users/models.py:367 users/models.py:368
 msgid "Code"
 msgstr "Koodi"
 
-#: models.py:360
+#: users/models.py:375
 msgid "True, if this transaction has already been used to pay for service."
 msgstr "Tosi, jos tilisiirtoa on käytetty jäsenpalvelun maksuun."
 
-#: models.py:392
+#: users/models.py:407
 msgid "Active"
 msgstr "Käytettävissä"
 
-#: models.py:393
+#: users/models.py:408
 msgid "Payment overdue"
 msgstr "Maksamatta"
 
-#: models.py:394
-#| msgid "Sender"
+#: users/models.py:409
 msgid "Suspended"
 msgstr "Keskeytetty"
 
-#: models.py:399
+#: users/models.py:414
 msgid "Service state"
 msgstr "Jäsenpalvelun tila"
 
-#: models.py:400
+#: users/models.py:415
 msgid "State of this service"
 msgstr "Jäsenpalvelun tila"
 
-#: models.py:411
+#: users/models.py:426
 msgid "Paid until"
 msgstr "Mihin päivämäärään asti maksettu"
 
-#: models.py:412
+#: users/models.py:427
 msgid "The service will stay active until this date"
 msgstr "Palvelu pysyy aktiivisena tähän päivämäärään asti"
 
-#: models.py:434
+#: users/models.py:457
 #, python-format
 msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"
 
-#: signals.py:87
+#: users/models.py:488
+msgid "How many days of service this invoice pays"
+msgstr "Montako päivää tämä lasku maksaa"
+
+#: users/models.py:489
+msgid ""
+"For example value 14 with access right service pays two weeks of access."
+msgstr "Esimerkiksi arvo 14 tilankäyttöoikeutta maksaa 2 viikkoa tilankäyttöä."
+
+#: users/models.py:495
+msgid "Reference number for paying invoice"
+msgstr "Tilisiirron viitenumero"
+
+#: users/models.py:496
+msgid "Reference number is set by transaction sender and must match this."
+msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
+
+#: users/models.py:500
+msgid "Minimum amount of money to satisfy this invoice."
+msgstr "Minimisumma laskun maksamiseksi"
+
+#: users/models.py:513
+#, python-format
+msgid ""
+"Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - "
+"%(amount)s€, reference: %(reference)s"
+msgstr ""
+"Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
+"käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
+
+#: users/signals.py:112
 msgid "Welcome and next steps"
 msgstr "Tervetuloa ja seuraavat toimenpiteet"

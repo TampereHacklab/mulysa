@@ -187,6 +187,21 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
+    def has_door_access(self):
+        """
+        helper method for checking if the user has access to open door
+        TODO: this should probably be checked by businesslogic
+        """
+        logger.info(self.servicesubscription_set.all())
+        try:
+            subscription = self.servicesubscription_set.get(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
+            if(subscription.state == ServiceSubscription.ACTIVE):
+                return True
+        except Exception as e:
+            logger.error(f"Tried to load servicesubscription that does not exists {e}")
+        return False
+
+
 def validate_agreement(value):
     if not value:
         raise ValidationError(_('You must agree to the terms'))
@@ -364,7 +379,7 @@ class BankTransaction(models.Model):
         return f'Bank transaction for {(self.user and self.user.email) or "unknown user"}' \
             + f' from {self.sender}' \
             + f' {self.amount}€, reference {self.reference_number}' \
-            + f', message {self.message or "(none)"}' \
+            + ((', message ' + self.message) if self.message else '') \
             + f' at {self.date or "(no date)"}'
 
 
@@ -430,6 +445,14 @@ class ServiceSubscription(models.Model):
     def statecolor(self):
         return self.SERVICE_STATE_COLORS[self.state]
 
+    # Return the translated name of the state
+    def statestring(self):
+        # There's probably a one-liner way to do this
+        for ss in ServiceSubscription.SERVICE_STATES:
+            if ss[0] == self.state:
+                return ss[1]
+        return "(???)"  # Should never happen
+
     def __str__(self):
         return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}
 
@@ -449,6 +472,9 @@ class UsersLog(models.Model):
         verbose_name=_('Message'),
         max_length=1024,
     )
+
+    def __str__(self):
+        return f'{self.user} - {self.date}: {self.message}'
 
 class CustomInvoice(models.Model):
     """

@@ -26,7 +26,7 @@ User list
 <td>
         {% for subscription in user.servicesubscriptions %}
                 {% if service == subscription.service %}
-                <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.state }}</span>
+                <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
                 {% endif %}
         {% endfor %}
 </td>
