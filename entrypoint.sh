@@ -15,4 +15,4 @@ echo "Creating default superuser if no users defined yet"
 pipenv run python manage.py initadmin
 
 echo "Starting server"
-pipenv run python -u manage.py runserver 0.0.0.0:8000 --noreload
+pipenv run gunicorn drfx.wsgi:application --bind 0.0.0.0:8000

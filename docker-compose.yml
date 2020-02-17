@@ -11,11 +11,30 @@ services:
       - "./data/db:/var/lib/mysql:z"
 
   nginx:
-
+    build: ./nginx
+    restart: always
+    container_name: nginx
     volumes:
-      - static_volume:/home/app/web/staticfiles
+      - static_files:/code/static/
     depends_on:
       - mulysa
+    labels:
+      - "traefik.enable=true"
+      # our service is named mulysa and it is on port 8000
+      - "traefik.http.services.nginxmulysa.loadbalancer.server.port=80"
+      # router listens only on this host
+      - "traefik.http.routers.nginxmulysa.rule=Host(`my.tampere.hacklab.fi`)"
+      # listen on websecure entrypoint
+      - "traefik.http.routers.nginxmulysa.entrypoints=websecure"
+      # use le for tls
+      - "traefik.http.routers.nginxmulysa.tls.certresolver=myhttpchallenge"
+
+      # defined middleware for redirects
+      - "traefik.http.middlewares.nginxmulysa-redirect-web-secure.redirectscheme.scheme=https"
+      # listen on web also and use the middlware to do the redirect
+      - "traefik.http.routers.nginxmulysa-redir.rule=host(`my.tampere.hacklab.fi`)"
+      - "traefik.http.routers.nginxmulysa-redir.entrypoints=web"
+      - "traefik.http.routers.nginxmulysa-redir.middlewares=mulysa-redirect-web-secure"
 
   mulysa:
     build: .
@@ -27,23 +46,6 @@ services:
       - db
     volumes:
       - static_files:/code/static/
-    labels:
-      - "traefik.enable=true"
-      # our service is named mulysa and it is on port 8000
-      - "traefik.http.services.mulysa.loadbalancer.server.port=8000"
-      # router listens only on this host
-      - "traefik.http.routers.mulysa.rule=Host(`my.tampere.hacklab.fi`)"
-      # listen on websecure entrypoint
-      - "traefik.http.routers.mulysa.entrypoints=websecure"
-      # use le for tls
-      - "traefik.http.routers.mulysa.tls.certresolver=myhttpchallenge"
-
-      # defined middleware for redirects
-      - "traefik.http.middlewares.mulysa-redirect-web-secure.redirectscheme.scheme=https"
-      # listen on web also and use the middlware to do the redirect
-      - "traefik.http.routers.mulysa-redir.rule=host(`my.tampere.hacklab.fi`)"
-      - "traefik.http.routers.mulysa-redir.entrypoints=web"
-      - "traefik.http.routers.mulysa-redir.middlewares=mulysa-redirect-web-secure"
 
   proxy:
     image: "traefik:v2.0.0-rc3"
@@ -72,6 +74,7 @@ services:
       - "8080:8080"
     depends_on:
       - mulysa
+      - nginx
 
 volumes:
   static_files:
