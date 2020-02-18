@@ -27,12 +27,13 @@ class BusinessLogic:
                 pass
         if transaction.user:
             translation.activate(transaction.user.language)
-
-        BusinessLogic.check_transaction_pays_custominvoice(transaction)
-
-        if transaction.user:
             transaction.user.log(_('Bank transaction of %(amount)s€ dated %(date)s') % {'amount': str(transaction.amount), 'date': str(transaction.date)})
-            BusinessLogic.updateuser(transaction.user)
+
+    @staticmethod
+    def update_all_users():
+        all_users = CustomUser.objects.all()
+        for user in all_users:
+            BusinessLogic.updateuser(user)
 
     @staticmethod
     def servicesubscription_state_changed(subscription, oldstate, newstate):
