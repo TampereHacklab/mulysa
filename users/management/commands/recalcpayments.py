@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
+
 from users.models import BankTransaction
+
 from utils.businesslogic import BusinessLogic
 
 # Caution: This does some destructive operations. Run only if you are sure.
