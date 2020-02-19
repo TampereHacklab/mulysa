@@ -172,4 +172,8 @@ class DataImport:
                 print('Error parsing data: ', str(err))
                 error = error + 1
                 failedrows.append(line + ' (' + str(err) + ')')
+        print('Data imported, now updating all users..')
+
+        BusinessLogic.update_all_users()
+
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}

@@ -1,6 +1,12 @@
 # local settings
 drfx/settings_local.py
 
+# static files will be collected on startup
+/static
+
+# no .mo files
+*.mo
+
 # editors
 .vscode
 
