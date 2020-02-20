@@ -48,7 +48,7 @@ class UsersTests(APITestCase):
 
         # check that the reset password email was sent
         self.assertEqual(len(mail.outbox), 1)
-        self.assertIn('accounts/reset', mail.outbox[0].body, 'link to reset found in email')
+        self.assertIn('www/reset/MQ/', mail.outbox[0].body, 'link to reset found in email')
 
         # for completenes sake
         self.assertEqual(u.email, u.get_short_name())
