@@ -9,64 +9,99 @@
     {% bootstrap_javascript jquery='full' %}
 
     <style type="text/css">
-      div.header {
-        display: flex;
-        justify-content: space-between;
+      html {
+        position: relative;
+        min-height: 100%;
       }
-      div.nav {
-        text-align: center;
+      body {
+        /* Margin bottom by footer height */
+        margin-bottom: 60px;
       }
-      div.nav ul li {
-          display: inline-block;
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+        line-height: 60px; /* Vertically center the text there */
+        background-color: #f5f5f5;
       }
-      div.nav ul li + li:before {
-          content: " | ";
+
+      body > main {
+        padding-top: 80px;
       }
-      div.footer {
-        text-align: center;
-      }
+
     </style>
   </head>
   <body>
-    <div class="header">
-      <h1>{% trans 'Tampere Hacklab member services' %}</h1>
-      <div class="userbox">
-        {% include 'www/usertools.html' %}
-      </div>
 
-    </div>
-    <div class="nav">
-      <ul>
-        <li><a href="{% url 'index' %}">{% trans 'Front page' %}</a></li>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{% url 'index' %}">{% trans 'My Hacklab' %}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
-
-            {% if user.is_staff %}
-            <li><a href="{% url 'users' %}">{% trans 'Users' %}</a></li>
-            <li><a href="{% url 'applications' %}">{% trans 'Member applications' %}</a></li>
-            <li><a href="{% url 'dataimport' %}">{% trans 'Import' %}</a></li>
-            <li><a href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a></li>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
+              {% if user.is_staff %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% trans 'Users' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'applications' %}">{% trans 'Member applications' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'dataimport' %}">{% trans 'Import' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a></li>
+              {% endif %}
+            {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">{% trans 'Register' %}</a></li>
             {% endif %}
+          </ul>
 
-        {% else %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'logout' %}">{% trans 'log out' %} ({{ user.first_name }})</a>
+              {% else %}
+                <a class="nav-link" href="{% url 'login' %}">{% trans 'Log in' %}</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              <form id="langform" class="form-inline" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <div class="input-group input-group-sm">
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{% trans 'Language' %}</span>
+                </div>
+                <select class="custom-select" name="language" onchange="this.form.submit()">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                    {{ language.name_local }}
+                  </option>
+                {% endfor %}
+                </select>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
-            <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
-            <li><a href="{% url 'password_reset' %}">{% trans 'Reset password' %}</a></li>
-
-        {% endif %}
-      </ul>
-
-    </div>
-
+    <main role="main" class="container-fluid">
     {% block content %}{% endblock content %}
+    </main>
 
-    <div class="footer">
-      <p>
-        {% blocktrans %} Web design by cos - help wanted! Make a pr at
-        <a href="{{ GITHUB_URL }}">GitHub</a>
-        {% endblocktrans %}
-      </p>
-    </div>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">
+          {% blocktrans %} Web design by cos - help wanted! Make a pr at
+          <a target="_blank" href="{{ GITHUB_URL }}">GitHub</a>
+          {% endblocktrans %}
+        </span>
+      </div>
+    </footer>
   </body>
 </html>
