@@ -94,7 +94,7 @@ ROOT_URLCONF = 'drfx.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['www/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
