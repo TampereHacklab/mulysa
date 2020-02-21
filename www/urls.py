@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='www/index.html')),
+    path('', include('django.contrib.auth.urls')),
     path('index', TemplateView.as_view(template_name='www/index.html'), name='index'),
     path('register', views.register, name='register'),
     path('dataimport', views.dataimport, name='dataimport'),

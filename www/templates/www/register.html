@@ -1,34 +1,57 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
 {% block content %}
-<h1>
-    {% trans 'Apply membership to Tampere Hacklab' %}
-</h1>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<form action="/www/register" method="post">
-    {% csrf_token %}
-    <table border="0">
-        {{ userform.as_table }}
-        {{ applicationform.as_table }}
-    </table>
-    <p>
-    {% blocktrans %}Terms for membership: I have read and agree to <a href="{{ MEMBERS_GUIDE_URL }}" target="_blank">members guide</a> 
-    and <a href="{{ ASSOCIATION_RULES_URL }}" target="_blank">association rules</a>.{% endblocktrans %}
-    </p>
-    <p>
-    {% blocktrans %}I promise to clean up any mess I have made at the lab and take responsibility for safety of myself and the premises.
-    I use only power tools and machines I have training and permission for.{% endblocktrans %}
-    </p>
-    <h2>{% trans 'Services' %}</h2>
-    {% for service in memberservices %}
-    <input type="checkbox" name="service-{{service.id}}" value="True"> {% trans service.name %} {{ service.cost_string }} / {{ service.period_string }}<br/>
-    {% endfor %}
-    <input type="submit" value="{% trans 'Register' %}">
-</form>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <h1>{% trans 'Apply membership to Tampere Hacklab' %}</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      {% bootstrap_messages %}
+      <form action="/www/register" method="post">
+        {% csrf_token %}
+        {% bootstrap_form userform %}
+        {% bootstrap_form applicationform %}
+
+        <p>
+          {% blocktrans %}Terms for membership: I have read and agree to
+          <a href="{{ MEMBERS_GUIDE_URL }}" target="_blank">members guide</a>
+          and
+          <a href="{{ ASSOCIATION_RULES_URL }}" target="_blank"
+            >association rules</a
+          >.{% endblocktrans %}
+        </p>
+
+        <p>
+          {% blocktrans %}I promise to clean up any mess I have made at the lab
+          and take responsibility for safety of myself and the premises. I use
+          only power tools and machines I have training and permission for.
+          {% endblocktrans %}
+        </p>
+
+        <h2>{% trans 'Services' %}</h2>
+        {% for service in memberservices %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="True" name="service-{{service.id}}" id="service-{{service.id}}">
+            <label class="form-check-label" for="service-{{service.id}}">
+                {% trans service.name %} {{ service.cost_string }} / {{ service.period_string }}
+            </label>
+        </div>
+        {% endfor %}
+
+        {% buttons %}
+        <input
+          type="submit"
+          class="btn btn-primary"
+          value="{% trans 'Register' %}"
+        />
+        {% endbuttons %}
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

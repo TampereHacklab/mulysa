@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import gettext as _
+from django.shortcuts import redirect
 
 from drfx import settings
 from users.models import (
@@ -68,6 +68,7 @@ def register(request):
                   content_type='text/html'
                   )
 
+@login_required
 @staff_member_required
 def dataimport(request):
     report = None
@@ -83,6 +84,7 @@ def dataimport(request):
         form = FileImportForm()
     return render(request, 'www/import.html', {'form': form, 'report': report})
 
+@login_required
 @staff_member_required
 def users(request):
     users = CustomUser.objects.all()
@@ -96,6 +98,7 @@ def users(request):
         'services': services
     })
 
+@login_required
 @staff_member_required
 def ledger(request):
     filter = request.GET.get('filter')
@@ -113,6 +116,7 @@ def ledger(request):
         'transactions': transactions
     })
 
+@login_required
 @staff_member_required
 def application_operation(request, application_id, operation):
     application = get_object_or_404(MembershipApplication, id=application_id)
@@ -126,6 +130,7 @@ def application_operation(request, application_id, operation):
 
     return applications(request)
 
+@login_required
 @staff_member_required
 def applications(request):
     applications = MembershipApplication.objects.all()
@@ -137,7 +142,7 @@ def applications(request):
 @login_required
 def userdetails(request, id):
     if not request.user.is_superuser and request.user.id != id:
-        return HttpResponseForbidden(_('Please login as this user or admin to see this'))
+        return redirect('/www/login/?next=%s' % request.path)
     userdetails = CustomUser.objects.get(id=id)
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('date')
@@ -200,6 +205,7 @@ def custominvoice_action(request, action, invoiceid):
 
     return custominvoice(request)
 
+@login_required
 @staff_member_required
 def updateuser(request, id):
     user = CustomUser.objects.get(id=id)

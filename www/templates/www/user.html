@@ -1,60 +1,96 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
+
 {% block content %}
-<h1>
+<div class="container">
+  <h1>
     {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
-</h1>
-{% if user.is_staff %}
-<p>
-<a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
-</p>
-{% endif %}
-<table width=90% border="1">
-<tr>
-    <td>{% trans 'Name' %}</td> <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
-</tr>
-<tr>
-    <td>{% trans 'Email' %}</td> <td>{{ userdetails.email }}</td>
-</tr>
-<tr>
-    <td>{% trans 'Phone' %}</td> <td>{{ userdetails.phone }}</td>
-</tr>
-<tr>
-    <td>{% trans 'Reference number' %}</td> <td>{{ userdetails.reference_number }}</td>
-</tr>
-</table>
-<h2>{% trans 'Service subscriptions' %}</h2>
-{% for subscription in userdetails.servicesubscriptions %}
-<table width=50% border="1">
-    <tr><td colspan="2"><h3>{{ subscription.service.name }}</h3></td></tr>
-    <tr><td>{% trans 'State' %}</td><td><span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span></td></tr>
-    <tr><td>{% trans 'Paid until' %}</td><td>{{subscription.paid_until}}</td></tr>
-    <tr><td>{% trans 'Last payment' %}</td><td>{{subscription.last_payment}}</td></tr>
-    <tr><td colspan="2">
+  </h1>
+
+  {% if user.is_staff %}
+  <p>
+    <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
+  </p>
+  {% endif %}
+
+  <table class="table">
+    <tr>
+      <td>{% trans 'Name' %}</td>
+      <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Email' %}</td>
+      <td>{{ userdetails.email }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Phone' %}</td>
+      <td>{{ userdetails.phone }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Reference number' %}</td>
+      <td>{{ userdetails.reference_number }}</td>
+    </tr>
+  </table>
+
+  <h2>{% trans 'Service subscriptions' %}</h2>
+
+  {% for subscription in userdetails.servicesubscriptions %}
+  <table class="table">
+    <tr>
+      <td colspan="2"><h3>{{ subscription.service.name }}</h3></td>
+    </tr>
+    <tr>
+      <td>{% trans 'State' %}</td>
+      <td>
+        <span style="background-color: {{ subscription.statecolor }}"
+          >{{ subscription.statestring }}</span
+        >
+      </td>
+    </tr>
+    <tr>
+      <td>{% trans 'Paid until' %}</td>
+      <td>{{subscription.paid_until}}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Last payment' %}</td>
+      <td>{{subscription.last_payment}}</td>
+    </tr>
+    <tr>
+      <td colspan="2">
         {% if subscription.service.id == defaultservice %}
-        {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal 
-        reference number {{ ref }} to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
-    {% else %}
-        {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
-        <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-    {% endif %}
-</td></tr>
-</table>
-{% endfor %}
+          {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}
+            This service can be paid with your personal reference number {{ ref }}
+            to bank account {{bank_iban}}. Service price is {{ cost }}
+          {% endblocktrans %}
+        {% else %}
+          {% blocktrans %}
+            Please create a custom invoice to pay this service.
+          {% endblocktrans %}
+          <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
 
-<h2>{% trans 'Activity log' %}</h2>
+  {% endfor %}
 
-<ul>
-{% for entry in userdetails.userslog %}
-<li>{{ entry.date }} - {{ entry.message }}</li>
-{% endfor %}
-</ul>
+  <h2>{% trans 'Activity log' %}</h2>
 
-<h2>{% trans 'Bank transactions' %}</h2>
+  <ul>
+    {% for entry in userdetails.userslog %}
+    <li>{{ entry.date }} - {{ entry.message }}</li>
+    {% endfor %}
+  </ul>
 
-<ul>
-{% for transaction in userdetails.transactions %}
-<li>{{ transaction.date }} {{ transaction.amount }}€ {% trans 'reference number' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}</li>
-{% endfor %}
-</ul>
+  <h2>{% trans 'Bank transactions' %}</h2>
+
+  <ul>
+    {% for transaction in userdetails.transactions %}
+    <li>
+      {{ transaction.date }} {{ transaction.amount }}€ {% trans 'referencenumber' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

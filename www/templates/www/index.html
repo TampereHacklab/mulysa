@@ -1,14 +1,31 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
+
 {% block content %}
-<h2>{% trans 'Welcome! Choose what to do next' %}</h2>
-<ul>
-  {% if user.is_authenticated %}
-    <li><a href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
-    <li><a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a></li>
-  {% else %}
-    <li><a href="{% url 'login' %}">{% trans 'Login to Mulysa' %}</a></li>
-    <li><a href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a></li>
-  {% endif %}
-</ul>
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">
+      {% if user.is_authenticated %}
+      {% trans 'Welcome back!' %} <strong>{{ user }}</strong>
+      {% else %}
+      {% trans 'Welcome! Wanna join us?' %}
+      {% endif %}
+    </h1>
+
+
+    {% if user.is_authenticated %}
+    <a class="btn btn-primary btn-lg" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+     {% else %}
+    <a class="btn btn-primary btn-lg" href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a>
+     {% endif %}
+  </div>
+</div>
+
+<div class="container">
+  TODO: more text here
+</div>
 {% endblock %}
