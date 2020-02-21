@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'users',
     'www',
     'dooractivator',
+    'emails',
 
     # so that we don't have to write
     # hundreds of lines of css
