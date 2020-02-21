@@ -1,7 +1,21 @@
 from django.urls import path
-from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView, ListView
+
+from . import models
 
 urlpatterns = [
-    path("<int:epoch>/<slug:subject>", login_required(TemplateView.as_view(template_name="email.html")), name="email"),
+    path(
+        "",
+        login_required(
+            ListView.as_view(paginate_by=50, queryset=models.Email.objects.filter(sent__isnull=False).order_by("-sent"))
+        ),
+    ),
+    path(
+        "<int:epoch>/<slug:slug>",
+        login_required(
+            DetailView.as_view(queryset=models.Email.objects.filter(sent__isnull=False))
+        ),
+        name="email",
+    ),
 ]

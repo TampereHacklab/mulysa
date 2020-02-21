@@ -11,9 +11,15 @@ from .models import Email
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ("subject", "draft", "sent", "email_actions")
-    list_filter = ("draft", "sent")
+    list_display = ("subject", "sent", "email_actions")
+    list_filter = ("sent",)
     readonly_fields = ("slug", "created", "last_modified", "sent", "email_actions")
+
+    def has_delete_permission(self, request, obj=None):
+        """ don't allow deleting emails that have been sent """
+        if obj and obj.sent is None:
+            return True
+        return False
 
     def get_urls(self):
         """
@@ -30,20 +36,27 @@ class EmailAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def email_actions(self, obj):
+        """
+        Get extra actions in admin views
+        """
         if obj.sent:
             return format_html(
+                '<a class="button" target="_blank" href="{url}">{text}</a>'.format(
+                    url=reverse("email", args=[obj.created.strftime("%s"), obj.slug]),
+                    text=_("Show browser version"),
+                )
+            )
+        if obj.id:
+            return format_html(
                 '<a class="button" href="{url}">{text}</a>'.format(
-                    url=reverse("email", args=[obj.created.strftime('%s'), obj.slug()]), text=_("Show browser version"),
+                    url=reverse("admin:email-send", args=[obj.pk]), text=_("Send now"),
                 )
             )
 
-        return format_html(
-            '<a class="button" href="{url}">{text}</a>'.format(
-                url=reverse("admin:email-send", args=[obj.pk]), text=_("Send now"),
-            )
-        )
-
     def send_email(self, request, *args, **kwargs):
+        """
+        Send the email
+        """
         email = get_object_or_404(Email, id=kwargs["id"])
 
         if request.method != "POST":

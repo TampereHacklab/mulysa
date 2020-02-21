@@ -11,5 +11,6 @@ class EmailActionForm(forms.Form):
 
     def save(self, email, user):
         email.sent = datetime.now()
+        email.slug = email.slugify()
         email.save()
         logger.info("Sending email")

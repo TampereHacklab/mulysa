@@ -36,13 +36,15 @@ class Email(models.Model):
         auto_now=True, verbose_name=_("Last modified datetime"),
     )
 
-    draft = models.BooleanField(verbose_name=_("Draft, the message wont be sent"),)
-
     sent = models.DateTimeField(
         blank=True, null=True, verbose_name=_("Datetime the message was sent")
     )
 
-    def slug(self):
+
+    def get_url(self):
+        return f"{self.sent.strftime('%s')}/{self.slug}"
+
+    def slugify(self):
         return slugify(self.subject)
 
     def __str__(self):

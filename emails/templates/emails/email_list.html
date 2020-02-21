@@ -1,0 +1,20 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+
+    {% if is_paginated %}
+    {% bootstrap_pagination page_obj %}
+    {% endif %}
+
+    {% for email in object_list %}
+        <li>{{ email.sent|date }} - <a href="{{email.get_url}}">{{ email.subject }}</a></li>
+    {% empty %}
+        <li>No emails yet.</li>
+    {% endfor %}
+</div>
+{% endblock %}
+
+

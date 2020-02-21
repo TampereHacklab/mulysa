@@ -1,0 +1,12 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <h1>{{email.subject}}</h1>
+    {{email.content}}
+</div>
+{% endblock %}
+
+
