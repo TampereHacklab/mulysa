@@ -12,9 +12,9 @@ from .forms import EmailActionForm
 
 
 class EmailAdmin(admin.ModelAdmin):
-    list_display = ("subject", "draft", "sent", "get_email_actions")
+    list_display = ("subject", "draft", "sent", "email_actions")
     list_filter = ("draft", "sent")
-    readonly_fields = ("created", "last_modified", "sent", "get_email_actions")
+    readonly_fields = ("created", "last_modified", "sent", "email_actions")
 
     def get_urls(self):
         """
@@ -23,14 +23,14 @@ class EmailAdmin(admin.ModelAdmin):
         urls = super().get_urls()
         custom_urls = [
             path(
-                "<int:id>/send",
+                "<int:id>/send/",
                 self.admin_site.admin_view(self.send_email),
                 name="email-send",
             ),
         ]
         return custom_urls + urls
 
-    def get_email_actions(self, obj):
+    def email_actions(self, obj):
         return format_html(
             '<a class="button" href="{url}">{text}</a>'.format(
                 url=reverse("admin:email-send", args=[obj.pk]), text=_("Send now"),

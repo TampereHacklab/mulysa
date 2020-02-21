@@ -11,6 +11,19 @@
       {{ form.non_field_errors }}
     {% endif %}
 
+    <pre>
+      TODO: preview for the email
+
+      pre stuff
+
+      content
+
+      post stuff
+
+      default signature
+    </pre>
+
+
     <fieldset class="module aligned">
       {% for field in form %}
         <div class="form-row">
@@ -27,6 +40,7 @@
     </fieldset>
     <div class="submit-row">
       <input type="submit" class="default" value="{% trans 'Send now' %}">
+      <a class="button large" href="{% url 'admin:emails_email_change' email.id %}">{% trans 'Cancel' %}</a>
     </div>
   </form>
 </div>
