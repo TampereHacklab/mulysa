@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from django import forms
 
@@ -9,5 +10,6 @@ class EmailActionForm(forms.Form):
     """ send the email """
 
     def save(self, email, user):
+        email.sent = datetime.now()
+        email.save()
         logger.info("Sending email")
-

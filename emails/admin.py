@@ -1,20 +1,19 @@
 from django.contrib import admin
-from .models import Email
-
-from django.utils.html import format_html
-from django.urls import reverse, path
-from django.utils.translation import ugettext_lazy as _
-from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.template.response import TemplateResponse
+from django.urls import path, reverse
+from django.utils.html import format_html
+from django.utils.translation import ugettext_lazy as _
 
 from .forms import EmailActionForm
+from .models import Email
 
 
 class EmailAdmin(admin.ModelAdmin):
     list_display = ("subject", "draft", "sent", "email_actions")
     list_filter = ("draft", "sent")
-    readonly_fields = ("created", "last_modified", "sent", "email_actions")
+    readonly_fields = ("slug", "created", "last_modified", "sent", "email_actions")
 
     def get_urls(self):
         """
@@ -31,6 +30,13 @@ class EmailAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def email_actions(self, obj):
+        if obj.sent:
+            return format_html(
+                '<a class="button" href="{url}">{text}</a>'.format(
+                    url=reverse("email", args=[obj.created.strftime('%s'), obj.slug()]), text=_("Show browser version"),
+                )
+            )
+
         return format_html(
             '<a class="button" href="{url}">{text}</a>'.format(
                 url=reverse("admin:email-send", args=[obj.pk]), text=_("Send now"),
@@ -38,7 +44,7 @@ class EmailAdmin(admin.ModelAdmin):
         )
 
     def send_email(self, request, *args, **kwargs):
-        email = get_object_or_404(Email, id=kwargs['id'])
+        email = get_object_or_404(Email, id=kwargs["id"])
 
         if request.method != "POST":
             form = EmailActionForm()
@@ -48,7 +54,7 @@ class EmailAdmin(admin.ModelAdmin):
             if form.is_valid():
                 try:
                     form.save(email, request.user)
-                except errors.Error as e:
+                except Exception:
                     # If save() raised, the form will a have a non
                     # field error containing an informative message.
                     pass

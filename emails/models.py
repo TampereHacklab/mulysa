@@ -1,5 +1,7 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+
 
 class Email(models.Model):
     """
@@ -10,37 +12,38 @@ class Email(models.Model):
         blank=False,
         null=False,
         verbose_name=_("Subject"),
-        help_text=_("Descriptive subject for the email. Finnish / English both should be written here"),
+        help_text=_(
+            "Descriptive subject for the email. Finnish / English both should be written here"
+        ),
         max_length=512,
     )
+
+    slug = models.SlugField(max_length=100, unique=True,)
 
     content = models.TextField(
         blank=False,
         null=False,
         verbose_name=_("Content"),
-        help_text=_("Content of the email. All emails will start with default 'View this message in browser' and end with 'You are receiving this message because') texts"),
+        help_text=_(
+            "Content of the email. All emails will start with default 'View this message in browser' and end with 'You are receiving this message because') texts"
+        ),
     )
 
     # some datetime bits
-    created = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_('Creation date'),
-    )
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_("Creation date"),)
 
     last_modified = models.DateTimeField(
-        auto_now=True,
-        verbose_name=_('Last modified datetime'),
+        auto_now=True, verbose_name=_("Last modified datetime"),
     )
 
-    draft = models.BooleanField(
-        verbose_name=_("Draft, the message wont be sent"),
-    )
+    draft = models.BooleanField(verbose_name=_("Draft, the message wont be sent"),)
 
     sent = models.DateTimeField(
-        blank=True,
-        null=True,
-        verbose_name=_("Datetime the message was sent")
+        blank=True, null=True, verbose_name=_("Datetime the message was sent")
     )
+
+    def slug(self):
+        return slugify(self.subject)
 
     def __str__(self):
         return self.subject
