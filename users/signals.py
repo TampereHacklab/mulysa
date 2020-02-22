@@ -134,6 +134,27 @@ def send_application_received_email(
 
     send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 
+@receiver(create_application, sender=models.MembershipApplication)
+def send_new_application_waiting_processing_email(
+    sender, instance: models.MembershipApplication, **kwargs
+):
+    """
+    send email to admin user so that they notice that there is a new membership application
+    """
+    logger.info("Sending new application received notification email {}".format(instance))
+    context = {
+        "user": instance.user,
+        "settings": settings,
+    }
+    subject = _("New membership application received")
+    from_email = settings.NOREPLY_FROM_ADDRESS
+    to = settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS
+    html_content = render_to_string("mail/new_application.html", context)
+    plaintext_content = strip_tags(html_content)
+
+    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
+
+
 
 @receiver(application_approved, sender=models.MembershipApplication)
 def send_application_approved_email(
