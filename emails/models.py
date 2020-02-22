@@ -43,6 +43,11 @@ class Email(models.Model):
     def get_url(self):
         return f"{self.sent.strftime('%s')}/{self.slug}"
 
+    def get_epoch(self):
+        if(self.sent):
+            return self.sent.strftime('%s')
+        return '000'
+
     def slugify(self):
         return slugify(self.subject)
 

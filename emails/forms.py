@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
+from django.urls import reverse_lazy
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +45,8 @@ class EmailActionForm(forms.Form):
                 "user": user,
                 "settings": settings,
                 "email": email,
+                "SITENAME": settings.SITENAME,
+                "SITE_URL": settings.SITE_URL,
             }
             subject = email.subject
             from_email = settings.NOREPLY_FROM_ADDRESS
