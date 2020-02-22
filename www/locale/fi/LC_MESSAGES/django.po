@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 18:52+0200\n"
+"POT-Creation-Date: 2020-02-22 19:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,7 +124,7 @@ msgid "Bank Ledger"
 msgstr "Tiliote"
 
 #: www/templates/www/base.html:56 www/templates/www/custominvoice.html:5
-#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:72
+#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:77
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
@@ -189,8 +189,8 @@ msgstr "Tervetuloa takaisin!"
 msgid "Welcome! Wanna join us?"
 msgstr "Tervetuloa! Haluatko liittyä?"
 
-#: www/templates/www/index.html:20 www/templates/www/user.html:64
-#: www/templates/www/user.html:73
+#: www/templates/www/index.html:20 www/templates/www/user.html:69
+#: www/templates/www/user.html:78
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
@@ -242,8 +242,12 @@ msgid "Services"
 msgstr "Jäsenpalvelut"
 
 #: www/templates/www/thanks.html:5
-msgid "Registration successful!"
-msgstr "Hakemus vastaanotettu!"
+msgid ""
+"Registration successful! Please check your e-mail (and spam folder) for "
+"instuctions."
+msgstr ""
+"Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
+"roskapostilaatikko) johon lähetimme lisäohjeita."
 
 #: www/templates/www/user.html:8
 msgid "User data for"
@@ -265,58 +269,59 @@ msgstr "Puhelin"
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: www/templates/www/user.html:36
+#: www/templates/www/user.html:38
+msgid ""
+"Your membership application is being processed. You will receive e-mail when "
+"the process is finished. This may take up to two weeks."
+msgstr ""
+"Jäsenhakemuksesi on vireillä. Saat sähköpostia kun hakemuksesi on käsitelty. "
+"Tämä voi kestää parikin viikkoa."
+
+#: www/templates/www/user.html:41
 msgid "Service subscriptions"
 msgstr "Jäsenpalvelut"
 
-#: www/templates/www/user.html:44
+#: www/templates/www/user.html:49
 msgid "State"
 msgstr "Tila"
 
-#: www/templates/www/user.html:50
+#: www/templates/www/user.html:55
 msgid "Paid until"
 msgstr "Voimassaoloaika"
 
-#: www/templates/www/user.html:51
+#: www/templates/www/user.html:56
 msgid "days left"
 msgstr "päivää jäljellä"
 
-#: www/templates/www/user.html:54
+#: www/templates/www/user.html:59
 msgid "Last payment"
 msgstr "Viimeisin maksu"
 
-#: www/templates/www/user.html:60
+#: www/templates/www/user.html:65
 #, python-format
 #| msgid ""
-#| "\n"
-#| "            This service can be paid with your personal reference number "
-#| "%(ref)s\n"
-#| "            to bank account %(bank_iban)s. Service price is %(cost)s\n"
-#| "          "
+#| "This service can be paid with your personal reference number %(ref)s\n"
+#| "            to bank account %(bank_iban)s. Service price is %(cost)s"
 msgid ""
 "This service can be paid with your personal reference number %(ref)s\n"
-"            to bank account %(bank_iban)s. Service price is %(cost)s"
+"              to bank account %(bank_iban)s. Service price is %(cost)s"
 msgstr ""
 "Tämän palvelun voit maksaa henkilökohtaisella viitenumerollasi %(ref)s "
 "tilille %(bank_iban)s. Palvelun hinta on %(cost)s"
 
-#: www/templates/www/user.html:63
-#| msgid ""
-#| "\n"
-#| "            Please create a custom invoice to pay this service.\n"
-#| "          "
+#: www/templates/www/user.html:68
 msgid "Please create a custom invoice to pay this service."
 msgstr "Luo vapaamuotoinen lasku maksaaksesi tämän palvelun."
 
-#: www/templates/www/user.html:80
+#: www/templates/www/user.html:86
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:88
+#: www/templates/www/user.html:94
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:93
+#: www/templates/www/user.html:99
 msgid "referencenumber"
 msgstr "viitenumero"
 
@@ -333,6 +338,9 @@ msgstr "Hylätty %(name)s:n jäsenhakemus"
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
+
+#~ msgid "Registration successful!"
+#~ msgstr "Hakemus vastaanotettu!"
 
 #~ msgid "My Hacklab"
 #~ msgstr "Hacklabini"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 18:52+0200\n"
+"POT-Creation-Date: 2020-02-22 19:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,7 +147,7 @@ msgstr "Muista käyttää aina omaa viitenumeroasi jäsenmaksuja maksaessa"
 msgid "You must agree to the terms"
 msgstr "Hyväksyn jäsenyyden ehdot"
 
-#: users/models.py:217 users/models.py:340 users/models.py:482
+#: users/models.py:217 users/models.py:340 users/models.py:485
 msgid "Message"
 msgstr "Terveiset"
 
@@ -200,7 +200,7 @@ msgstr "Päiväys"
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: users/models.py:334 users/models.py:509
+#: users/models.py:334 users/models.py:512
 msgid "Amount"
 msgstr "Määrä"
 
@@ -274,33 +274,33 @@ msgstr "Mihin päivämäärään asti maksettu"
 msgid "The service will stay active until this date"
 msgstr "Palvelu pysyy aktiivisena tähän päivämäärään asti"
 
-#: users/models.py:467
+#: users/models.py:470
 #, python-format
 msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"
 
-#: users/models.py:498
+#: users/models.py:501
 msgid "How many days of service this invoice pays"
 msgstr "Montako päivää tämä lasku maksaa"
 
-#: users/models.py:499
+#: users/models.py:502
 msgid ""
 "For example value 14 with access right service pays two weeks of access."
 msgstr "Esimerkiksi arvo 14 tilankäyttöoikeutta maksaa 2 viikkoa tilankäyttöä."
 
-#: users/models.py:505
+#: users/models.py:508
 msgid "Reference number for paying invoice"
 msgstr "Tilisiirron viitenumero"
 
-#: users/models.py:506
+#: users/models.py:509
 msgid "Reference number is set by transaction sender and must match this."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: users/models.py:510
+#: users/models.py:513
 msgid "Minimum amount of money to satisfy this invoice."
 msgstr "Minimisumma laskun maksamiseksi"
 
-#: users/models.py:523
+#: users/models.py:526
 #, python-format
 msgid ""
 "Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - "

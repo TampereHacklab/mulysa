@@ -160,6 +160,7 @@ def userdetails(request, id):
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('date')
     userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('date')
     userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
+    userdetails.membership_application = MembershipApplication.objects.filter(user=userdetails).first()
     return render(request, 'www/user.html', {'userdetails': userdetails, 'defaultservice': settings.DEFAULT_ACCOUNT_SERVICE, 'bank_iban': settings.ACCOUNT_IBAN})
 
 @login_required
