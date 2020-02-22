@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 
 from drfx import settings
 from users.models import BankTransaction, CustomInvoice, CustomUser, MemberService, ServiceSubscription
+from users.signals import application_approved, application_denied
 
 
 """
@@ -220,6 +221,7 @@ class BusinessLogic:
         print('Rejecting app ', application)
         # TODO: Send mail and any other notifications to user?
         # Should delete the application
+        application_denied.send(sender=application.__class__, instance=application)
         application.user.delete()
 
     """
@@ -229,6 +231,7 @@ class BusinessLogic:
     def accept_application(application):
         print('Accepting app ', application)
         # TODO: Send mail and any other notifications to user?
+        application_approved.send(sender=application.__class__, instance=application)
         user = application.user
         user.log(_('Accepted as member'))
         # Move user's subscriptions to overdue state

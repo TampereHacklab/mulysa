@@ -1,0 +1,31 @@
+{% extends 'mail/email_base.html' %} {% block content %}
+<h1>
+  Thank you for applying for membership to {{ settings.SITENAME }} {{
+  user.first_name }}!
+</h1>
+<p>
+  We will check your application and get back to you after your application has
+  been processed.
+</p>
+
+<p>
+  In the meantime the Best way to get started is to join our community meeting
+  first Tuesday of the month or weekly open house every Tuesday. It is also
+  highly recommendable to join our communication channels (Matrix, Telegram or
+  IRC and email list). Be happy to ask if you like to know more!
+</p>
+
+<p>
+  If you want to speed things up you can already pay your monthly fee using the
+  payment information below.
+</p>
+
+<p>
+  <b>Account holder</b>: {{ settings.ACCOUNT_NAME }}<br />
+  ACCOUNT_IBAN : {{ settings.ACCOUNT_IBAN }}<br />
+  ACCOUNT_BIC : {{ settings.ACCOUNT_BIC }}<br />
+  ref : {{ user.reference_number }}
+</p>
+
+<p>Best regards {{ settings.SITENAME }} hackers!</p>
+{% endblock %}

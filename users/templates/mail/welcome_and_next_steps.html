@@ -1,45 +1,67 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <title></title>
 
-    <style type="text/css">
-    </style>
-</head>
+    <style type="text/css"></style>
+  </head>
 
-<body style="margin:0; padding:0; background-color:#F2F2F2;">
+  <body style="margin:0; padding:0; background-color:#F2F2F2;">
     <center>
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F2F2F2">
-            <tr>
-                <td align="center" valign="top">
-                    <h1>Welcome {{user.first_name}} to Tampere Hacklab ry</h1>
-                    <p>
-                        Great to have you onboard! The Best way to get started is to join our community meeting first Tuesday of the month or weekly open house every Tuesday. It is also highly recommendable to join our communication channels (Matrix, Telegram or IRC and email list). Be happy to ask if you like to know more!
-                    </p>
+      <table
+        width="100%"
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        bgcolor="#F2F2F2"
+      >
+        <tr>
+          <td align="center" valign="top">
+            <h1>Welcome {{user.first_name}} to {{ settings.SITENAME }}</h1>
 
-                    <h2>Payment info</h2>
-                    <p>Your personal bank reference number is <b>{{user.reference_number}}</b>. Remember always to use
-                        your reference number</p>
-                    <p>We will be waiting your first payment before we add your account access in to the systems. Before this you can join our community meetings, open house and communication channels and ask if someone could help you. All Hacklab services work by voluntary basis so things might not work always. Please be patient. For the challenges help would be appreciated, and we would be more than happy for your contribution.</p>
+            <p>
+              Great to have you onboard! Your membership application has been
+              approved and now is a great time to to join our community by
+              coming to the next community meeting on the first Tuesday of the
+              month or poping by weekly open house every Tuesday. It is also
+              highly recommendable to join our communication channels (Matrix,
+              Telegram or IRC and email list). Be happy to ask if you like to
+              know more!
+            </p>
 
-                    <h3>Bank account information is</h3>
+            <h2>Payment info</h2>
+            <p>
+              Your personal bank reference number is
+              <b>{{user.reference_number}}</b>. Remember always to use your
+              reference number.
+            </p>
+            <p>
+              We will be waiting your first payment before we add your account
+              access in to the systems. Before this you can join our community
+              meetings, open house and communication channels and ask if someone
+              could help you. All Hacklab services work by voluntary basis so
+              things might not work always. Please be patient. For the
+              challenges help would be appreciated, and we would be more than
+              happy for your contribution.
+            </p>
 
-                    <p><b>Account holder</b>: {{settings.ACCOUNT_NAME}}<br />
-                        ACCOUNT_IBAN : {{settings.IBAN}}<br />
-                        ACCOUNT_BIC : {{settings.BIC}}<br />
-                        ref : {{user.reference_number}}</p>
-						
-			<p>Best regards Tampere Hacklab hackers!</p>
+            <h3>Bank account information is</h3>
 
-                </td>
-            </tr>
-        </table>
+            <p>
+              <b>Account holder</b>: {{ settings.ACCOUNT_NAME }}<br />
+              ACCOUNT_IBAN : {{ settings.ACCOUNT_IBAN }}<br />
+              ACCOUNT_BIC : {{ settings.ACCOUNT_BIC }}<br />
+              ref : {{ user.reference_number }}
+            </p>
+
+            <p>Best regards {{ settings.SITENAME }} hackers!</p>
+          </td>
+        </tr>
+      </table>
     </center>
-</body>
-
+  </body>
 </html>
