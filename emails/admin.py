@@ -1,4 +1,5 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
@@ -67,9 +68,10 @@ class EmailAdmin(admin.ModelAdmin):
             if form.is_valid():
                 try:
                     form.save(email, request.user)
-                except Exception:
+                except Exception as e:
                     # If save() raised, the form will a have a non
                     # field error containing an informative message.
+                    self.message_user(request, f"Sending email failed: {e}", level=messages.ERROR)
                     pass
                 else:
                     self.message_user(request, "Success")

@@ -8,7 +8,12 @@ urlpatterns = [
     path(
         "",
         login_required(
-            ListView.as_view(paginate_by=50, queryset=models.Email.objects.filter(sent__isnull=False).order_by("-sent"))
+            ListView.as_view(
+                paginate_by=50,
+                queryset=models.Email.objects.filter(sent__isnull=False).order_by(
+                    "-sent"
+                ),
+            )
         ),
     ),
     path(

@@ -40,7 +40,6 @@ class Email(models.Model):
         blank=True, null=True, verbose_name=_("Datetime the message was sent")
     )
 
-
     def get_url(self):
         return f"{self.sent.strftime('%s')}/{self.slug}"
 
