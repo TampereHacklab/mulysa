@@ -10,7 +10,6 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
-from django.urls import reverse_lazy
 
 logger = logging.getLogger(__name__)
 
