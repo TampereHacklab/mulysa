@@ -1,0 +1,6 @@
+{# The real content of the email, first the content and then the "post" stuff like, why this email was sent #}
+{% load i18n %}
+
+{{ email.content }}
+<br />
+{% blocktrans %} You are receiving this email because you are registered member of <a target="_blank" href="{{ GITHUB_URL }}">{{ SITENAME }}a</a>{% endblocktrans %}
