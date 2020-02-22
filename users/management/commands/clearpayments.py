@@ -38,4 +38,9 @@ class Command(BaseCommand):
             transaction.user = None
             transaction.save()
 
+        custominvoices = CustomInvoice.objects.all()
+        for custominvoice in custominvoices:
+            custominvoice.payment_transaction = None
+            custominvoice.save()
+
         user.log("User's payment history begins")
