@@ -33,64 +33,72 @@
     </tr>
   </table>
 
-  <h2>{% trans 'Service subscriptions' %}</h2>
+  {% if userdetails.membership_application %}
+  <b>
+  {% trans 'Your membership application is being processed. You will receive e-mail when the process is finished. This may take up to two weeks.' %}
+  </b>
+  {% else %}
+    <h2>{% trans 'Service subscriptions' %}</h2>
 
-  {% for subscription in userdetails.servicesubscriptions %}
-  <table class="table">
-    <tr>
-      <td colspan="2"><h3>{{ subscription.service.name }}</h3></td>
-    </tr>
-    <tr>
-      <td>{% trans 'State' %}</td>
-      <td>
-        <span style="background-color: {{ subscription.statecolor }}"
-          >{{ subscription.statestring }}</span
-        >
-      </td>
-    </tr>
-    <tr>
-      <td>{% trans 'Paid until' %}</td>
-      <td>{{subscription.paid_until}}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'Last payment' %}</td>
-      <td>{{subscription.last_payment}}</td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        {% if subscription.service.id == defaultservice %}
-          {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}
-            This service can be paid with your personal reference number {{ ref }}
-            to bank account {{bank_iban}}. Service price is {{ cost }}
-          {% endblocktrans %}
-        {% else %}
-          {% blocktrans %}
-            Please create a custom invoice to pay this service.
-          {% endblocktrans %}
-          <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-        {% endif %}
-      </td>
-    </tr>
-  </table>
+    {% for subscription in userdetails.servicesubscriptions %}
+    <table class="table">
+      <tr>
+        <td colspan="2"><h3>{{ subscription.service.name }}</h3></td>
+      </tr>
+      <tr>
+        <td>{% trans 'State' %}</td>
+        <td>
+          <span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>{% trans 'Paid until' %}</td>
+        <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Last payment' %}</td>
+        <td>{{subscription.last_payment|default_if_none:"-"}}</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          {% if subscription.service.id == defaultservice %}
+            {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal reference number {{ ref }}
+              to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
+          {% else %}
+            {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
+            <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
 
-  {% endfor %}
-
-  <h2>{% trans 'Activity log' %}</h2>
-
-  <ul>
-    {% for entry in userdetails.userslog %}
-    <li>{{ entry.date }} - {{ entry.message }}</li>
     {% endfor %}
-  </ul>
 
-  <h2>{% trans 'Bank transactions' %}</h2>
+    <h2>{% trans 'Custom invoices' %}</h2>
+    <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+    <ul>
+      {% for custominvoice in userdetails.custominvoices %}
+      <li>{{ custominvoice }}</li>
+      {% endfor %}
+    </ul>
 
-  <ul>
-    {% for transaction in userdetails.transactions %}
-    <li>
-      {{ transaction.date }} {{ transaction.amount }}€ {% trans 'referencenumber' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+    <h2>{% trans 'Activity log' %}</h2>
+
+    <ul>
+      {% for entry in userdetails.userslog %}
+      <li>{{ entry.date }} - {{ entry.message }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>{% trans 'Bank transactions' %}</h2>
+
+    <ul>
+      {% for transaction in userdetails.transactions %}
+      <li>
+        {{ transaction.date }} {{ transaction.amount }}€ {% trans 'referencenumber' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
 {% endblock %}

@@ -118,6 +118,18 @@ def ledger(request):
 
 @login_required
 @staff_member_required
+def custominvoices(request):
+    filter = request.GET.get('filter')  # For future expansion
+    custominvoices = []
+    if not filter:
+        custominvoices = CustomInvoice.objects.all().order_by('payment_transaction')
+
+    return render(request, 'www/custominvoices.html', {
+        'custominvoices': custominvoices
+    })
+
+@login_required
+@staff_member_required
 def application_operation(request, application_id, operation):
     application = get_object_or_404(MembershipApplication, id=application_id)
     name = str(application.user)
@@ -147,6 +159,8 @@ def userdetails(request, id):
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
     userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('date')
     userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('date')
+    userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
+    userdetails.membership_application = MembershipApplication.objects.filter(user=userdetails).first()
     return render(request, 'www/user.html', {'userdetails': userdetails, 'defaultservice': settings.DEFAULT_ACCOUNT_SERVICE, 'bank_iban': settings.ACCOUNT_IBAN})
 
 @login_required

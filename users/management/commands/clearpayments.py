@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from users.models import BankTransaction, CustomUser, ServiceSubscription, UsersLog
+from users.models import BankTransaction, CustomUser, ServiceSubscription, UsersLog, CustomInvoice
 
 # Caution: This does some destructive operations. Run only if you are sure.
 
@@ -37,5 +37,10 @@ class Command(BaseCommand):
             transaction.has_been_used = False
             transaction.user = None
             transaction.save()
+
+        custominvoices = CustomInvoice.objects.all()
+        for custominvoice in custominvoices:
+            custominvoice.payment_transaction = None
+            custominvoice.save()
 
         user.log("User's payment history begins")

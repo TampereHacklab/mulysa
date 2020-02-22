@@ -4,6 +4,8 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <title>{% block title %}Mulysa{% endblock %}</title>
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
@@ -37,7 +39,7 @@
 
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="{% url 'index' %}">{% trans 'My Hacklab' %}</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Tampere Hacklab</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,6 +53,7 @@
               <li class="nav-item"><a class="nav-link" href="{% url 'applications' %}">{% trans 'Member applications' %}</a></li>
               <li class="nav-item"><a class="nav-link" href="{% url 'dataimport' %}">{% trans 'Import' %}</a></li>
               <li class="nav-item"><a class="nav-link" href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'custominvoices' %}">{% trans 'Custom invoices' %}</a></li>
               {% endif %}
             {% else %}
               <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">{% trans 'Register' %}</a></li>

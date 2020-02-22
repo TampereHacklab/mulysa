@@ -77,6 +77,7 @@ class BusinessLogic:
                     if not subscription.paid_until:
                         subscription.paid_until = transaction.date
                     subscription.paid_until = subscription.paid_until + timedelta(days=invoice.days)
+                    subscription.last_payment = transaction
                     invoice.payment_transaction = transaction
                     transaction.has_been_used = True
                     transaction.user = invoice.user
@@ -87,6 +88,7 @@ class BusinessLogic:
                                                                                                                                      'name': subscription.service.name,
                                                                                                                                      'until': subscription.paid_until,
                                                                                                                                      'transaction': transaction}))
+                    BusinessLogic.check_servicesubscription_state(subscription)
                 except ServiceSubscription.DoesNotExist:
                     print('Transaction would pay for invoice but user has no servicesubscription??')
             else:

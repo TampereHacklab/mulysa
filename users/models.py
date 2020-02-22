@@ -453,6 +453,19 @@ class ServiceSubscription(models.Model):
                 return ss[1]
         return "(???)"  # Should never happen
 
+    # Return number of days left until subscription ends
+    def days_left(self):
+        if self.state != ServiceSubscription.ACTIVE:
+            return 0
+
+        if not self.paid_until:  # Should be, but just to be sure
+            return 0
+
+        daysleft = (self.paid_until - datetime.date.today()).days
+        if daysleft < 0:
+            daysleft = 0
+        return daysleft
+
     def __str__(self):
         return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}
 

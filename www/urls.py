@@ -11,6 +11,7 @@ urlpatterns = [
     path('dataimport', views.dataimport, name='dataimport'),
     path('users', views.users, name='users'),
     path('ledger', views.ledger, name='ledger'),
+    path('custominvoices', views.custominvoices, name='custominvoices'),
     path('userdetails/<int:id>/', views.userdetails, name='userdetails'),
     path('custominvoice', views.custominvoice, name='custominvoice'),
     path('custominvoice/<str:action>/<int:invoiceid>/', views.custominvoice_action, name='custominvoice_action'),
