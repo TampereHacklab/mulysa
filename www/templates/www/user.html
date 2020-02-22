@@ -75,6 +75,14 @@
 
   {% endfor %}
 
+  <h2>{% trans 'Custom invoices' %}</h2>
+  <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+  <ul>
+    {% for custominvoice in userdetails.custominvoices %}
+    <li>{{ custominvoice }}</li>
+    {% endfor %}
+  </ul>
+
   <h2>{% trans 'Activity log' %}</h2>
 
   <ul>

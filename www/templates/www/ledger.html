@@ -7,7 +7,7 @@ Bank ledger
 <a href="{% url 'ledger' %}">All</a> |
 <a href="{% url 'ledger' %}?filter=unknown">Unknown user</a> |
 <a href="{% url 'ledger' %}?filter=paid">Paid from account</a> |
-<a href="{% url 'ledger' %}?filter=unused">Unused payments</a> |
+<a href="{% url 'ledger' %}?filter=unused">Unused payments</a>
 
 <table width="90%" border="1">
 <tr>
@@ -20,7 +20,7 @@ Bank ledger
     <td>{{ transaction.sender }}</td>
     <td>{{ transaction.reference_number }}</td>
     <td>{{ transaction.message }}</td>
-    <td>{{ transaction.has_been_used }}</td>
+    <td align="center">{% if transaction.has_been_used %}✔{% endif %}</td>
     <td>
         {% if transaction.user %}
         <a href="{% url 'userdetails' transaction.user.id %}">

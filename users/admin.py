@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription
+from .models import BankTransaction, CustomUser, MemberService, MembershipApplication, ServiceSubscription, CustomInvoice, UsersLog
 
 
 class CustomUserAdmin(UserAdmin):
@@ -18,3 +18,5 @@ admin.site.register(MembershipApplication)
 admin.site.register(MemberService)
 admin.site.register(ServiceSubscription)
 admin.site.register(BankTransaction)
+admin.site.register(CustomInvoice)
+admin.site.register(UsersLog)
