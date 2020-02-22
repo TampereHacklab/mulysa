@@ -43,30 +43,24 @@
     <tr>
       <td>{% trans 'State' %}</td>
       <td>
-        <span style="background-color: {{ subscription.statecolor }}"
-          >{{ subscription.statestring }}</span
-        >
+        <span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
       </td>
     </tr>
     <tr>
       <td>{% trans 'Paid until' %}</td>
-      <td>{{subscription.paid_until}}</td>
+      <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
     </tr>
     <tr>
       <td>{% trans 'Last payment' %}</td>
-      <td>{{subscription.last_payment}}</td>
+      <td>{{subscription.last_payment|default_if_none:"-"}}</td>
     </tr>
     <tr>
       <td colspan="2">
         {% if subscription.service.id == defaultservice %}
-          {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}
-            This service can be paid with your personal reference number {{ ref }}
-            to bank account {{bank_iban}}. Service price is {{ cost }}
-          {% endblocktrans %}
+          {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal reference number {{ ref }}
+            to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
         {% else %}
-          {% blocktrans %}
-            Please create a custom invoice to pay this service.
-          {% endblocktrans %}
+          {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
           <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
         {% endif %}
       </td>

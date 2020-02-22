@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from users.models import BankTransaction, CustomUser, ServiceSubscription, UsersLog
+from users.models import BankTransaction, CustomUser, ServiceSubscription, UsersLog, CustomInvoice
 
 # Caution: This does some destructive operations. Run only if you are sure.
 

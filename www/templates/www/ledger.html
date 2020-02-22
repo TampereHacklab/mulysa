@@ -18,7 +18,7 @@ Bank ledger
     <td>{{ transaction.date }}</td>
     <td>{{ transaction.amount }}</td>
     <td>{{ transaction.sender }}</td>
-    <td>{{ transaction.reference_number }}</td>
+    <td>{{ transaction.reference_number|default_if_none:"" }}</td>
     <td>{{ transaction.message }}</td>
     <td align="center">{% if transaction.has_been_used %}✔{% endif %}</td>
     <td>

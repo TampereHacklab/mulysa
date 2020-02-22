@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-16 22:54+0200\n"
+"POT-Creation-Date: 2020-02-22 18:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,60 +32,123 @@ msgstr "Valitse palvelu.."
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
-#: www/templates/registration/login.html:6
-#: www/templates/registration/login.html:10 www/templates/www/usertools.html:7
+#: www/templates/registration/login.html:5
+#: www/templates/registration/login.html:11
+#: www/templates/registration/login.html:21
+#: www/templates/registration/password_reset_complete.html:15
+#: www/templates/www/base.html:68
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
-#: www/templates/www/applications.html:5 www/templates/www/base.html:43
+#: www/templates/registration/login.html:23
+msgid "Forget password?"
+msgstr "Salasanan nollaus"
+
+#: www/templates/registration/password_reset_complete.html:13
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr "Salasanasi on asetettu. Voit nyt kirjautua sisään."
+
+#: www/templates/registration/password_reset_confirm.html:15
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr "Anna uusi salasanasi kahdesti."
+
+#: www/templates/registration/password_reset_confirm.html:26
+msgid "Change my password"
+msgstr "Salasanan vaihto"
+
+#: www/templates/registration/password_reset_confirm.html:41
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr "Salasanan vaihtolinkki on jo käytetty. Pyydä uusi vaihtolinkki."
+
+#: www/templates/registration/password_reset_confirm.html:44
+msgid "Get new reset link"
+msgstr "Pyydä uusi vaihtolinkki"
+
+#: www/templates/registration/password_reset_done.html:13
+msgid ""
+"We’ve emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"Olemme lähettäneet sähköpostiisi ohjeet salasanan vaihtoon, olettaen että "
+"säköpostisi vastaa käyttäjätunnusta. Viestin pitiäisi olla pian perillä."
+
+#: www/templates/registration/password_reset_done.html:17
+msgid ""
+"If you don’t receive an email, please make sure you’ve entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"Jos et saanut sähköpostia, varmista että käytit samaa osoitetta kuin "
+"jäsenhakemuksen tehdessä ja tarkista myös roskapostisi."
+
+#: www/templates/registration/password_reset_done.html:21
+#: www/templates/registration/password_reset_form.html:25
+msgid "Back to login"
+msgstr "Takaisin sisäänkirjautumiseen"
+
+#: www/templates/registration/password_reset_form.html:11
+msgid "Forgot your password?"
+msgstr "Unohditko salasanasi?"
+
+#: www/templates/registration/password_reset_form.html:12
+msgid ""
+"Enter your email address below, and we'll email instructions for setting a "
+"new one."
+msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi."
+
+#: www/templates/registration/password_reset_form.html:23
+msgid "Send me instructions!"
+msgstr "Lähetä ohjeet"
+
+#: www/templates/www/applications.html:5 www/templates/www/base.html:53
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
-#: www/templates/www/base.html:28
-msgid "Tampere Hacklab member services"
-msgstr "Tampere Hacklabin jäsenrekisteri"
-
-#: www/templates/www/base.html:36
-msgid "Front page"
-msgstr "Etusivu"
-
-#: www/templates/www/base.html:39 www/templates/www/index.html:7
+#: www/templates/www/base.html:50 www/templates/www/index.html:19
 msgid "Show my user information"
 msgstr "Näytä tietoni"
 
-#: www/templates/www/base.html:42
+#: www/templates/www/base.html:52
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: www/templates/www/base.html:44
+#: www/templates/www/base.html:54
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: www/templates/www/base.html:45
+#: www/templates/www/base.html:55
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:50 www/templates/www/register.html:32
+#: www/templates/www/base.html:56 www/templates/www/custominvoice.html:5
+#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:72
+msgid "Custom invoices"
+msgstr "Vapaamuotoiset laskut"
+
+#: www/templates/www/base.html:59 www/templates/www/register.html:50
 msgid "Register"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:51
-msgid "Reset password"
-msgstr "Salasanan nollaus"
+#: www/templates/www/base.html:66
+msgid "log out"
+msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:62
+#: www/templates/www/base.html:76
+msgid "Language"
+msgstr "Kieli"
+
+#: www/templates/www/base.html:103
 #, python-format
 msgid ""
 " Web design by cos - help wanted! Make a pr at\n"
-"        <a href=\"%(GITHUB_URL)s\">GitHub</a>\n"
-"        "
+"          <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>\n"
+"          "
 msgstr ""
 "Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
 "href=\"%(GITHUB_URL)s\">GitHubissa</a>"
-
-#: www/templates/www/custominvoice.html:5
-msgid "Custom invoices"
-msgstr "Vapaamuotoiset laskut"
 
 #: www/templates/www/custominvoice.html:8
 msgid "Note: You can always delete invoice if you choose not to pay it"
@@ -118,48 +181,63 @@ msgstr "poista"
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
 
-#: www/templates/www/index.html:4
-msgid "Welcome! Choose what to do next"
-msgstr "Tervetuloa! Miten voimme palvella?"
+#: www/templates/www/index.html:11
+msgid "Welcome back!"
+msgstr "Tervetuloa takaisin!"
 
-#: www/templates/www/index.html:8 www/templates/www/user.html:39
+#: www/templates/www/index.html:13
+msgid "Welcome! Wanna join us?"
+msgstr "Tervetuloa! Haluatko liittyä?"
+
+#: www/templates/www/index.html:20 www/templates/www/user.html:64
+#: www/templates/www/user.html:73
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
-#: www/templates/www/index.html:10
-msgid "Login to Mulysa"
-msgstr "Kirjaudu sisään"
-
-#: www/templates/www/index.html:11
+#: www/templates/www/index.html:22
 msgid "Apply membership in hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: www/templates/www/register.html:5
+#: www/templates/www/index.html:29
+msgid ""
+"<strong>Note</strong> This membership system is still under heavy "
+"development. If you find bugs or inconsistensies please report them. Thanks!"
+msgstr ""
+"<strong>Huomaa</strong> Tätä jäsenyydenhallintajärjestelmää kehtitetään "
+"aktiivisesti. Jos löydät bugeja tai outoksia, ilmoita niistä. Kiitos."
+
+#: www/templates/www/register.html:8
 msgid "Apply membership to Tampere Hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
 #: www/templates/www/register.html:21
 #, python-format
 msgid ""
-"Terms for membership: I have read and agree to <a "
-"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</a> \n"
-"    and <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">association "
-"rules</a>."
+"Terms for membership: I have read and agree to\n"
+"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members "
+"guide</a>\n"
+"          and\n"
+"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
+"            >association rules</a\n"
+"          >."
 msgstr ""
 "Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
 "href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">jäsenen ohjeen</a> ja <a "
 "href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
-#: www/templates/www/register.html:25
+#: www/templates/www/register.html:30
 msgid ""
-"I promise to clean up any mess I have made at the lab and take "
-"responsibility for safety of myself and the premises.\n"
-"    I use only power tools and machines I have training and permission for."
+"I promise to clean up any mess I have made at the lab (+little more)\n"
+"          and take responsibility for safety of myself, others and the "
+"premises. I will use\n"
+"          only power tools and machines I have got training and permission "
+"for.\n"
+"          "
 msgstr ""
 "Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
 "omasta ja labin turvallisuudesta."
 
-#: www/templates/www/register.html:28
+#: www/templates/www/register.html:36
 msgid "Services"
 msgstr "Jäsenpalvelut"
 
@@ -167,110 +245,118 @@ msgstr "Jäsenpalvelut"
 msgid "Registration successful!"
 msgstr "Hakemus vastaanotettu!"
 
-#: www/templates/www/user.html:5
+#: www/templates/www/user.html:8
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
 
-#: www/templates/www/user.html:14
+#: www/templates/www/user.html:19
 msgid "Name"
 msgstr "Nimi"
 
-#: www/templates/www/user.html:17
+#: www/templates/www/user.html:23
 msgid "Email"
 msgstr "Sähköposti"
 
-#: www/templates/www/user.html:20
+#: www/templates/www/user.html:27
 msgid "Phone"
 msgstr "Puhelin"
 
-#: www/templates/www/user.html:23
+#: www/templates/www/user.html:31
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: www/templates/www/user.html:26
+#: www/templates/www/user.html:36
 msgid "Service subscriptions"
 msgstr "Jäsenpalvelut"
 
-#: www/templates/www/user.html:30
+#: www/templates/www/user.html:44
 msgid "State"
 msgstr "Tila"
 
-#: www/templates/www/user.html:31
+#: www/templates/www/user.html:50
 msgid "Paid until"
 msgstr "Voimassaoloaika"
 
-#: www/templates/www/user.html:32
+#: www/templates/www/user.html:51
+msgid "days left"
+msgstr "päivää jäljellä"
+
+#: www/templates/www/user.html:54
 msgid "Last payment"
 msgstr "Viimeisin maksu"
 
-#: www/templates/www/user.html:35
+#: www/templates/www/user.html:60
 #, python-format
 #| msgid ""
 #| "\n"
-#| "        This service can be paid with your personal reference number "
-#| "%(ref)s to bank account %(bank_iban)s. Service price is %(cost)s \n"
-#| "        "
+#| "            This service can be paid with your personal reference number "
+#| "%(ref)s\n"
+#| "            to bank account %(bank_iban)s. Service price is %(cost)s\n"
+#| "          "
 msgid ""
-"This service can be paid with your personal \n"
-"        reference number %(ref)s to bank account %(bank_iban)s. Service "
-"price is %(cost)s"
+"This service can be paid with your personal reference number %(ref)s\n"
+"            to bank account %(bank_iban)s. Service price is %(cost)s"
 msgstr ""
 "Tämän palvelun voit maksaa henkilökohtaisella viitenumerollasi %(ref)s "
 "tilille %(bank_iban)s. Palvelun hinta on %(cost)s"
 
-#: www/templates/www/user.html:38
+#: www/templates/www/user.html:63
 #| msgid ""
 #| "\n"
-#| "        Please create a custom invoice to pay this service.\n"
-#| "        "
+#| "            Please create a custom invoice to pay this service.\n"
+#| "          "
 msgid "Please create a custom invoice to pay this service."
 msgstr "Luo vapaamuotoinen lasku maksaaksesi tämän palvelun."
 
-#: www/templates/www/user.html:45
+#: www/templates/www/user.html:80
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:53
+#: www/templates/www/user.html:88
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:57
-msgid "reference number"
+#: www/templates/www/user.html:93
+msgid "referencenumber"
 msgstr "viitenumero"
-
-#: www/templates/www/usertools.html:5
-msgid "Logged in as"
-msgstr "Kirjauduttu sisään käyttäjänä"
-
-#: www/templates/www/usertools.html:5
-msgid "log out"
-msgstr "kirjaudu ulos"
-
-#: www/templates/www/usertools.html:13
-msgid "Language"
-msgstr "Kieli"
-
-#: www/templates/www/usertools.html:24
-msgid "Change"
-msgstr "Vaihda"
 
 #: www/views.py:42
 msgid "Please select at least one member service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: www/views.py:122
+#: www/views.py:138
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:125
+#: www/views.py:141
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:140
-msgid "Please login as this user or admin to see this"
-msgstr "Kirjaudu adminina nähdäksesi tämän"
+#~ msgid "My Hacklab"
+#~ msgstr "Hacklabini"
+
+#~ msgid "Tampere Hacklab member services"
+#~ msgstr "Tampere Hacklabin jäsenrekisteri"
+
+#~ msgid "Front page"
+#~ msgstr "Etusivu"
+
+#~ msgid "Welcome! Choose what to do next"
+#~ msgstr "Tervetuloa! Miten voimme palvella?"
+
+#~ msgid "Login to Mulysa"
+#~ msgstr "Kirjaudu sisään"
+
+#~ msgid "Logged in as"
+#~ msgstr "Kirjauduttu sisään käyttäjänä"
+
+#~ msgid "Change"
+#~ msgstr "Vaihda"
+
+#~ msgid "Please login as this user or admin to see this"
+#~ msgstr "Kirjaudu adminina nähdäksesi tämän"
 
 #~ msgid ""
 #~ "I use only power tools and machines I have training and permission for."
