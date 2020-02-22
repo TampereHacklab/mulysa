@@ -25,6 +25,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*', ]
 
+# Sitename
+SITENAME = "Mulysa"
+SITE_URL = "https://mulysa.tld"
+
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
 MEMBERS_GUIDE_URL = "https://wiki.tampere.hacklab.fi/member_s_guide"
