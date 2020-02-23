@@ -34,7 +34,7 @@ services:
       # listen on web also and use the middlware to do the redirect
       - "traefik.http.routers.nginxmulysa-redir.rule=host(`my.tampere.hacklab.fi`)"
       - "traefik.http.routers.nginxmulysa-redir.entrypoints=web"
-      - "traefik.http.routers.nginxmulysa-redir.middlewares=mulysa-redirect-web-secure"
+      - "traefik.http.routers.nginxmulysa-redir.middlewares=nginxmulysa-redirect-web-secure"
 
   mulysa:
     build: .
