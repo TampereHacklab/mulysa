@@ -14,6 +14,7 @@
       {% bootstrap_messages %}
       <form action="/www/register" method="post">
         {% csrf_token %}
+        {{ userform.media }}
         {% bootstrap_form userform %}
         {% bootstrap_form applicationform %}
 
