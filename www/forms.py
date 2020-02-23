@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext as _
 
+from bootstrap_datepicker_plus import DatePickerInput
 from users import models
 from users.models import ServiceSubscription
 
@@ -10,7 +11,9 @@ class RegistrationUserForm(forms.ModelForm):
         model = models.CustomUser
         fields = ['first_name', 'last_name', 'email', 'language', 'municipality',
                   'nick', 'mxid', 'birthday', 'phone']
-    birthday = forms.DateField(widget=forms.DateInput(format='%d.%m.%Y'), input_formats=('%d.%m.%Y',))
+        widgets = {
+            'birthday': DatePickerInput(format='%d.%m.%Y')
+        }
 
 class RegistrationApplicationForm(forms.ModelForm):
     class Meta:
