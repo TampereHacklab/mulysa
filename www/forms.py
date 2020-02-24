@@ -1,11 +1,11 @@
+from datetime import datetime
+
 from django import forms
 from django.utils.translation import gettext as _
 
-from bootstrap_datepicker_plus import DatePickerInput
 from users import models
 from users.models import MemberService, ServiceSubscription
-from django.utils import  translation
-from datetime import datetime
+
 
 class RegistrationUserForm(forms.ModelForm):
     class Meta:
@@ -21,13 +21,17 @@ class RegistrationUserForm(forms.ModelForm):
             "birthday",
             "phone",
         ]
-        localized_fields = ('birthday',)
-#        widgets = {"birthday": DatePickerInput(format="%d.%m.%Y", options={'locale': 'fi'})}
-#        widgets = {"birthday": DatePickerInput()}
+        localized_fields = ("birthday",)
         widgets = {
-            "birthday": forms.SelectDateWidget(years=[x for x in range(datetime.today().year-100,datetime.today().year+1)])
+            "birthday": forms.SelectDateWidget(
+                years=[
+                    x
+                    for x in range(
+                        datetime.today().year - 100, datetime.today().year + 1
+                    )
+                ]
+            )
         }
-
 
 
 class RegistrationApplicationForm(forms.ModelForm):
