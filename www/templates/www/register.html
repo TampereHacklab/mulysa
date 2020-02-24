@@ -15,6 +15,11 @@
       <form action="/www/register" method="post">
         {% csrf_token %}
         {{ userform.media }}
+
+        {% bootstrap_form_errors userform %}
+        {% bootstrap_form_errors applicationform %}
+        {% bootstrap_form_errors servicesform %}
+
         {% bootstrap_form userform %}
         {% bootstrap_form applicationform %}
 
