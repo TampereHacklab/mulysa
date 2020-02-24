@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*', ]
 # Sitename
 SITENAME = "Mulysa"
 SITE_URL = "https://mulysa.tld"
+PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
 
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
