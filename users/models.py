@@ -83,6 +83,10 @@ class CustomUser(AbstractUser):
         max_length=255,
     )
 
+    # django does not make these mandatory by default, lets make them mandatory
+    first_name = models.CharField(max_length=30, blank=False, null=False)
+    last_name = models.CharField(max_length=150, blank=False, null=False)
+
     municipality = models.CharField(
         blank=False,
         verbose_name=_('Municipality / City'),
