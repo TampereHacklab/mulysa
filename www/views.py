@@ -57,7 +57,6 @@ def register(request):
             # knows about them
             new_application.save()
 
-
             return render(request, 'www/thanks.html', {}, content_type='text/html')
     else:
         userform = RegistrationUserForm()
