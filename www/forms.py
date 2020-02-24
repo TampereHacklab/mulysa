@@ -4,7 +4,8 @@ from django.utils.translation import gettext as _
 from bootstrap_datepicker_plus import DatePickerInput
 from users import models
 from users.models import MemberService, ServiceSubscription
-
+from django.utils import  translation
+from datetime import datetime
 
 class RegistrationUserForm(forms.ModelForm):
     class Meta:
@@ -20,7 +21,13 @@ class RegistrationUserForm(forms.ModelForm):
             "birthday",
             "phone",
         ]
-        widgets = {"birthday": DatePickerInput(format="%d.%m.%Y")}
+        localized_fields = ('birthday',)
+#        widgets = {"birthday": DatePickerInput(format="%d.%m.%Y", options={'locale': 'fi'})}
+#        widgets = {"birthday": DatePickerInput()}
+        widgets = {
+            "birthday": forms.SelectDateWidget(years=[x for x in range(datetime.today().year-100,datetime.today().year+1)])
+        }
+
 
 
 class RegistrationApplicationForm(forms.ModelForm):
@@ -31,6 +38,9 @@ class RegistrationApplicationForm(forms.ModelForm):
 
 class RegistrationServicesFrom(forms.Form):
     def build_service_choices():
+        """
+        Helper for building service choices for the form
+        """
         service_choices = []
         for service in MemberService.objects.all():
             name = _(service.name)
