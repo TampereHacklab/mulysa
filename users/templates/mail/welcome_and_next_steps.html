@@ -53,7 +53,7 @@
 
             <ul>
             {% for servicesubscription in user.servicesubscription_set.all %}
-                <li>{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.days_per_payment }} days</li>
+                <li>{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }} days</li>
             {% endfor %}
             </ul>
 
