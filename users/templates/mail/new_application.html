@@ -1,4 +1,6 @@
-{% extends 'mail/email_base.html' %} {% block content %}
+{% extends 'mail/email_base.html' %}
+
+{% block content %}
 <h1>
   New membership application in {{ settings.SITENAME }}
 </h1>
@@ -10,6 +12,5 @@
 </p>
 
 {# TODO: show rest of the application information here #}
-
 
 {% endblock %}

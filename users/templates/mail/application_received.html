@@ -1,4 +1,8 @@
-{% extends 'mail/email_base.html' %} {% block content %}
+{% extends 'mail/email_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
 <h1>
   Thank you for applying for membership to {{ settings.SITENAME }} {{
   user.first_name }}!
@@ -21,11 +25,15 @@
 </p>
 
 <h3>Your services</h3>
-
 <ul>
-{% for servicesubscription in user.servicesubscription_set.all %}
-    <li>{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}</li>
-{% endfor %}
+  {% for servicesubscription in user.servicesubscription_set.all %}
+    <li>{{ servicesubscription.service.name }} -
+        {{ servicesubscription.service.cost_string }} /
+        {{ servicesubscription.service.period_string }}
+        {% if servicesubscription.service.id == settings.DEFAULT_ACCOUNT_SERVICE %}
+          <strong>{% trans 'Bank reference number' %}: {{ user.reference_number }}</strong>
+        {% endif %}</li>
+  {% endfor %}
 </ul>
 
 <h3>Bank account information is</h3>
@@ -34,7 +42,6 @@
   <b>Account holder</b>: {{ settings.ACCOUNT_NAME }}<br />
   ACCOUNT_IBAN : {{ settings.ACCOUNT_IBAN }}<br />
   ACCOUNT_BIC : {{ settings.ACCOUNT_BIC }}<br />
-  ref : {{ user.reference_number }}
 </p>
 
 <p>Best regards {{ settings.SITENAME }} hackers!</p>
