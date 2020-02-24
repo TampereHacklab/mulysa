@@ -25,8 +25,37 @@
 </div>
 
 <div class="container">
-  {% blocktrans %}<p>Hello! This is member registration system for Tampere Hacklab ry. If you have not been member before you can fill out our member application by clicking "Apply membership in hacklab" button. If you already are member of the community, you can log in by clicking top right corner "Log in" button. In case you are rejoining to our crew, please contact hallitus by email and wait for the instructions.</p>
-  <p>With this system you can manage your member information and invoices. When you log in first time, please check that your information is correct.</p>
-  <p>This membership system is still under heavy development. If you find bugs or inconsistencies please report them for the team mulysa. Thank you in advance!</p>{% endblocktrans %}
+  {# important warnings etc first #}
+  {% if user.is_authenticated %}
+    {% if user.membershipapplication_set.all.0 %}
+    <div class="alert alert-info">
+      {% trans 'Your membership application is still being processed. Please be patient!' %}
+    </div>
+    {% endif %}
+
+    {% if user.has_suspended_services %}
+      <div class="alert alert-warning">
+        {% trans 'You have services in suspended state.' %}
+      </div>
+    {% endif %}
+
+    {# TODO: show overdue payments? #}
+  {% endif %}
+
+
+  <p>{% blocktrans %}Hello! This is membership management service for {{ SITENAME }}. {% endblocktrans %} </p>
+  {% if user.is_authenticated %}
+    {# TODO: show the last email sent to members #}
+    {# TODO: show the most important user statuses (last payment date etc) #}
+    {# TODO: show open invoices for the user #}
+    {# TODO: show "changelog" #}
+  {% else %}
+    {% blocktrans %}<p>If you have not been member before you can fill out our member application by clicking "Apply membership in hacklab" button.</p>
+    <p>If you already are member of the community, you can log in by clicking top right corner "Log in" button. </p>{% endblocktrans %}
+  {% endif %}
+
+  <p>{% trans 'With this system you can manage your member information and invoices. When you log in first time, please check that your information is correct.' %}</p>
+  <p>{% trans 'This membership system is still under heavy development. If you find bugs or inconsistencies please report them for the team mulysa. Thank you in advance!' %}</p>
+
 </div>
 {% endblock %}
