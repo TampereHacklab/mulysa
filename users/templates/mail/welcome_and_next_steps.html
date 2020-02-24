@@ -49,6 +49,14 @@
               happy for your contribution.
             </p>
 
+            <h3>Your services</h3>
+
+            <ul>
+            {% for servicesubscription in user.servicesubscription_set.all %}
+                <li>{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.days_per_payment }} days</li>
+            {% endfor %}
+            </ul>
+
             <h3>Bank account information is</h3>
 
             <p>
