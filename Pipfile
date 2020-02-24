@@ -35,7 +35,6 @@ drf-tracking = {editable = true,git = "https://github.com/aschn/drf-tracking.git
 phonenumbers = "*"
 gunicorn = "*"
 django-bootstrap4 = "*"
-django-bootstrap-datepicker-plus = "*"
 
 [requires]
 python_version = "3.7"

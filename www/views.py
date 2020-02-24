@@ -1,9 +1,8 @@
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
-from django.shortcuts import redirect
 
 from drfx import settings
 from users.models import (
@@ -15,7 +14,13 @@ from users.models import (
     ServiceSubscription,
     UsersLog,
 )
-from www.forms import CustomInvoiceForm, FileImportForm, RegistrationApplicationForm, RegistrationUserForm
+from www.forms import (
+    CustomInvoiceForm,
+    FileImportForm,
+    RegistrationApplicationForm,
+    RegistrationServicesFrom,
+    RegistrationUserForm,
+)
 
 from utils import referencenumber
 from utils.businesslogic import BusinessLogic
@@ -26,22 +31,28 @@ def register(request):
     if request.method == 'POST':
         userform = RegistrationUserForm(request.POST)
         applicationform = RegistrationApplicationForm(request.POST)
+        servicesform = RegistrationServicesFrom(request.POST)
 
-        memberservices = MemberService.objects.all()
-        subscribed_services = []
-        for service in memberservices:
-            if 'service-' + str(service.id) in request.POST:
-                subscribed_services.append(service)
-                if service.pays_also_service:
-                    subscribed_services.append(service.pays_also_service)
+        if userform.is_valid() and applicationform.is_valid() and servicesform.is_valid():
 
-        # Convert to set for unique items
-        subscribed_services = set(subscribed_services)
+            # extra handling for services that pay for other services
+            # TODO: this logic should probably live in business logic
+            memberservices = MemberService.objects.all()
+            subscribed_services = []
 
-        if userform.is_valid() and len(subscribed_services) == 0:
-            messages.error(request, _('Please select at least one member service'))
+            print(servicesform.cleaned_data.get('services'))
 
-        if userform.is_valid() and applicationform.is_valid():
+            for service in memberservices:
+                print(service.id)
+                if str(service.id) in servicesform.cleaned_data.get('services', []):
+                    print(f"selecting service {service.name}")
+                    subscribed_services.append(service)
+                    if service.pays_also_service:
+                        subscribed_services.append(service.pays_also_service)
+
+            # Convert to set for unique items
+            subscribed_services = set(subscribed_services)
+
             new_user = userform.save(commit=False)
             new_application = applicationform.save(commit=False)
             new_user.save()
@@ -58,12 +69,13 @@ def register(request):
     else:
         userform = RegistrationUserForm()
         applicationform = RegistrationApplicationForm()
+        servicesform = RegistrationServicesFrom()
     return render(request,
                   'www/register.html',
                   {
                       'userform': userform,
                       'applicationform': applicationform,
-                      'memberservices': MemberService.objects.all()
+                      'servicesform': servicesform,
                   },
                   content_type='text/html'
                   )

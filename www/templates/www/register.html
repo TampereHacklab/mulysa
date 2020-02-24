@@ -34,15 +34,7 @@
           {% endblocktrans %}
         </p>
 
-        <h2>{% trans 'Services' %}</h2>
-        {% for service in memberservices %}
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="True" name="service-{{service.id}}" id="service-{{service.id}}">
-            <label class="form-check-label" for="service-{{service.id}}">
-                {% trans service.name %} {{ service.cost_string }} / {{ service.period_string }}
-            </label>
-        </div>
-        {% endfor %}
+        {% bootstrap_form servicesform %}
 
         {% buttons %}
         <input

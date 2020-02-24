@@ -109,7 +109,6 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(
         blank=False,
         verbose_name=_('Birthday'),
-        help_text=_('Format: DD.MM.YYYY'),
     )
 
     phone = models.CharField(
