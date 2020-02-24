@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 
 from users import models
 from users.models import MemberService, ServiceSubscription
+from django.db.utils import OperationalError
 
 
 class RegistrationUserForm(forms.ModelForm):
@@ -46,14 +47,18 @@ class RegistrationServicesFrom(forms.Form):
         Helper for building service choices for the form
         """
         service_choices = []
-        for service in MemberService.objects.all():
-            name = _(service.name)
-            service_choices.append(
-                (
-                    service.pk,
-                    f"{name}, {service.cost_string()} / {service.period_string()}",
+        try:
+            for service in MemberService.objects.all():
+                name = _(service.name)
+                service_choices.append(
+                    (
+                        service.pk,
+                        f"{name}, {service.cost_string()} / {service.period_string()}",
+                    )
                 )
-            )
+        except OperationalError:
+            # make migrations and migrate will fail with this (the class is loaded on startup)
+            pass
         return service_choices
 
     services = forms.MultipleChoiceField(
