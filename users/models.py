@@ -192,7 +192,6 @@ class CustomUser(AbstractUser):
         helper method for checking if the user has access to open door
         TODO: this should probably be checked by businesslogic
         """
-        logger.info(self.servicesubscription_set.all())
         try:
             subscription = self.servicesubscription_set.get(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
             if(subscription.state == ServiceSubscription.ACTIVE):
@@ -201,6 +200,19 @@ class CustomUser(AbstractUser):
             logger.error(f"Tried to load servicesubscription that does not exists {e}")
         return False
 
+    def has_suspended_services(self):
+        """
+        Helper method for checking if user has suspended services
+        """
+        # special case, always return False if membership application is still open
+        if self.membershipapplication_set.count() > 0:
+            return False
+
+        for subscription in self.servicesubscription_set.all():
+            if(subscription.state == ServiceSubscription.SUSPENDED):
+                return True
+
+        return False
 
 def validate_agreement(value):
     if not value:
