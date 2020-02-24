@@ -20,6 +20,8 @@ DEFAULT_ACCOUNT_SERVICE = 2
 
 CUSTOM_INVOICE_REFERENCE_BASE = 10000
 
+MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS = "example@example.com"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

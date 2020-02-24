@@ -1,17 +1,14 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
 {% block content %}
 <h2>
         {% trans 'Member applications' %}
 </h2>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<table width="90%" border="1">
+
+{% bootstrap_messages %}
+
+<table class="table">
     <tr>
         <th>Name</th>
         <th>E-mail</th>
@@ -22,7 +19,7 @@
     </tr>
 {% for application in applications %}
 <tr>
-<td><a href="{% url 'userdetails' application.user.id %}">{{ application.user.first_name }} {{ application.user.last_name }}</a></td> 
+<td><a href="{% url 'userdetails' application.user.id %}">{{ application.user.first_name }} {{ application.user.last_name }}</a></td>
 <td>{{ application.user.email }}</td>
 <td>{{ application.message }}</td>
 <td>{{ application.agreement }}</td>
@@ -31,7 +28,9 @@
     <li>{{ subscription.service.name }}</li>
     {% endfor %}
 </td>
-<td><a href="{% url 'application_operation' application.id 'accept' %}">Accept</a> | <a href="{% url 'application_operation' application.id 'reject' %}">R</a>eject</td>
+<td>
+    <a class="btn btn-primary" href="{% url 'application_operation' application.id 'accept' %}">Accept</a>
+    <a class="btn btn-danger" href="{% url 'application_operation' application.id 'reject' %}">Reject</a></td>
 </tr>
 {% endfor %}
 </table>

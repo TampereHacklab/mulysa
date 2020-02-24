@@ -57,13 +57,16 @@ def register(request):
             new_application = applicationform.save(commit=False)
             new_user.save()
             new_application.user = new_user
-            new_application.save()
 
             for service in subscribed_services:
                 subscription = ServiceSubscription(user=new_user,
                                                    service=service,
                                                    state=ServiceSubscription.SUSPENDED)
                 subscription.save()
+
+            # save only after subscriptions are saved also so that the email
+            # knows about them
+            new_application.save()
 
             return render(request, 'www/thanks.html', {}, content_type='text/html')
     else:

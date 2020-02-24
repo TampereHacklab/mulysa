@@ -3,24 +3,28 @@
 {% load i18n %}
 
 {% block content %}
-<h1>Welcome {{user.first_name}} to {{ settings.SITENAME }}</h1>
+<h1>
+  Thank you for applying for membership to {{ settings.SITENAME }} {{
+  user.first_name }}!
+</h1>
 <p>
-  Great to have you onboard! Your membership application has been
-  approved and now is a great time to to join our community by
-  coming to the next community meeting on the first Tuesday of the
-  month or poping by weekly open house every Tuesday. It is also
-  highly recommendable to join our communication channels (Matrix,
-  Telegram or IRC and email list). Be happy to ask if you like to
-  know more!
+  We will check your application and get back to you after your application has
+  been processed.
 </p>
-<p>All Hacklab services work by voluntary basis so
-  things might not work always. Please be patient. For the
-  challenges help would be appreciated, and we would be more than
-  happy for your contribution.
+
+<p>
+  In the meantime the Best way to get started is to join our community meeting
+  first Tuesday of the month or weekly open house every Tuesday. It is also
+  highly recommendable to join our communication channels (Matrix, Telegram or
+  IRC and email list). Be happy to ask if you like to know more!
+</p>
+
+<p>
+  If you want to speed things up you can already pay your monthly fee using the
+  payment information below.
 </p>
 
 <h3>Your services</h3>
-
 <ul>
   {% for servicesubscription in user.servicesubscription_set.all %}
     <li>{{ servicesubscription.service.name }} -
@@ -41,5 +45,4 @@
 </p>
 
 <p>Best regards {{ settings.SITENAME }} hackers!</p>
-
 {% endblock %}
