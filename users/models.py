@@ -529,6 +529,18 @@ class CustomInvoice(models.Model):
         max_digits=6,
         decimal_places=2
     )
+    # some datetime bits
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Invoice creation date'),
+        help_text=_('Automatically set to now when invoice is created')
+    )
+    last_modified = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_('Last modified datetime'),
+        help_text=_('Last time this invoice was modified'),
+    )
+
     # Points to the payment, if this invoice has been paid.
     payment_transaction = models.ForeignKey(
         BankTransaction,

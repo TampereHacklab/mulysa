@@ -9,9 +9,9 @@
   </h1>
 
   {% if user.is_staff %}
-  <p>
-    <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
-  </p>
+    <p>
+      <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
+    </p>
   {% endif %}
 
   <table class="table">
@@ -34,9 +34,9 @@
   </table>
 
   {% if userdetails.membership_application %}
-  <b>
-  {% trans 'Your membership application is being processed. You will receive e-mail when the process is finished. This may take up to two weeks.' %}
-  </b>
+    <b>
+    {% trans 'Your membership application is being processed. You will receive e-mail when the process is finished. This may take up to two weeks.' %}
+    </b>
   {% else %}
     <h2>{% trans 'Service subscriptions' %}</h2>
 
@@ -71,34 +71,60 @@
         </td>
       </tr>
     </table>
-
     {% endfor %}
 
     <h2>{% trans 'Custom invoices' %}</h2>
-    <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-    <ul>
+    <table class="table">
+      <tr>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Service' %}</th>
+        <th>{% trans 'Amount' %}</th>
+        <th>{% trans 'reference_number' %}</th>
+      </tr>
       {% for custominvoice in userdetails.custominvoices %}
-      <li>{{ custominvoice }}</li>
+      <tr>
+        <td>{{ custominvoice.created }}</td>
+        <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
+        <td>{{ custominvoice.amount }}</td>
+        <td>{{ custominvoice.reference_number }}</td>
+      </tr>
       {% endfor %}
-    </ul>
+    </table>
+    <a class="btn btn-primary" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
 
     <h2>{% trans 'Activity log' %}</h2>
-
-    <ul>
+    <table class="table">
+      <tr>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Message' %}</th>
+      </tr>
       {% for entry in userdetails.userslog %}
-      <li>{{ entry.date }} - {{ entry.message }}</li>
+      <tr>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.message }}</td>
+      </tr>
       {% endfor %}
-    </ul>
+    </table>
 
     <h2>{% trans 'Bank transactions' %}</h2>
-
-    <ul>
+    <table class="table">
+      <tr>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Amount' %}</th>
+        <th>{% trans 'referencenumber' %}</th>
+        <th>{% trans 'Sender' %}</th>
+        <th>{% trans 'Message' %}</th>
+      </tr>
       {% for transaction in userdetails.transactions %}
-      <li>
-        {{ transaction.date }} {{ transaction.amount }}€ {% trans 'referencenumber' %} {{ transaction.reference_number }} {{ transaction.sender }} {{ transaction.message }}
-      </li>
+      <tr>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.reference_number }}</td>
+        <td>{{ transaction.sender }}</td>
+        <td>{{ transaction.message }}</td>
+      </tr>
       {% endfor %}
-    </ul>
-  </div>
-{% endif %}
+    </table>
+  {% endif %}
+</div>
 {% endblock %}
