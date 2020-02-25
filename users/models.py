@@ -402,6 +402,12 @@ class BankTransaction(models.Model):
         help_text=_('True, if this transaction has already been used to pay for service.')
     )
 
+    comment = models.TextField(
+        blank=True,
+        null=True,
+        help_text=_('free form comment field for strange transaction'),
+    )
+
     def __str__(self):
         return f'Bank transaction for {(self.user and self.user.email) or "unknown user"}' \
             + f' from {self.sender}' \
