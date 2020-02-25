@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-<h1>Welcome {{user.first_name}} to {{ settings.SITENAME }}</h1>
+<h1>Welcome {{ user.first_name }} to {{ settings.SITENAME }}</h1>
 <p>
   Great to have you onboard! Your membership application has been
   approved and now is a great time to to join our community by
@@ -35,9 +35,9 @@
 <h3>Bank account information is</h3>
 
 <p>
-  <b>Account holder</b>: {{ settings.ACCOUNT_NAME }}<br />
-  ACCOUNT_IBAN : {{ settings.ACCOUNT_IBAN }}<br />
-  ACCOUNT_BIC : {{ settings.ACCOUNT_BIC }}<br />
+  <b>{% trans 'Account holder' %}Account holder</b>: {{ settings.ACCOUNT_NAME }}<br />
+  {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}<br />
+  {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}<br />
 </p>
 
 <p>Best regards {{ settings.SITENAME }} hackers!</p>
