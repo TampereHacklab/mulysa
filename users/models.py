@@ -246,7 +246,6 @@ class MembershipApplication(models.Model):
         help_text=_('Last time this invoice was modified'),
     )
 
-
     agreement = models.BooleanField(
         blank=False,
         verbose_name=_('I agree to the terms presented'),
