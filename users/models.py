@@ -234,6 +234,19 @@ class MembershipApplication(models.Model):
         max_length=1024,
     )
 
+    # some datetime bits
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('Application creation date'),
+        help_text=_('Automatically set to now when membership application is created')
+    )
+    last_modified = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_('Last modified datetime'),
+        help_text=_('Last time this invoice was modified'),
+    )
+
+
     agreement = models.BooleanField(
         blank=False,
         verbose_name=_('I agree to the terms presented'),
