@@ -243,7 +243,7 @@ class MembershipApplication(models.Model):
     last_modified = models.DateTimeField(
         auto_now=True,
         verbose_name=_('Last modified datetime'),
-        help_text=_('Last time this invoice was modified'),
+        help_text=_('Last time this membership application was modified'),
     )
 
     agreement = models.BooleanField(

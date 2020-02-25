@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='membershipapplication',
             name='last_modified',
-            field=models.DateTimeField(auto_now=True, help_text='Last time this invoice was modified', verbose_name='Last modified datetime'),
+            field=models.DateTimeField(auto_now=True, help_text='Last time this membership application was modified', verbose_name='Last modified datetime'),
         ),
     ]
