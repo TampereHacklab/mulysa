@@ -1,6 +1,7 @@
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+
+from autoslug import AutoSlugField
 
 
 class Email(models.Model):
@@ -18,7 +19,7 @@ class Email(models.Model):
         max_length=512,
     )
 
-    slug = models.SlugField(max_length=100, unique=True,)
+    slug = AutoSlugField(populate_from='subject', unique=True)
 
     content = models.TextField(
         blank=False,
@@ -47,9 +48,6 @@ class Email(models.Model):
         if(self.sent):
             return self.sent.strftime('%s')
         return '000'
-
-    def slugify(self):
-        return slugify(self.subject)
 
     def __str__(self):
         return self.subject

@@ -18,9 +18,6 @@ class EmailActionForm(forms.Form):
     """ send the email """
 
     def save(self, email, adminuser):
-        email.sent = datetime.now()
-        email.slug = email.slugify()
-
         LogEntry.objects.log_action(
             user_id=adminuser.pk,
             content_type_id=ContentType.objects.get_for_model(email).pk,
@@ -67,7 +64,8 @@ class EmailActionForm(forms.Form):
                 change_message=f"Sent to {user.email}",
             )
 
-        # save the slug
+        # save sent date to object to prevent sending again
+        email.sent = datetime.now()
         email.save()
 
         LogEntry.objects.log_action(
@@ -78,5 +76,3 @@ class EmailActionForm(forms.Form):
             action_flag=CHANGE,
             change_message=f"Sending done",
         )
-
-        logger.info("Sending email")
