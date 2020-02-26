@@ -1,4 +1,5 @@
 import logging
+import time
 from datetime import datetime
 
 from django import forms
@@ -10,6 +11,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
+from django.core.mail import get_connection
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +20,7 @@ class EmailActionForm(forms.Form):
     """ send the email """
 
     def save(self, email, adminuser):
+        start = time.time()
         LogEntry.objects.log_action(
             user_id=adminuser.pk,
             content_type_id=ContentType.objects.get_for_model(email).pk,
@@ -26,6 +29,8 @@ class EmailActionForm(forms.Form):
             action_flag=CHANGE,
             change_message=f"Start sending",
         )
+
+        connection = get_connection()
 
         # send the email to all active users
         # TODO: the recipient set should be a setting
@@ -51,7 +56,7 @@ class EmailActionForm(forms.Form):
             plaintext_content = strip_tags(html_content)
 
             send_mail(
-                subject, plaintext_content, from_email, [to], html_message=html_content
+                subject, plaintext_content, from_email, [to], html_message=html_content, connection=connection
             )
 
             # log it
@@ -68,11 +73,14 @@ class EmailActionForm(forms.Form):
         email.sent = datetime.now()
         email.save()
 
+        end = time.time()
+        elapsed = end - start
+
         LogEntry.objects.log_action(
             user_id=adminuser.pk,
             content_type_id=ContentType.objects.get_for_model(email).pk,
             object_id=email.pk,
             object_repr=force_text(email),
             action_flag=CHANGE,
-            change_message=f"Sending done",
+            change_message=f"Sending done, sending took {elapsed}",
         )
