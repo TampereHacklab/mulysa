@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "be6e0511f3e463cb6609abc1f46c9feade8181bbb0bccec312002fcba98971c4"
+            "sha256": "58acc0cd0d112632b6d875f5d243217dcf68d4ecbc84f868bbc36da9015edb00"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -122,6 +122,14 @@
             "index": "pypi",
             "version": "==1.4.1"
         },
+        "django-mailer": {
+            "hashes": [
+                "sha256:23efb9f094ce35f5f99dd1127c75c1e9a595c4208ac7c0ab3abe0e72a70b3a28",
+                "sha256:e596485a80a82108556988eb450c4c011d356d76ec09c19cc4e9a6e029b712f2"
+            ],
+            "index": "pypi",
+            "version": "==2.0"
+        },
         "django-rest-auth": {
             "hashes": [
                 "sha256:f11e12175dafeed772f50d740d22caeab27e99a3caca24ec65e66a8d6de16571"
@@ -184,6 +192,13 @@
                 "sha256:c922560ac46888d47384de1dbdc3daaa2ea993af4b26a436dec31fa2c19ec668"
             ],
             "version": "==3.0.0a1"
+        },
+        "lockfile": {
+            "hashes": [
+                "sha256:6aed02de03cba24efabcd600b30540140634fc06cfa603822d508d5361e9f799",
+                "sha256:6c3cb24f344923d30b2785d5ad75182c8ea7ac1b6171b08657258ec7429d50fa"
+            ],
+            "version": "==0.12.2"
         },
         "markupsafe": {
             "hashes": [

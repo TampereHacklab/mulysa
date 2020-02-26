@@ -36,6 +36,7 @@ phonenumbers = "*"
 gunicorn = "*"
 django-bootstrap4 = "*"
 django-autoslug = "*"
+django-mailer = "*"
 
 [requires]
 python_version = "3.7"

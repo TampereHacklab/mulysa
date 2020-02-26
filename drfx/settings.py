@@ -66,6 +66,9 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework_filters',
 
+    # email queue
+    'mailer',
+
     # ready made registration please
     # todo: we probably want to write our own
     'rest_auth.registration',
