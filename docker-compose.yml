@@ -76,5 +76,15 @@ services:
       - mulysa
       - nginx
 
+  ofelia:
+    image: 'mcuadros/ofelia:latest'
+    container_name: ofelia
+    volumes:
+      - "./ofelia.ini:/etc/ofelia/config.ini"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    depends_on:
+      - mulysa
+    restart: always
+
 volumes:
   static_files:
