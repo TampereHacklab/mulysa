@@ -102,8 +102,9 @@ class CustomUser(AbstractUser):
     )
 
     mxid = models.CharField(
-        null=True,
         blank=True,
+        null=True,
+        unique=True,
         verbose_name=_('Matrix ID'),
         help_text=_('Matrix ID (@user:example.org)'),
         max_length=255,
@@ -117,6 +118,8 @@ class CustomUser(AbstractUser):
 
     phone = models.CharField(
         blank=False,
+        null=True,
+    #    unique=True, # TODO: Fix production db to have unique OR null values, then apply this
         verbose_name=_('Mobile phone number'),
         help_text=_('This number will also be the one that gets access to the'
                     ' hacklab premises. International format (+35840123567).'),
@@ -162,6 +165,7 @@ class CustomUser(AbstractUser):
     )
 
     # this will be autofilled in post_save
+    # This is being replaces by ServiceSubscription reference number - do not use in new code.
     reference_number = models.BigIntegerField(
         blank=True,
         null=True,
@@ -313,6 +317,13 @@ class MemberService(models.Model):
         blank=True,
         null=True,
         verbose_name='How many days befor payment expiration a warning message shall be sent',
+        validators=[MinValueValidator(0)],
+    )
+
+    days_maximum = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name='How many days of service member can pay at maximum',
         validators=[MinValueValidator(0)],
     )
 
@@ -469,6 +480,21 @@ class ServiceSubscription(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True
+    )
+
+    reference_number = models.BigIntegerField(
+        blank=True,
+        null=True,
+        unique=True,
+        verbose_name=_('Reference number for paying for this service subscription'),
+        help_text=_('Pay for this service with this reference number'),
+    )
+
+    warning_sent = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text=_('Set to True when a expiration warning message has been sent to user.')
     )
 
     SERVICE_STATE_COLORS = {
