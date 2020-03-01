@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 19:48+0200\n"
+"POT-Creation-Date: 2020-03-01 17:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,15 +20,27 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: www/forms.py:28
+#: www/forms.py:65
+msgid "Choose if you want 24/7 access"
+msgstr "Valitse, jos haluat ympärivuorokautisen pääsyn"
+
+#: www/forms.py:68 www/templates/www/applications.html:17
+msgid "Services"
+msgstr "Jäsenpalvelut"
+
+#: www/forms.py:70
+msgid "You must select at least one service"
+msgstr "Valitse vähintään yksi jäsenpalvelu"
+
+#: www/forms.py:84 www/templates/www/user.html:89
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: www/forms.py:28
+#: www/forms.py:86
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: www/forms.py:29
+#: www/forms.py:89
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
@@ -41,7 +53,7 @@ msgid "Log in"
 msgstr "Kirjaudu sisään"
 
 #: www/templates/registration/login.html:23
-msgid "Forget password?"
+msgid "Forgot password?"
 msgstr "Salasanan nollaus"
 
 #: www/templates/registration/password_reset_complete.html:13
@@ -103,9 +115,31 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 msgid "Send me instructions!"
 msgstr "Lähetä ohjeet"
 
-#: www/templates/www/applications.html:5 www/templates/www/base.html:53
+#: www/templates/www/applications.html:6 www/templates/www/base.html:53
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
+
+#: www/templates/www/applications.html:12 www/templates/www/user.html:88
+#: www/templates/www/user.html:107 www/templates/www/user.html:121
+msgid "Date"
+msgstr "Päiväys"
+
+#: www/templates/www/applications.html:13 www/templates/www/user.html:19
+msgid "Name"
+msgstr "Nimi"
+
+#: www/templates/www/applications.html:14
+msgid "E-mail"
+msgstr "Sähköposti"
+
+#: www/templates/www/applications.html:15 www/templates/www/user.html:108
+#: www/templates/www/user.html:125
+msgid "Message"
+msgstr "Viesti"
+
+#: www/templates/www/applications.html:16
+msgid "Agreement"
+msgstr "Hyväksyntä"
 
 #: www/templates/www/base.html:50 www/templates/www/index.html:19
 msgid "Show my user information"
@@ -124,12 +158,12 @@ msgid "Bank Ledger"
 msgstr "Tiliote"
 
 #: www/templates/www/base.html:56 www/templates/www/custominvoice.html:5
-#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:77
+#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:85
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:59 www/templates/www/register.html:50
-msgid "Register"
+#: www/templates/www/base.html:59
+msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/base.html:66
@@ -141,13 +175,15 @@ msgid "Language"
 msgstr "Kieli"
 
 #: www/templates/www/base.html:103
+msgid "Privacy policy"
+msgstr "Tietosuojakäytäntö"
+
+#: www/templates/www/base.html:104
 #, python-format
 msgid ""
-" Web design by cos - help wanted! Make a pr at\n"
-"          <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>\n"
-"          "
+" Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
 msgstr ""
-"Jäsenrekisterin teossa kaivataan lisää tekijöitä, osallistu projektiin <a "
+"Raportoi bugit ja osallistu projektiin <a "
 "href=\"%(GITHUB_URL)s\">GitHubissa</a>"
 
 #: www/templates/www/custominvoice.html:8
@@ -189,8 +225,8 @@ msgstr "Tervetuloa takaisin!"
 msgid "Welcome! Wanna join us?"
 msgstr "Tervetuloa! Haluatko liittyä?"
 
-#: www/templates/www/index.html:20 www/templates/www/user.html:69
-#: www/templates/www/user.html:78
+#: www/templates/www/index.html:20 www/templates/www/user.html:77
+#: www/templates/www/user.html:102
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
@@ -198,19 +234,51 @@ msgstr "Luo ja katsele vapaamuotoisia laskuja"
 msgid "Apply membership in hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: www/templates/www/index.html:29
+#: www/templates/www/index.html:32
 msgid ""
-"<strong>Note</strong> This membership system is still under heavy "
-"development. If you find bugs or inconsistensies please report them. Thanks!"
+"Your membership application is still being processed. Please be patient!"
+msgstr "Jäsenhakemuksesi käsittely on kesken. Ole hyvä ja odota."
+
+#: www/templates/www/index.html:38
+msgid "You have services in suspended state."
+msgstr "Sinulla on palveluita jotka on keskeytetty."
+
+#: www/templates/www/index.html:46
+#, python-format
+msgid "Hello! This is membership management service for %(SITENAME)s. "
+msgstr "Tämä on %(SITENAME)s:n jäsenyydenhallintapalvelu."
+
+#: www/templates/www/index.html:53
+msgid ""
+"<p>If you have not been member before you can fill out our member "
+"application by clicking \"Apply membership in hacklab\" button.</p>\n"
+"    <p>If you already are member of the community, you can log in by "
+"clicking top right corner \"Log in\" button. </p>"
 msgstr ""
-"<strong>Huomaa</strong> Tätä jäsenyydenhallintajärjestelmää kehtitetään "
-"aktiivisesti. Jos löydät bugeja tai outoksia, ilmoita niistä. Kiitos."
+"<p>Jos et ole aikaisemmin ollut jäsen, täytä jäsenhakemus.</p>\n"
+"    <p>Jos olet jo jäsen, kirjaudu sisään palveluun. </p>"
+
+#: www/templates/www/index.html:57
+msgid ""
+"With this system you can manage your member information and invoices. When "
+"you log in first time, please check that your information is correct."
+msgstr ""
+"Tällä järjestelmällä voit hallita jäsentietojasi ja laskutustasi. Tarkista "
+"tietosi oikeellisuus, kun kirjaudut sisään ensimmäisen kerran."
+
+#: www/templates/www/index.html:58
+msgid ""
+"This membership system is still under heavy development. If you find bugs or "
+"inconsistencies please report them for the team mulysa. Thank you in advance!"
+msgstr ""
+"Tätä jäsenyydenhallintajärjestelmää kehtitetään aktiivisesti. Jos löydät "
+"bugeja tai outoksia, ilmoita niistä. Kiitos."
 
 #: www/templates/www/register.html:8
 msgid "Apply membership to Tampere Hacklab"
 msgstr "Hae hacklabin jäsenyyttä"
 
-#: www/templates/www/register.html:21
+#: www/templates/www/register.html:27
 #, python-format
 msgid ""
 "Terms for membership: I have read and agree to\n"
@@ -225,7 +293,7 @@ msgstr ""
 "href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">jäsenen ohjeen</a> ja <a "
 "href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
-#: www/templates/www/register.html:30
+#: www/templates/www/register.html:36
 msgid ""
 "I promise to clean up any mess I have made at the lab (+little more)\n"
 "          and take responsibility for safety of myself, others and the "
@@ -237,14 +305,14 @@ msgstr ""
 "Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
 "omasta ja labin turvallisuudesta."
 
-#: www/templates/www/register.html:36
-msgid "Services"
-msgstr "Jäsenpalvelut"
+#: www/templates/www/register.html:48
+msgid "Register"
+msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/thanks.html:5
+#: www/templates/www/thanks.html:7
 msgid ""
-"Registration successful! Please check your e-mail (and spam folder) for "
-"instuctions."
+"Your membership application was successfully submitted! Please check your "
+"e-mail (and spam folder) for instuctions."
 msgstr ""
 "Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
 "roskapostilaatikko) johon lähetimme lisäohjeita."
@@ -252,10 +320,6 @@ msgstr ""
 #: www/templates/www/user.html:8
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
-
-#: www/templates/www/user.html:19
-msgid "Name"
-msgstr "Nimi"
 
 #: www/templates/www/user.html:23
 msgid "Email"
@@ -298,43 +362,63 @@ msgid "Last payment"
 msgstr "Viimeisin maksu"
 
 #: www/templates/www/user.html:65
+msgid "This is paid by other member services - you do not need to pay for it."
+msgstr ""
+"Tätä jäsenpalvelua ei tarvitse erikseen maksaa - toinen sinulla oleva "
+"jäsenpalvelu maksaa sen."
+
+#: www/templates/www/user.html:73
 #, python-format
 #| msgid ""
 #| "This service can be paid with your personal reference number %(ref)s\n"
-#| "            to bank account %(bank_iban)s. Service price is %(cost)s"
+#| "              to bank account %(bank_iban)s. Service price is %(cost)s"
 msgid ""
 "This service can be paid with your personal reference number %(ref)s\n"
-"              to bank account %(bank_iban)s. Service price is %(cost)s"
+"                to bank account %(bank_iban)s. Service price is %(cost)s"
 msgstr ""
 "Tämän palvelun voit maksaa henkilökohtaisella viitenumerollasi %(ref)s "
 "tilille %(bank_iban)s. Palvelun hinta on %(cost)s"
 
-#: www/templates/www/user.html:68
+#: www/templates/www/user.html:76
 msgid "Please create a custom invoice to pay this service."
 msgstr "Luo vapaamuotoinen lasku maksaaksesi tämän palvelun."
 
-#: www/templates/www/user.html:86
+#: www/templates/www/user.html:90 www/templates/www/user.html:122
+msgid "Amount"
+msgstr "Määrä"
+
+#: www/templates/www/user.html:91
+#| msgid "referencenumber"
+msgid "reference_number"
+msgstr "viitenumero"
+
+#: www/templates/www/user.html:96
+#| msgid "days left"
+msgid "days of"
+msgstr "päivää jäljellä"
+
+#: www/templates/www/user.html:104
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:94
+#: www/templates/www/user.html:118
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:99
+#: www/templates/www/user.html:123
 msgid "referencenumber"
 msgstr "viitenumero"
 
-#: www/views.py:42
-msgid "Please select at least one member service"
-msgstr "Valitse vähintään yksi jäsenpalvelu"
+#: www/templates/www/user.html:124
+msgid "Sender"
+msgstr "Lähettäjä"
 
-#: www/views.py:138
+#: www/views.py:153
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:141
+#: www/views.py:156
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"

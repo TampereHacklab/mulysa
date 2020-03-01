@@ -61,12 +61,21 @@
       </tr>
       <tr>
         <td colspan="2">
-          {% if subscription.service.id == defaultservice %}
-            {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal reference number {{ ref }}
-              to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
+          {% if subscription.paid_by_subscriptions %}
+            {% trans 'This is paid by other member services - you do not need to pay for it.' %}
+            <ul>
+            {% for paying_sub in subscription.paid_by_subscriptions %}
+              <li>{{ paying_sub }}</li>
+            {% endfor %}
+          </ul>
           {% else %}
-            {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
-            <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+            {% if subscription.service.id == defaultservice %}
+              {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal reference number {{ ref }}
+                to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
+            {% else %}
+              {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
+              <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+            {% endif %}
           {% endif %}
         </td>
       </tr>

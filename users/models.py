@@ -334,6 +334,9 @@ class MemberService(models.Model):
             return _('year')
         return str(self.days_per_payment) + ' ' + _('days')
 
+    # Returns a list of services that pay for this service
+    def paid_by_services(self):
+        return MemberService.objects.filter(pays_also_service=self)
 
 class BankTransaction(models.Model):
     """
@@ -498,6 +501,16 @@ class ServiceSubscription(models.Model):
         if daysleft < 0:
             daysleft = 0
         return daysleft
+
+    # Returns a list of user's servicesubscriptions that pay for this subscription
+    def paid_by_subscriptions(self):
+        paying_subs = []
+        paying_services = self.service.paid_by_services()
+        for service in paying_services:
+            subs = ServiceSubscription.objects.filter(user=self.user, service=service)
+            if subs:
+                paying_subs.append(subs[0].service.name)
+        return paying_subs
 
     def __str__(self):
         return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}
