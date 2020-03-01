@@ -14,16 +14,17 @@ class ParseError(Exception):
     """Raised when the data has invalid value"""
     pass
 
+
 """
 This class contains static members to import data to Mulysa. Data can be:
 
- - Member data. Current implementation imports CSV file used by old 
+ - Member data. Current implementation imports CSV file used by old
    Tampere hacklab registry. It is only for reference - write your
    own importer!
 
  - Bank events. This is in form of bank transactions in and out of an
    account. Only one account is supported currently.
-   Current implementation uses Nordea TITO format which seems to be 
+   Current implementation uses Nordea TITO format which seems to be
    some kind of standard.
    Use it if you can or write your own importer.
 
