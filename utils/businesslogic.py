@@ -39,14 +39,6 @@ class BusinessLogic:
         for user in all_users:
             BusinessLogic.updateuser(user)
 
-    # Private function - don't call from outside. This is called when service state changes.
-    # Can be used to trigger notifications or anything.
-    @staticmethod
-    def servicesubscription_state_changed(subscription, oldstate, newstate):
-        translation.activate(subscription.user.language)
-        subscription.user.log(_('Service %(servicename)s state changed from %(oldstate)s to %(newstate)s') % {'servicename': subscription.service.name,
-                                                                                                              'oldstate': oldstate, 'newstate': newstate})
-
     # Updates the user's status based on the data in database. Can be called from outside.
     @staticmethod
     def updateuser(user):
@@ -55,7 +47,7 @@ class BusinessLogic:
         for invoice in invoices:
             try:
                 transaction = BankTransaction.objects.get(reference_number=invoice.reference_number, has_been_used=False)
-                BusinessLogic.check_transaction_pays_custominvoice(transaction)
+                BusinessLogic._check_transaction_pays_custominvoice(transaction)
             except BankTransaction.DoesNotExist:
                 pass
 
@@ -67,12 +59,81 @@ class BusinessLogic:
         if len(servicesubscriptions) == 1:
             for subscription in servicesubscriptions:
                 print('Examining default subscription', subscription)
-                BusinessLogic.updatesubscription(user, subscription, servicesubscriptions)
-                BusinessLogic.check_servicesubscription_state(subscription)
+                BusinessLogic._updatesubscription(user, subscription, servicesubscriptions)
+                BusinessLogic._check_servicesubscription_state(subscription)
 
-    # Private method. Checks if given transaction pays any custom invoice
+    """
+    Rejects a membership application and deletes the user
+    """
     @staticmethod
-    def check_transaction_pays_custominvoice(transaction):
+    def reject_application(application):
+        print('Rejecting app ', application)
+        # TODO: Send mail and any other notifications to user?
+        # Should delete the application
+        application_denied.send(sender=application.__class__, instance=application)
+        application.user.delete()
+
+    """
+    Accepts a membership application
+    """
+    @staticmethod
+    def accept_application(application):
+        print('Accepting app ', application)
+        # TODO: Send mail and any other notifications to user?
+        application_approved.send(sender=application.__class__, instance=application)
+        user = application.user
+        user.log(_('Accepted as member'))
+        # Move user's subscriptions to overdue state
+        for subscription in ServiceSubscription.objects.filter(user=user):
+            subscription.state = ServiceSubscription.OVERDUE
+            subscription.save()
+            BusinessLogic._servicesubscription_state_changed(subscription, ServiceSubscription.SUSPENDED, subscription.state)
+
+        application.delete()
+        BusinessLogic.updateuser(user)
+
+    # PRIVATE methods below - don't call these from outside (unless you know what you're doing!)
+
+    """
+    Checks if the servicesubscription state needs to be changed due to paid_until changed.
+    """
+    @staticmethod
+    def _check_servicesubscription_state(subscription):
+        # We do nothing if subscription is suspended
+        if subscription.state == ServiceSubscription.SUSPENDED:
+            return
+
+        oldstate = subscription.state
+
+        # Check if the service has been overdue and can be activated
+        if subscription.state == ServiceSubscription.OVERDUE \
+                and subscription.paid_until \
+                and subscription.paid_until > date.today():
+            subscription.state = ServiceSubscription.ACTIVE
+            subscription.save()
+            BusinessLogic._servicesubscription_state_changed(subscription, oldstate, subscription.state)
+
+        # Check if the service becomes overdue
+        if subscription.state == ServiceSubscription.ACTIVE \
+                and subscription.paid_until \
+                and subscription.paid_until < date.today():
+            print(f'{subscription} payment overdue so changing state to OVERDUE')
+            subscription.state = ServiceSubscription.OVERDUE
+            subscription.save()
+            BusinessLogic._servicesubscription_state_changed(subscription, oldstate, subscription.state)
+        # TODO: Handle moving subscription from OVERDUE to SUSPENDED if enough time passes.
+
+    # This is called when service state changes.
+    # Can be used to trigger notifications or anything.
+    @staticmethod
+    def _servicesubscription_state_changed(subscription, oldstate, newstate):
+        translation.activate(subscription.user.language)
+        subscription.user.log(_('Service %(servicename)s state changed from %(oldstate)s to %(newstate)s') % {'servicename': subscription.service.name,
+                                                                                                              'oldstate': oldstate, 'newstate': newstate})
+
+    # Checks if given transaction pays any custom invoice
+    @staticmethod
+    def _check_transaction_pays_custominvoice(transaction):
         invoices = CustomInvoice.objects.filter(reference_number=transaction.reference_number, payment_transaction__isnull=True)
 
         for invoice in invoices:
@@ -94,15 +155,15 @@ class BusinessLogic:
                                                                                                                                      'name': subscription.service.name,
                                                                                                                                      'until': subscription.paid_until,
                                                                                                                                      'transaction': transaction}))
-                    BusinessLogic.check_servicesubscription_state(subscription)
+                    BusinessLogic._check_servicesubscription_state(subscription)
                 except ServiceSubscription.DoesNotExist:
                     print('Transaction would pay for invoice but user has no servicesubscription??')
             else:
                 print('Transaction', transaction, 'insufficient for invoice', invoice)
 
-    # Private method. Updates a single subscription status for given user (used by updateuser)
+    # Updates a single subscription status for given user (used by updateuser)
     @staticmethod
-    def updatesubscription(user, subscription, servicesubscriptions):
+    def _updatesubscription(user, subscription, servicesubscriptions):
         print('Updating ', subscription, 'for', user)
         translation.activate(user.language)
 
@@ -114,7 +175,7 @@ class BusinessLogic:
         # Figure out other services that pay for this service
         services_that_pay_this = MemberService.objects.filter(pays_also_service=subscription.service)
         for service in services_that_pay_this:
-            if BusinessLogic.user_is_subscribed_to(servicesubscriptions, service):
+            if BusinessLogic._user_is_subscribed_to(servicesubscriptions, service):
                 print('Service is paid by ', service, ' which user is subscribed so skipping this service.')
                 return
 
@@ -122,32 +183,32 @@ class BusinessLogic:
         transactions = BankTransaction.objects.filter(user=user, has_been_used=False).order_by('date')
 
         for transaction in transactions:
-            if BusinessLogic.transaction_pays_service(transaction, subscription.service):
+            if BusinessLogic._transaction_pays_service(transaction, subscription.service):
                 print('Transaction is new and pays for service', subscription.service)
-                BusinessLogic.service_paid_by_transaction(subscription, transaction)
+                BusinessLogic._service_paid_by_transaction(subscription, transaction)
             else:
                 print('Transaction does not pay service', subscription.service)
 
-    # Private method - Checks if given transaction pays the service. Returns boolean.
+    # Checks if given transaction pays the service. Returns boolean.
     @staticmethod
-    def transaction_pays_service(transaction, service):
+    def _transaction_pays_service(transaction, service):
         if service.cost_min and transaction.amount < service.cost_min:
             return False
         if not service.cost_min and transaction.amount < service.cost:
             return False
         return True
 
-    # Private method - Returns True if user (whose servicesubscriptions is given) is subscribed to given service
+    # Returns True if user (whose servicesubscriptions is given) is subscribed to given service
     @staticmethod
-    def user_is_subscribed_to(servicesubscriptions, service):
+    def _user_is_subscribed_to(servicesubscriptions, service):
         for subscription in servicesubscriptions:
             if subscription.service == service:
                 return True
         return False
 
-    # Private method - Called if transaction actually pays for extra time on given service subscription
+    # Called if transaction actually pays for extra time on given service subscription
     @staticmethod
-    def service_paid_by_transaction(servicesubscription, transaction):
+    def _service_paid_by_transaction(servicesubscription, transaction):
         translation.activate(servicesubscription.user.language)
 
         # How many days to add to subscription's paid until
@@ -194,63 +255,4 @@ class BusinessLogic:
                                                   'until': str(paid_servicesubscription.paid_until),
                                                   'anotherservicename': str(servicesubscription.service)})
 
-                    BusinessLogic.check_servicesubscription_state(paid_servicesubscription)
-
-    """
-    Private - Checks if the servicesubscription state needs to be changed due to paid_until changed.
-    """
-    @staticmethod
-    def check_servicesubscription_state(subscription):
-        # We do nothing if subscription is suspended
-        if subscription.state == ServiceSubscription.SUSPENDED:
-            return
-
-        oldstate = subscription.state
-
-        # Check if the service has been overdue and can be activated
-        if subscription.state == ServiceSubscription.OVERDUE \
-                and subscription.paid_until \
-                and subscription.paid_until > date.today():
-            subscription.state = ServiceSubscription.ACTIVE
-            subscription.save()
-            BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
-
-        # Check if the service becomes overdue
-        if subscription.state == ServiceSubscription.ACTIVE \
-                and subscription.paid_until \
-                and subscription.paid_until < date.today():
-            print(f'{subscription} payment overdue so changing state to OVERDUE')
-            subscription.state = ServiceSubscription.OVERDUE
-            subscription.save()
-            BusinessLogic.servicesubscription_state_changed(subscription, oldstate, subscription.state)
-        # TODO: Handle moving subscription from OVERDUE to SUSPENDED if enough time passes.
-
-    """
-    Rejects a membership application and deletes the user
-    """
-    @staticmethod
-    def reject_application(application):
-        print('Rejecting app ', application)
-        # TODO: Send mail and any other notifications to user?
-        # Should delete the application
-        application_denied.send(sender=application.__class__, instance=application)
-        application.user.delete()
-
-    """
-    Accepts a membership application
-    """
-    @staticmethod
-    def accept_application(application):
-        print('Accepting app ', application)
-        # TODO: Send mail and any other notifications to user?
-        application_approved.send(sender=application.__class__, instance=application)
-        user = application.user
-        user.log(_('Accepted as member'))
-        # Move user's subscriptions to overdue state
-        for subscription in ServiceSubscription.objects.filter(user=user):
-            subscription.state = ServiceSubscription.OVERDUE
-            subscription.save()
-            BusinessLogic.servicesubscription_state_changed(subscription, ServiceSubscription.SUSPENDED, subscription.state)
-
-        application.delete()
-        BusinessLogic.updateuser(user)
+                    BusinessLogic._check_servicesubscription_state(paid_servicesubscription)

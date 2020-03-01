@@ -11,7 +11,7 @@ Bank ledger
 
 <table width="90%" border="1">
 <tr>
-<th>Date</th><th>Amount</th><th>Peer</th><th>Reference</th><th>Message</th><th>Has been used</th><th>User</th>
+<th>Date</th><th>Amount</th><th>Peer</th><th>Reference</th><th>Message</th><th>Has been used</th><th>User</th><th>Management</th>
 </tr>
 {% for transaction in transactions %}
 <tr>
@@ -27,6 +27,8 @@ Bank ledger
         {{ transaction.user.first_name }} {{ transaction.user.last_name }}
         </a>
         {% endif %}
+    </td>
+    <td><a href="{% url 'admin:users_banktransaction_change' transaction.id %}">Modify</a></td>
 </tr>
 {% endfor %}
 </table>

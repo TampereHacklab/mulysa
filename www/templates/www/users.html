@@ -10,7 +10,7 @@ User list
 {% for service in services %}
 <th>{{ service.name }}</th>
 {% endfor %}
-
+<th>Management</th>
 </tr>
 {% for user in users %}
 <tr>
@@ -31,6 +31,7 @@ User list
         {% endfor %}
 </td>
 {% endfor %}
+<td><a href="{% url 'admin:users_customuser_change' user.id %}">Modify</a></td>
 </tr>
 {% endfor %}
 </table>

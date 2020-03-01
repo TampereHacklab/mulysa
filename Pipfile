@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 pep8 = "*"
 flake8 = "*"
-pylint = "<2.0.0"
+pylint = "*"
 ipython = "*"
 autopep8 = "*"
 coverage = "*"

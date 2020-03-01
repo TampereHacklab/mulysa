@@ -490,11 +490,9 @@ class ServiceSubscription(models.Model):
         help_text=_('Pay for this service with this reference number'),
     )
 
-    warning_sent = models.BooleanField(
-        blank=False,
-        null=False,
-        default=False,
-        help_text=_('Set to True when a expiration warning message has been sent to user.')
+    reminder_sent = models.DateField(
+        null=True,
+        help_text=_('Set date when a expiration reminder message has been sent to user. Reset to NULL when state changes.')
     )
 
     SERVICE_STATE_COLORS = {

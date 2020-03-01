@@ -10,7 +10,8 @@
 
   {% if user.is_staff %}
     <p>
-      <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a>
+      <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a> |
+      <a href="{% url 'admin:users_customuser_change' userdetails.id %}">View in admin</a>
     </p>
   {% endif %}
 
