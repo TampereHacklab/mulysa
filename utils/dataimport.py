@@ -14,8 +14,28 @@ class ParseError(Exception):
     """Raised when the data has invalid value"""
     pass
 
+
+"""
+This class contains static members to import data to Mulysa. Data can be:
+
+ - Member data. Current implementation imports CSV file used by old
+   Tampere hacklab registry. It is only for reference - write your
+   own importer!
+
+ - Bank events. This is in form of bank transactions in and out of an
+   account. Only one account is supported currently.
+   Current implementation uses Nordea TITO format which seems to be
+   some kind of standard.
+   Use it if you can or write your own importer.
+
+After data is imported, businesslogic to update all user data is
+invoked. All functions return an object showing counts of imported,
+already existing and failed items and array of failed rows. These
+are displayed in the import UI.
+"""
 class DataImport:
 
+    # Import cvs member list. Only for reference.
     @staticmethod
     def importmembers(f):
         csv = f.read().decode('utf8')
@@ -112,6 +132,8 @@ class DataImport:
 
         return {'imported': imported, 'exists': exists, 'error': error, 'failedrows': failedrows}
 
+    # Nordea TITO import. TITO spec here: https://www.nordea.fi/Images/146-84478/xml_tiliote.pdf
+    # Note: this is the text-based TITO, not XML.
     @staticmethod
     def import_tito(f):
         tito = f.read().decode('utf8')
@@ -154,6 +176,7 @@ class DataImport:
                     # Done parsing, add the transaction
 
                     try:
+                        # Archival reference should be unique ID
                         BankTransaction.objects.get(archival_reference=archival_reference)
                         exists = exists + 1
                     except BankTransaction.DoesNotExist:

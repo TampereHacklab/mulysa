@@ -102,8 +102,9 @@ class CustomUser(AbstractUser):
     )
 
     mxid = models.CharField(
-        null=True,
         blank=True,
+        null=True,
+        unique=True,
         verbose_name=_('Matrix ID'),
         help_text=_('Matrix ID (@user:example.org)'),
         max_length=255,
@@ -117,6 +118,8 @@ class CustomUser(AbstractUser):
 
     phone = models.CharField(
         blank=False,
+        null=True,
+        #    unique=True, # TODO: Fix production db to have unique OR null values, then apply this
         verbose_name=_('Mobile phone number'),
         help_text=_('This number will also be the one that gets access to the'
                     ' hacklab premises. International format (+35840123567).'),
@@ -162,6 +165,7 @@ class CustomUser(AbstractUser):
     )
 
     # this will be autofilled in post_save
+    # This is being replaces by ServiceSubscription reference number - do not use in new code.
     reference_number = models.BigIntegerField(
         blank=True,
         null=True,
@@ -316,6 +320,13 @@ class MemberService(models.Model):
         validators=[MinValueValidator(0)],
     )
 
+    days_maximum = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name='How many days of service member can pay at maximum',
+        validators=[MinValueValidator(0)],
+    )
+
     def __str__(self):
         return _('Member service') + ' ' + str(self.name)
 
@@ -334,6 +345,9 @@ class MemberService(models.Model):
             return _('year')
         return str(self.days_per_payment) + ' ' + _('days')
 
+    # Returns a list of services that pay for this service
+    def paid_by_services(self):
+        return MemberService.objects.filter(pays_also_service=self)
 
 class BankTransaction(models.Model):
     """
@@ -468,6 +482,19 @@ class ServiceSubscription(models.Model):
         null=True
     )
 
+    reference_number = models.BigIntegerField(
+        blank=True,
+        null=True,
+        unique=True,
+        verbose_name=_('Reference number for paying for this service subscription'),
+        help_text=_('Pay for this service with this reference number'),
+    )
+
+    reminder_sent = models.DateField(
+        null=True,
+        help_text=_('Set date when a expiration reminder message has been sent to user. Reset to NULL when state changes.')
+    )
+
     SERVICE_STATE_COLORS = {
         ACTIVE: 'green',
         OVERDUE: 'yellow',
@@ -498,6 +525,16 @@ class ServiceSubscription(models.Model):
         if daysleft < 0:
             daysleft = 0
         return daysleft
+
+    # Returns a list of user's servicesubscriptions that pay for this subscription
+    def paid_by_subscriptions(self):
+        paying_subs = []
+        paying_services = self.service.paid_by_services()
+        for service in paying_services:
+            subs = ServiceSubscription.objects.filter(user=self.user, service=service)
+            if subs:
+                paying_subs.append(subs[0].service.name)
+        return paying_subs
 
     def __str__(self):
         return _('Service %(servicename)s for %(username)s') % {'servicename': self.service.name, 'username': str(self.user)}

@@ -124,11 +124,11 @@
         },
         "django-mailer": {
             "hashes": [
-                "sha256:23efb9f094ce35f5f99dd1127c75c1e9a595c4208ac7c0ab3abe0e72a70b3a28",
-                "sha256:e596485a80a82108556988eb450c4c011d356d76ec09c19cc4e9a6e029b712f2"
+                "sha256:c7bb9bd96034c15b3b1e2de071cfaecde8051ae3203cf4ac9e3ced6a426239aa",
+                "sha256:d3792e69ecae295ee92efa2cd49677eae5679c08cea1ab6478a43c98d064f0bb"
             ],
             "index": "pypi",
-            "version": "==2.0"
+            "version": "==2.0.1"
         },
         "django-rest-auth": {
             "hashes": [
@@ -289,6 +289,7 @@
                 "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
                 "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"
             ],
+            "markers": "python_version >= '3.0'",
             "version": "==2.23.0"
         },
         "requests-oauthlib": {
@@ -718,6 +719,7 @@
                 "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
                 "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"
             ],
+            "markers": "python_version >= '3.0'",
             "version": "==2.23.0"
         },
         "rope": {
