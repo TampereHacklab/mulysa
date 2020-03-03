@@ -28,10 +28,6 @@
       <td>{% trans 'Phone' %}</td>
       <td>{{ userdetails.phone }}</td>
     </tr>
-    <tr>
-      <td>{% trans 'Reference number' %}</td>
-      <td>{{ userdetails.reference_number }}</td>
-    </tr>
   </table>
 
   {% if userdetails.membership_application %}
@@ -57,6 +53,10 @@
         <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
       </tr>
       <tr>
+        <td>{% trans 'Reference number' %}</td>
+        <td>{{subscription.reference_number|default_if_none:"-"}}</td>
+      </tr>
+      <tr>
         <td>{% trans 'Last payment' %}</td>
         <td>{{subscription.last_payment|default_if_none:"-"}}</td>
       </tr>
@@ -70,13 +70,10 @@
             {% endfor %}
           </ul>
           {% else %}
-            {% if subscription.service.id == defaultservice %}
-              {% blocktrans with ref=userdetails.reference_number cost=subscription.service.cost_string %}This service can be paid with your personal reference number {{ ref }}
-                to bank account {{bank_iban}}. Service price is {{ cost }}{% endblocktrans %}
-            {% else %}
-              {% blocktrans %}Please create a custom invoice to pay this service.{% endblocktrans %}
-              <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-            {% endif %}
+            {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service can be paid with reference number {{ ref }}
+              to bank account {{bank_iban}}. Service price is {{ cost }}.{% endblocktrans %}<br/>
+            {% blocktrans %}To pay this service multiple times, you can create a custom invoice.{% endblocktrans %}
+            <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
           {% endif %}
         </td>
       </tr>
@@ -89,7 +86,7 @@
         <th>{% trans 'Date' %}</th>
         <th>{% trans 'Service' %}</th>
         <th>{% trans 'Amount' %}</th>
-        <th>{% trans 'reference_number' %}</th>
+        <th>{% trans 'Reference number' %}</th>
       </tr>
       {% for custominvoice in userdetails.custominvoices %}
       <tr>

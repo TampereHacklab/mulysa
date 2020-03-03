@@ -327,6 +327,14 @@ class MemberService(models.Model):
         validators=[MinValueValidator(0)],
     )
 
+    # This can be used to make "private" services that need to be added by admin to user.
+    hidden = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text=_('True, if this service should not be shown for user member application form etc.')
+    )
+
     def __str__(self):
         return _('Member service') + ' ' + str(self.name)
 

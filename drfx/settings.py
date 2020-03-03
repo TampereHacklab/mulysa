@@ -12,13 +12,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8'
-ACCOUNT_BIC = 'FI12 3456 789'
-ACCOUNT_IBAN = 'IBANCODE'
+ACCOUNT_BIC = 'BICCODE'
+ACCOUNT_IBAN = 'FI12 3456 789'
 ACCOUNT_NAME = 'Account name'
-# The service ID that is paid by payments to user's personal account
+
+# The service ID that opens hacklab door. Avoid using in code.
 DEFAULT_ACCOUNT_SERVICE = 2
 
 CUSTOM_INVOICE_REFERENCE_BASE = 10000
+SERVICE_INVOICE_REFERENCE_BASE = 20000
 
 MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS = "example@example.com"
 

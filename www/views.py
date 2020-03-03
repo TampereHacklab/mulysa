@@ -63,6 +63,8 @@ def register(request):
                                                    service=service,
                                                    state=ServiceSubscription.SUSPENDED)
                 subscription.save()
+                subscription.reference_number = referencenumber.generate(settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id)
+                subscription.save()
 
             # save only after subscriptions are saved also so that the email
             # knows about them
@@ -176,7 +178,7 @@ def userdetails(request, id):
     userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('date')
     userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
     userdetails.membership_application = MembershipApplication.objects.filter(user=userdetails).first()
-    return render(request, 'www/user.html', {'userdetails': userdetails, 'defaultservice': settings.DEFAULT_ACCOUNT_SERVICE, 'bank_iban': settings.ACCOUNT_IBAN})
+    return render(request, 'www/user.html', {'userdetails': userdetails, 'bank_iban': settings.ACCOUNT_IBAN})
 
 @login_required
 def custominvoice(request):

@@ -31,17 +31,34 @@ class BusinessLogic:
         Called when a new transaction has been added into database
         """
         logger.debug(f"New transaction {transaction}")
+
+        # Figure out a user for this transaction, if possible
         transaction_user = None
+
         if transaction.reference_number and transaction.reference_number > 0:
-            try:
-                # Figure out if a user can be mapped to transaction
-                transaction_user = CustomUser.objects.get(
-                    reference_number=transaction.reference_number
-                )
+            # Search subscriptions for reference..
+            subscriptions = ServiceSubscription.objects.filter(reference_number=transaction.reference_number)
+
+            if len(subscriptions) > 1:
+                logger.warn(f'Suspicious: more than one service subscription with same reference!')
+
+            for subscription in subscriptions:
+                transaction_user = subscription.user
+
+            # Search custom invoices for reference..
+            if not transaction_user:
+                custominvoices = CustomInvoice.objects.filter(reference_number=transaction.reference_number)
+
+                if len(custominvoices) > 1:
+                    logger.warn(f'Suspicious: more than one custominvoice with same reference!')
+
+                for custominvoice in custominvoices:
+                    transaction_user = custominvoice.user
+
+            if transaction_user:
                 transaction.user = transaction_user
                 transaction.save()
-            except CustomUser.DoesNotExist:
-                pass
+
         if transaction.user:
             translation.activate(transaction.user.language)
             transaction.user.log(
@@ -68,28 +85,26 @@ class BusinessLogic:
             user=user, payment_transaction__isnull=True
         )
         for invoice in invoices:
-            try:
-                transaction = BankTransaction.objects.get(
+            transactions = BankTransaction.objects.filter(
                     reference_number=invoice.reference_number, has_been_used=False
                 )
-                BusinessLogic._check_transaction_pays_custominvoice(transaction)
-            except BankTransaction.DoesNotExist:
-                pass
+            if len(transactions) > 1:
+                logger.warn(f'Suspicious: more than one transaction matching custominvoice reference!')
 
-        # Now we check transactions done to user's default account
-        defaultservice = MemberService.objects.get(id=settings.DEFAULT_ACCOUNT_SERVICE)
+            for transaction in transactions:
+                BusinessLogic._check_transaction_pays_custominvoice(transaction)
+
         servicesubscriptions = ServiceSubscription.objects.filter(
-            user=user, service=defaultservice
+                        user=user
         )
 
-        # Update user's servicesubscription if it exists:
-        if len(servicesubscriptions) == 1:
-            for subscription in servicesubscriptions:
-                logger.debug(f"Examining default subscription {subscription}")
-                BusinessLogic._updatesubscription(
-                    user, subscription, servicesubscriptions
-                )
-                BusinessLogic._check_servicesubscription_state(subscription)
+        # Check subscriptions
+        for subscription in servicesubscriptions:
+            logger.debug(f"Examining subscription {subscription}")
+            BusinessLogic._updatesubscription(
+                user, subscription, servicesubscriptions
+            )
+            BusinessLogic._check_servicesubscription_state(subscription)
 
     @staticmethod
     def reject_application(application):
@@ -254,7 +269,7 @@ class BusinessLogic:
 
         # Check generic transactions that could pay for this service
         transactions = BankTransaction.objects.filter(
-            user=user, has_been_used=False
+            reference_number=subscription.reference_number, has_been_used=False
         ).order_by("date")
 
         for transaction in transactions:
@@ -318,6 +333,7 @@ class BusinessLogic:
         servicesubscription.save()
 
         # Mark transaction as used
+        transaction.user = servicesubscription.user
         transaction.has_been_used = True
         transaction.save()
 
