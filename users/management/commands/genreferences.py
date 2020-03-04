@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
-from utils import referencenumber
-from users.models import ServiceSubscription
+
 from drfx import settings
+from users.models import ServiceSubscription
+
+from utils import referencenumber
 
 # Caution: This does some destructive operations. Run only if you are sure.
 
