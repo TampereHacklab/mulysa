@@ -5,7 +5,9 @@ from . import referencenumber
 
 class TestReferenceNumber(unittest.TestCase):
     def test_generate(self):
-        self.assertEqual(referencenumber.generate(123), 1232, 'generated correct reference number')
+        self.assertEqual(
+            referencenumber.generate(123), 1232, "generated correct reference number"
+        )
 
         with self.assertRaises(ValueError):
             referencenumber.generate(1)
@@ -30,4 +32,4 @@ class TestReferenceNumber(unittest.TestCase):
 
     def test_format(self):
         n = referencenumber.generate(1111111111)
-        self.assertEqual(referencenumber.format(n), '1 11111 11110')
+        self.assertEqual(referencenumber.format(n), "1 11111 11110")

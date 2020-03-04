@@ -4,7 +4,6 @@ from datetime import date, timedelta
 from django.utils import translation
 from django.utils.translation import gettext as _
 
-from drfx import settings
 from users.models import (
     BankTransaction,
     CustomInvoice,
@@ -31,17 +30,42 @@ class BusinessLogic:
         Called when a new transaction has been added into database
         """
         logger.debug(f"New transaction {transaction}")
+
+        # Figure out a user for this transaction, if possible
         transaction_user = None
+
         if transaction.reference_number and transaction.reference_number > 0:
-            try:
-                # Figure out if a user can be mapped to transaction
-                transaction_user = CustomUser.objects.get(
+            # Search subscriptions for reference..
+            subscriptions = ServiceSubscription.objects.filter(
+                reference_number=transaction.reference_number
+            )
+
+            if len(subscriptions) > 1:
+                logger.warn(
+                    f"Suspicious: more than one service subscription with same reference!"
+                )
+
+            for subscription in subscriptions:
+                transaction_user = subscription.user
+
+            # Search custom invoices for reference..
+            if not transaction_user:
+                custominvoices = CustomInvoice.objects.filter(
                     reference_number=transaction.reference_number
                 )
+
+                if len(custominvoices) > 1:
+                    logger.warn(
+                        f"Suspicious: more than one custominvoice with same reference!"
+                    )
+
+                for custominvoice in custominvoices:
+                    transaction_user = custominvoice.user
+
+            if transaction_user:
                 transaction.user = transaction_user
                 transaction.save()
-            except CustomUser.DoesNotExist:
-                pass
+
         if transaction.user:
             translation.activate(transaction.user.language)
             transaction.user.log(
@@ -68,28 +92,24 @@ class BusinessLogic:
             user=user, payment_transaction__isnull=True
         )
         for invoice in invoices:
-            try:
-                transaction = BankTransaction.objects.get(
-                    reference_number=invoice.reference_number, has_been_used=False
+            transactions = BankTransaction.objects.filter(
+                reference_number=invoice.reference_number, has_been_used=False
+            )
+            if len(transactions) > 1:
+                logger.warn(
+                    f"Suspicious: more than one transaction matching custominvoice reference!"
                 )
+
+            for transaction in transactions:
                 BusinessLogic._check_transaction_pays_custominvoice(transaction)
-            except BankTransaction.DoesNotExist:
-                pass
 
-        # Now we check transactions done to user's default account
-        defaultservice = MemberService.objects.get(id=settings.DEFAULT_ACCOUNT_SERVICE)
-        servicesubscriptions = ServiceSubscription.objects.filter(
-            user=user, service=defaultservice
-        )
+        servicesubscriptions = ServiceSubscription.objects.filter(user=user)
 
-        # Update user's servicesubscription if it exists:
-        if len(servicesubscriptions) == 1:
-            for subscription in servicesubscriptions:
-                logger.debug(f"Examining default subscription {subscription}")
-                BusinessLogic._updatesubscription(
-                    user, subscription, servicesubscriptions
-                )
-                BusinessLogic._check_servicesubscription_state(subscription)
+        # Check subscriptions
+        for subscription in servicesubscriptions:
+            logger.debug(f"Examining subscription {subscription}")
+            BusinessLogic._updatesubscription(user, subscription, servicesubscriptions)
+            BusinessLogic._check_servicesubscription_state(subscription)
 
     @staticmethod
     def reject_application(application):
@@ -224,6 +244,8 @@ class BusinessLogic:
                         "Transaction would pay for invoice but user has no servicesubscription??"
                     )
             else:
+                transaction.comment = f"Insufficient amount for invoice {invoice}"
+                transaction.save()
                 logger.debug(
                     f"Transaction {transaction} insufficient for invoice {invoice}"
                 )
@@ -254,7 +276,7 @@ class BusinessLogic:
 
         # Check generic transactions that could pay for this service
         transactions = BankTransaction.objects.filter(
-            user=user, has_been_used=False
+            reference_number=subscription.reference_number, has_been_used=False
         ).order_by("date")
 
         for transaction in transactions:
@@ -266,6 +288,11 @@ class BusinessLogic:
                 )
                 BusinessLogic._service_paid_by_transaction(subscription, transaction)
             else:
+                transaction.user = subscription.user
+                transaction.comment = (
+                    f"Amount insufficient to pay service {subscription.service}"
+                )
+                transaction.save()
                 logger.debug(f"Transaction does not pay service {subscription.service}")
 
     @staticmethod
@@ -307,6 +334,7 @@ class BusinessLogic:
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
+            transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
 
@@ -318,6 +346,7 @@ class BusinessLogic:
         servicesubscription.save()
 
         # Mark transaction as used
+        transaction.user = servicesubscription.user
         transaction.has_been_used = True
         transaction.save()
 
@@ -338,7 +367,9 @@ class BusinessLogic:
                 service=servicesubscription.service.pays_also_service,
             )
             for paid_servicesubscription in paid_servicesubscriptions:
-                logger.debug(f"{servicesubscription} also pays for {paid_servicesubscription}")
+                logger.debug(
+                    f"{servicesubscription} also pays for {paid_servicesubscription}"
+                )
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
                     logger.debug("Service is suspended - no action")
                 else:

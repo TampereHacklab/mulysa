@@ -13,9 +13,7 @@ class TestAccess(APITestCase):
     fixtures = ["users/fixtures/memberservices.json"]
 
     def setUp(self):
-        self.device = AccessDevice.objects.create(
-            deviceid="testdevice",
-        )
+        self.device = AccessDevice.objects.create(deviceid="testdevice",)
         self.ok_user = CustomUser.objects.create(
             email="test1@example.com", birthday=datetime.now(), phone="+35844055066"
         )
@@ -41,7 +39,9 @@ class TestAccess(APITestCase):
         Test with missing payload
         """
         url = reverse("access-phone")
-        response = self.client.post(url, {"deviceid": self.device.deviceid, "payload": ""})
+        response = self.client.post(
+            url, {"deviceid": self.device.deviceid, "payload": ""}
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_access_phone_ok(self):

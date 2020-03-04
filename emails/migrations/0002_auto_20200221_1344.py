@@ -6,19 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('emails', '0001_initial'),
+        ("emails", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='email',
-            name='draft',
-            field=models.BooleanField(default=False, verbose_name='Draft, the message wont be sent'),
+            model_name="email",
+            name="draft",
+            field=models.BooleanField(
+                default=False, verbose_name="Draft, the message wont be sent"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='email',
-            name='sent',
-            field=models.DateTimeField(blank=True, null=True, verbose_name='Datetime the message was sent'),
+            model_name="email",
+            name="sent",
+            field=models.DateTimeField(
+                blank=True, null=True, verbose_name="Datetime the message was sent"
+            ),
         ),
     ]

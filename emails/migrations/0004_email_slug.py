@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('emails', '0003_auto_20200221_1346'),
+        ("emails", "0003_auto_20200221_1346"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='email',
-            name='slug',
-            field=models.SlugField(default='testing', max_length=100, unique=True),
+            model_name="email",
+            name="slug",
+            field=models.SlugField(default="testing", max_length=100, unique=True),
             preserve_default=False,
         ),
     ]

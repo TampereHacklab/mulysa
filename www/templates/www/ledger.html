@@ -11,7 +11,7 @@ Bank ledger
 
 <table width="90%" border="1">
 <tr>
-<th>Date</th><th>Amount</th><th>Peer</th><th>Reference</th><th>Message</th><th>Has been used</th><th>User</th><th>Management</th>
+<th>Date</th><th>Amount</th><th>Peer</th><th>Reference</th><th>Message</th><th>Comment</th><th>Has been used</th><th>User</th><th>Management</th>
 </tr>
 {% for transaction in transactions %}
 <tr>
@@ -20,6 +20,7 @@ Bank ledger
     <td>{{ transaction.sender }}</td>
     <td>{{ transaction.reference_number|default_if_none:"" }}</td>
     <td>{{ transaction.message }}</td>
+    <td>{{ transaction.comment|default_if_none:"" }}</td>
     <td align="center">{% if transaction.has_been_used %}✔{% endif %}</td>
     <td>
         {% if transaction.user %}
@@ -28,7 +29,7 @@ Bank ledger
         </a>
         {% endif %}
     </td>
-    <td><a href="{% url 'admin:users_banktransaction_change' transaction.id %}">Modify</a></td>
+    <td><a href="{% url 'admin:users_banktransaction_change' transaction.id %}">{% trans 'Modify' %}</a></td>
 </tr>
 {% endfor %}
 </table>

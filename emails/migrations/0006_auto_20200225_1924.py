@@ -7,13 +7,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('emails', '0005_remove_email_draft'),
+        ("emails", "0005_remove_email_draft"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='email',
-            name='slug',
-            field=autoslug.fields.AutoSlugField(editable=False, populate_from='subject', unique=True),
+            model_name="email",
+            name="slug",
+            field=autoslug.fields.AutoSlugField(
+                editable=False, populate_from="subject", unique=True
+            ),
         ),
     ]

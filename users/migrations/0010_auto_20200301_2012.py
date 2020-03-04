@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0009_auto_20200301_1634'),
+        ("users", "0009_auto_20200301_1634"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='servicesubscription',
-            name='warning_sent',
-        ),
+        migrations.RemoveField(model_name="servicesubscription", name="warning_sent",),
         migrations.AddField(
-            model_name='servicesubscription',
-            name='reminder_sent',
-            field=models.DateField(help_text='Set date when a expiration reminder message has been sent to user. Reset to NULL when state changes.', null=True),
+            model_name="servicesubscription",
+            name="reminder_sent",
+            field=models.DateField(
+                help_text="Set date when a expiration reminder message has been sent to user. Reset to NULL when state changes.",
+                null=True,
+            ),
         ),
     ]

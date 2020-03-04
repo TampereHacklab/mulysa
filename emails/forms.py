@@ -53,13 +53,7 @@ class EmailActionForm(forms.Form):
             html_content = render_to_string("mail/email.html", context)
             plaintext_content = strip_tags(html_content)
 
-            send_html_mail(
-                subject,
-                plaintext_content,
-                html_content,
-                from_email,
-                [to]
-            )
+            send_html_mail(subject, plaintext_content, html_content, from_email, [to])
 
             # log it
             LogEntry.objects.log_action(

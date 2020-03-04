@@ -7,20 +7,69 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='SMSLog',
+            name="SMSLog",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True, help_text='Automatically now', verbose_name='Creation')),
-                ('from_number', models.CharField(blank=True, max_length=255, null=True, verbose_name='From number')),
-                ('to_number', models.CharField(blank=True, max_length=255, null=True, verbose_name='To number')),
-                ('message', models.CharField(blank=True, max_length=255, null=True, verbose_name='Message')),
-                ('via', models.CharField(blank=True, max_length=255, null=True, verbose_name='Via, which operator delivered the message')),
-                ('sid', models.CharField(blank=True, help_text='this is only added after the operator has accepted the message', max_length=255, null=True, verbose_name='Operators ID for the message')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="Automatically now",
+                        verbose_name="Creation",
+                    ),
+                ),
+                (
+                    "from_number",
+                    models.CharField(
+                        blank=True,
+                        max_length=255,
+                        null=True,
+                        verbose_name="From number",
+                    ),
+                ),
+                (
+                    "to_number",
+                    models.CharField(
+                        blank=True, max_length=255, null=True, verbose_name="To number"
+                    ),
+                ),
+                (
+                    "message",
+                    models.CharField(
+                        blank=True, max_length=255, null=True, verbose_name="Message"
+                    ),
+                ),
+                (
+                    "via",
+                    models.CharField(
+                        blank=True,
+                        max_length=255,
+                        null=True,
+                        verbose_name="Via, which operator delivered the message",
+                    ),
+                ),
+                (
+                    "sid",
+                    models.CharField(
+                        blank=True,
+                        help_text="this is only added after the operator has accepted the message",
+                        max_length=255,
+                        null=True,
+                        verbose_name="Operators ID for the message",
+                    ),
+                ),
             ],
         ),
     ]

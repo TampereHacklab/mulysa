@@ -29,9 +29,7 @@
     <li>{{ servicesubscription.service.name }} -
         {{ servicesubscription.service.cost_string }} /
         {{ servicesubscription.service.period_string }}
-        {% if servicesubscription.service.id == settings.DEFAULT_ACCOUNT_SERVICE %}
-          <strong>{% trans 'Bank reference number' %}: {{ user.reference_number }}</strong>
-        {% endif %}</li>
+        <strong>{% trans 'Bank reference number' %}: {{  servicesubscription.reference_number }}</strong>
   {% endfor %}
 </ul>
 

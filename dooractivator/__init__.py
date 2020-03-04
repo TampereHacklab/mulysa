@@ -1,1 +1,1 @@
-default_app_config = 'dooractivator.apps.DooractivatorConfig'
+default_app_config = "dooractivator.apps.DooractivatorConfig"

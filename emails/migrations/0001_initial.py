@@ -7,16 +7,36 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Email',
+            name="Email",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(help_text='Descriptive subject for the email. Finnish / English both should be written here', max_length=512, verbose_name='Subject')),
-                ('content', models.TextField(help_text="Content of the email. All emails will start with default 'View this message in browser' and end with 'You are receiving this message because') texts", verbose_name='Content')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "subject",
+                    models.CharField(
+                        help_text="Descriptive subject for the email. Finnish / English both should be written here",
+                        max_length=512,
+                        verbose_name="Subject",
+                    ),
+                ),
+                (
+                    "content",
+                    models.TextField(
+                        help_text="Content of the email. All emails will start with default 'View this message in browser' and end with 'You are receiving this message because') texts",
+                        verbose_name="Content",
+                    ),
+                ),
             ],
         ),
     ]

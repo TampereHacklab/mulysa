@@ -7,19 +7,28 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0006_auto_20200225_1535'),
+        ("users", "0006_auto_20200225_1535"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='membershipapplication',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, help_text='Automatically set to now when membership application is created', verbose_name='Application creation date'),
+            model_name="membershipapplication",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                help_text="Automatically set to now when membership application is created",
+                verbose_name="Application creation date",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='membershipapplication',
-            name='last_modified',
-            field=models.DateTimeField(auto_now=True, help_text='Last time this membership application was modified', verbose_name='Last modified datetime'),
+            model_name="membershipapplication",
+            name="last_modified",
+            field=models.DateTimeField(
+                auto_now=True,
+                help_text="Last time this membership application was modified",
+                verbose_name="Last modified datetime",
+            ),
         ),
     ]
