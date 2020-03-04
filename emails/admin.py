@@ -70,7 +70,9 @@ class EmailAdmin(admin.ModelAdmin):
                 except Exception as e:
                     # If save() raised, the form will a have a non
                     # field error containing an informative message.
-                    self.message_user(request, f"Sending email failed: {e}", level=messages.ERROR)
+                    self.message_user(
+                        request, f"Sending email failed: {e}", level=messages.ERROR
+                    )
                     pass
                 else:
                     self.message_user(request, "Success")

@@ -7,18 +7,53 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='AccessDevice',
+            name="AccessDevice",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True, help_text='Automatically set to now when user is create', verbose_name='User creation date')),
-                ('last_modified', models.DateTimeField(auto_now=True, help_text='Last time this user was modified', verbose_name='Last modified datetime')),
-                ('name', models.CharField(help_text='Human readable name for the device, like door or laser', max_length=512, verbose_name='Device name')),
-                ('deviceid', models.CharField(help_text='used to know which device this was', max_length=512, verbose_name='device id')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="Automatically set to now when user is create",
+                        verbose_name="User creation date",
+                    ),
+                ),
+                (
+                    "last_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="Last time this user was modified",
+                        verbose_name="Last modified datetime",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Human readable name for the device, like door or laser",
+                        max_length=512,
+                        verbose_name="Device name",
+                    ),
+                ),
+                (
+                    "deviceid",
+                    models.CharField(
+                        help_text="used to know which device this was",
+                        max_length=512,
+                        verbose_name="device id",
+                    ),
+                ),
             ],
         ),
     ]

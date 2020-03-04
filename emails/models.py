@@ -19,7 +19,7 @@ class Email(models.Model):
         max_length=512,
     )
 
-    slug = AutoSlugField(populate_from='subject', unique=True)
+    slug = AutoSlugField(populate_from="subject", unique=True)
 
     content = models.TextField(
         blank=False,
@@ -45,9 +45,9 @@ class Email(models.Model):
         return f"{self.sent.strftime('%s')}/{self.slug}"
 
     def get_epoch(self):
-        if(self.sent):
-            return self.sent.strftime('%s')
-        return '000'
+        if self.sent:
+            return self.sent.strftime("%s")
+        return "000"
 
     def __str__(self):
         return self.subject

@@ -121,6 +121,7 @@
         <th>{% trans 'referencenumber' %}</th>
         <th>{% trans 'Sender' %}</th>
         <th>{% trans 'Message' %}</th>
+        <th>{% trans 'Comment' %}</th>
       </tr>
       {% for transaction in userdetails.transactions %}
       <tr>
@@ -129,6 +130,7 @@
         <td>{{ transaction.reference_number }}</td>
         <td>{{ transaction.sender }}</td>
         <td>{{ transaction.message }}</td>
+        <td>{{ transaction.comment }}</td>
       </tr>
       {% endfor %}
     </table>

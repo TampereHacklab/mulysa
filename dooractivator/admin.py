@@ -8,6 +8,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
     """
     Simple read only admin model
     """
+
     actions = None
 
     def has_view_permission(self, request, obj=None):
@@ -24,7 +25,7 @@ class ReadOnlyAdmin(admin.ModelAdmin):
 
 
 class SMSLogReadOnlyAdmin(ReadOnlyAdmin):
-    list_display = ['created', 'to_number', 'message', 'via']
+    list_display = ["created", "to_number", "message", "via"]
     readonly_fields = []
 
 

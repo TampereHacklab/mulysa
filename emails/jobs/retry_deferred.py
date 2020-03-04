@@ -5,6 +5,7 @@ from mailer.models import Message
 
 logger = logging.getLogger(__name__)
 
+
 class Job(HourlyJob):
     help = "Retry deferred messages"
 

@@ -67,7 +67,7 @@ class RegistrationServicesFrom(forms.Form):
         required=True,
         label=_("Services"),
         choices=build_service_choices(),
-        error_messages={'required': _('You must select at least one service')}
+        error_messages={"required": _("You must select at least one service")},
     )
 
 

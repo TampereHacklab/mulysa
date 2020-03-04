@@ -13,102 +13,515 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0011_update_proxy_permissions'),
+        ("auth", "0011_update_proxy_permissions"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CustomUser',
+            name="CustomUser",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('first_name', models.CharField(blank=True, max_length=30, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('username', models.CharField(blank=True, help_text='django expects that we have this field... TODO: figure out if we can get rid of this completely', max_length=30, null=True, verbose_name='username not used')),
-                ('email', models.EmailField(help_text='Your email address will be used for important notifications about your membership', max_length=255, unique=True, verbose_name='Email address')),
-                ('municipality', models.CharField(max_length=255, verbose_name='Municipality / City')),
-                ('nick', models.CharField(blank=True, help_text='Nickname you are known with on Internet', max_length=255, null=True, verbose_name='Nick')),
-                ('mxid', models.CharField(blank=True, help_text='Matrix ID (@user:example.org)', max_length=255, null=True, validators=[users.models.validate_mxid], verbose_name='Matrix ID')),
-                ('birthday', models.DateField(help_text='Format: DD.MM.YYYY', verbose_name='Birthday')),
-                ('phone', models.CharField(help_text='This number will also be the one that gets access to the hacklab premises. International format (+35840123567).', max_length=255, validators=[users.models.validate_phone], verbose_name='Mobile phone number')),
-                ('bank_account', models.CharField(blank=True, help_text='Bank account for paying invoices (IBAN format: FI123567890)', max_length=255, null=True, verbose_name='Bank account')),
-                ('language', models.CharField(choices=[('fi', 'Suomi'), ('en', 'English')], default='fi', help_text='Language preferred by user', max_length=10, verbose_name='Language')),
-                ('created', models.DateTimeField(auto_now_add=True, help_text='Automatically set to now when user is create', verbose_name='User creation date')),
-                ('last_modified', models.DateTimeField(auto_now=True, help_text='Last time this user was modified', verbose_name='Last modified datetime')),
-                ('marked_for_deletion_on', models.DateTimeField(blank=True, help_text='Filled if the user has marked themself as wanting to end their membership', null=True, verbose_name='Marked for deletion')),
-                ('reference_number', models.IntegerField(blank=True, help_text='Remember to always use your unique reference number for membership fee payments', null=True, verbose_name='Reference number of membership fee payments')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "is_superuser",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        verbose_name="superuser status",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=30, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "is_staff",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates whether the user can log into this admin site.",
+                        verbose_name="staff status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                        verbose_name="active",
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="date joined"
+                    ),
+                ),
+                (
+                    "username",
+                    models.CharField(
+                        blank=True,
+                        help_text="django expects that we have this field... TODO: figure out if we can get rid of this completely",
+                        max_length=30,
+                        null=True,
+                        verbose_name="username not used",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        help_text="Your email address will be used for important notifications about your membership",
+                        max_length=255,
+                        unique=True,
+                        verbose_name="Email address",
+                    ),
+                ),
+                (
+                    "municipality",
+                    models.CharField(
+                        max_length=255, verbose_name="Municipality / City"
+                    ),
+                ),
+                (
+                    "nick",
+                    models.CharField(
+                        blank=True,
+                        help_text="Nickname you are known with on Internet",
+                        max_length=255,
+                        null=True,
+                        verbose_name="Nick",
+                    ),
+                ),
+                (
+                    "mxid",
+                    models.CharField(
+                        blank=True,
+                        help_text="Matrix ID (@user:example.org)",
+                        max_length=255,
+                        null=True,
+                        validators=[users.models.validate_mxid],
+                        verbose_name="Matrix ID",
+                    ),
+                ),
+                (
+                    "birthday",
+                    models.DateField(
+                        help_text="Format: DD.MM.YYYY", verbose_name="Birthday"
+                    ),
+                ),
+                (
+                    "phone",
+                    models.CharField(
+                        help_text="This number will also be the one that gets access to the hacklab premises. International format (+35840123567).",
+                        max_length=255,
+                        validators=[users.models.validate_phone],
+                        verbose_name="Mobile phone number",
+                    ),
+                ),
+                (
+                    "bank_account",
+                    models.CharField(
+                        blank=True,
+                        help_text="Bank account for paying invoices (IBAN format: FI123567890)",
+                        max_length=255,
+                        null=True,
+                        verbose_name="Bank account",
+                    ),
+                ),
+                (
+                    "language",
+                    models.CharField(
+                        choices=[("fi", "Suomi"), ("en", "English")],
+                        default="fi",
+                        help_text="Language preferred by user",
+                        max_length=10,
+                        verbose_name="Language",
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="Automatically set to now when user is create",
+                        verbose_name="User creation date",
+                    ),
+                ),
+                (
+                    "last_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="Last time this user was modified",
+                        verbose_name="Last modified datetime",
+                    ),
+                ),
+                (
+                    "marked_for_deletion_on",
+                    models.DateTimeField(
+                        blank=True,
+                        help_text="Filled if the user has marked themself as wanting to end their membership",
+                        null=True,
+                        verbose_name="Marked for deletion",
+                    ),
+                ),
+                (
+                    "reference_number",
+                    models.IntegerField(
+                        blank=True,
+                        help_text="Remember to always use your unique reference number for membership fee payments",
+                        null=True,
+                        verbose_name="Reference number of membership fee payments",
+                    ),
+                ),
+                (
+                    "groups",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Group",
+                        verbose_name="groups",
+                    ),
+                ),
+                (
+                    "user_permissions",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Specific permissions for this user.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Permission",
+                        verbose_name="user permissions",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-                'abstract': False,
+                "verbose_name": "user",
+                "verbose_name_plural": "users",
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='BankTransaction',
+            name="BankTransaction",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('archival_reference', models.CharField(max_length=18, unique=True, verbose_name='Archival reference')),
-                ('date', models.DateField(help_text='Date of the transaction', verbose_name='Date')),
-                ('amount', models.DecimalField(decimal_places=2, help_text='Amount of money transferred to account', max_digits=6, verbose_name='Amount')),
-                ('message', models.CharField(help_text='Message attached to transaction by sender. Should not normally be used.', max_length=512, verbose_name='Message')),
-                ('sender', models.CharField(blank=True, help_text='Sender of the transaction, if known.', max_length=512, null=True, verbose_name='Sender')),
-                ('reference_number', models.BigIntegerField(blank=True, help_text='Reference number is set by transaction sender and should normally always be used.', null=True, verbose_name='Reference number of transaction')),
-                ('transaction_id', models.CharField(blank=True, help_text='Bank transaction id', max_length=512, null=True, verbose_name='Transaction id')),
-                ('code', models.CharField(blank=True, help_text='Code', max_length=512, null=True, verbose_name='Code')),
-                ('has_been_used', models.BooleanField(default=False, help_text='True, if this transaction has already been used to pay for service.')),
-                ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "archival_reference",
+                    models.CharField(
+                        max_length=18, unique=True, verbose_name="Archival reference"
+                    ),
+                ),
+                (
+                    "date",
+                    models.DateField(
+                        help_text="Date of the transaction", verbose_name="Date"
+                    ),
+                ),
+                (
+                    "amount",
+                    models.DecimalField(
+                        decimal_places=2,
+                        help_text="Amount of money transferred to account",
+                        max_digits=6,
+                        verbose_name="Amount",
+                    ),
+                ),
+                (
+                    "message",
+                    models.CharField(
+                        help_text="Message attached to transaction by sender. Should not normally be used.",
+                        max_length=512,
+                        verbose_name="Message",
+                    ),
+                ),
+                (
+                    "sender",
+                    models.CharField(
+                        blank=True,
+                        help_text="Sender of the transaction, if known.",
+                        max_length=512,
+                        null=True,
+                        verbose_name="Sender",
+                    ),
+                ),
+                (
+                    "reference_number",
+                    models.BigIntegerField(
+                        blank=True,
+                        help_text="Reference number is set by transaction sender and should normally always be used.",
+                        null=True,
+                        verbose_name="Reference number of transaction",
+                    ),
+                ),
+                (
+                    "transaction_id",
+                    models.CharField(
+                        blank=True,
+                        help_text="Bank transaction id",
+                        max_length=512,
+                        null=True,
+                        verbose_name="Transaction id",
+                    ),
+                ),
+                (
+                    "code",
+                    models.CharField(
+                        blank=True,
+                        help_text="Code",
+                        max_length=512,
+                        null=True,
+                        verbose_name="Code",
+                    ),
+                ),
+                (
+                    "has_been_used",
+                    models.BooleanField(
+                        default=False,
+                        help_text="True, if this transaction has already been used to pay for service.",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MemberService',
+            name="MemberService",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Name of the service', max_length=512, verbose_name='Service name')),
-                ('cost', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)], verbose_name='Normal cost of the service')),
-                ('cost_min', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)], verbose_name='Minimum payment')),
-                ('cost_max', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)], verbose_name='Maximum payment')),
-                ('days_per_payment', models.IntegerField(validators=[django.core.validators.MinValueValidator(0)], verbose_name='How many days of service member gets for a valid payment')),
-                ('days_bonus_for_first', models.IntegerField(default=0, validators=[django.core.validators.MinValueValidator(0)], verbose_name='How many extra days of service member gets when paying for first time')),
-                ('days_before_warning', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)], verbose_name='How many days befor payment expiration a warning message shall be sent')),
-                ('pays_also_service', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.MemberService')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Name of the service",
+                        max_length=512,
+                        verbose_name="Service name",
+                    ),
+                ),
+                (
+                    "cost",
+                    models.IntegerField(
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="Normal cost of the service",
+                    ),
+                ),
+                (
+                    "cost_min",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="Minimum payment",
+                    ),
+                ),
+                (
+                    "cost_max",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="Maximum payment",
+                    ),
+                ),
+                (
+                    "days_per_payment",
+                    models.IntegerField(
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="How many days of service member gets for a valid payment",
+                    ),
+                ),
+                (
+                    "days_bonus_for_first",
+                    models.IntegerField(
+                        default=0,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="How many extra days of service member gets when paying for first time",
+                    ),
+                ),
+                (
+                    "days_before_warning",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                        verbose_name="How many days befor payment expiration a warning message shall be sent",
+                    ),
+                ),
+                (
+                    "pays_also_service",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="users.MemberService",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='UsersLog',
+            name="UsersLog",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(auto_now_add=True, verbose_name='Date of this log event')),
-                ('message', models.CharField(max_length=1024, verbose_name='Message')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Date of this log event"
+                    ),
+                ),
+                ("message", models.CharField(max_length=1024, verbose_name="Message")),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ServiceSubscription',
+            name="ServiceSubscription",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('state', models.CharField(choices=[('ACTIVE', 'Active'), ('OVERDUE', 'Payment overdue'), ('SUSPENDED', 'Suspended')], default='SUSPENDED', help_text='State of this service', max_length=16, verbose_name='Service state')),
-                ('paid_until', models.DateField(blank=True, help_text='The service will stay active until this date', null=True, verbose_name='Paid until')),
-                ('last_payment', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.BankTransaction')),
-                ('service', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.MemberService')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "state",
+                    models.CharField(
+                        choices=[
+                            ("ACTIVE", "Active"),
+                            ("OVERDUE", "Payment overdue"),
+                            ("SUSPENDED", "Suspended"),
+                        ],
+                        default="SUSPENDED",
+                        help_text="State of this service",
+                        max_length=16,
+                        verbose_name="Service state",
+                    ),
+                ),
+                (
+                    "paid_until",
+                    models.DateField(
+                        blank=True,
+                        help_text="The service will stay active until this date",
+                        null=True,
+                        verbose_name="Paid until",
+                    ),
+                ),
+                (
+                    "last_payment",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="users.BankTransaction",
+                    ),
+                ),
+                (
+                    "service",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="users.MemberService",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='MembershipApplication',
+            name="MembershipApplication",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('message', models.CharField(blank=True, help_text='Free-form message to hacklab board', max_length=1024, verbose_name='Message')),
-                ('agreement', models.BooleanField(validators=[users.models.validate_agreement], verbose_name='I agree to the terms presented')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "message",
+                    models.CharField(
+                        blank=True,
+                        help_text="Free-form message to hacklab board",
+                        max_length=1024,
+                        verbose_name="Message",
+                    ),
+                ),
+                (
+                    "agreement",
+                    models.BooleanField(
+                        validators=[users.models.validate_agreement],
+                        verbose_name="I agree to the terms presented",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
-

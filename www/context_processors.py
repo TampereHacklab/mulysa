@@ -8,5 +8,5 @@ def external_urls(request):
         "GITHUB_URL": settings.GITHUB_URL,
         "SITENAME": settings.SITENAME,
         "SITE_URL": settings.SITE_URL,
-        "PRIVACY_POLICY_URL": settings.PRIVACY_POLICY_URL
+        "PRIVACY_POLICY_URL": settings.PRIVACY_POLICY_URL,
     }

@@ -6,6 +6,7 @@ class AccessDataSerializer(serializers.Serializer):
     """
     Serializer for incoming access data
     """
+
     deviceid = serializers.CharField(max_length=200)
     payload = serializers.CharField(max_length=200)
 
@@ -14,6 +15,7 @@ class UserAccessSerializer(serializers.HyperlinkedModelSerializer):
     """
     Serializer for user access data return
     """
+
     class Meta:
         model = CustomUser
         fields = (

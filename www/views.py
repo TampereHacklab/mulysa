@@ -28,23 +28,27 @@ from utils.dataimport import DataImport
 
 
 def register(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         userform = RegistrationUserForm(request.POST)
         applicationform = RegistrationApplicationForm(request.POST)
         servicesform = RegistrationServicesFrom(request.POST)
 
-        if userform.is_valid() and applicationform.is_valid() and servicesform.is_valid():
+        if (
+            userform.is_valid()
+            and applicationform.is_valid()
+            and servicesform.is_valid()
+        ):
 
             # extra handling for services that pay for other services
             # TODO: this logic should probably live in business logic
             memberservices = MemberService.objects.all()
             subscribed_services = []
 
-            print(servicesform.cleaned_data.get('services'))
+            print(servicesform.cleaned_data.get("services"))
 
             for service in memberservices:
                 print(service.id)
-                if str(service.id) in servicesform.cleaned_data.get('services', []):
+                if str(service.id) in servicesform.cleaned_data.get("services", []):
                     print(f"selecting service {service.name}")
                     subscribed_services.append(service)
                     if service.pays_also_service:
@@ -59,47 +63,52 @@ def register(request):
             new_application.user = new_user
 
             for service in subscribed_services:
-                subscription = ServiceSubscription(user=new_user,
-                                                   service=service,
-                                                   state=ServiceSubscription.SUSPENDED)
+                subscription = ServiceSubscription(
+                    user=new_user, service=service, state=ServiceSubscription.SUSPENDED
+                )
                 subscription.save()
-                subscription.reference_number = referencenumber.generate(settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id)
+                subscription.reference_number = referencenumber.generate(
+                    settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+                )
                 subscription.save()
 
             # save only after subscriptions are saved also so that the email
             # knows about them
             new_application.save()
 
-            return render(request, 'www/thanks.html', {}, content_type='text/html')
+            return render(request, "www/thanks.html", {}, content_type="text/html")
     else:
         userform = RegistrationUserForm()
         applicationform = RegistrationApplicationForm()
         servicesform = RegistrationServicesFrom()
-    return render(request,
-                  'www/register.html',
-                  {
-                      'userform': userform,
-                      'applicationform': applicationform,
-                      'servicesform': servicesform,
-                  },
-                  content_type='text/html'
-                  )
+    return render(
+        request,
+        "www/register.html",
+        {
+            "userform": userform,
+            "applicationform": applicationform,
+            "servicesform": servicesform,
+        },
+        content_type="text/html",
+    )
+
 
 @login_required
 @staff_member_required
 def dataimport(request):
     report = None
-    if request.method == 'POST':
+    if request.method == "POST":
         form = FileImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
-            if request.POST['filetype'] == 'M':
-                report = dataimport.importmembers(request.FILES['file'])
-            if request.POST['filetype'] == 'TITO':
-                report = dataimport.import_tito(request.FILES['file'])
+            if request.POST["filetype"] == "M":
+                report = dataimport.importmembers(request.FILES["file"])
+            if request.POST["filetype"] == "TITO":
+                report = dataimport.import_tito(request.FILES["file"])
     else:
         form = FileImportForm()
-    return render(request, 'www/import.html', {'form': form, 'report': report})
+    return render(request, "www/import.html", {"form": form, "report": report})
+
 
 @login_required
 @staff_member_required
@@ -110,119 +119,154 @@ def users(request):
     for user in users:
         user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
 
-    return render(request, 'www/users.html', {
-        'users': users,
-        'services': services
-    })
+    return render(request, "www/users.html", {"users": users, "services": services})
+
 
 @login_required
 @staff_member_required
 def ledger(request):
-    filter = request.GET.get('filter')
+    filter = request.GET.get("filter")
     transactions = []
     if not filter:
-        transactions = BankTransaction.objects.all().order_by('-date')
-    elif filter == 'unknown':
-        transactions = BankTransaction.objects.filter(user=None).order_by('-date')
-    elif filter == 'paid':
-        transactions = BankTransaction.objects.filter(amount__lte=0).order_by('-date')
-    elif filter == 'unused':
-        transactions = BankTransaction.objects.filter(has_been_used=False).order_by('-date')
+        transactions = BankTransaction.objects.all().order_by("-date")
+    elif filter == "unknown":
+        transactions = BankTransaction.objects.filter(user=None).order_by("-date")
+    elif filter == "paid":
+        transactions = BankTransaction.objects.filter(amount__lte=0).order_by("-date")
+    elif filter == "unused":
+        transactions = BankTransaction.objects.filter(has_been_used=False).order_by(
+            "-date"
+        )
 
-    return render(request, 'www/ledger.html', {
-        'transactions': transactions
-    })
+    return render(request, "www/ledger.html", {"transactions": transactions})
+
 
 @login_required
 @staff_member_required
 def custominvoices(request):
-    filter = request.GET.get('filter')  # For future expansion
+    filter = request.GET.get("filter")  # For future expansion
     custominvoices = []
     if not filter:
-        custominvoices = CustomInvoice.objects.all().order_by('payment_transaction')
+        custominvoices = CustomInvoice.objects.all().order_by("payment_transaction")
 
-    return render(request, 'www/custominvoices.html', {
-        'custominvoices': custominvoices
-    })
+    return render(
+        request, "www/custominvoices.html", {"custominvoices": custominvoices}
+    )
+
 
 @login_required
 @staff_member_required
 def application_operation(request, application_id, operation):
     application = get_object_or_404(MembershipApplication, id=application_id)
     name = str(application.user)
-    if operation == 'reject':
+    if operation == "reject":
         BusinessLogic.reject_application(application)
-        messages.success(request, _('Rejected member application from %(name)s') % {'name': name})
-    if operation == 'accept':
+        messages.success(
+            request, _("Rejected member application from %(name)s") % {"name": name}
+        )
+    if operation == "accept":
         BusinessLogic.accept_application(application)
-        messages.success(request, _('Accepted member application from %(name)s') % {'name': name})
+        messages.success(
+            request, _("Accepted member application from %(name)s") % {"name": name}
+        )
 
     return applications(request)
+
 
 @login_required
 @staff_member_required
 def applications(request):
     applications = MembershipApplication.objects.all()
     for application in applications:
-        application.servicesubscriptions = set(ServiceSubscription.objects.filter(user=application.user))
+        application.servicesubscriptions = set(
+            ServiceSubscription.objects.filter(user=application.user)
+        )
 
-    return render(request, 'www/applications.html', {'applications': applications})
+    return render(request, "www/applications.html", {"applications": applications})
+
 
 @login_required
 def userdetails(request, id):
     if not request.user.is_superuser and request.user.id != id:
-        return redirect('/www/login/?next=%s' % request.path)
+        return redirect("/www/login/?next=%s" % request.path)
     userdetails = CustomUser.objects.get(id=id)
-    userdetails.servicesubscriptions = ServiceSubscription.objects.filter(user=userdetails)
-    userdetails.transactions = BankTransaction.objects.filter(user=userdetails).order_by('date')
-    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by('date')
+    userdetails.servicesubscriptions = ServiceSubscription.objects.filter(
+        user=userdetails
+    )
+    userdetails.transactions = BankTransaction.objects.filter(
+        user=userdetails
+    ).order_by("date")
+    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by("date")
     userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
-    userdetails.membership_application = MembershipApplication.objects.filter(user=userdetails).first()
-    return render(request, 'www/user.html', {'userdetails': userdetails, 'bank_iban': settings.ACCOUNT_IBAN})
+    userdetails.membership_application = MembershipApplication.objects.filter(
+        user=userdetails
+    ).first()
+    return render(
+        request,
+        "www/user.html",
+        {"userdetails": userdetails, "bank_iban": settings.ACCOUNT_IBAN},
+    )
+
 
 @login_required
 def custominvoice(request):
     days = 0
     amount = 0
-    servicename = ''
-    paid_invoices = CustomInvoice.objects.filter(user=request.user, payment_transaction__isnull=False)
-    unpaid_invoices = CustomInvoice.objects.filter(user=request.user, payment_transaction__isnull=True)
+    servicename = ""
+    paid_invoices = CustomInvoice.objects.filter(
+        user=request.user, payment_transaction__isnull=False
+    )
+    unpaid_invoices = CustomInvoice.objects.filter(
+        user=request.user, payment_transaction__isnull=True
+    )
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CustomInvoiceForm(request.POST)
-        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+        form.fields["service"].queryset = ServiceSubscription.objects.filter(
+            user=request.user
+        ).exclude(state=ServiceSubscription.SUSPENDED)
 
         if form.is_valid():
-            count = int(form.cleaned_data['count'])
+            count = int(form.cleaned_data["count"])
             if count <= 0:
-                raise Exception('Invalid count, should never happen!')
+                raise Exception("Invalid count, should never happen!")
 
-            service_subscription_id = int(request.POST['service'])
+            service_subscription_id = int(request.POST["service"])
             subscription = ServiceSubscription.objects.get(id=service_subscription_id)
             days = subscription.service.days_per_payment * count
             amount = subscription.service.cost * count
             servicename = subscription.service.name
 
-            if 'create' in request.POST:
-                invoice = CustomInvoice(user=request.user, subscription=subscription, amount=amount, days=days)
+            if "create" in request.POST:
+                invoice = CustomInvoice(
+                    user=request.user,
+                    subscription=subscription,
+                    amount=amount,
+                    days=days,
+                )
                 invoice.save()
-                invoice.reference_number = referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id)
+                invoice.reference_number = referencenumber.generate(
+                    settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
+                )
                 invoice.save()
     else:
         form = CustomInvoiceForm()
-        form.fields['service'].queryset = ServiceSubscription.objects.filter(user=request.user).exclude(state=ServiceSubscription.SUSPENDED)
+        form.fields["service"].queryset = ServiceSubscription.objects.filter(
+            user=request.user
+        ).exclude(state=ServiceSubscription.SUSPENDED)
     return render(
         request,
-        'www/custominvoice.html',
+        "www/custominvoice.html",
         {
-            'form': form,
-            'paid_invoices': paid_invoices,
-            'unpaid_invoices': unpaid_invoices,
-            'days': days,
-            'amount': amount,
-            'servicename': servicename,
+            "form": form,
+            "paid_invoices": paid_invoices,
+            "unpaid_invoices": unpaid_invoices,
+            "days": days,
+            "amount": amount,
+            "servicename": servicename,
         },
     )
+
 
 @login_required
 def custominvoice_action(request, action, invoiceid):
@@ -230,11 +274,12 @@ def custominvoice_action(request, action, invoiceid):
     invoice = CustomInvoice.objects.get(user=request.user, id=invoiceid)
     if invoice:
         if invoice.payment_transaction:
-            print('Woot, custom invoice already paid, so wont delete!')
+            print("Woot, custom invoice already paid, so wont delete!")
         else:
             invoice.delete()
 
     return custominvoice(request)
+
 
 @login_required
 @staff_member_required

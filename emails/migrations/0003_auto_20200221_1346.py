@@ -7,19 +7,25 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('emails', '0002_auto_20200221_1344'),
+        ("emails", "0002_auto_20200221_1344"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='email',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='Creation date'),
+            model_name="email",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                verbose_name="Creation date",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='email',
-            name='last_modified',
-            field=models.DateTimeField(auto_now=True, verbose_name='Last modified datetime'),
+            model_name="email",
+            name="last_modified",
+            field=models.DateTimeField(
+                auto_now=True, verbose_name="Last modified datetime"
+            ),
         ),
     ]

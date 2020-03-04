@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0007_auto_20200225_1703'),
+        ("users", "0007_auto_20200225_1703"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='banktransaction',
-            name='comment',
-            field=models.TextField(blank=True, help_text='free form comment field for strange transaction', null=True),
+            model_name="banktransaction",
+            name="comment",
+            field=models.TextField(
+                blank=True,
+                help_text="free form comment field for strange transaction",
+                null=True,
+            ),
         ),
     ]

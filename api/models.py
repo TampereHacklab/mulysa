@@ -10,6 +10,7 @@ class AccessDevice(models.Model):
     """
     Device thingy, used by access service to know what to do
     """
+
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_("User creation date"),
