@@ -81,7 +81,7 @@
     {% endfor %}
 
     <h2>{% trans 'Custom invoices' %}</h2>
-    <table class="table">
+    <table class="table table-responsive-sm">
       <tr>
         <th>{% trans 'Date' %}</th>
         <th>{% trans 'Service' %}</th>
@@ -100,7 +100,7 @@
     <a class="btn btn-primary" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
 
     <h2>{% trans 'Activity log' %}</h2>
-    <table class="table">
+    <table class="table table-sm table-responsive-sm">
       <tr>
         <th>{% trans 'Date' %}</th>
         <th>{% trans 'Message' %}</th>
@@ -114,7 +114,7 @@
     </table>
 
     <h2>{% trans 'Bank transactions' %}</h2>
-    <table class="table">
+    <table class="table table-sm table-responsive-sm">
       <tr>
         <th>{% trans 'Date' %}</th>
         <th>{% trans 'Amount' %}</th>
