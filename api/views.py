@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models import CustomUser, NFCCard
+from users.models import CustomUser, NFCCard, ServiceSubscription
 
 from utils.phonenumber import normalize_number
 
@@ -111,7 +111,7 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         if not user.is_active:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
-        if not user.has_door_access():
+        if qs.first().subscription.state != ServiceSubscription.ACTIVE:
             return Response(status=status.HTTP_403_FORBIDDEN)
 
         outserializer = UserAccessSerializer(user)
