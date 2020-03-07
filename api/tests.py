@@ -35,6 +35,11 @@ class TestAccess(APITestCase):
             user=self.ok_user, subscription=self.ok_subscription, cardid="ABC123TEST",
         )
         self.ok_card.save()
+        # and another test card for the same user
+        self.ok_card2 = NFCCard.objects.create(
+            user=self.ok_user, subscription=self.ok_subscription, cardid="ABC123TEST2",
+        )
+        self.ok_card2.save()
 
         # user with no access
         self.fail_user = CustomUser.objects.create(
@@ -95,10 +100,17 @@ class TestAccess(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_nfc(self):
+    def test_nfc_ok(self):
         url = reverse("access-nfc")
         response = self.client.post(
             url, {"deviceid": self.device.deviceid, "payload": self.ok_card.cardid}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_nfc_ok2(self):
+        url = reverse("access-nfc")
+        response = self.client.post(
+            url, {"deviceid": self.device.deviceid, "payload": self.ok_card2.cardid}
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
