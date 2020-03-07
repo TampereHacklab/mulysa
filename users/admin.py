@@ -10,6 +10,7 @@ from .models import (
     ServiceSubscription,
     CustomInvoice,
     UsersLog,
+    NFCCard,
 )
 
 
@@ -30,6 +31,14 @@ class CustomUserAdmin(UserAdmin):
     ]
 
 
+class NFCCardAdmin(admin.ModelAdmin):
+    list_display = [
+        "user",
+        "subscription",
+        "cardid",
+    ]
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
 admin.site.register(MemberService)
@@ -37,3 +46,4 @@ admin.site.register(ServiceSubscription)
 admin.site.register(BankTransaction)
 admin.site.register(CustomInvoice)
 admin.site.register(UsersLog)
+admin.site.register(NFCCard, NFCCardAdmin)

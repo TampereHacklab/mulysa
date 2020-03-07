@@ -29,6 +29,7 @@ class AccessDevice(models.Model):
         max_length=512,
     )
     deviceid = models.CharField(
+        unique=True,
         verbose_name=_("device id"),
         help_text=_("used to know which device this was"),
         max_length=512,

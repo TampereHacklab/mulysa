@@ -590,12 +590,11 @@ class ServiceSubscription(models.Model):
         }
 
 
-"""
-A text log message for user activities (status changes, payments, etc)
-"""
-
-
 class UsersLog(models.Model):
+    """
+    A text log message for user activities (status changes, payments, etc)
+    """
+
     # User this log message is associated with
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateTimeField(
@@ -664,3 +663,35 @@ class CustomInvoice(models.Model):
             "amount": self.amount,
             "reference": self.reference_number,
         }
+
+
+class NFCCard(models.Model):
+    """
+    NFC Card for user for a subscription
+
+    At the moment this is written for opening the door.
+    """
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    subscription = models.ForeignKey(ServiceSubscription, on_delete=models.CASCADE)
+    # some datetime bits
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_("Creation date"),
+        help_text=_("Automatically set to now when is created"),
+    )
+    last_modified = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_("Last modified datetime"),
+        help_text=_("Last time this object was modified"),
+    )
+    cardid = models.CharField(
+        blank=False,
+        null=True,
+        unique=True,
+        verbose_name=_("NFC card id number as read by the card reader"),
+        help_text=_("Usually hex format"),
+        max_length=512,
+    )
+
+    def __str__(self):
+        return f"nfc access card for user {self.user} for service {self.subscription}"
