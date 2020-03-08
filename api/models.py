@@ -32,7 +32,7 @@ class AccessDevice(models.Model):
         unique=True,
         verbose_name=_("device id"),
         help_text=_("used to know which device this was"),
-        max_length=512,
+        max_length=255,
     )
 
     # TODO:

@@ -690,7 +690,7 @@ class NFCCard(models.Model):
         unique=True,
         verbose_name=_("NFC card id number as read by the card reader"),
         help_text=_("Usually hex format"),
-        max_length=512,
+        max_length=255,
     )
 
     def __str__(self):
