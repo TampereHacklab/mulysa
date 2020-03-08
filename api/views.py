@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models import CustomUser
+from users.models import CustomUser, NFCCard, ServiceSubscription
 
 from utils.phonenumber import normalize_number
 
@@ -22,7 +22,7 @@ class VerySlowThrottle(AnonRateThrottle):
     Throttle for access views
     """
 
-    rate = "5/minute"
+    rate = "10/minute"
 
 
 class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
@@ -91,12 +91,31 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         outserializer = UserAccessSerializer(user)
         return Response(outserializer.data)
 
-    #    @action(detail=False, method=["post"])
+    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
     def nfc(self, request, format=None):
         """
-        TODO: implement nfc reader serializer
+        NFC card access
         """
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+        inserializer = AccessDataSerializer(data=request.data)
+        inserializer.is_valid(raise_exception=True)
+
+        cardid = inserializer.validated_data.get("payload")
+        qs = NFCCard.objects.filter(cardid=cardid)
+
+        if qs.count() == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # our user
+        user = qs.first().user
+        # user does not have access rights
+        if not user.is_active:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        if qs.first().subscription.state != ServiceSubscription.ACTIVE:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        outserializer = UserAccessSerializer(user)
+        return Response(outserializer.data)
 
     def list(self, request):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)

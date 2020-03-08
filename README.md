@@ -10,7 +10,7 @@ asylym[::-1] is a member management system for Tampere Hacklab.
 
 Tampere Hacklab has been groving and member management has become pretty labor intensive.
 This project tries to automate the boring parts by automating the communication with members,
-managing the door access and managing the LDAP account creation.
+managing the door access and managing the LDAP account creation (some of this is still on the TODO list).
 
 Most of this works around our "User" model which can do multiple things
 
@@ -29,6 +29,7 @@ Most of this works around our "User" model which can do multiple things
   * Member fills in their email address
   * Mulysa sends email with a confirmation link and information to the Member
   * If member uses the activation link within X days the member will be MarkedForDeletion and deleted after XX days
+* Door access can be automated with nfc or phone number
 
 # Start developing
 
@@ -56,47 +57,45 @@ Before committing, run
 * flake8
 * tox
 
-# Member state changes will trigger things
-
-* State == active
-  * members phone number will be added to the door management
-  * members email will be activated to ldap (or added)
-  * email to member stating what happened
-* State == inactive
-  * member phone number will be removed from the door management
-  * members ldap account will be disabled
-  * email to member stating what happened
-* State == new
-  * email to member with directions on what to do next
-
-
 # Future improvements
 
 * Automate fetching and processing of member payment data from bank
 
-# examples
 
-## register new user:
+# Door access api
 
-## deactivate user:
+There are currently two different api endpoints for door access. One phone number based and one for nfc cards.
+
+Phone number based access is based on the users phone number and they must have a active subscription to the default service (on a default installation this would be serviceid=2 "tilankäyttöoikeus"). User can also have multiple NFC cards that check the same service access.
+
+Both endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number or nfc card id).
+
+Examples:
 
 ```
-curl -X PATCH \
-  http://127.0.0.1:8000/api/v1/users/2/set_activation/ \
-  -H 'Authorization: Token FILL_WITH_YOUR_ADMIN_USER_TOKEN' \
+curl -X POST \
+  http://127.0.0.1:8000/api/v1/access/nfc/ \
   -H 'Content-Type: application/json' \
   -d '{
- "is_active": false
-}'
+     "deviceid": "123",
+     "payload": "ABC321"
+   }'
 ```
 
-## get list of new users
+```
+curl -X POST \
+  http://127.0.0.1:8000/api/v1/access/phone/ \
+  -H 'Content-Type: application/json' \
+  -d '{
+     "deviceid": "123",
+     "payload": "+358123123123"
+   }'
+```
 
-TODO
 
-## push new payment for user
+200 responses can be considered valid access, all other are invalid. 200 responses will also contain some basic user data for example for showing in a door access welcome message.
 
-TODO
+There are two example implementations for esp32 based access readers that can be found here:
 
-
-TODO: more examples
+https://github.com/TampereHacklab/mulysa_callerid
+https://github.com/TampereHacklab/mulysa_nfc_reader
