@@ -9,9 +9,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
-from django.utils.html import strip_tags
 
 from mailer import send_html_mail
+
+from utils import stringutils
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,6 @@ class EmailActionForm(forms.Form):
 
         # send the email to all active users
         # TODO: the recipient set should be a setting
-        # and the sending should happen in a queue
         for user in get_user_model().objects.filter(is_active=True):
             logger.info(
                 "Queuing email {email.subject} to {user.email}".format(
@@ -51,7 +51,7 @@ class EmailActionForm(forms.Form):
             from_email = settings.NOREPLY_FROM_ADDRESS
             to = user.email
             html_content = render_to_string("mail/email.html", context)
-            plaintext_content = strip_tags(html_content)
+            plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
             send_html_mail(subject, plaintext_content, html_content, from_email, [to])
 

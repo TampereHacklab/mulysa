@@ -6,10 +6,9 @@ from django.core.mail import send_mail
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
-from utils import referencenumber
+from utils import referencenumber, stringutils
 
 from . import models
 
@@ -130,7 +129,7 @@ def send_application_received_email(
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = instance.user.email
     html_content = render_to_string("mail/application_received.html", context)
-    plaintext_content = strip_tags(html_content)
+    plaintext_content = stringutils.strip_tags_and_whitespace(html_content).strip()
 
     send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 
@@ -153,7 +152,7 @@ def send_new_application_waiting_processing_email(
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS
     html_content = render_to_string("mail/new_application.html", context)
-    plaintext_content = strip_tags(html_content)
+    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
     send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 
@@ -172,7 +171,7 @@ def send_application_approved_email(
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = instance.user.email
     html_content = render_to_string("mail/welcome_and_next_steps.html", context)
-    plaintext_content = strip_tags(html_content)
+    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
     send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 
@@ -191,7 +190,7 @@ def send_application_denied_email(
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = instance.user.email
     html_content = render_to_string("mail/application_rejected.html", context)
-    plaintext_content = strip_tags(html_content)
+    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
     send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
 

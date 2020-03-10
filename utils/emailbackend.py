@@ -9,7 +9,7 @@ class LoggingBackend(django.core.mail.backends.smtp.EmailBackend):
     """
     Simple email backend based on django default EmailBackend
 
-    Just to get some logging for emails
+    Just to get some logging for emails during development
     """
 
     def send_messages(self, email_messages):
