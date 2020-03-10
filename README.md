@@ -54,6 +54,7 @@ Push only .po files to git, not .mo's!
 
 Before committing, run
 
+* black
 * flake8
 * tox
 

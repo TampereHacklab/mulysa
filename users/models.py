@@ -83,6 +83,12 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    class Meta:
+        ordering = (
+            "first_name",
+            "last_name",
+        )
+
     # django kinda expects username field to exists even if we don't use it
     username = models.CharField(
         max_length=30,
@@ -92,6 +98,7 @@ class CustomUser(AbstractUser):
         verbose_name="username not used",
         help_text="django expects that we have this field... TODO: figure out if we can get rid of this completely",
     )
+
     email = models.EmailField(
         unique=True,
         blank=False,
@@ -119,7 +126,7 @@ class CustomUser(AbstractUser):
     )
 
     mxid = models.CharField(
-        blank=True,
+        blank=False,
         null=True,
         unique=True,
         verbose_name=_("Matrix ID"),
@@ -345,7 +352,7 @@ class MemberService(models.Model):
     days_before_warning = models.IntegerField(
         blank=True,
         null=True,
-        verbose_name="How many days befor payment expiration a warning message shall be sent",
+        verbose_name="How many days before payment expiration a warning message shall be sent",
         validators=[MinValueValidator(0)],
     )
 
@@ -353,6 +360,13 @@ class MemberService(models.Model):
         blank=True,
         null=True,
         verbose_name="How many days of service member can pay at maximum",
+        validators=[MinValueValidator(0)],
+    )
+
+    days_until_suspending = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name="How many days service can be in payment pending state until it is moved to suspended state",
         validators=[MinValueValidator(0)],
     )
 
@@ -417,6 +431,7 @@ class BankTransaction(models.Model):
         decimal_places=2,
     )
     message = models.CharField(
+        blank=True,
         verbose_name=_("Message"),
         help_text=_(
             "Message attached to transaction by sender. Should not normally be used."
@@ -573,6 +588,19 @@ class ServiceSubscription(models.Model):
             daysleft = 0
         return daysleft
 
+    # Return number of days subscription is overdue
+    def days_overdue(self):
+        if self.state != ServiceSubscription.OVERDUE:
+            return 0
+
+        if not self.paid_until:
+            return 0
+
+        days_overdue = -(self.paid_until - datetime.date.today()).days
+        if days_overdue < 0:
+            days_overdue = 0
+        return days_overdue
+
     # Returns a list of user's servicesubscriptions that pay for this subscription
     def paid_by_subscriptions(self):
         paying_subs = []
@@ -671,6 +699,7 @@ class NFCCard(models.Model):
 
     At the moment this is written for opening the door.
     """
+
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     subscription = models.ForeignKey(ServiceSubscription, on_delete=models.CASCADE)
     # some datetime bits

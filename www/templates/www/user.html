@@ -62,24 +62,27 @@
       </tr>
       <tr>
         <td colspan="2">
-          {% if subscription.paid_by_subscriptions %}
-            {% trans 'This is paid by other member services - you do not need to pay for it.' %}
-            <ul>
-            {% for paying_sub in subscription.paid_by_subscriptions %}
-              <li>{{ paying_sub }}</li>
-            {% endfor %}
-          </ul>
+          {% if subscription.state == "SUSPENDED" %}
+            {% trans 'This service has been suspended. Please contact management if you want to re-apply for it.'%}
           {% else %}
-            {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service can be paid with reference number {{ ref }}
-              to bank account {{bank_iban}}. Service price is {{ cost }}.{% endblocktrans %}<br/>
-            {% blocktrans %}To pay this service multiple times, you can create a custom invoice.{% endblocktrans %}
-            <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+            {% if subscription.paid_by_subscriptions %}
+              {% trans 'This is paid by other member services - you do not need to pay for it.' %}
+              <ul>
+              {% for paying_sub in subscription.paid_by_subscriptions %}
+                <li>{{ paying_sub }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+              {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service can be paid with reference number {{ ref }}
+                to bank account {{bank_iban}}. Service price is {{ cost }}.{% endblocktrans %}<br/>
+              {% blocktrans %}To pay this service multiple times, you can create a custom invoice.{% endblocktrans %}
+              <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+            {% endif %}
           {% endif %}
         </td>
       </tr>
     </table>
     {% endfor %}
-
     <h2>{% trans 'Custom invoices' %}</h2>
     <table class="table table-responsive-sm">
       <tr>
@@ -114,11 +117,13 @@
     </table>
 
     <h2>{% trans 'Bank transactions' %}</h2>
+    <p>{% trans 'Transactions are not processed in real time. Newest bank transactions uploaded to the system' %}: {{ last_transaction }}</p>
+
     <table class="table table-sm table-responsive-sm">
       <tr>
         <th>{% trans 'Date' %}</th>
         <th>{% trans 'Amount' %}</th>
-        <th>{% trans 'referencenumber' %}</th>
+        <th>{% trans 'Reference number' %}</th>
         <th>{% trans 'Sender' %}</th>
         <th>{% trans 'Message' %}</th>
         <th>{% trans 'Comment' %}</th>
@@ -128,9 +133,9 @@
         <td>{{ transaction.date }}</td>
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.reference_number }}</td>
-        <td>{{ transaction.sender }}</td>
+        <td>{{ transaction.sender|default_if_none:"" }}</td>
         <td>{{ transaction.message }}</td>
-        <td>{{ transaction.comment }}</td>
+        <td>{{ transaction.comment|default_if_none:"" }}</td>
       </tr>
       {% endfor %}
     </table>
