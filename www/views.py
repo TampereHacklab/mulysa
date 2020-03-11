@@ -206,7 +206,7 @@ def userdetails(request, id):
         {
             "userdetails": userdetails,
             "bank_iban": settings.ACCOUNT_IBAN,
-            "last_transaction": latest_transaction.date,
+            "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
 
