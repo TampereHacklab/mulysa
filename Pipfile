@@ -37,6 +37,7 @@ gunicorn = "*"
 django-bootstrap4 = "*"
 django-autoslug = "*"
 django-mailer = "*"
+xlrd = "*"
 
 [requires]
 python_version = "3.7"
