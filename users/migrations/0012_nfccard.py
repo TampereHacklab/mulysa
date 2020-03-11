@@ -8,19 +8,61 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0011_memberservice_hidden'),
+        ("users", "0011_memberservice_hidden"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='NFCCard',
+            name="NFCCard",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True, help_text='Automatically set to now when is created', verbose_name='Creation date')),
-                ('last_modified', models.DateTimeField(auto_now=True, help_text='Last time this object was modified', verbose_name='Last modified datetime')),
-                ('cardid', models.CharField(help_text='Usually hex format', max_length=512, null=True, verbose_name='NFC card id number as read by the card reader')),
-                ('subscription', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.ServiceSubscription')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(
+                        auto_now_add=True,
+                        help_text="Automatically set to now when is created",
+                        verbose_name="Creation date",
+                    ),
+                ),
+                (
+                    "last_modified",
+                    models.DateTimeField(
+                        auto_now=True,
+                        help_text="Last time this object was modified",
+                        verbose_name="Last modified datetime",
+                    ),
+                ),
+                (
+                    "cardid",
+                    models.CharField(
+                        help_text="Usually hex format",
+                        max_length=512,
+                        null=True,
+                        verbose_name="NFC card id number as read by the card reader",
+                    ),
+                ),
+                (
+                    "subscription",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="users.ServiceSubscription",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

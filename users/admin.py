@@ -18,7 +18,11 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = [
+    ordering = (
+        "first_name",
+        "last_name",
+    )
+    list_display = (
         "email",
         "first_name",
         "last_name",
@@ -26,9 +30,11 @@ class CustomUserAdmin(UserAdmin):
         "language",
         "municipality",
         "phone",
-        "reference_number",
+        "mxid",
         "is_active",
-    ]
+    )
+    list_filter = list_display
+    fieldsets = (("Extra", {"fields": list_display}),)
 
 
 class NFCCardAdmin(admin.ModelAdmin):

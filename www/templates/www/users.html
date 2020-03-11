@@ -26,7 +26,10 @@ User list
 <td>
         {% for subscription in user.servicesubscriptions %}
                 {% if service == subscription.service %}
-                <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
+                        <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
+                        {% if subscription.state == "OVERDUE" %}
+                                {{ subscription.days_overdue }} {% trans 'days'%}
+                        {% endif %}
                 {% endif %}
         {% endfor %}
 </td>

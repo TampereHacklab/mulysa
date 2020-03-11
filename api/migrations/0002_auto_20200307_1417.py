@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0001_initial'),
+        ("api", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='accessdevice',
-            name='deviceid',
-            field=models.CharField(help_text='used to know which device this was', max_length=512, unique=True, verbose_name='device id'),
+            model_name="accessdevice",
+            name="deviceid",
+            field=models.CharField(
+                help_text="used to know which device this was",
+                max_length=512,
+                unique=True,
+                verbose_name="device id",
+            ),
         ),
     ]

@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0013_auto_20200307_1417'),
+        ("users", "0013_auto_20200307_1417"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='nfccard',
-            name='cardid',
-            field=models.CharField(help_text='Usually hex format', max_length=255, null=True, unique=True, verbose_name='NFC card id number as read by the card reader'),
+            model_name="nfccard",
+            name="cardid",
+            field=models.CharField(
+                help_text="Usually hex format",
+                max_length=255,
+                null=True,
+                unique=True,
+                verbose_name="NFC card id number as read by the card reader",
+            ),
         ),
     ]

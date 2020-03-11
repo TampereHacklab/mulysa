@@ -180,7 +180,19 @@ class BusinessLogic:
             BusinessLogic._servicesubscription_state_changed(
                 subscription, oldstate, subscription.state
             )
-        # TODO: Handle moving subscription from OVERDUE to SUSPENDED if enough time passes.
+        if (
+            subscription.state == ServiceSubscription.OVERDUE
+            and subscription.service.days_until_suspending
+            and subscription.days_overdue() > subscription.service.days_until_suspending
+        ):
+            logger.debug(
+                f"{subscription} has been overdue for {subscription.days_overdue()} days - suspending"
+            )
+            subscription.state = ServiceSubscription.SUSPENDED
+            subscription.save()
+            BusinessLogic._servicesubscription_state_changed(
+                subscription, oldstate, subscription.state
+            )
 
     @staticmethod
     def _servicesubscription_state_changed(subscription, oldstate, newstate):

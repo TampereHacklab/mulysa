@@ -47,9 +47,7 @@ def register(request):
             print(servicesform.cleaned_data.get("services"))
 
             for service in memberservices:
-                print(service.id)
                 if str(service.id) in servicesform.cleaned_data.get("services", []):
-                    print(f"selecting service {service.name}")
                     subscribed_services.append(service)
                     if service.pays_also_service:
                         subscribed_services.append(service.pays_also_service)
@@ -201,10 +199,15 @@ def userdetails(request, id):
     userdetails.membership_application = MembershipApplication.objects.filter(
         user=userdetails
     ).first()
+    latest_transaction = BankTransaction.objects.order_by("date").first()
     return render(
         request,
         "www/user.html",
-        {"userdetails": userdetails, "bank_iban": settings.ACCOUNT_IBAN},
+        {
+            "userdetails": userdetails,
+            "bank_iban": settings.ACCOUNT_IBAN,
+            "last_transaction": latest_transaction.date,
+        },
     )
 
 
