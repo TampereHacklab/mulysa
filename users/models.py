@@ -126,7 +126,7 @@ class CustomUser(AbstractUser):
     )
 
     mxid = models.CharField(
-        blank=False,
+        blank=True,
         null=True,
         unique=True,
         verbose_name=_("Matrix ID"),
