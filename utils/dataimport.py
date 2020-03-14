@@ -9,6 +9,8 @@ from users.models import BankTransaction, CustomUser, MemberService, ServiceSubs
 
 from utils.businesslogic import BusinessLogic
 
+from utils.holvitoolbox import HolviToolbox
+
 
 class ParseError(Exception):
     """Raised when the data has invalid value"""
@@ -228,3 +230,67 @@ class DataImport:
             "error": error,
             "failedrows": failedrows,
         }
+    # Holvi TITO import. TITO spec here: ???
+    # Note: this is the XSL-based TITO.
+    @staticmethod
+    def import_holvi(f):
+        holvi = HolviToolbox.parse_account_statement(f)
+        imported = exists = error = 0
+        failedrows = []
+        for line in holvi[1:]:
+            print("import_holvi - Processing line:", str(line))
+            try:
+                if len(line) == 0:
+                    raise ParseError("Empty line or not starting with T")
+                archival_reference = line['Filing ID'].strip()
+                if len(archival_reference) < 32:
+                    raise ParseError(
+                        "Archival reference number invalid: " + archival_reference
+                    )
+                transaction_date = line['Date_parsed']
+                message = line['Message'].strip()
+                if message == "Viitemaksu":
+                    message = None
+                amount = int(line['Amount'])
+                peer = line['Counterparty']
+                reference = line['Reference'].strip()
+                if len(reference) > 0 and reference.isdigit():
+                    reference = int(reference)
+                else:
+                    if len(message)==0:
+                        message = reference
+                    reference = None
+
+                # Done parsing, add the transaction
+
+                try:
+                    # Archival reference should be unique ID
+                    BankTransaction.objects.get(
+                        archival_reference=archival_reference
+                    )
+                    exists = exists + 1
+                except BankTransaction.DoesNotExist:
+                    transaction = BankTransaction.objects.create(
+                        date=transaction_date,
+                        amount=amount,
+                        reference_number=reference,
+                        sender=peer,
+                        archival_reference=archival_reference,
+                    )
+                    BusinessLogic.new_transaction(transaction)
+                    imported = imported + 1
+            except ParseError as err:
+                print("Error parsing data: ", str(err))
+                error = error + 1
+                failedrows.append(line + " (" + str(err) + ")")
+        print("Data imported, now updating all users..")
+
+        BusinessLogic.update_all_users()
+
+        return {
+            "imported": imported,
+            "exists": exists,
+            "error": error,
+            "failedrows": failedrows,
+        }
+

@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.core.files.uploadedfile import InMemoryUploadedFile
 import xlrd
 
 class HolviToolbox:
@@ -6,7 +7,7 @@ class HolviToolbox:
     Contains various helper methods to handle Holvi data
     """
     @staticmethod
-    def parse_account_statement(filename):
+    def parse_account_statement(filename: InMemoryUploadedFile):
         """
         Parses Holvi account statement Excel
 
@@ -14,7 +15,7 @@ class HolviToolbox:
         "Date", "Amount", "Currency", "Counterparty", "Description", "Reference",
         "Message", "Filing ID"
         """
-        sheet = xlrd.open_workbook(filename).sheet_by_index(0)
+        sheet = xlrd.open_workbook(file_contents=filename.read()).sheet_by_index(0)
 
         headers = []
         items = []
