@@ -419,7 +419,7 @@ class BankTransaction(models.Model):
         null=False,
         unique=True,
         verbose_name=_("Archival reference"),
-        max_length=18,
+        max_length=255,
     )
     date = models.DateField(
         verbose_name=_("Date"), help_text=_("Date of the transaction"),
