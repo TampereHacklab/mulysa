@@ -254,6 +254,8 @@ class DataImport:
                 amount = int(line['Amount'])
                 peer = line['Counterparty']
                 reference = line['Reference'].strip()
+                if reference.startswith('RF'):
+                    reference = reference[4:]
                 if len(reference) > 0 and reference.isdigit():
                     reference = int(reference)
                 else:
