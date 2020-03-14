@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.core.files.uploadedfile import InMemoryUploadedFile
+
 import xlrd
 
 class HolviToolbox:
@@ -39,7 +40,7 @@ class HolviToolbox:
                 # Parse payment date
                 item['Date_parsed'] = datetime.strptime(
                     item['Date'],
-                    '%d %b %Y, %H:%M:%S' # 8 Jan 2020, 09:35:43
+                    '%d %b %Y, %H:%M:%S'  # 8 Jan 2020, 09:35:43
                 )
 
                 # Force reference field to be strings
@@ -53,4 +54,3 @@ class HolviToolbox:
                 items.append(item)
 
         return items
-

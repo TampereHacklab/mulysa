@@ -8,7 +8,6 @@ from django.db.utils import IntegrityError
 from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
 
 from utils.businesslogic import BusinessLogic
-
 from utils.holvitoolbox import HolviToolbox
 
 
@@ -259,7 +258,7 @@ class DataImport:
                 if len(reference) > 0 and reference.isdigit():
                     reference = int(reference)
                 else:
-                    if len(message)==0:
+                    if len(message) == 0:
                         message = reference
                     reference = None
 
@@ -295,4 +294,3 @@ class DataImport:
             "error": error,
             "failedrows": failedrows,
         }
-
