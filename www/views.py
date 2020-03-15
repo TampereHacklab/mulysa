@@ -103,6 +103,8 @@ def dataimport(request):
                 report = dataimport.importmembers(request.FILES["file"])
             if request.POST["filetype"] == "TITO":
                 report = dataimport.import_tito(request.FILES["file"])
+            if request.POST["filetype"] == "HOLVI":
+                report = dataimport.import_holvi(request.FILES["file"])
     else:
         form = FileImportForm()
     return render(request, "www/import.html", {"form": form, "report": report})

@@ -74,7 +74,7 @@ class RegistrationServicesFrom(forms.Form):
 class FileImportForm(forms.Form):
     filetype = forms.ChoiceField(
         label="File type",
-        choices=[("TITO", "Transactions (Nordea TITO)"), ("M", "Members (csv)")],
+        choices=[("TITO", "Transactions (Nordea TITO)"), ("M", "Members (csv)"), ("HOLVI", "Holvi (xls)")],
     )
     file = forms.FileField()
 
