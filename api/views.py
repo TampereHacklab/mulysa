@@ -67,9 +67,9 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         number = normalize_number(number)
         qs = CustomUser.objects.filter(phone=number)
 
-        # nothing found, 404
+        # nothing found, 480
         if qs.count() == 0:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=480)
 
         # multiple users found. this cannot work...
         if qs.count() != 1:
@@ -83,10 +83,10 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         # user does not have access rights
         if not user.is_active:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=481)
 
         if not user.has_door_access():
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=481)
 
         outserializer = UserAccessSerializer(user)
         return Response(outserializer.data)
@@ -103,16 +103,16 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         qs = NFCCard.objects.filter(cardid=cardid)
 
         if qs.count() == 0:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=480)
 
         # our user
         user = qs.first().user
         # user does not have access rights
         if not user.is_active:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=481)
 
         if qs.first().subscription.state != ServiceSubscription.ACTIVE:
-            return Response(status=status.HTTP_403_FORBIDDEN)
+            return Response(status=481)
 
         outserializer = UserAccessSerializer(user)
         return Response(outserializer.data)
