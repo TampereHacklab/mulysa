@@ -84,7 +84,7 @@ class TestAccess(APITestCase):
         response = self.client.post(
             url, {"deviceid": self.device.deviceid, "payload": self.fail_user.phone}
         )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, 481)
 
     def test_access_phone_empty(self):
         url = reverse("access-phone")
@@ -119,7 +119,7 @@ class TestAccess(APITestCase):
         response = self.client.post(
             url, {"deviceid": self.device.deviceid, "payload": self.not_ok_card.cardid}
         )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, 481)
 
     def test_nfc_empty(self):
         url = reverse("access-nfc")
