@@ -227,6 +227,8 @@ class CustomUser(AbstractUser):
         helper method for checking if the user has access to open door
         TODO: this should probably be checked by businesslogic
         """
+        if not self.is_active:
+            return False
         try:
             subscription = self.servicesubscription_set.get(
                 service=drfx_settings.DEFAULT_ACCOUNT_SERVICE
@@ -695,13 +697,11 @@ class CustomInvoice(models.Model):
 
 class NFCCard(models.Model):
     """
-    NFC Card for user for a subscription
-
-    At the moment this is written for opening the door.
+    NFC Card for user
     """
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    subscription = models.ForeignKey(ServiceSubscription, on_delete=models.CASCADE)
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
@@ -722,5 +722,12 @@ class NFCCard(models.Model):
         max_length=255,
     )
 
+    def censored_id(self):
+        if len(self.cardid) < 2:
+            return "**"
+        out = "*" * (len(self.cardid) - 2)
+        out = out + self.cardid[-2:]
+        return out
+
     def __str__(self):
-        return f"nfc access card for user {self.user} for service {self.subscription}"
+        return f"NFC access card for user {self.user}"

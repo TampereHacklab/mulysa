@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
+from datetime import datetime, timedelta
 
 from drfx import settings
 from users.models import (
@@ -13,6 +14,7 @@ from users.models import (
     MembershipApplication,
     ServiceSubscription,
     UsersLog,
+    NFCCard,
 )
 from www.forms import (
     CustomInvoiceForm,
@@ -21,6 +23,8 @@ from www.forms import (
     RegistrationServicesFrom,
     RegistrationUserForm,
 )
+
+from api.models import DeviceAccessLogEntry
 
 from utils import referencenumber
 from utils.businesslogic import BusinessLogic
@@ -211,6 +215,38 @@ def userdetails(request, id):
             "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
+
+
+@login_required
+def usersettings(request, id):
+    if not request.user.is_superuser and request.user.id != id:
+        return redirect("/www/login/?next=%s" % request.path)
+    userdetails = CustomUser.objects.get(id=id)
+    userdetails.nfccard = NFCCard.objects.filter(user=userdetails).first()
+    if not userdetails.nfccard:
+        # This monster finds unclaimed NFC cards stamped in last 5 minutes.
+        userdetails.nfclog = (
+            DeviceAccessLogEntry.objects.filter(
+                granted=False,
+                nfccard=None,
+                date__gte=datetime.now() - timedelta(minutes=5),
+            )
+            .exclude(payload__isnull=True)
+            .order_by("-date")
+        )
+    return render(request, "www/usersettings.html", {"userdetails": userdetails,},)
+
+
+@login_required
+def claim_nfc(request, id, cardid):
+    userdetails = CustomUser.objects.get(id=id)
+    nfccards = NFCCard.objects.filter(cardid=cardid)
+    if len(nfccards) > 0:
+        raise Exception("This card is already claimed, should never happen!")
+    newcard = NFCCard(cardid=cardid, user=userdetails)
+    messages.success(request, _("NFC Card successfully claimed"))
+    newcard.save()
+    return usersettings(request, id)
 
 
 @login_required

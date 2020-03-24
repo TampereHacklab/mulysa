@@ -40,7 +40,6 @@ class CustomUserAdmin(UserAdmin):
 class NFCCardAdmin(admin.ModelAdmin):
     list_display = [
         "user",
-        "subscription",
         "cardid",
     ]
 

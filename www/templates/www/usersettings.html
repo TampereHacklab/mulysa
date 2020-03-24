@@ -1,0 +1,43 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+        <h1>{% trans 'User settings' %}</h1>
+    </div>
+  </div>
+  {% bootstrap_messages %}
+  <table class="table">
+    <tr>
+      <td>{% trans 'Name' %}</td>
+      <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Email' %}</td>
+      <td>{{ userdetails.email }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Phone' %}</td>
+      <td>{{ userdetails.phone }}</td>
+    </tr>
+    <tr>
+        <td>{% trans 'NFC Card' %}</td>
+        <td>
+            {% if userdetails.nfccard %}
+                {{ userdetails.nfccard.censored_id }}
+            {% else %}
+                {% if userdetails.nfclog %}
+                    {% for entry in userdetails.nfclog %}
+                        <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id entry.payload %}">{% trans 'Claim NFC card' %} {{ entry.payload }}</a>                
+                    {% endfor %}
+                {% else %}
+                    {% trans 'No NFC card claimed - go to door, use a card and claim it here in 5 minutes' %}
+                {% endif %}            
+            {% endif %}            
+            </td>
+      </tr>
+    </table>
+</div>
+{% endblock %}

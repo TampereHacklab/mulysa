@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 21:54+0200\n"
+"POT-Creation-Date: 2020-03-24 22:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr "Montako kertaa haluat maksaa palvelun"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:68
+#: www/templates/www/base.html:69
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -115,7 +115,7 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 msgid "Send me instructions!"
 msgstr "Lähetä ohjeet"
 
-#: www/templates/www/applications.html:6 www/templates/www/base.html:53
+#: www/templates/www/applications.html:6 www/templates/www/base.html:54
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
@@ -125,6 +125,7 @@ msgid "Date"
 msgstr "Päiväys"
 
 #: www/templates/www/applications.html:13 www/templates/www/user.html:20
+#: www/templates/www/usersettings.html:14
 msgid "Name"
 msgstr "Nimi"
 
@@ -145,46 +146,51 @@ msgstr "Hyväksyntä"
 msgid "Show my user information"
 msgstr "Näytä tietoni"
 
-#: www/templates/www/base.html:52
+#: www/templates/www/base.html:51
+#| msgid "Change my password"
+msgid "Change my settings"
+msgstr "Omat asetukset"
+
+#: www/templates/www/base.html:53
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: www/templates/www/base.html:54
+#: www/templates/www/base.html:55
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: www/templates/www/base.html:55
+#: www/templates/www/base.html:56
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:56 www/templates/www/custominvoice.html:5
+#: www/templates/www/base.html:57 www/templates/www/custominvoice.html:5
 #: www/templates/www/custominvoices.html:4 www/templates/www/user.html:86
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:59
+#: www/templates/www/base.html:60
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:66
+#: www/templates/www/base.html:67
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:76
+#: www/templates/www/base.html:77
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:103
+#: www/templates/www/base.html:104
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:104
+#: www/templates/www/base.html:105
 #, python-format
 msgid ""
 " Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
 msgstr ""
-"Raportoi bugit ja osallistu projektiin <a href=\"%(GITHUB_URL)s"
-"\">GitHubissa</a>"
+"Raportoi bugit ja osallistu projektiin <a "
+"href=\"%(GITHUB_URL)s\">GitHubissa</a>"
 
 #: www/templates/www/custominvoice.html:8
 msgid "Note: You can always delete invoice if you choose not to pay it"
@@ -286,16 +292,16 @@ msgstr "Hae hacklabin jäsenyyttä"
 #, python-format
 msgid ""
 "Terms for membership: I have read and agree to\n"
-"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</"
-"a>\n"
+"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members "
+"guide</a>\n"
 "          and\n"
 "          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
 "            >association rules</a\n"
 "          >."
 msgstr ""
-"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a href=\"%(MEMBERS_GUIDE_URL)s"
-"\" target=\"_blank\">jäsenen ohjeen</a> ja <a href="
-"\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
+"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
+"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">jäsenen ohjeen</a> ja <a "
+"href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
 #: www/templates/www/register.html:36
 msgid ""
@@ -315,8 +321,8 @@ msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/thanks.html:7
 msgid ""
-"Your membership application was successfully submitted! Please check your e-"
-"mail (and spam folder) for instuctions."
+"Your membership application was successfully submitted! Please check your "
+"e-mail (and spam folder) for instuctions."
 msgstr ""
 "Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
 "roskapostilaatikko) johon lähetimme lisäohjeita."
@@ -325,11 +331,11 @@ msgstr ""
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
 
-#: www/templates/www/user.html:24
+#: www/templates/www/user.html:24 www/templates/www/usersettings.html:18
 msgid "Email"
 msgstr "Sähköposti"
 
-#: www/templates/www/user.html:28
+#: www/templates/www/user.html:28 www/templates/www/usersettings.html:22
 msgid "Phone"
 msgstr "Puhelin"
 
@@ -368,8 +374,8 @@ msgstr "Viimeisin maksu"
 
 #: www/templates/www/user.html:66
 msgid ""
-"This service has been suspended. Please contact management if you want to re-"
-"apply for it."
+"This service has been suspended. Please contact management if you want to "
+"re-apply for it."
 msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
@@ -431,15 +437,38 @@ msgstr "Kommentti"
 msgid "days"
 msgstr "päivää"
 
-#: www/views.py:163
+#: www/templates/www/usersettings.html:8
+msgid "User settings"
+msgstr "Omat asetukset"
+
+#: www/templates/www/usersettings.html:26
+msgid "NFC Card"
+msgstr "NFC-kortti"
+
+#: www/templates/www/usersettings.html:33
+msgid "Claim NFC card"
+msgstr "Käytä NFC-korttia"
+
+#: www/templates/www/usersettings.html:36
+msgid ""
+"No NFC card claimed - go to door, use a card and claim it here in 5 minutes"
+msgstr ""
+"Ei NFC-korttia yhdistettynä - mene ovelle, leimaa kortti ja yhdistä se "
+"täällä viiden minuutin kuluessa"
+
+#: www/views.py:169
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:168
+#: www/views.py:174
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
+
+#: www/views.py:247
+msgid "NFC Card successfully claimed"
+msgstr "NFC-kortti yhdistetty"
 
 #~ msgid "referencenumber"
 #~ msgstr "viitenumero"
