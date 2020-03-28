@@ -111,12 +111,15 @@ def dataimport(request):
         form = FileImportForm()
     return render(request, "www/import.html", {"form": form, "report": report})
 
+
 @login_required
 @staff_member_required
 def dataexport(request):
-    if 'data' in request.GET:
-        if request.GET['data'] == 'memberstsv':
-            return HttpResponse(DataExport.exportmembers(), content_type='application/tsv')
+    if "data" in request.GET:
+        if request.GET["data"] == "memberstsv":
+            return HttpResponse(
+                DataExport.exportmembers(), content_type="application/tsv"
+            )
 
     return render(request, "www/export.html")
 
