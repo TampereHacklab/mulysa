@@ -9,6 +9,7 @@ urlpatterns = [
     path("index", TemplateView.as_view(template_name="www/index.html"), name="index"),
     path("register", views.register, name="register"),
     path("dataimport", views.dataimport, name="dataimport"),
+    path("dataexport", views.dataexport, name="dataexport"),
     path("users", views.users, name="users"),
     path("ledger", views.ledger, name="ledger"),
     path("custominvoices", views.custominvoices, name="custominvoices"),
