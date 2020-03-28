@@ -31,14 +31,10 @@ class TestAccess(APITestCase):
         self.ok_subscription.save()
 
         # and test card
-        self.ok_card = NFCCard.objects.create(
-            user=self.ok_user, subscription=self.ok_subscription, cardid="ABC123TEST",
-        )
+        self.ok_card = NFCCard.objects.create(user=self.ok_user, cardid="ABC123TEST",)
         self.ok_card.save()
         # and another test card for the same user
-        self.ok_card2 = NFCCard.objects.create(
-            user=self.ok_user, subscription=self.ok_subscription, cardid="ABC123TEST2",
-        )
+        self.ok_card2 = NFCCard.objects.create(user=self.ok_user, cardid="ABC123TEST2",)
         self.ok_card2.save()
 
         # user with no access
@@ -53,7 +49,7 @@ class TestAccess(APITestCase):
         )
         # and a test card for fail case
         self.not_ok_card = NFCCard.objects.create(
-            user=self.fail_user, subscription=self.fail_subscription, cardid="TESTABC",
+            user=self.fail_user, cardid="TESTABC",
         )
         self.not_ok_card.save()
 

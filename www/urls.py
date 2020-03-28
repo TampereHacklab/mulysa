@@ -13,6 +13,12 @@ urlpatterns = [
     path("ledger", views.ledger, name="ledger"),
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
+    path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
+    path(
+        "usersettings/<int:id>/claim_nfc/<str:cardid>",
+        views.claim_nfc,
+        name="claim_nfc",
+    ),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",

@@ -48,6 +48,7 @@
           <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'usersettings' user.id %}">{% trans 'Change my settings' %}</a></li>
               {% if user.is_staff %}
               <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% trans 'Users' %}</a></li>
               <li class="nav-item"><a class="nav-link" href="{% url 'applications' %}">{% trans 'Member applications' %}</a></li>

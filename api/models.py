@@ -2,6 +2,7 @@ import logging
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from users.models import NFCCard
 
 logger = logging.getLogger(__name__)
 
@@ -39,3 +40,37 @@ class AccessDevice(models.Model):
     # * which services this device gives access to
     # * extra settings for this device (like how long the access lasts)
     # *
+
+
+class DeviceAccessLogEntry(models.Model):
+    date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_("Date of this entry"),
+        help_text=_("Automatically set to now when created"),
+    )
+
+    granted = models.BooleanField(
+        verbose_name=_("Granted"), help_text=_("Was the access granted")
+    )
+
+    device = models.ForeignKey(
+        AccessDevice,
+        null=True,
+        verbose_name=_("Device this event came from"),
+        on_delete=models.SET_NULL,
+    )
+
+    payload = models.CharField(
+        blank=False,
+        null=True,
+        verbose_name=_("NFC card id or phone number, or other field like that"),
+        max_length=255,
+    )
+
+    nfccard = models.ForeignKey(
+        NFCCard,
+        null=True,
+        verbose_name=_("NFC card"),
+        help_text=_("NFC card this was mapped to, if any"),
+        on_delete=models.SET_NULL,
+    )

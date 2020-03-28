@@ -8,11 +8,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models import CustomUser, NFCCard, ServiceSubscription
+from users.models import CustomUser, NFCCard
 
 from utils.phonenumber import normalize_number
 
-from .models import AccessDevice
+from .models import AccessDevice, DeviceAccessLogEntry
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +51,9 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         returns 200 ok with some user data if everything is fine and 4XX for other situations
         """
+
+        # TODO: Generate log entry for phone events also!
+
         inserializer = AccessDataSerializer(data=request.data)
         inserializer.is_valid(raise_exception=True)
 
@@ -82,9 +85,6 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         user = qs.first()
 
         # user does not have access rights
-        if not user.is_active:
-            return Response(status=481)
-
         if not user.has_door_access():
             return Response(status=481)
 
@@ -96,26 +96,45 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         """
         NFC card access
         """
+        logentry = DeviceAccessLogEntry()
         inserializer = AccessDataSerializer(data=request.data)
         inserializer.is_valid(raise_exception=True)
+
+        deviceqs = AccessDevice.objects.all()
+        deviceid = inserializer.validated_data.get("deviceid")
+        device = get_object_or_404(deviceqs, deviceid=deviceid)
+        logging.debug(f"found device {device}")
 
         cardid = inserializer.validated_data.get("payload")
         qs = NFCCard.objects.filter(cardid=cardid)
 
+        logentry.device = device
+        logentry.payload = cardid
+
+        # 0 = success, any other = failure
+        response_status = 0
+
         if qs.count() == 0:
-            return Response(status=480)
+            response_status = 480
+        else:
+            logentry.nfccard = qs.first()
 
-        # our user
-        user = qs.first().user
-        # user does not have access rights
-        if not user.is_active:
-            return Response(status=481)
+            # our user
+            user = qs.first().user
 
-        if qs.first().subscription.state != ServiceSubscription.ACTIVE:
-            return Response(status=481)
+            # user does not have access rights
+            if not user.has_door_access():
+                response_status = 481
 
-        outserializer = UserAccessSerializer(user)
-        return Response(outserializer.data)
+        logentry.granted = response_status == 0
+
+        logentry.save()
+
+        if response_status == 0:
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data)
+
+        return Response(status=response_status)
 
     def list(self, request):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)

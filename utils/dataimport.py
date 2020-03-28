@@ -229,6 +229,7 @@ class DataImport:
             "error": error,
             "failedrows": failedrows,
         }
+
     # Holvi TITO import. TITO spec here: ???
     # Note: this is the XSL-based TITO.
     @staticmethod
@@ -241,19 +242,19 @@ class DataImport:
             try:
                 if len(line) == 0:
                     raise ParseError("Empty line or not starting with T")
-                archival_reference = line['Filing ID'].strip()
+                archival_reference = line["Filing ID"].strip()
                 if len(archival_reference) < 32:
                     raise ParseError(
                         "Archival reference number invalid: " + archival_reference
                     )
-                transaction_date = line['Date_parsed']
-                message = line['Message'].strip()
+                transaction_date = line["Date_parsed"]
+                message = line["Message"].strip()
                 if message == "Viitemaksu":
                     message = None
-                amount = int(line['Amount'])
-                peer = line['Counterparty']
-                reference = line['Reference'].strip()
-                if reference.startswith('RF'):
+                amount = int(line["Amount"])
+                peer = line["Counterparty"]
+                reference = line["Reference"].strip()
+                if reference.startswith("RF"):
                     reference = reference[4:]
                 if len(reference) > 0 and reference.isdigit():
                     reference = int(reference)
@@ -266,9 +267,7 @@ class DataImport:
 
                 try:
                     # Archival reference should be unique ID
-                    BankTransaction.objects.get(
-                        archival_reference=archival_reference
-                    )
+                    BankTransaction.objects.get(archival_reference=archival_reference)
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
                     transaction = BankTransaction.objects.create(

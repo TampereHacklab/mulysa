@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 21:54+0200\n"
+"POT-Creation-Date: 2020-03-24 22:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgid "Automatically set to now when user is create"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
 #: users/models.py:178 users/models.py:282 users/models.py:675
-#: users/models.py:713
+#: users/models.py:711
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
 
@@ -356,39 +356,39 @@ msgstr ""
 "Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
 "käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
 
-#: users/models.py:708
+#: users/models.py:706
 msgid "Creation date"
 msgstr "Luontipäivä"
 
-#: users/models.py:709
+#: users/models.py:707
 msgid "Automatically set to now when is created"
 msgstr "Asetetaan automaattisesti kun luodaan"
 
-#: users/models.py:714
+#: users/models.py:712
 msgid "Last time this object was modified"
 msgstr "Päiväys, kun tätä on viimeksi muokattu"
 
-#: users/models.py:720
+#: users/models.py:718
 msgid "NFC card id number as read by the card reader"
 msgstr "NFC-kortin tunniste kortinlukijan lukemana"
 
-#: users/models.py:721
+#: users/models.py:719
 msgid "Usually hex format"
 msgstr "Yleensä heksaa"
 
-#: users/signals.py:129
+#: users/signals.py:128
 msgid "Thank you for applying membership and next steps"
 msgstr "Kiitos hakemuksestasi, ja seuraavat toimenpiteet"
 
-#: users/signals.py:152
+#: users/signals.py:151
 msgid "New membership application received"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/signals.py:171
+#: users/signals.py:170
 msgid "Your application has been approved"
 msgstr "Hakemuksesi on hyväksytty"
 
-#: users/signals.py:190
+#: users/signals.py:189
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
