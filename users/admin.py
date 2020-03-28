@@ -32,6 +32,7 @@ class CustomUserAdmin(UserAdmin):
         "phone",
         "mxid",
         "is_active",
+        "is_staff",
     )
     list_filter = list_display
     fieldsets = (("Extra", {"fields": list_display}),)
