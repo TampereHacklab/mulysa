@@ -18,11 +18,9 @@ class DataExport:
         for user in users:
             tko_ref = ""
             tko_service = MemberService.objects.get(id=tko)
-            print("TKO Service", tko_service)
             services = ServiceSubscription.objects.filter(
                 user=user, service=tko_service
             )
-            print("Services", services)
             if len(services) == 1:
                 tko_ref = services[0].reference_number
                 if not tko_ref:
