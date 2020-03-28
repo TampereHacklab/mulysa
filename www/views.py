@@ -201,7 +201,7 @@ def userdetails(request, id):
     userdetails.membership_application = MembershipApplication.objects.filter(
         user=userdetails
     ).first()
-    latest_transaction = BankTransaction.objects.order_by("date").first()
+    latest_transaction = BankTransaction.objects.order_by("-date").first()
     return render(
         request,
         "www/user.html",
