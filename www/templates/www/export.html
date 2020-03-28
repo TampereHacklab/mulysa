@@ -1,0 +1,10 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>
+Data export
+</h1>
+<ul>
+    <li>Members TSV</li> <a href="{% url 'dataexport' %}?data=memberstsv">export</a>
+</ul>
+{% endblock %}

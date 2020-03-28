@@ -3,6 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
+from django.http import HttpResponse
 
 from drfx import settings
 from users.models import (
@@ -25,6 +26,7 @@ from www.forms import (
 from utils import referencenumber
 from utils.businesslogic import BusinessLogic
 from utils.dataimport import DataImport
+from utils.dataexport import DataExport
 
 
 def register(request):
@@ -108,6 +110,15 @@ def dataimport(request):
     else:
         form = FileImportForm()
     return render(request, "www/import.html", {"form": form, "report": report})
+
+@login_required
+@staff_member_required
+def dataexport(request):
+    if 'data' in request.GET:
+        if request.GET['data'] == 'memberstsv':
+            return HttpResponse(DataExport.exportmembers(), content_type='application/tsv')
+
+    return render(request, "www/export.html")
 
 
 @login_required
