@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 from drfx import settings as drfx_settings
 
@@ -290,6 +291,9 @@ class MembershipApplication(models.Model):
         verbose_name=_("I agree to the terms presented"),
         validators=[validate_agreement],
     )
+
+    def age_days(self):
+        return (timezone.now() - self.created).days
 
     def __str__(self):
         return _("Membership application for %(name)s") % {"name": str(self.user)}
