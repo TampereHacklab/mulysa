@@ -254,12 +254,20 @@ def usersettings(request, id):
 @login_required
 def claim_nfc(request, id, cardid):
     userdetails = CustomUser.objects.get(id=id)
-    nfccards = NFCCard.objects.filter(cardid=cardid)
-    if len(nfccards) > 0:
-        raise Exception("This card is already claimed, should never happen!")
-    newcard = NFCCard(cardid=cardid, user=userdetails)
-    messages.success(request, _("NFC Card successfully claimed"))
-    newcard.save()
+
+    if cardid == 'RELEASE':
+        nfccard = NFCCard.objects.get(user=userdetails)
+        nfccard.delete()
+        messages.success(request, _('Released NFC card'))
+        userdetails.log(_('Released NFC card'))
+    else:
+        nfccards = NFCCard.objects.filter(cardid=cardid)
+        if len(nfccards) > 0:
+            raise Exception("This card is already claimed, should never happen!")
+        newcard = NFCCard(cardid=cardid, user=userdetails)
+        messages.success(request, _("NFC Card successfully claimed"))
+        userdetails.log(_("NFC Card successfully claimed"))
+        newcard.save()
     return usersettings(request, id)
 
 
