@@ -255,11 +255,11 @@ def usersettings(request, id):
 def claim_nfc(request, id, cardid):
     userdetails = CustomUser.objects.get(id=id)
 
-    if cardid == 'RELEASE':
+    if cardid == "RELEASE":
         nfccard = NFCCard.objects.get(user=userdetails)
         nfccard.delete()
-        messages.success(request, _('Released NFC card'))
-        userdetails.log(_('Released NFC card'))
+        messages.success(request, _("Released NFC card"))
+        userdetails.log(_("Released NFC card"))
     else:
         nfccards = NFCCard.objects.filter(cardid=cardid)
         if len(nfccards) > 0:
