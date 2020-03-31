@@ -27,6 +27,7 @@
         <td>
             {% if userdetails.nfccard %}
                 {{ userdetails.nfccard.censored_id }}
+                <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id 'RELEASE' %}">{% trans 'Release' %}</a> 
             {% else %}
                 {% if userdetails.nfclog %}
                     {% for entry in userdetails.nfclog %}

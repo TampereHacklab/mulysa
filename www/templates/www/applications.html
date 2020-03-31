@@ -19,7 +19,7 @@
     </tr>
     {% for application in applications %}
     <tr>
-        <td>{{ application.created }}</td>
+        <td>{{ application.created }} ({{ application.age_days }} {% trans 'days' %})</td>
         <td><a href="{% url 'userdetails' application.user.id %}">{{ application.user.first_name }} {{ application.user.last_name }}</a></td>
         <td>{{ application.user.email }}</td>
         <td>{{ application.message }}</td>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-24 22:01+0200\n"
+"POT-Creation-Date: 2020-03-29 21:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,15 +32,15 @@ msgstr "Jäsenpalvelut"
 msgid "You must select at least one service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: www/forms.py:84 www/templates/www/user.html:90
+#: www/forms.py:88 www/templates/www/user.html:90
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: www/forms.py:86
+#: www/forms.py:90
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: www/forms.py:89
+#: www/forms.py:93
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
@@ -48,7 +48,7 @@ msgstr "Montako kertaa haluat maksaa palvelun"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:69
+#: www/templates/www/base.html:70
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -142,12 +142,15 @@ msgstr "Viesti"
 msgid "Agreement"
 msgstr "Hyväksyntä"
 
+#: www/templates/www/applications.html:22 www/templates/www/users.html:31
+msgid "days"
+msgstr "päivää"
+
 #: www/templates/www/base.html:50 www/templates/www/index.html:19
 msgid "Show my user information"
 msgstr "Näytä tietoni"
 
 #: www/templates/www/base.html:51
-#| msgid "Change my password"
 msgid "Change my settings"
 msgstr "Omat asetukset"
 
@@ -160,31 +163,36 @@ msgid "Import"
 msgstr "Tiedon tuonti"
 
 #: www/templates/www/base.html:56
+#| msgid "Import"
+msgid "Export"
+msgstr "Tiedon vienti"
+
+#: www/templates/www/base.html:57
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:57 www/templates/www/custominvoice.html:5
+#: www/templates/www/base.html:58 www/templates/www/custominvoice.html:5
 #: www/templates/www/custominvoices.html:4 www/templates/www/user.html:86
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:60
+#: www/templates/www/base.html:61
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:67
+#: www/templates/www/base.html:68
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:77
+#: www/templates/www/base.html:78
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:104
+#: www/templates/www/base.html:105
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:105
+#: www/templates/www/base.html:106
 #, python-format
 msgid ""
 " Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
@@ -433,10 +441,6 @@ msgstr "Lähettäjä"
 msgid "Comment"
 msgstr "Kommentti"
 
-#: www/templates/www/users.html:31
-msgid "days"
-msgstr "päivää"
-
 #: www/templates/www/usersettings.html:8
 msgid "User settings"
 msgstr "Omat asetukset"
@@ -445,28 +449,37 @@ msgstr "Omat asetukset"
 msgid "NFC Card"
 msgstr "NFC-kortti"
 
-#: www/templates/www/usersettings.html:33
+#: www/templates/www/usersettings.html:30
+msgid "Release"
+msgstr "Vapauta"
+
+#: www/templates/www/usersettings.html:34
 msgid "Claim NFC card"
 msgstr "Käytä NFC-korttia"
 
-#: www/templates/www/usersettings.html:36
+#: www/templates/www/usersettings.html:37
 msgid ""
 "No NFC card claimed - go to door, use a card and claim it here in 5 minutes"
 msgstr ""
 "Ei NFC-korttia yhdistettynä - mene ovelle, leimaa kortti ja yhdistä se "
 "täällä viiden minuutin kuluessa"
 
-#: www/views.py:169
+#: www/views.py:183
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:174
+#: www/views.py:188
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:247
+#: www/views.py:261 www/views.py:262
+#| msgid "Claim NFC card"
+msgid "Released NFC card"
+msgstr "Vapautettu NFC-kortti"
+
+#: www/views.py:268 www/views.py:269
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
 
