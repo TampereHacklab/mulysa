@@ -255,11 +255,10 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:675e4f7f2f5851d3139e8a038d2f1f491a858184f6cf069a52626cd303ba54aa",
-                "sha256:a08f1843dba5e35f7d01b804be6c8fa438567128bcd5e75945dcc7d5f486846c"
+                "sha256:59ae9cb25fb03027c9f2bf5584098e699be7eca12c443838b83752956be15cda",
+                "sha256:bebf881ef0e775b93062fbd107bf164b5baef877a7b8f702e93a9a5d24ae4065"
             ],
-            "index": "pypi",
-            "version": "==8.11.5"
+            "version": "==8.12.1"
         },
         "pyjwt": {
             "hashes": [
