@@ -319,10 +319,9 @@
         },
         "twilio": {
             "hashes": [
-                "sha256:c7d99b87a1d3ed5d49638e45509edad7fe10d030d4b5239c5af805b0a2043ad9"
+                "sha256:284040aa4cd504d67e95cde17db38d4d11454ac8bd43cab94f66694241b962af"
             ],
-            "index": "pypi",
-            "version": "==6.36.0"
+            "version": "==6.37.0"
         },
         "uritemplate": {
             "hashes": [
