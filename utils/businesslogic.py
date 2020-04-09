@@ -275,6 +275,10 @@ class BusinessLogic:
             logger.debug("Service is suspended - no action")
             return
 
+        if not subscription.reference_number:
+            logger.debug("Service has no reference number - no action")
+            return
+
         # Figure out other services that pay for this service
         services_that_pay_this = MemberService.objects.filter(
             pays_also_service=subscription.service
