@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 23:29+0300\n"
+"POT-Creation-Date: 2020-04-09 23:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -400,12 +400,30 @@ msgstr "Hakemuksesi on hyväksytty"
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
-#: users/templates/mail/application_received.txt:6
-#, python-format
+#: users/templates/mail/application_received.txt:4
+#| msgid ""
+#| "\n"
+#| "Thank you for applying for membership to %(settings.SITENAME)s "
+#| "%(user.first_name)s!\n"
+#| "\n"
+#| "We will check your application and get back to you after your application "
+#| "has\n"
+#| "been processed.\n"
+#| "\n"
+#| "In the meantime the Best way to get started is to join our community "
+#| "meeting\n"
+#| "first Tuesday of the month or weekly open house every Tuesday. It is "
+#| "also\n"
+#| "highly recommendable to join our communication channels (Matrix, Telegram "
+#| "or\n"
+#| "IRC and email list). Be happy to ask if you like to know more!\n"
+#| "\n"
+#| "If you want to speed things up you can already pay your monthly fee using "
+#| "the\n"
+#| "payment information below.\n"
 msgid ""
 "\n"
-"Thank you for applying for membership to %(settings.SITENAME)s "
-"%(user.first_name)s!\n"
+"Thank you for applying for membership!\n"
 "\n"
 "We will check your application and get back to you after your application "
 "has\n"
@@ -418,72 +436,56 @@ msgid ""
 "or\n"
 "IRC and email list). Be happy to ask if you like to know more!\n"
 "\n"
+"You should have received e-mail link to create a password to our membership\n"
+"management system, mulysa. \n"
+"\n"
 "If you want to speed things up you can already pay your monthly fee using "
 "the\n"
-"payment information below.\n"
+"payment information below. You can find payment information in mulysa.\n"
 msgstr ""
 "\n"
-"Kiitos jäsenhakemuksestasi %(settings.SITENAME)s:n, %(user.first_name)s!\n"
+"Kiitos jäsenhakemuksestasi!\n"
 "\n"
 "Käymme hakemuksesi läpi ja otamme yhteyttä kun hakemuksesi on käsitelty.\n"
 "\n"
 "Tällä aikaa voit vierailla labilla avointen ovien aikana ja liittyä "
 "pikaviestinkanavillemme.\n"
 "\n"
-"Jos haluat maksaa jäsenmaksusi samantien, alla on maksutietosi.\n"
-
-#: users/templates/mail/application_received.txt:21
-#: users/templates/mail/welcome_and_next_steps.txt:22
-msgid "Your services"
-msgstr "Jäsenpalvelusi"
-
-#: users/templates/mail/application_received.txt:25
-#: users/templates/mail/welcome_and_next_steps.txt:26
-msgid "Bank reference number"
-msgstr "Viitenumero"
-
-#: users/templates/mail/application_received.txt:29
-#: users/templates/mail/welcome_and_next_steps.txt:30
-msgid "Bank account information is"
-msgstr "Pankkitiedot ovat"
-
-#: users/templates/mail/application_received.txt:31
-#: users/templates/mail/welcome_and_next_steps.txt:32
-msgid "Account holder"
-msgstr "Tilin haltija"
-
-#: users/templates/mail/application_received.txt:32
-#: users/templates/mail/welcome_and_next_steps.txt:33
-msgid "IBAN"
-msgstr "IBAN"
-
-#: users/templates/mail/application_received.txt:33
-#: users/templates/mail/welcome_and_next_steps.txt:34
-msgid "BIC"
-msgstr "BIC"
-
-#: users/templates/mail/application_received.txt:35
-#: users/templates/mail/application_rejected.txt:8
-#: users/templates/mail/welcome_and_next_steps.txt:36
-#, python-format
-msgid "Best regards %(settings.SITENAME)s hackers!"
-msgstr "Terveisin %(settings.SITENAME)s!"
+"Sinulle on lähetetty linkki jonka kautta voit resetoida salasanasi labin\n"
+"jäsenyydenhallintapalveluun, mulysaan.\n"
+"\n"
+"Jos haluat maksaa jäsenmaksusi samantien, löydät mulysasta maksutiedot.\n"
 
 #: users/templates/mail/application_rejected.txt:4
-#, python-format
-msgid "Your application to %(settings.SITENAME)s has been rejected."
-msgstr "Hakemuksesi %(settings.SITENAME)s:n on hylätty"
+#| msgid "Your application has been rejected"
+msgid "Your application has been rejected."
+msgstr "Hakemuksesi on hylätty."
 
 #: users/templates/mail/new_application.txt:4
-#, python-format
-msgid "New membership application in %(settings.SITENAME)s"
-msgstr "Uusi jäsenhakemus vastaanotettu %(settings.SITENAME)s:n"
+#| msgid "New membership application received"
+msgid "New membership application"
+msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/templates/mail/welcome_and_next_steps.txt:6
-#, python-format
+#: users/templates/mail/welcome_and_next_steps.txt:4
+#| msgid ""
+#| "\n"
+#| "Welcome %(user.first_name)s to %(settings.SITENAME)s\n"
+#| "\n"
+#| "Great to have you onboard! Your membership application has been\n"
+#| "approved and now is a great time to to join our community by\n"
+#| "coming to the next community meeting on the first Tuesday of the\n"
+#| "month or poping by weekly open house every Tuesday. It is also\n"
+#| "highly recommendable to join our communication channels (Matrix,\n"
+#| "Telegram or IRC and email list). Be happy to ask if you like to\n"
+#| "know more!\n"
+#| "\n"
+#| "All Hacklab services work by voluntary basis so\n"
+#| "things might not work always. Please be patient. For the\n"
+#| "challenges help would be appreciated, and we would be more than\n"
+#| "happy for your contribution.\n"
 msgid ""
 "\n"
-"Welcome %(user.first_name)s to %(settings.SITENAME)s\n"
+"Welcome aboard!\n"
 "\n"
 "Great to have you onboard! Your membership application has been\n"
 "approved and now is a great time to to join our community by\n"
@@ -497,14 +499,48 @@ msgid ""
 "things might not work always. Please be patient. For the\n"
 "challenges help would be appreciated, and we would be more than\n"
 "happy for your contribution.\n"
+"\n"
+"Please see mulysa (our membership management service) on\n"
+"instructions how to pay your membership, unless you already have\n"
+"done so.\n"
 msgstr ""
 "\n"
-"Tervetuloa jäseneksi, %(user.first_name)s %(settings.SITENAME)s:n!\n"
+"Tervetuloa jäseneksi!\n"
 "\n"
 "Ellet ole jo tehnyt niin, tule seuraavaan yhteisömiittiin esittelemään "
 "itsesi.\n"
 "Kannattaa myös liittyä pikaviestinkanaville ja sähköpostilistalle, jotta\n"
 "saat ajantasaista tietoa labin asioista.\n"
+"\n"
+"Ellet ole jo tehnyt niin, kirjaudy mulysaan (jäsenrekisteri) josta löydät\n"
+"ohjeet jäsenyytesi maksamiseen.\n"
+
+#~ msgid "Your services"
+#~ msgstr "Jäsenpalvelusi"
+
+#~ msgid "Bank reference number"
+#~ msgstr "Viitenumero"
+
+#~ msgid "Bank account information is"
+#~ msgstr "Pankkitiedot ovat"
+
+#~ msgid "Account holder"
+#~ msgstr "Tilin haltija"
+
+#~ msgid "IBAN"
+#~ msgstr "IBAN"
+
+#~ msgid "BIC"
+#~ msgstr "BIC"
+
+#~ msgid "Best regards %(settings.SITENAME)s hackers!"
+#~ msgstr "Terveisin %(settings.SITENAME)s!"
+
+#~ msgid "Your application to %(settings.SITENAME)s has been rejected."
+#~ msgstr "Hakemuksesi %(settings.SITENAME)s:n on hylätty"
+
+#~ msgid "New membership application in %(settings.SITENAME)s"
+#~ msgstr "Uusi jäsenhakemus vastaanotettu %(settings.SITENAME)s:n"
 
 #~ msgid "Format: DD.MM.YYYY"
 #~ msgstr "Muoto: PP.KK.VVVV"

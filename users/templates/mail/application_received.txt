@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 {% blocktrans %}
-Thank you for applying for membership to {{ settings.SITENAME }} {{ user.first_name }}!
+Thank you for applying for membership!
 
 We will check your application and get back to you after your application has
 been processed.
@@ -12,23 +12,10 @@ first Tuesday of the month or weekly open house every Tuesday. It is also
 highly recommendable to join our communication channels (Matrix, Telegram or
 IRC and email list). Be happy to ask if you like to know more!
 
+You should have received e-mail link to create a password to our membership
+management system, mulysa. 
+
 If you want to speed things up you can already pay your monthly fee using the
-payment information below.
+payment information below. You can find payment information in mulysa.
 {% endblocktrans %}
-
-{% blocktrans %}Your services{% endblocktrans %}
-
-{% for servicesubscription in user.servicesubscription_set.all %}
-{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
-{% trans 'Bank reference number' %}: {{  servicesubscription.reference_number }}
-
-{% endfor %}
-
-{% blocktrans %}Bank account information is{% endblocktrans %}
-
-{% trans 'Account holder' %}</b>: {{ settings.ACCOUNT_NAME }}
-  {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}
-  {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}
-
-{% blocktrans %}Best regards {{ settings.SITENAME }} hackers!{% endblocktrans %}
 {% endblock %}

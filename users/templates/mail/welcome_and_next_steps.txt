@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 {% blocktrans %}
-Welcome {{ user.first_name }} to {{ settings.SITENAME }}
+Welcome aboard!
 
 Great to have you onboard! Your membership application has been
 approved and now is a great time to to join our community by
@@ -16,21 +16,9 @@ All Hacklab services work by voluntary basis so
 things might not work always. Please be patient. For the
 challenges help would be appreciated, and we would be more than
 happy for your contribution.
+
+Please see mulysa (our membership management service) on
+instructions how to pay your membership, unless you already have
+done so.
 {% endblocktrans %}
-{% blocktrans %}Your services{% endblocktrans %}
-
-{% for servicesubscription in user.servicesubscription_set.all %}
-{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
-{% trans 'Bank reference number' %}: {{  servicesubscription.reference_number }}
-
-{% endfor %}
-
-{% blocktrans %}Bank account information is{% endblocktrans %}
-
-{% trans 'Account holder' %}: {{ settings.ACCOUNT_NAME }}
-  {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}<br />
-  {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}<br />
-
-{% blocktrans %}Best regards {{ settings.SITENAME }} hackers!{% endblocktrans %}
-
 {% endblock %}

@@ -1,9 +1,7 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans %}Your application to {{ settings.SITENAME }} has been rejected.{% endblocktrans %}
+{% blocktrans %}Your application has been rejected.{% endblocktrans %}
 
 {# TODO: tell reason for rejection #}
-
-{% blocktrans %}Best regards {{ settings.SITENAME }} hackers!{% endblocktrans %}
 {% endblock %}
