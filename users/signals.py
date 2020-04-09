@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from django.utils import translation
 
 from utils import referencenumber, stringutils
 
@@ -124,6 +125,7 @@ def send_application_received_email(
         "user": instance.user,
         "settings": settings,
     }
+    translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Thank you for applying membership and next steps")
     from_email = settings.NOREPLY_FROM_ADDRESS
@@ -164,6 +166,7 @@ def send_application_approved_email(
         "user": instance.user,
         "settings": settings,
     }
+    translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
     from_email = settings.NOREPLY_FROM_ADDRESS
@@ -182,6 +185,7 @@ def send_application_denied_email(
         "user": instance.user,
         "settings": settings,
     }
+    translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
     from_email = settings.NOREPLY_FROM_ADDRESS

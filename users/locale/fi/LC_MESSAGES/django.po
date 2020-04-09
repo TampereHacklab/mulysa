@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 23:47+0300\n"
+"POT-Creation-Date: 2020-04-10 00:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa "
-"@kayttaja:esimerkko.org"
+"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa @kayttaja:"
+"esimerkko.org"
 
 #: users/models.py:34
 #, python-format
@@ -384,43 +384,23 @@ msgstr "NFC-kortin tunniste kortinlukijan lukemana"
 msgid "Usually hex format"
 msgstr "Yleensä heksaa"
 
-#: users/signals.py:128
+#: users/signals.py:131
 msgid "Thank you for applying membership and next steps"
 msgstr "Kiitos hakemuksestasi, ja seuraavat toimenpiteet"
 
-#: users/signals.py:150
+#: users/signals.py:153
 msgid "New membership application received"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/signals.py:168
+#: users/signals.py:172
 msgid "Your application has been approved"
 msgstr "Hakemuksesi on hyväksytty"
 
-#: users/signals.py:186
+#: users/signals.py:191
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
 #: users/templates/mail/application_received.txt:4
-#| msgid ""
-#| "\n"
-#| "Thank you for applying for membership to %(settings.SITENAME)s "
-#| "%(user.first_name)s!\n"
-#| "\n"
-#| "We will check your application and get back to you after your application "
-#| "has\n"
-#| "been processed.\n"
-#| "\n"
-#| "In the meantime the Best way to get started is to join our community "
-#| "meeting\n"
-#| "first Tuesday of the month or weekly open house every Tuesday. It is "
-#| "also\n"
-#| "highly recommendable to join our communication channels (Matrix, Telegram "
-#| "or\n"
-#| "IRC and email list). Be happy to ask if you like to know more!\n"
-#| "\n"
-#| "If you want to speed things up you can already pay your monthly fee using "
-#| "the\n"
-#| "payment information below.\n"
 msgid ""
 "\n"
 "Thank you for applying for membership!\n"
@@ -457,32 +437,14 @@ msgstr ""
 "Jos haluat maksaa jäsenmaksusi samantien, löydät mulysasta maksutiedot.\n"
 
 #: users/templates/mail/application_rejected.txt:4
-#| msgid "Your application has been rejected"
 msgid "Your application has been rejected."
 msgstr "Hakemuksesi on hylätty."
 
 #: users/templates/mail/new_application.txt:4
-#| msgid "New membership application received"
 msgid "New membership application"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
 #: users/templates/mail/welcome_and_next_steps.txt:4
-#| msgid ""
-#| "\n"
-#| "Welcome %(user.first_name)s to %(settings.SITENAME)s\n"
-#| "\n"
-#| "Great to have you onboard! Your membership application has been\n"
-#| "approved and now is a great time to to join our community by\n"
-#| "coming to the next community meeting on the first Tuesday of the\n"
-#| "month or poping by weekly open house every Tuesday. It is also\n"
-#| "highly recommendable to join our communication channels (Matrix,\n"
-#| "Telegram or IRC and email list). Be happy to ask if you like to\n"
-#| "know more!\n"
-#| "\n"
-#| "All Hacklab services work by voluntary basis so\n"
-#| "things might not work always. Please be patient. For the\n"
-#| "challenges help would be appreciated, and we would be more than\n"
-#| "happy for your contribution.\n"
 msgid ""
 "\n"
 "Welcome aboard!\n"
