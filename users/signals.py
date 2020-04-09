@@ -169,11 +169,11 @@ def send_application_approved_email(
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
     from_email = settings.NOREPLY_FROM_ADDRESS
-    to = instance.user.email
+    to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
     html_content = render_to_string("mail/welcome_and_next_steps.html", context)
     plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
-    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, to, html_message=html_content)
 
 
 @receiver(application_denied, sender=models.MembershipApplication)
@@ -188,11 +188,11 @@ def send_application_denied_email(
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
     from_email = settings.NOREPLY_FROM_ADDRESS
-    to = instance.user.email
+    to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
     html_content = render_to_string("mail/application_rejected.html", context)
     plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
 
-    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, to, html_message=html_content)
 
 
 @receiver(pre_save, sender=models.CustomUser)
