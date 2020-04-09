@@ -1,7 +1,7 @@
 {% extends 'mail/email_base.txt' %}
 
 {% block content %}
-New membership application in {{ settings.SITENAME }}
+{% blocktrans %}New membership application in {{ settings.SITENAME }}{% endblocktrans %}
 
 {{user.first_name}} {{user.last_name}}
 

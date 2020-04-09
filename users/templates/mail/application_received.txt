@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+{% blocktrans %}
 Thank you for applying for membership to {{ settings.SITENAME }} {{ user.first_name }}!
 
 We will check your application and get back to you after your application has
@@ -15,8 +16,9 @@ IRC and email list). Be happy to ask if you like to know more!
 
 If you want to speed things up you can already pay your monthly fee using the
 payment information below.
+{% endblocktrans %}
 
-Your services
+{% blocktrans %}Your services{% endblocktrans %}
 
 {% for servicesubscription in user.servicesubscription_set.all %}
 {{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
@@ -24,11 +26,11 @@ Your services
 
 {% endfor %}
 
-Bank account information is
+{% blocktrans %}Bank account information is{% endblocktrans %}
 
 {% trans 'Account holder' %}</b>: {{ settings.ACCOUNT_NAME }}
   {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}
   {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}
 
-Best regards {{ settings.SITENAME }} hackers!
+{% blocktrans %}Best regards {{ settings.SITENAME }} hackers!{% endblocktrans %}
 {% endblock %}

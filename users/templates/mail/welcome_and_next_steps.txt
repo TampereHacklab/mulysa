@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+{% blocktrans %}
 Welcome {{ user.first_name }} to {{ settings.SITENAME }}
 
 Great to have you onboard! Your membership application has been
@@ -17,8 +18,8 @@ All Hacklab services work by voluntary basis so
 things might not work always. Please be patient. For the
 challenges help would be appreciated, and we would be more than
 happy for your contribution.
-
-Your services
+{% endblocktrans %}
+{% blocktrans %}Your services{% endblocktrans %}
 
 {% for servicesubscription in user.servicesubscription_set.all %}
 {{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
@@ -26,12 +27,12 @@ Your services
 
 {% endfor %}
 
-Bank account information is
+{% blocktrans %}Bank account information is{% endblocktrans %}
 
 {% trans 'Account holder' %}: {{ settings.ACCOUNT_NAME }}
   {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}<br />
   {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}<br />
 
-Best regards {{ settings.SITENAME }} hackers!
+{% blocktrans %}Best regards {{ settings.SITENAME }} hackers!{% endblocktrans %}
 
 {% endblock %}

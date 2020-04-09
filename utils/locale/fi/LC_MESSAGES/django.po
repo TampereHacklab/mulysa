@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 21:48+0300\n"
+"POT-Creation-Date: 2020-04-09 23:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,14 +44,14 @@ msgstr ""
 "%(name)s on nyt maksettu %(days)s päivää lisää, %(until)s asti tilisiirron "
 "%(transaction)s ansiosta"
 
-#: utils/businesslogic.py:366
+#: utils/businesslogic.py:370
 #, python-format
 msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
 "%(servicename)s on nyt maksettu %(until)s asti tilisiirron %(transaction)s "
 "ansiosta"
 
-#: utils/businesslogic.py:396
+#: utils/businesslogic.py:400
 #, python-format
 msgid ""
 "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s "

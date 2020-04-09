@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 21:48+0300\n"
+"POT-Creation-Date: 2020-04-09 23:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa @kayttaja:"
-"esimerkko.org"
+"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa "
+"@kayttaja:esimerkko.org"
 
 #: users/models.py:34
 #, python-format
@@ -112,8 +112,8 @@ msgstr "Käyttäjän luontipäivä"
 msgid "Automatically set to now when user is create"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: users/models.py:179 users/models.py:285 users/models.py:681
-#: users/models.py:717
+#: users/models.py:179 users/models.py:285 users/models.py:682
+#: users/models.py:718
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
 
@@ -144,7 +144,7 @@ msgstr "Muista käyttää aina omaa viitenumeroasi jäsenmaksuja maksaessa"
 msgid "You must agree to the terms"
 msgstr "Hyväksyn jäsenyyden ehdot"
 
-#: users/models.py:272 users/models.py:441 users/models.py:637
+#: users/models.py:272 users/models.py:441 users/models.py:638
 msgid "Message"
 msgstr "Terveiset"
 
@@ -215,7 +215,7 @@ msgstr "Päiväys"
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: users/models.py:434 users/models.py:668
+#: users/models.py:434 users/models.py:669
 msgid "Amount"
 msgstr "Määrä"
 
@@ -301,7 +301,7 @@ msgstr "Viitenumero palvelun maksamiseen"
 msgid "Pay for this service with this reference number"
 msgstr "Pakasa palvelu tällä viitteellä"
 
-#: users/models.py:562
+#: users/models.py:563
 msgid ""
 "Set date when a expiration reminder message has been sent to user. Reset to "
 "NULL when state changes."
@@ -309,45 +309,45 @@ msgstr ""
 "Päiväys jolloin muistutusviesti on lähetetty käyttäjälle. Palautetaan "
 "NULLiksi kun palvelun tila muuttuu."
 
-#: users/models.py:621
+#: users/models.py:622
 #, python-format
 msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"
 
-#: users/models.py:653
+#: users/models.py:654
 msgid "How many days of service this invoice pays"
 msgstr "Montako päivää tämä lasku maksaa"
 
-#: users/models.py:655
+#: users/models.py:656
 msgid ""
 "For example value 14 with access right service pays two weeks of access."
 msgstr "Esimerkiksi arvo 14 tilankäyttöoikeutta maksaa 2 viikkoa tilankäyttöä."
 
-#: users/models.py:662
+#: users/models.py:663
 msgid "Reference number for paying invoice"
 msgstr "Tilisiirron viitenumero"
 
-#: users/models.py:664
+#: users/models.py:665
 msgid "Reference number is set by transaction sender and must match this."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: users/models.py:669
+#: users/models.py:670
 msgid "Minimum amount of money to satisfy this invoice."
 msgstr "Minimisumma laskun maksamiseksi"
 
-#: users/models.py:676
+#: users/models.py:677
 msgid "Invoice creation date"
 msgstr "Laskun luontipäivä"
 
-#: users/models.py:677
+#: users/models.py:678
 msgid "Automatically set to now when invoice is created"
 msgstr "Asetetaan automaattisesti kun lasku luodaan"
 
-#: users/models.py:682
+#: users/models.py:683
 msgid "Last time this invoice was modified"
 msgstr "Päiväys, kun laskun tietoja on viimeksi muokattu"
 
-#: users/models.py:692
+#: users/models.py:693
 #, python-format
 msgid ""
 "Custom invoice to pay %(days)s days of %(servicename)s for %(username)s - "
@@ -356,23 +356,23 @@ msgstr ""
 "Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
 "käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
 
-#: users/models.py:712
+#: users/models.py:713
 msgid "Creation date"
 msgstr "Luontipäivä"
 
-#: users/models.py:713
+#: users/models.py:714
 msgid "Automatically set to now when is created"
 msgstr "Asetetaan automaattisesti kun luodaan"
 
-#: users/models.py:718
+#: users/models.py:719
 msgid "Last time this object was modified"
 msgstr "Päiväys, kun tätä on viimeksi muokattu"
 
-#: users/models.py:724
+#: users/models.py:725
 msgid "NFC card id number as read by the card reader"
 msgstr "NFC-kortin tunniste kortinlukijan lukemana"
 
-#: users/models.py:725
+#: users/models.py:726
 msgid "Usually hex format"
 msgstr "Yleensä heksaa"
 
@@ -380,37 +380,127 @@ msgstr "Yleensä heksaa"
 msgid "Thank you for applying membership and next steps"
 msgstr "Kiitos hakemuksestasi, ja seuraavat toimenpiteet"
 
-#: users/signals.py:151
+#: users/signals.py:150
 msgid "New membership application received"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/signals.py:170
+#: users/signals.py:168
 msgid "Your application has been approved"
 msgstr "Hakemuksesi on hyväksytty"
 
-#: users/signals.py:189
+#: users/signals.py:186
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
-#: users/templates/mail/application_received.html:32
-#: users/templates/mail/welcome_and_next_steps.html:29
+#: users/templates/mail/application_received.txt:6
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Thank you for applying for membership to %(settings.SITENAME)s "
+"%(user.first_name)s!\n"
+"\n"
+"We will check your application and get back to you after your application "
+"has\n"
+"been processed.\n"
+"\n"
+"In the meantime the Best way to get started is to join our community "
+"meeting\n"
+"first Tuesday of the month or weekly open house every Tuesday. It is also\n"
+"highly recommendable to join our communication channels (Matrix, Telegram "
+"or\n"
+"IRC and email list). Be happy to ask if you like to know more!\n"
+"\n"
+"If you want to speed things up you can already pay your monthly fee using "
+"the\n"
+"payment information below.\n"
+msgstr ""
+"\n"
+"Kiitos jäsenhakemuksestasi %(settings.SITENAME)s:n, %(user.first_name)s!\n"
+"\n"
+"Käymme hakemuksesi läpi ja otamme yhteyttä kun hakemuksesi on käsitelty.\n"
+"\n"
+"Tällä aikaa voit vierailla labilla avointen ovien aikana ja liittyä "
+"pikaviestinkanavillemme.\n"
+"\n"
+"Jos haluat maksaa jäsenmaksusi samantien, alla on maksutietosi.\n"
+
+#: users/templates/mail/application_received.txt:21
+#: users/templates/mail/welcome_and_next_steps.txt:22
+#| msgid "Member service"
+msgid "Your services"
+msgstr "Jäsenpalvelusi"
+
+#: users/templates/mail/application_received.txt:25
+#: users/templates/mail/welcome_and_next_steps.txt:26
 msgid "Bank reference number"
 msgstr "Viitenumero"
 
-#: users/templates/mail/application_received.html:39
-#: users/templates/mail/welcome_and_next_steps.html:36
+#: users/templates/mail/application_received.txt:29
+#: users/templates/mail/welcome_and_next_steps.txt:30
+#| msgid "Bank account"
+msgid "Bank account information is"
+msgstr "Pankkitiedot ovat"
+
+#: users/templates/mail/application_received.txt:31
+#: users/templates/mail/welcome_and_next_steps.txt:32
 msgid "Account holder"
 msgstr "Tilin haltija"
 
-#: users/templates/mail/application_received.html:40
-#: users/templates/mail/welcome_and_next_steps.html:37
+#: users/templates/mail/application_received.txt:32
+#: users/templates/mail/welcome_and_next_steps.txt:33
 msgid "IBAN"
 msgstr "IBAN"
 
-#: users/templates/mail/application_received.html:41
-#: users/templates/mail/welcome_and_next_steps.html:38
+#: users/templates/mail/application_received.txt:33
+#: users/templates/mail/welcome_and_next_steps.txt:34
 msgid "BIC"
 msgstr "BIC"
+
+#: users/templates/mail/application_received.txt:35
+#: users/templates/mail/application_rejected.txt:8
+#: users/templates/mail/welcome_and_next_steps.txt:36
+#, python-format
+msgid "Best regards %(settings.SITENAME)s hackers!"
+msgstr "Terveisin %(settings.SITENAME)s!"
+
+#: users/templates/mail/application_rejected.txt:4
+#, python-format
+#| msgid "Your application has been rejected"
+msgid "Your application to %(settings.SITENAME)s has been rejected."
+msgstr "Hakemuksesi %(settings.SITENAME)s:n on hylätty"
+
+#: users/templates/mail/new_application.txt:4
+#, python-format
+#| msgid "New membership application received"
+msgid "New membership application in %(settings.SITENAME)s"
+msgstr "Uusi jäsenhakemus vastaanotettu %(settings.SITENAME)s:n"
+
+#: users/templates/mail/welcome_and_next_steps.txt:6
+#, fuzzy, python-format
+msgid ""
+"\n"
+"Welcome %(user.first_name)s to %(settings.SITENAME)s\n"
+"\n"
+"Great to have you onboard! Your membership application has been\n"
+"approved and now is a great time to to join our community by\n"
+"coming to the next community meeting on the first Tuesday of the\n"
+"month or poping by weekly open house every Tuesday. It is also\n"
+"highly recommendable to join our communication channels (Matrix,\n"
+"Telegram or IRC and email list). Be happy to ask if you like to\n"
+"know more!\n"
+"\n"
+"All Hacklab services work by voluntary basis so\n"
+"things might not work always. Please be patient. For the\n"
+"challenges help would be appreciated, and we would be more than\n"
+"happy for your contribution.\n"
+msgstr ""
+"\n"
+"Tervetuloa jäseneksi, %(user.first_name)s %(settings.SITENAME)s:n!\n"
+"\n"
+"Ellet ole jo tehnyt niin, tule seuraavaan yhteisömiittiin esittelemään "
+"itsesi.\n"
+"Kannattaa myös liittyä pikaviestinkanaville ja sähköpostilistalle, jotta\n"
+"saat ajantasaista tietoa labin asioista.\n"
 
 #~ msgid "Format: DD.MM.YYYY"
 #~ msgstr "Muoto: PP.KK.VVVV"
