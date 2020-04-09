@@ -425,7 +425,7 @@ class BankTransaction(models.Model):
         null=False,
         unique=True,
         verbose_name=_("Archival reference"),
-        max_length=18,
+        max_length=32,
     )
     date = models.DateField(
         verbose_name=_("Date"), help_text=_("Date of the transaction"),
@@ -557,6 +557,7 @@ class ServiceSubscription(models.Model):
     )
 
     reminder_sent = models.DateField(
+        blank=True,
         null=True,
         help_text=_(
             "Set date when a expiration reminder message has been sent to user. Reset to NULL when state changes."
