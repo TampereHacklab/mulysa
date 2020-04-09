@@ -60,7 +60,7 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     """
     form = PasswordResetForm({"email": instance.email})
     from_email = getattr(settings, "NOREPLY_FROM_ADDRESS", "noreply@tampere.hacklab.fi")
-    template = "registration/password_reset_email.html"
+    template = "registration/password_reset_email.txt"
     form.is_valid()
     form.save(from_email=from_email, email_template_name=template)
 
@@ -128,10 +128,9 @@ def send_application_received_email(
     subject = _("Thank you for applying membership and next steps")
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = instance.user.email
-    html_content = render_to_string("mail/application_received.html", context)
-    plaintext_content = stringutils.strip_tags_and_whitespace(html_content).strip()
+    plaintext_content = render_to_string("mail/application_received.txt", context)
 
-    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, [to])
 
 
 @receiver(create_application, sender=models.MembershipApplication)
@@ -151,10 +150,9 @@ def send_new_application_waiting_processing_email(
     subject = _("New membership application received")
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS
-    html_content = render_to_string("mail/new_application.html", context)
-    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
+    plaintext_content = render_to_string("mail/new_application.txt", context)
 
-    send_mail(subject, plaintext_content, from_email, [to], html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, [to])
 
 
 @receiver(application_approved, sender=models.MembershipApplication)
@@ -170,10 +168,9 @@ def send_application_approved_email(
     subject = _("Your application has been approved")
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
-    html_content = render_to_string("mail/welcome_and_next_steps.html", context)
-    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
+    plaintext_content = render_to_string("mail/welcome_and_next_steps.txt", context)
 
-    send_mail(subject, plaintext_content, from_email, to, html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, to)
 
 
 @receiver(application_denied, sender=models.MembershipApplication)
@@ -189,10 +186,9 @@ def send_application_denied_email(
     subject = _("Your application has been rejected")
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = [instance.user.email, settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
-    html_content = render_to_string("mail/application_rejected.html", context)
-    plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
+    plaintext_content = render_to_string("mail/application_rejected.txt", context)
 
-    send_mail(subject, plaintext_content, from_email, to, html_message=html_content)
+    send_mail(subject, plaintext_content, from_email, to)
 
 
 @receiver(pre_save, sender=models.CustomUser)

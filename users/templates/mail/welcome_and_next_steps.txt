@@ -1,0 +1,37 @@
+{% extends 'mail/email_base.txt' %}
+
+{% load i18n %}
+
+{% block content %}
+Welcome {{ user.first_name }} to {{ settings.SITENAME }}
+
+Great to have you onboard! Your membership application has been
+approved and now is a great time to to join our community by
+coming to the next community meeting on the first Tuesday of the
+month or poping by weekly open house every Tuesday. It is also
+highly recommendable to join our communication channels (Matrix,
+Telegram or IRC and email list). Be happy to ask if you like to
+know more!
+
+All Hacklab services work by voluntary basis so
+things might not work always. Please be patient. For the
+challenges help would be appreciated, and we would be more than
+happy for your contribution.
+
+Your services
+
+{% for servicesubscription in user.servicesubscription_set.all %}
+{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
+{% trans 'Bank reference number' %}: {{  servicesubscription.reference_number }}
+
+{% endfor %}
+
+Bank account information is
+
+{% trans 'Account holder' %}: {{ settings.ACCOUNT_NAME }}
+  {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}<br />
+  {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}<br />
+
+Best regards {{ settings.SITENAME }} hackers!
+
+{% endblock %}

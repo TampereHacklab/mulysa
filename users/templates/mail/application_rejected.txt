@@ -1,0 +1,9 @@
+{% extends 'mail/email_base.txt' %}
+
+{% block content %}
+Your application to {{ settings.SITENAME }} has been rejected.
+
+{# TODO: tell reason for rejection #}
+
+Best regards {{ settings.SITENAME }} hackers!
+{% endblock %}

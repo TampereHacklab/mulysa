@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 
-from mailer import send_html_mail
+from mailer import send_mail
 
 from utils import stringutils
 
@@ -50,10 +50,9 @@ class EmailActionForm(forms.Form):
             subject = email.subject
             from_email = settings.NOREPLY_FROM_ADDRESS
             to = user.email
-            html_content = render_to_string("mail/email.html", context)
-            plaintext_content = stringutils.strip_tags_and_whitespace(html_content)
+            plaintext_content = render_to_string("mail/email.txt", context)
 
-            send_html_mail(subject, plaintext_content, html_content, from_email, [to])
+            send_mail(subject, plaintext_content, from_email, [to])
 
             # log it
             LogEntry.objects.log_action(

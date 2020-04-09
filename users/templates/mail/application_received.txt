@@ -1,0 +1,34 @@
+{% extends 'mail/email_base.txt' %}
+
+{% load i18n %}
+
+{% block content %}
+Thank you for applying for membership to {{ settings.SITENAME }} {{ user.first_name }}!
+
+We will check your application and get back to you after your application has
+been processed.
+
+In the meantime the Best way to get started is to join our community meeting
+first Tuesday of the month or weekly open house every Tuesday. It is also
+highly recommendable to join our communication channels (Matrix, Telegram or
+IRC and email list). Be happy to ask if you like to know more!
+
+If you want to speed things up you can already pay your monthly fee using the
+payment information below.
+
+Your services
+
+{% for servicesubscription in user.servicesubscription_set.all %}
+{{ servicesubscription.service.name }} - {{ servicesubscription.service.cost_string }} / {{ servicesubscription.service.period_string }}
+{% trans 'Bank reference number' %}: {{  servicesubscription.reference_number }}
+
+{% endfor %}
+
+Bank account information is
+
+{% trans 'Account holder' %}</b>: {{ settings.ACCOUNT_NAME }}
+  {% trans 'IBAN' %}: {{ settings.ACCOUNT_IBAN }}
+  {% trans 'BIC' %}: {{ settings.ACCOUNT_BIC }}
+
+Best regards {{ settings.SITENAME }} hackers!
+{% endblock %}
