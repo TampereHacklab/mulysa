@@ -1,7 +1,5 @@
 {% extends 'mail/email_base.txt' %}
-
 {% load i18n %}
-
 {% block content %}
 {% blocktrans %}
 Thank you for applying for membership to {{ settings.SITENAME }} {{ user.first_name }}!

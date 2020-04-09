@@ -1,7 +1,5 @@
 {% extends 'mail/email_base.txt' %}
-
 {% load i18n %}
-
 {% block content %}
 {% blocktrans %}
 Welcome {{ user.first_name }} to {{ settings.SITENAME }}

@@ -60,7 +60,7 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     """
     form = PasswordResetForm({"email": instance.email})
     from_email = getattr(settings, "NOREPLY_FROM_ADDRESS", "noreply@tampere.hacklab.fi")
-    template = "registration/password_reset_email.txt"
+    template = "registration/password_reset_email.html"
     form.is_valid()
     form.save(from_email=from_email, email_template_name=template)
 

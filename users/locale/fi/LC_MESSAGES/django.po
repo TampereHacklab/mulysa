@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-09 23:12+0300\n"
+"POT-Creation-Date: 2020-04-09 23:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,6 +51,14 @@ msgid ""
 "membership"
 msgstr ""
 "Sähköpostia käytetään labin toimintaan ja jäsenyyteen liittyvään viestintään"
+
+#: users/models.py:114
+msgid "First name"
+msgstr "Etunimi"
+
+#: users/models.py:115
+msgid "Last name"
+msgstr "Sukunimi"
 
 #: users/models.py:118
 msgid "Municipality / City"
@@ -393,7 +401,7 @@ msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
 #: users/templates/mail/application_received.txt:6
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "Thank you for applying for membership to %(settings.SITENAME)s "
@@ -426,7 +434,6 @@ msgstr ""
 
 #: users/templates/mail/application_received.txt:21
 #: users/templates/mail/welcome_and_next_steps.txt:22
-#| msgid "Member service"
 msgid "Your services"
 msgstr "Jäsenpalvelusi"
 
@@ -437,7 +444,6 @@ msgstr "Viitenumero"
 
 #: users/templates/mail/application_received.txt:29
 #: users/templates/mail/welcome_and_next_steps.txt:30
-#| msgid "Bank account"
 msgid "Bank account information is"
 msgstr "Pankkitiedot ovat"
 
@@ -465,18 +471,16 @@ msgstr "Terveisin %(settings.SITENAME)s!"
 
 #: users/templates/mail/application_rejected.txt:4
 #, python-format
-#| msgid "Your application has been rejected"
 msgid "Your application to %(settings.SITENAME)s has been rejected."
 msgstr "Hakemuksesi %(settings.SITENAME)s:n on hylätty"
 
 #: users/templates/mail/new_application.txt:4
 #, python-format
-#| msgid "New membership application received"
 msgid "New membership application in %(settings.SITENAME)s"
 msgstr "Uusi jäsenhakemus vastaanotettu %(settings.SITENAME)s:n"
 
 #: users/templates/mail/welcome_and_next_steps.txt:6
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "Welcome %(user.first_name)s to %(settings.SITENAME)s\n"

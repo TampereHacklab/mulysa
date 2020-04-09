@@ -1,5 +1,5 @@
 {% extends 'mail/email_base.txt' %}
-
+{% load i18n %}
 {% block content %}
 {% blocktrans %}Your application to {{ settings.SITENAME }} has been rejected.{% endblocktrans %}
 

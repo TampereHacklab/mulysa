@@ -1,5 +1,5 @@
 {% extends 'mail/email_base.txt' %}
-
+{% load i18n %}
 {% block content %}
 {% blocktrans %}New membership application in {{ settings.SITENAME }}{% endblocktrans %}
 
