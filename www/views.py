@@ -348,5 +348,15 @@ def custominvoice_action(request, action, invoiceid):
 @staff_member_required
 def updateuser(request, id):
     user = CustomUser.objects.get(id=id)
+
+    # First, generate any missing ref numbers
+    subscriptions = ServiceSubscription.objects.filter(user=user)
+    for subscription in subscriptions:
+        if not subscription.reference_number:
+            subscription.reference_number = referencenumber.generate(
+                settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+            )
+            subscription.save()
+
     BusinessLogic.updateuser(user)
     return userdetails(request, id)
