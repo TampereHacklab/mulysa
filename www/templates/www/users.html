@@ -6,10 +6,11 @@ User list
 </h2>
 <table width="90%" border="1">
 <tr>
-<th>Name</th><th>Email</th><th>Phone</th><th>Reference</th>
+<th>Name</th><th>Email</th><th>Phone</th>
 {% for service in services %}
 <th>{{ service.name }}</th>
 {% endfor %}
+<th>Extra services</th>
 <th>Management</th>
 </tr>
 {% for user in users %}
@@ -21,7 +22,6 @@ User list
 </td> 
 <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
 <td>{{ user.phone }}</td>
-<td>{{ user.reference_number }}</td>
 {% for service in services %}
 <td>
         {% for subscription in user.servicesubscriptions %}
@@ -34,6 +34,15 @@ User list
         {% endfor %}
 </td>
 {% endfor %}
+<td>
+        {% for subscription in user.servicesubscriptions %}
+                {% if subscription.service.hidden %}
+                <p>
+                        {{ subscription }} <span  style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
+                </p>
+                {% endif %}
+        {% endfor %}
+</td>
 <td><a href="{% url 'admin:users_customuser_change' user.id %}">Modify</a></td>
 </tr>
 {% endfor %}

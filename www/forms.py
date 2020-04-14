@@ -48,7 +48,7 @@ class RegistrationServicesFrom(forms.Form):
         """
         service_choices = []
         try:
-            for service in MemberService.objects.all():
+            for service in MemberService.objects.filter(hidden=False):
                 name = _(service.name)
                 service_choices.append(
                     (

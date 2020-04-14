@@ -12,8 +12,6 @@ from django.utils.encoding import force_text
 
 from mailer import send_mail
 
-from utils import stringutils
-
 logger = logging.getLogger(__name__)
 
 

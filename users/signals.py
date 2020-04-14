@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 
-from utils import referencenumber, stringutils
+from utils import referencenumber
 
 from . import models
 

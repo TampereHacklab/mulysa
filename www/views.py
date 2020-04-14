@@ -132,7 +132,7 @@ def dataexport(request):
 @staff_member_required
 def users(request):
     users = CustomUser.objects.all()
-    services = MemberService.objects.all()
+    services = MemberService.objects.filter(hidden=False)
 
     for user in users:
         user.servicesubscriptions = ServiceSubscription.objects.filter(user=user)
