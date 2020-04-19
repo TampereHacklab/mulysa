@@ -66,27 +66,6 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     form.save(from_email=from_email, email_template_name=template)
 
 
-@receiver(create_user)
-def add_reference_number(sender, instance: models.CustomUser, **kwargs):
-    """
-    Catch create_user and if the user does not have reference number then add it
-    """
-    if instance.reference_number is None:
-        instance.reference_number = referencenumber.generate(instance.id * 100)
-        logger.info(
-            "User: {} got newly generated reference number {}".format(
-                instance.id, instance.reference_number
-            )
-        )
-        instance.save()
-    else:
-        logger.info(
-            "User: {} already has reference number {}".format(
-                instance.id, instance.reference_number
-            )
-        )
-
-
 @receiver(post_save, sender=models.MembershipApplication)
 def application_creation(
     sender, instance: models.MembershipApplication, created, raw, **kwargs

@@ -105,7 +105,6 @@ class DataImport:
                     phone = "+358" + phone[1:]
 
                 newuser = CustomUser.objects.create_customuser(
-                    reference_number=fields[1],
                     first_name=first_name,
                     last_name=last_name,
                     email=fields[4],

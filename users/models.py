@@ -60,7 +60,6 @@ class CustomUserManager(BaseUserManager):
         first_name,
         last_name,
         phone,
-        reference_number,
         birthday,
         municipality,
         nick,
@@ -73,7 +72,6 @@ class CustomUserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             phone=phone,
-            reference_number=reference_number,
             birthday=birthday,
             municipality=municipality,
             nick=nick,
@@ -192,17 +190,6 @@ class CustomUser(AbstractUser):
         verbose_name=_("Marked for deletion"),
         help_text=_(
             "Filled if the user has marked themself as wanting to end their membership"
-        ),
-    )
-
-    # this will be autofilled in post_save
-    # This is being replaces by ServiceSubscription reference number - do not use in new code.
-    reference_number = models.BigIntegerField(
-        blank=True,
-        null=True,
-        verbose_name=_("Reference number of membership fee payments"),
-        help_text=_(
-            "Remember to always use your unique reference number for membership fee payments"
         ),
     )
 
