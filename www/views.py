@@ -23,6 +23,7 @@ from www.forms import (
     RegistrationApplicationForm,
     RegistrationServicesFrom,
     RegistrationUserForm,
+    CreateUserForm,
 )
 
 from api.models import DeviceAccessLogEntry
@@ -360,3 +361,16 @@ def updateuser(request, id):
 
     BusinessLogic.updateuser(user)
     return userdetails(request, id)
+
+
+@login_required
+@staff_member_required
+def createuser(request):
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return userdetails(request, new_user.id)
+    else:
+        form = CreateUserForm()
+    return render(request, "www/createuser.html", {"userform": form})

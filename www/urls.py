@@ -11,6 +11,7 @@ urlpatterns = [
     path("dataimport", views.dataimport, name="dataimport"),
     path("dataexport", views.dataexport, name="dataexport"),
     path("users", views.users, name="users"),
+    path("users/create", views.createuser, name="users/create"),
     path("ledger", views.ledger, name="ledger"),
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),

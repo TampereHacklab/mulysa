@@ -8,8 +8,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from utils import referencenumber
-
 from . import models, signals
 
 
@@ -56,7 +54,6 @@ class UsersTests(APITestCase):
         # for completenes sake
         self.assertEqual(u.email, u.get_short_name())
         self.assertEqual(u.email, u.natural_key())
-
 
     def test_signals(self):
         u = models.CustomUser()

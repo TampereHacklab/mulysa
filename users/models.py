@@ -55,14 +55,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_customuser(
-        self,
-        email,
-        first_name,
-        last_name,
-        phone,
-        birthday,
-        municipality,
-        nick,
+        self, email, first_name, last_name, phone, birthday, municipality, nick,
     ):
         if not email:
             raise ValueError(_("User must have an email address"))

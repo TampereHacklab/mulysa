@@ -92,3 +92,30 @@ class CustomInvoiceForm(forms.Form):
     count = forms.IntegerField(
         label=_("How many units of service you want"), min_value=1, max_value=666
     )
+
+
+class CreateUserForm(forms.ModelForm):
+    class Meta:
+        model = models.CustomUser
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "language",
+            "municipality",
+            "nick",
+            "mxid",
+            "birthday",
+            "phone",
+        ]
+        localized_fields = ("birthday",)
+        widgets = {
+            "birthday": forms.SelectDateWidget(
+                years=[
+                    x
+                    for x in range(
+                        datetime.today().year - 100, datetime.today().year + 1
+                    )
+                ]
+            )
+        }

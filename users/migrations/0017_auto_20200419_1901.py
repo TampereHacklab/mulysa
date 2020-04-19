@@ -6,22 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0016_auto_20200409_1928'),
+        ("users", "0016_auto_20200409_1928"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='customuser',
-            name='reference_number',
+        migrations.RemoveField(model_name="customuser", name="reference_number",),
+        migrations.AlterField(
+            model_name="customuser",
+            name="first_name",
+            field=models.CharField(max_length=30, verbose_name="First name"),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='first_name',
-            field=models.CharField(max_length=30, verbose_name='First name'),
-        ),
-        migrations.AlterField(
-            model_name='customuser',
-            name='last_name',
-            field=models.CharField(max_length=150, verbose_name='Last name'),
+            model_name="customuser",
+            name="last_name",
+            field=models.CharField(max_length=150, verbose_name="Last name"),
         ),
     ]
