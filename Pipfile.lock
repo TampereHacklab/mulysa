@@ -253,10 +253,10 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:59ae9cb25fb03027c9f2bf5584098e699be7eca12c443838b83752956be15cda",
-                "sha256:bebf881ef0e775b93062fbd107bf164b5baef877a7b8f702e93a9a5d24ae4065"
+                "sha256:61adadab01adaac571b04ddbe50f981c488ef00cfd51eef7e040ef4765871b00",
+                "sha256:eedbace07295109ce98b13b9bd1ac22dd43c1e90a3f0854c557c2298493fc731"
             ],
-            "version": "==8.12.1"
+            "version": "==8.12.2"
         },
         "pyjwt": {
             "hashes": [
