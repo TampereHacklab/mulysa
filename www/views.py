@@ -236,6 +236,26 @@ def userdetails(request, id):
 def usersettings(request, id):
     if not request.user.is_superuser and request.user.id != id:
         return redirect("/www/login/?next=%s" % request.path)
+    if request.method == "POST":
+        mxid = request.POST["mxid"]
+
+        # Check if mxid changed
+        if mxid != request.user.mxid:
+            # Check for dupes:
+            users = CustomUser.objects.filter(mxid=mxid).exclude(id=request.user.id)
+            if len(users) > 0:
+                messages.error(request, _("Matrix ID already in use"))
+            else:
+                if ("@" in mxid and ":" in mxid) or (len(mxid) == 0):
+                    if len(mxid) == 0:
+                        mxid = None
+                    request.user.mxid = mxid
+                    request.user.save()
+                    messages.success(request, _("Matrix ID changed successfully"))
+                    request.user.log(_("Set Matrix ID to %(mxid)s") % {"mxid": mxid})
+                else:
+                    messages.error(request, _("Invalid Matrix ID"))
+
     userdetails = CustomUser.objects.get(id=id)
     userdetails.nfccard = NFCCard.objects.filter(user=userdetails).first()
     if not userdetails.nfccard:
