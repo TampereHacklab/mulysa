@@ -300,7 +300,9 @@ def usersettings(request, id):
 @login_required
 def subscribe_service(request, id, serviceid):
     service = MemberService.objects.get(id=serviceid)
-    already_existing = ServiceSubscription.objects.filter(user=request.user, service=service)
+    already_existing = ServiceSubscription.objects.filter(
+        user=request.user, service=service
+    )
     if len(already_existing):
         messages.error(request, _("You already have this service"))
     else:
