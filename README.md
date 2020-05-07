@@ -65,11 +65,11 @@ Before committing, run
 
 # Door access api
 
-There are currently two different api endpoints for door access. One phone number based and one for nfc cards.
+There are multiple api endpoints for checking door access: One phone number, nfc card and Matrix ID.
 
 Phone number based access is based on the users phone number and they must have a active subscription to the default service (on a default installation this would be serviceid=2 "tilankäyttöoikeus"). User can also have multiple NFC cards that check the same service access.
 
-Both endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number or nfc card id).
+All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
 
 Examples:
 
@@ -93,14 +93,23 @@ curl -X POST \
    }'
 ```
 
+```
+curl -X POST \
+  http://127.0.0.1:8000/api/v1/access/mxid/ \
+  -H 'Content-Type: application/json' \
+  -d '{
+     "deviceid": "123",
+     "payload": "@user:server.org"
+   }'
+```
 
 200 responses can be considered valid access, all other are invalid. 200 responses will also contain some basic user data for example for showing in a door access welcome message.
 
 API will return these responses on certain error conditions:
  - 400 when query has invalid content
  - 404 when deviceid isn't found
- - 480 when phone number/NFC id is not found at all
- - 481 when phone number/NFC id is found within member but has no access rights
+ - 480 when phone number/NFC id/mxid is not found at all
+ - 481 when phone number/NFC id/mxid is found within member but has no access rights
 
 There are two example implementations for esp32 based access readers that can be found here:
 

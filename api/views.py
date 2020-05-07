@@ -136,6 +136,47 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
 
         return Response(status=response_status)
 
+    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
+    def mxid(self, request, format=None):
+        """
+        Matrix mxid access
+        """
+        logentry = DeviceAccessLogEntry()
+        inserializer = AccessDataSerializer(data=request.data)
+        inserializer.is_valid(raise_exception=True)
+
+        deviceqs = AccessDevice.objects.all()
+        deviceid = inserializer.validated_data.get("deviceid")
+        device = get_object_or_404(deviceqs, deviceid=deviceid)
+        logging.debug(f"found device {device}")
+
+        mxid = inserializer.validated_data.get("payload")
+        users = CustomUser.objects.filter(mxid=mxid)
+
+        logentry.device = device
+        logentry.payload = mxid
+
+        # 0 = success, any other = failure
+        response_status = 0
+
+        if users.count() != 1:
+            response_status = 480
+        else:
+            user = users.first()
+
+            # user does not have access rights
+            if not user.has_door_access():
+                response_status = 481
+
+        logentry.granted = response_status == 0
+        logentry.save()
+
+        if response_status == 0:
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data)
+
+        return Response(status=response_status)
+
     def list(self, request):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
 

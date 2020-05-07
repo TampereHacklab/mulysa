@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-10 00:13+0300\n"
+"POT-Creation-Date: 2020-05-03 00:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,7 +125,7 @@ msgid "Date"
 msgstr "Päiväys"
 
 #: www/templates/www/applications.html:13 www/templates/www/user.html:20
-#: www/templates/www/usersettings.html:14
+#: www/templates/www/usersettings.html:15
 msgid "Name"
 msgstr "Nimi"
 
@@ -142,7 +142,7 @@ msgstr "Viesti"
 msgid "Agreement"
 msgstr "Hyväksyntä"
 
-#: www/templates/www/applications.html:22 www/templates/www/users.html:31
+#: www/templates/www/applications.html:22 www/templates/www/users.html:34
 msgid "days"
 msgstr "päivää"
 
@@ -196,8 +196,16 @@ msgstr "Tietosuojakäytäntö"
 msgid ""
 " Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
 msgstr ""
-"Raportoi bugit ja osallistu projektiin <a href=\"%(GITHUB_URL)s"
-"\">GitHubissa</a>"
+"Raportoi bugit ja osallistu projektiin <a "
+"href=\"%(GITHUB_URL)s\">GitHubissa</a>"
+
+#: www/templates/www/createuser.html:8
+msgid "Create user"
+msgstr "Luo käyttäjä"
+
+#: www/templates/www/createuser.html:27
+msgid "Create"
+msgstr "Luo"
 
 #: www/templates/www/custominvoice.html:8
 msgid "Note: You can always delete invoice if you choose not to pay it"
@@ -299,16 +307,16 @@ msgstr "Hae hacklabin jäsenyyttä"
 #, python-format
 msgid ""
 "Terms for membership: I have read and agree to\n"
-"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</"
-"a>\n"
+"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members "
+"guide</a>\n"
 "          and\n"
 "          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
 "            >association rules</a\n"
 "          >."
 msgstr ""
-"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a href=\"%(MEMBERS_GUIDE_URL)s"
-"\" target=\"_blank\">jäsenen ohjeen</a> ja <a href="
-"\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
+"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
+"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">jäsenen ohjeen</a> ja <a "
+"href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
 
 #: www/templates/www/register.html:36
 msgid ""
@@ -328,8 +336,8 @@ msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/thanks.html:7
 msgid ""
-"Your membership application was successfully submitted! Please check your e-"
-"mail (and spam folder) for instuctions."
+"Your membership application was successfully submitted! Please check your "
+"e-mail (and spam folder) for instuctions."
 msgstr ""
 "Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
 "roskapostilaatikko) johon lähetimme lisäohjeita."
@@ -338,11 +346,11 @@ msgstr ""
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
 
-#: www/templates/www/user.html:24 www/templates/www/usersettings.html:18
+#: www/templates/www/user.html:24 www/templates/www/usersettings.html:19
 msgid "Email"
 msgstr "Sähköposti"
 
-#: www/templates/www/user.html:28 www/templates/www/usersettings.html:22
+#: www/templates/www/user.html:28 www/templates/www/usersettings.html:23
 msgid "Phone"
 msgstr "Puhelin"
 
@@ -381,8 +389,8 @@ msgstr "Viimeisin maksu"
 
 #: www/templates/www/user.html:66
 msgid ""
-"This service has been suspended. Please contact management if you want to re-"
-"apply for it."
+"This service has been suspended. Please contact management if you want to "
+"re-apply for it."
 msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
@@ -440,46 +448,78 @@ msgstr "Lähettäjä"
 msgid "Comment"
 msgstr "Kommentti"
 
+#: www/templates/www/users.html:8
+msgid "Create new user"
+msgstr "Luo uusi käyttäjä"
+
 #: www/templates/www/usersettings.html:8
 msgid "User settings"
 msgstr "Omat asetukset"
 
-#: www/templates/www/usersettings.html:26
+#: www/templates/www/usersettings.html:27
+msgid "Matrix ID"
+msgstr "Matrix ID"
+
+#: www/templates/www/usersettings.html:31
 msgid "NFC Card"
 msgstr "NFC-kortti"
 
-#: www/templates/www/usersettings.html:30
+#: www/templates/www/usersettings.html:35
 msgid "Release"
 msgstr "Vapauta"
 
-#: www/templates/www/usersettings.html:34
+#: www/templates/www/usersettings.html:39
 msgid "Claim NFC card"
 msgstr "Käytä NFC-korttia"
 
-#: www/templates/www/usersettings.html:37
+#: www/templates/www/usersettings.html:42
 msgid ""
 "No NFC card claimed - go to door, use a card and claim it here in 5 minutes"
 msgstr ""
 "Ei NFC-korttia yhdistettynä - mene ovelle, leimaa kortti ja yhdistä se "
 "täällä viiden minuutin kuluessa"
 
-#: www/views.py:183
+#: www/templates/www/usersettings.html:51
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+#: www/views.py:184
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:188
+#: www/views.py:189
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:261 www/views.py:262
+#: www/views.py:247
+msgid "Matrix ID already in use"
+msgstr "Matrix ID on jo käytössä"
+
+#: www/views.py:255
+msgid "Matrix ID changed successfully"
+msgstr "Matrix ID vaihdettu"
+
+#: www/views.py:257
+#, python-format
+msgid "Set Matrix ID to %(mxid)s"
+msgstr "Matrix ID asetettu: %(mxid)s"
+
+#: www/views.py:259
+msgid "Invalid Matrix ID"
+msgstr "Epäkelpo Matrix ID"
+
+#: www/views.py:284 www/views.py:285
 msgid "Released NFC card"
 msgstr "Vapautettu NFC-kortti"
 
-#: www/views.py:268 www/views.py:269
+#: www/views.py:291 www/views.py:292
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
+
+#~ msgid "Save"
+#~ msgstr "Tallenna"
 
 #~ msgid "referencenumber"
 #~ msgstr "viitenumero"
