@@ -21,6 +21,16 @@ urlpatterns = [
         views.claim_nfc,
         name="claim_nfc",
     ),
+    path(
+        "usersettings/<int:id>/subscribe_service/<int:serviceid>",
+        views.subscribe_service,
+        name="subscribe_service",
+    ),
+    path(
+        "usersettings/<int:id>/unsubscribe_service/<int:serviceid>",
+        views.unsubscribe_service,
+        name="unsubscribe_service",
+    ),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",
