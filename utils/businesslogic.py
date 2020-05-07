@@ -3,6 +3,7 @@ from datetime import date, timedelta
 
 from django.utils import translation
 from django.utils.translation import gettext as _
+from drfx import settings
 
 from users.models import (
     BankTransaction,
@@ -12,6 +13,8 @@ from users.models import (
     ServiceSubscription,
 )
 from users.signals import application_approved, application_denied
+
+from utils import referencenumber
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +45,7 @@ class BusinessLogic:
 
             if len(subscriptions) > 1:
                 logger.warn(
-                    f"Suspicious: more than one service subscription with same reference!"
+                    "Suspicious: more than one service subscription with same reference!"
                 )
 
             for subscription in subscriptions:
@@ -56,7 +59,7 @@ class BusinessLogic:
 
                 if len(custominvoices) > 1:
                     logger.warn(
-                        f"Suspicious: more than one custominvoice with same reference!"
+                        "Suspicious: more than one custominvoice with same reference!"
                     )
 
                 for custominvoice in custominvoices:
@@ -97,7 +100,7 @@ class BusinessLogic:
             )
             if len(transactions) > 1:
                 logger.warn(
-                    f"Suspicious: more than one transaction matching custominvoice reference!"
+                    "Suspicious: more than one transaction matching custominvoice reference!"
                 )
 
             for transaction in transactions:
@@ -142,6 +145,20 @@ class BusinessLogic:
 
         application.delete()
         BusinessLogic.updateuser(user)
+
+    @staticmethod
+    def create_servicesubscription(user, service, state):
+        """
+        Creates a new service subscription for wanted user and service
+        Sets it to wanted state and generates a reference number for it.
+        """
+        subscription = ServiceSubscription(user=user, service=service, state=state)
+        subscription.save()
+        subscription.reference_number = referencenumber.generate(
+            settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+        )
+        subscription.save()
+        return subscription
 
     # PRIVATE methods below - don't call these from outside (unless you know what you're doing!)
 

@@ -8,12 +8,16 @@
         <h1>{% trans 'User settings' %}</h1>
     </div>
   </div>
-  <form class="form-horizontal" action="." method="post">{% csrf_token %}
+  <form class="form-horizontal" action="{% url 'usersettings' userdetails.id %}" method="post">{% csrf_token %}
     {% bootstrap_messages %}
   <table class="table">
     <tr>
       <td>{% trans 'Name' %}</td>
       <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Nickname' %}</td>
+      <td><input type="text" id="nick" name="nick" value={{ userdetails.nick|default_if_none:"" }}></td>
     </tr>
     <tr>
       <td>{% trans 'Email' %}</td>
@@ -51,5 +55,24 @@
     value="{% trans 'Save changes' %}"
   />
   </form>
-</div>
+  <div class="col-lg-6 offset-lg-3">
+    <h1>{% trans 'Extra Services' %}</h1>
+  </div>
+  {% blocktrans %}Here you can see extra services that you can subscribe yourself. You can only unsubscribe services when you have
+  paid them fully. {% endblocktrans %}
+  <ul>
+  {% for service in subscribable_services %}
+    <li> {{service.name}} 
+      <a class="btn btn-primary" href="{% url 'subscribe_service' userdetails.id service.id %}">{% trans 'Subscribe service' %}</a>
+    </li>
+  {% endfor %}
+  </ul>
+  <ul>
+    {% for service in unsubscribable_services %}
+      <li> {{service.name}} 
+        <a class="btn btn-primary" href="{% url 'unsubscribe_service' userdetails.id service.id %}">{% trans 'Unsubscribe service' %}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
 {% endblock %}

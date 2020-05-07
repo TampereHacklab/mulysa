@@ -26,7 +26,7 @@ class EmailActionForm(forms.Form):
             object_id=email.pk,
             object_repr=force_text(email),
             action_flag=CHANGE,
-            change_message=f"Start queuing",
+            change_message="Start queuing",
         )
 
         # send the email to all active users
