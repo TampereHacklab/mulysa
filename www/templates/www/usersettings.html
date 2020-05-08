@@ -62,7 +62,7 @@
   paid them fully. {% endblocktrans %}
   <ul>
   {% for service in subscribable_services %}
-    <li> {{service.name}} 
+    <li> <b>{{service.name}}</b> -  {{ service.cost_string }} / {{ service.period_string }}
       <a class="btn btn-primary" href="{% url 'subscribe_service' userdetails.id service.id %}">{% trans 'Subscribe service' %}</a>
     </li>
   {% endfor %}

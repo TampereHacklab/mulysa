@@ -396,7 +396,7 @@ class MemberService(models.Model):
             return _("month")
         if self.days_per_payment == 365:
             return _("year")
-        return str(self.days_per_payment) + " " + _("days")
+        return str(self.days_per_payment) + " " + str(_("days"))
 
     # Returns a list of services that pay for this service
     def paid_by_services(self):
