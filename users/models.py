@@ -370,6 +370,16 @@ class MemberService(models.Model):
         ),
     )
 
+    # True if users are allowed to subscribe and unsubscribe themselves with this service
+    self_subscribe = models.BooleanField(
+        blank=False,
+        null=False,
+        default=False,
+        help_text=_(
+            "True, if this service can be subscribed and unsubscribed by users themselves."
+        ),
+    )
+
     def __str__(self):
         return _("Member service") + " " + str(self.name)
 
