@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-07 23:18+0300\n"
+"POT-Creation-Date: 2020-05-08 22:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,11 +486,11 @@ msgstr ""
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#: www/templates/www/usersettings.html:62
+#: www/templates/www/usersettings.html:59
 msgid "Extra Services"
 msgstr "Ylimääräiset jäsenpalvelut"
 
-#: www/templates/www/usersettings.html:64
+#: www/templates/www/usersettings.html:61
 msgid ""
 "Here you can see extra services that you can subscribe yourself. You can "
 "only unsubscribe services when you have\n"
@@ -501,11 +500,11 @@ msgstr ""
 "Voit poistaa käytöstä palveluita ainoastaan kun ne ovat maksettu ja "
 "aktiivisessa tilassa."
 
-#: www/templates/www/usersettings.html:69
+#: www/templates/www/usersettings.html:66
 msgid "Subscribe service"
 msgstr "Ota käyttöön"
 
-#: www/templates/www/usersettings.html:76
+#: www/templates/www/usersettings.html:73
 msgid "Unsubscribe service"
 msgstr "Poista käytöstä"
 
@@ -540,19 +539,19 @@ msgstr "Epäkelpo Matrix ID"
 msgid "Nickname changed successfully"
 msgstr "Nimimerkki vaihdettu"
 
-#: www/views.py:305
+#: www/views.py:307
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:310
+#: www/views.py:312
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:324
+#: www/views.py:326
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:329
+#: www/views.py:331
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -560,66 +559,14 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:333
+#: www/views.py:335
 msgid "You are not subscribed to that service"
 msgstr "Sinulla ei ole tätä jäsenpalvelua"
 
-#: www/views.py:344 www/views.py:345
+#: www/views.py:346 www/views.py:347
 msgid "Released NFC card"
 msgstr "Vapautettu NFC-kortti"
 
-#: www/views.py:351 www/views.py:352
+#: www/views.py:353 www/views.py:354
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
-
-#~ msgid "Matrix ID"
-#~ msgstr "Matrix ID"
-
-#~ msgid "referencenumber"
-#~ msgstr "viitenumero"
-
-#~ msgid "Please create a custom invoice to pay this service."
-#~ msgstr "Luo vapaamuotoinen lasku maksaaksesi tämän palvelun."
-
-#~| msgid "referencenumber"
-#~ msgid "reference_number"
-#~ msgstr "viitenumero"
-
-#~ msgid "Registration successful!"
-#~ msgstr "Hakemus vastaanotettu!"
-
-#~ msgid "My Hacklab"
-#~ msgstr "Hacklabini"
-
-#~ msgid "Tampere Hacklab member services"
-#~ msgstr "Tampere Hacklabin jäsenrekisteri"
-
-#~ msgid "Front page"
-#~ msgstr "Etusivu"
-
-#~ msgid "Welcome! Choose what to do next"
-#~ msgstr "Tervetuloa! Miten voimme palvella?"
-
-#~ msgid "Login to Mulysa"
-#~ msgstr "Kirjaudu sisään"
-
-#~ msgid "Logged in as"
-#~ msgstr "Kirjauduttu sisään käyttäjänä"
-
-#~ msgid "Change"
-#~ msgstr "Vaihda"
-
-#~ msgid "Please login as this user or admin to see this"
-#~ msgstr "Kirjaudu adminina nähdäksesi tämän"
-
-#~ msgid ""
-#~ "I use only power tools and machines I have training and permission for."
-#~ msgstr ""
-#~ "Käytän vain sellaisia työkaluja laitteita joiden käyttöön olen saanut "
-#~ "luvan ja tarvittavan koulutuksen."
-
-#~ msgid "Paid until %(paiduntil)s"
-#~ msgstr "Maksettu %(paiduntil)s asti"
-
-#~ msgid "last payment %(lastpayment)s"
-#~ msgstr "viimeisin maksu %(lastpayment)s"

@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-08 22:11+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: api/models.py:17
+msgid "User creation date"
+msgstr "Käyttäjän luontipäivä"
+
+#: api/models.py:18
+msgid "Automatically set to now when user is create"
+msgstr "Automaattisesti asetettu täksi päiväksi kun käyttäjä on luotu"
+
+#: api/models.py:23
+msgid "Last modified datetime"
+msgstr "Muokkauspäivä"
+
+#: api/models.py:24
+msgid "Last time this user was modified"
+msgstr "Päiväys, koska viimeksi muokattu"
+
+#: api/models.py:28
+msgid "Device name"
+msgstr "Laitteen nimi"
+
+#: api/models.py:29
+msgid "Human readable name for the device, like door or laser"
+msgstr "Ihmisen luettava nimi laitteelle, kuten ovi tai laser"
+
+#: api/models.py:34
+msgid "device id"
+msgstr "laitteen tunniste"
+
+#: api/models.py:35
+msgid "used to know which device this was"
+msgstr "tunnistaa yksittäisen laitteen"
+
+#: api/models.py:48
+msgid "Date of this entry"
+msgstr "Käytön päivämäärä"
+
+#: api/models.py:49
+msgid "Automatically set to now when created"
+msgstr "Automaattisesti asetettu täksi päiväksi kun luotu"
+
+#: api/models.py:53
+msgid "Granted"
+msgstr "Sallittu"
+
+#: api/models.py:53
+msgid "Was the access granted"
+msgstr "Oliko pääsy sallittu"
+
+#: api/models.py:59
+msgid "Device this event came from"
+msgstr "Laite, jolta tapahtuma tuli"
+
+#: api/models.py:66
+msgid "NFC card id or phone number, or other field like that"
+msgstr "NFC-kortti, puhelinnumero, tai vastaava kenttä"
+
+#: api/models.py:73
+msgid "NFC card"
+msgstr "NFC-kortti"
+
+#: api/models.py:74
+msgid "NFC card this was mapped to, if any"
+msgstr "NFC-kortti johon tämä mäpättiin, jos sellainen oli"

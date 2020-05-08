@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-07 23:33+0300\n"
+"POT-Creation-Date: 2020-05-08 22:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +51,7 @@ msgstr ""
 "ansiosta"
 
 #: utils/businesslogic.py:417
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s "
 "was paid"
