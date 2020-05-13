@@ -22,6 +22,7 @@ class UserAccessSerializer(serializers.HyperlinkedModelSerializer):
             "email",
             "first_name",
             "last_name",
+            "nick",
             "phone",
         )
         read_only_fields = ("is_active",)
