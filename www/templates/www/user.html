@@ -5,12 +5,14 @@
 {% block content %}
 <div class="container">
   <h1>
-    {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
+    {% trans 'User data for' %} {{ userdetails }}
   </h1>
 
   {% if user.is_staff %}
     <p>
       <a href="{% url 'updateuser' userdetails.id %}">Update user's data</a> |
+      <a href="{% url 'users/delete' userdetails.id 0 %}">D</a>elete user - keep account |
+      <a href="{% url 'users/delete' userdetails.id 1 %}">D</a>elete user <b>including account</b> |
       <a href="{% url 'admin:users_customuser_change' userdetails.id %}">View in admin</a>
     </p>
   {% endif %}
@@ -19,6 +21,10 @@
     <tr>
       <td>{% trans 'Name' %}</td>
       <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Membership state' %}</td>
+      <td>{{ userdetails.statestring }}</td>
     </tr>
     <tr>
       <td>{% trans 'Email' %}</td>

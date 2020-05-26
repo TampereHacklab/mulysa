@@ -458,3 +458,45 @@ def createuser(request):
     else:
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
+
+@login_required
+@staff_member_required
+def deleteuser(request, id, delete):
+    user = CustomUser.objects.get(id=id)
+    print (user.state)
+    if not (user.state == CustomUser.MEMBER or user.state == CustomUser.RESIGN_DELETE or user.state == CustomUser.RESIGN_SAVE_ACCOUNT):
+        messages.error(
+            request,
+                    _(
+                        "User not member or requesting delete"
+                    ),
+                )
+        return userdetails(request, id)
+
+    custominvoices = CustomInvoice.objects.filter(user=user)
+
+    for invoice in custominvoices:
+        invoice.delete()
+
+    subscriptions = ServiceSubscription.objects.filter(user=user)
+    for subscription in subscriptions:
+        subscription.delete()
+
+    if delete == 1:
+        user.first_name = ""
+        user.last_name = ""
+        user.email = None
+        user.phone = ""
+        user.municipality = ""
+        user.mxid = None
+        user.nick = ""
+        user.bank_account = ""
+        user.save()
+        user.log('User has resigned and all information cleared')
+    else:
+        user.log('User has resigned but account information is kept as requested')
+
+    user.state = CustomUser.RESIGNED
+    user.save()
+
+    return userdetails(request, id)

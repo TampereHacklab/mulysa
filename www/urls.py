@@ -12,6 +12,7 @@ urlpatterns = [
     path("dataexport", views.dataexport, name="dataexport"),
     path("users", views.users, name="users"),
     path("users/create", views.createuser, name="users/create"),
+    path("users/delete/<int:id>/<int:delete>", views.deleteuser, name="users/delete"),
     path("ledger", views.ledger, name="ledger"),
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),

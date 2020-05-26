@@ -31,6 +31,7 @@ class CustomUserAdmin(UserAdmin):
         "municipality",
         "phone",
         "mxid",
+        "state",
         "is_active",
         "is_staff",
     )

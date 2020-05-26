@@ -93,7 +93,8 @@ class CustomUser(AbstractUser):
 
     email = models.EmailField(
         unique=True,
-        blank=False,
+        blank=True,
+        null=True,
         verbose_name=_("Email address"),
         help_text=_(
             "Your email address will be used for important notifications about your membership"
@@ -186,6 +187,29 @@ class CustomUser(AbstractUser):
         ),
     )
 
+    APPLYING = "APPLYING"
+    MEMBER = "MEMBER"
+    RESIGN_SAVE_ACCOUNT = "RESIGN_SAVE"
+    RESIGN_DELETE = "RESIGN_DELETE"
+    RESIGNED = "RESIGNED"
+
+    MEMBERSHIP_STATES = [
+        (APPLYING, _("Applying")),
+        (MEMBER, _("Member")),
+        (RESIGN_SAVE_ACCOUNT, _("Resign requested - save account")),
+        (RESIGN_DELETE, _("Resign requested - delete account")),
+        (RESIGNED, _("Resigned")),
+    ]
+
+    state = models.CharField(
+        blank=False,
+        verbose_name=_("Membership state"),
+        help_text=_("State of this member"),
+        max_length=16,
+        choices=MEMBERSHIP_STATES,
+        default=MEMBER, # TODO: Should be changed to APPLYING after db migrated
+    )
+
     # we don't really want to get any nicknames, plain email will do better
     # as our username
     USERNAME_FIELD = "email"
@@ -204,8 +228,10 @@ class CustomUser(AbstractUser):
         logevent.save()
         logger.info("User {}'s log: {}".format(logevent.user, message))
 
-    def __str__(self):
-        return self.first_name + " " + self.last_name
+    def  __str__(self):
+        if len(self.first_name) > 0 or len(self.last_name) > 0:
+            return f'{self.first_name} {self.last_name}'
+        return f'(User {self.id})'
 
     def has_door_access(self):
         """
@@ -237,6 +263,13 @@ class CustomUser(AbstractUser):
                 return True
 
         return False
+    
+    def statestring(self):
+        # There's probably a one-liner way to do this
+        for ss in CustomUser.MEMBERSHIP_STATES:
+            if ss[0] == self.state:
+                return ss[1]
+        return "(???)"  # Should never happen
 
 
 def validate_agreement(value):

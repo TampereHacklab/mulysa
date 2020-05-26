@@ -74,5 +74,11 @@
       </li>
     {% endfor %}
     </ul>
-  </div>
+    <div class="col-lg-6 offset-lg-3">
+      <h1>{% trans 'Membership management' %}</h1>
+    </div>
+    {% trans 'Your current membership state' %}: {{ userdetails.statestring }}
+    {% ifequal userdetails.state 'MEMBER' %}
+    IS MEMBER
+    {% endifequal %}
 {% endblock %}

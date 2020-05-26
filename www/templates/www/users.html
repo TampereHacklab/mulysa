@@ -20,7 +20,7 @@ User list
 <tr>
 <td>
         <a href="{% url 'userdetails' user.id %}">
-        {{ user.first_name }} {{ user.last_name }} {% if user.nick %}({{ user.nick }}){% endif %}
+        {{ user }} {% if user.nick %}({{ user.nick }}){% endif %}
         </a>
 </td> 
 <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
