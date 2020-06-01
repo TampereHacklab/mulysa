@@ -315,9 +315,9 @@
         },
         "twilio": {
             "hashes": [
-                "sha256:7ef6ad19251fee6a41f1184e97b4fcb62f4a8c0e6f4b78797e40e9c92aed006d"
+                "sha256:7c6329118583852bb06a2065dd2987a012310e5dfd834ef821d736b059bd1c74"
             ],
-            "version": "==6.39.0"
+            "version": "==6.41.0"
         },
         "uritemplate": {
             "hashes": [
