@@ -207,7 +207,7 @@ class CustomUser(AbstractUser):
         help_text=_("State of this member"),
         max_length=16,
         choices=MEMBERSHIP_STATES,
-        default=MEMBER, # TODO: Should be changed to APPLYING after db migrated
+        default=MEMBER,  # TODO: Should be changed to APPLYING after db migrated
     )
 
     # we don't really want to get any nicknames, plain email will do better
@@ -228,10 +228,10 @@ class CustomUser(AbstractUser):
         logevent.save()
         logger.info("User {}'s log: {}".format(logevent.user, message))
 
-    def  __str__(self):
+    def __str__(self):
         if len(self.first_name) > 0 or len(self.last_name) > 0:
-            return f'{self.first_name} {self.last_name}'
-        return f'(User {self.id})'
+            return f"{self.first_name} {self.last_name}"
+        return f"(User {self.id})"
 
     def has_door_access(self):
         """
@@ -263,7 +263,7 @@ class CustomUser(AbstractUser):
                 return True
 
         return False
-    
+
     def statestring(self):
         # There's probably a one-liner way to do this
         for ss in CustomUser.MEMBERSHIP_STATES:

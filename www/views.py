@@ -40,6 +40,10 @@ def register(request):
         applicationform = RegistrationApplicationForm(request.POST)
         servicesform = RegistrationServicesFrom(request.POST)
 
+        # Make sure registered user has a non-empty e-mail address
+        if len(request.POST["email"]) == 0:
+            userform.add_error("email", _("Please enter a valid e-mail-address"))
+
         if (
             userform.is_valid()
             and applicationform.is_valid()
@@ -50,8 +54,6 @@ def register(request):
             # TODO: this logic should probably live in business logic
             memberservices = MemberService.objects.all()
             subscribed_services = []
-
-            print(servicesform.cleaned_data.get("services"))
 
             for service in memberservices:
                 if str(service.id) in servicesform.cleaned_data.get("services", []):
@@ -459,28 +461,24 @@ def createuser(request):
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
 
+
 @login_required
 @staff_member_required
 def deleteuser(request, id, delete):
     user = CustomUser.objects.get(id=id)
-    print (user.state)
-    if not (user.state == CustomUser.MEMBER or user.state == CustomUser.RESIGN_DELETE or user.state == CustomUser.RESIGN_SAVE_ACCOUNT):
+    print(user.state)
+    if not (
+        user.state == CustomUser.MEMBER
+        or user.state == CustomUser.RESIGN_DELETE
+        or user.state == CustomUser.RESIGN_SAVE_ACCOUNT
+    ):
         messages.error(
-            request,
-                    _(
-                        "User not member or requesting delete"
-                    ),
-                )
+            request, _("User not member or requesting delete"),
+        )
         return userdetails(request, id)
 
-    custominvoices = CustomInvoice.objects.filter(user=user)
-
-    for invoice in custominvoices:
-        invoice.delete()
-
-    subscriptions = ServiceSubscription.objects.filter(user=user)
-    for subscription in subscriptions:
-        subscription.delete()
+    CustomInvoice.objects.filter(user=user).delete()
+    ServiceSubscription.objects.filter(user=user).delete()
 
     if delete == 1:
         user.first_name = ""
@@ -492,9 +490,9 @@ def deleteuser(request, id, delete):
         user.nick = ""
         user.bank_account = ""
         user.save()
-        user.log('User has resigned and all information cleared')
+        user.log("User has resigned and all information cleared")
     else:
-        user.log('User has resigned but account information is kept as requested')
+        user.log("User has resigned but account information is kept as requested")
 
     user.state = CustomUser.RESIGNED
     user.save()
