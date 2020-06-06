@@ -90,6 +90,20 @@ class BusinessLogic:
         """
         Updates the user's status based on the data in database. Can be called from outside.
         """
+
+        # Fix missing custom invoice reference numbers (if created from admin etc)
+        invoices = CustomInvoice.objects.filter(
+            user=user, reference_number__isnull=True
+        )
+        for invoice in invoices:
+            invoice.reference_number = referencenumber.generate(
+                settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
+            )
+            invoice.save()
+            print(
+                "Generated missing reference for custom invoice", invoice.user, invoice
+            )
+
         # Check for custom invoices..
         invoices = CustomInvoice.objects.filter(
             user=user, payment_transaction__isnull=True
