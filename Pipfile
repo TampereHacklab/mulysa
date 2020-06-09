@@ -17,7 +17,7 @@ python-coveralls = "*"
 black = "*"
 
 [packages]
-django = "*"
+django = "==3.0.*"
 djangorestframework = "*"
 django-rest-auth = "*"
 django-allauth = "*"

@@ -29,4 +29,4 @@ class SMSLogReadOnlyAdmin(ReadOnlyAdmin):
     readonly_fields = []
 
 
-admin.site.register(SMSLog, SMSLogReadOnlyAdmin)
+#admin.site.register(SMSLog, SMSLogReadOnlyAdmin)
