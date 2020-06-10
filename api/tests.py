@@ -9,7 +9,6 @@ from rest_framework.test import APITestCase
 from users.models import CustomUser, MemberService, ServiceSubscription, NFCCard
 from rest_framework.authtoken.models import Token
 
-
 class TestAccess(APITestCase):
     fixtures = ["users/fixtures/memberservices.json"]
 
@@ -72,6 +71,16 @@ class TestAccess(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_access_phone_not_found(self):
+        """
+        Test with not found number
+        """
+        url = reverse("access-phone")
+        response = self.client.post(
+            url, {"deviceid": self.device.deviceid, "payload": "+358111111111"}
+        )
+        self.assertEqual(response.status_code, 480)
+
     def test_access_phone_list_unauthenticated(self):
         url = reverse("access-phone")
         response = self.client.get(url)
@@ -80,7 +89,7 @@ class TestAccess(APITestCase):
     def test_access_phone_list_wrongauth(self):
         url = reverse("access-phone")
         response = self.client.get(
-            url, HTTP_AUTHORIZATION="Token {}".format('invalidtoken')
+            url, HTTP_AUTHORIZATION="Token {}".format("invalidtoken")
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
