@@ -76,6 +76,12 @@ class TestAccess(APITestCase):
 
         self.fail_subscription.save()
 
+    def test_list(self):
+        url = reverse("access-list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_501_NOT_IMPLEMENTED)
+
+
     def test_access_phone_no_payload(self):
         """
         Test with missing payload
