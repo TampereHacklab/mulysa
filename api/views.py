@@ -23,7 +23,7 @@ class VerySlowThrottle(AnonRateThrottle):
     Throttle for access views
     """
 
-    rate = "15/minute"
+    rate = "10/minute"
 
 
 class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
