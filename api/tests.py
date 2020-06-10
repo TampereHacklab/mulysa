@@ -81,6 +81,29 @@ class TestAccess(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_501_NOT_IMPLEMENTED)
 
+    def test_access_phone_list_unauthenticated(self):
+        url = reverse("access-phone")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_access_phone_list_wrongauth(self):
+        url = reverse("access-phone")
+        response = self.client.get(
+            url, HTTP_AUTHORIZATION="Token {}".format("invalidtoken")
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_access_phone_list_authenticated(self):
+        url = reverse("access-phone")
+        response = self.client.get(
+            url, HTTP_AUTHORIZATION="Token {}".format(self.superuser_token)
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, self.ok_user.phone)
+        self.assertContains(response, self.ok_user.email)
+        self.assertNotContains(response, self.fail_user.phone)
+        self.assertNotContains(response, self.fail_user.email)
+
 
     def test_access_phone_no_payload(self):
         """
@@ -108,29 +131,6 @@ class TestAccess(APITestCase):
             url, {"deviceid": self.device.deviceid, "payload": "+358111111111"}
         )
         self.assertEqual(response.status_code, 480)
-
-    def test_access_phone_list_unauthenticated(self):
-        url = reverse("access-phone")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_access_phone_list_wrongauth(self):
-        url = reverse("access-phone")
-        response = self.client.get(
-            url, HTTP_AUTHORIZATION="Token {}".format("invalidtoken")
-        )
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_access_phone_list_authenticated(self):
-        url = reverse("access-phone")
-        response = self.client.get(
-            url, HTTP_AUTHORIZATION="Token {}".format(self.superuser_token)
-        )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, self.ok_user.phone)
-        self.assertContains(response, self.ok_user.email)
-        self.assertNotContains(response, self.fail_user.phone)
-        self.assertNotContains(response, self.fail_user.email)
 
     def test_access_phone_ok(self):
         """
