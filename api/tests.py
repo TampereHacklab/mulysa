@@ -185,6 +185,13 @@ class TestAccess(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_nfc_not_found(self):
+        url = reverse("access-nfc")
+        response = self.client.post(
+            url, {"deviceid": self.device.deviceid, "payload": "doesnotexists"}
+        )
+        self.assertEqual(response.status_code, 480)
+
     def tearDown(self):
         CustomUser.objects.all().delete()
         Token.objects.all().delete()
