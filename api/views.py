@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
+from rest_framework import mixins
 from users.models import CustomUser, NFCCard
 
 from utils.phonenumber import normalize_number
@@ -25,20 +26,27 @@ class VerySlowThrottle(AnonRateThrottle):
     rate = "10/minute"
 
 
-class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
+class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     Access checker api
 
-    Currently only implements phone
+    contains few sub endpoints like phone, mxid and nfc that can be used to check one user
+    with one access method.
+
+    When for example phone endpoint is called with a post it will try to check the incoming
+    deviceid and payload against the database and return 200 ok if the user has access.
+
+    Get request to the same phone endpoint will return a list of all active users.
 
     Also throws erros for all default actions TODO: there is probably a cleaner way to do this
     """
 
     throttle_classes = [VerySlowThrottle]
     permission_classes = []
-
-    def get_serializer_class(self):
-        pass
+    # default to AccessDataSerializer for all methods
+    serializer_class = AccessDataSerializer
+    # default queryset as none
+    queryset = CustomUser.objects.none
 
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
     def phone(self, request, format=None):
@@ -50,6 +58,8 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         http POST http://127.0.0.1:8000/api/v1/access/phone/ deviceid=asdf payload=0440431918
 
         returns 200 ok with some user data if everything is fine and 4XX for other situations
+
+        users with enough power will also get a list of all users with door access with this endpoint
         """
 
         # TODO: Generate log entry for phone events also!
@@ -89,6 +99,26 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
             return Response(status=481)
 
         outserializer = UserAccessSerializer(user)
+        return Response(outserializer.data)
+
+    @phone.mapping.get
+    def phone_list(self, request, format=None):
+        """
+        List all phone access users
+        """
+        # only for superusers
+        user = request.user
+        if not request.user or not request.user.is_superuser:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        # collect list of all users that have door access
+        users_with_door_access = []
+        for user in CustomUser.objects.all():
+            if user.has_door_access():
+                users_with_door_access.append(user)
+
+        # and output it
+        outserializer = UserAccessSerializer(users_with_door_access, many=True)
         return Response(outserializer.data)
 
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
@@ -178,19 +208,4 @@ class AccessViewSet(LoggingMixin, viewsets.GenericViewSet):
         return Response(status=response_status)
 
     def list(self, request):
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-
-    def create(self, request):
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-
-    def retrieve(self, request, pk=None):
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-
-    def update(self, request, pk=None):
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-
-    def partial_update(self, request, pk=None):
-        return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
-
-    def destroy(self, request, pk=None):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)

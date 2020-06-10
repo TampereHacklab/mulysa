@@ -7,12 +7,19 @@ from drfx import settings
 from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import CustomUser, MemberService, ServiceSubscription, NFCCard
+from rest_framework.authtoken.models import Token
 
 
 class TestAccess(APITestCase):
     fixtures = ["users/fixtures/memberservices.json"]
 
     def setUp(self):
+        # create test superuser for authenticated calls
+        self.superuser = CustomUser.objects.create_superuser(
+            "admin@example.com", "FirstName", "LastName", "+358123", "hunter2"
+        )
+        self.superuser_token = Token.objects.create(user=self.superuser)
+
         # create test device
         self.device = AccessDevice.objects.create(deviceid="testdevice",)
 
@@ -64,6 +71,29 @@ class TestAccess(APITestCase):
             url, {"deviceid": self.device.deviceid, "payload": ""}
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_access_phone_list_unauthenticated(self):
+        url = reverse("access-phone")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_access_phone_list_wrongauth(self):
+        url = reverse("access-phone")
+        response = self.client.get(
+            url, HTTP_AUTHORIZATION="Token {}".format('invalidtoken')
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_access_phone_list_authenticated(self):
+        url = reverse("access-phone")
+        response = self.client.get(
+            url, HTTP_AUTHORIZATION="Token {}".format(self.superuser_token)
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, self.ok_user.phone)
+        self.assertContains(response, self.ok_user.email)
+        self.assertNotContains(response, self.fail_user.phone)
+        self.assertNotContains(response, self.fail_user.email)
 
     def test_access_phone_ok(self):
         """
@@ -125,5 +155,5 @@ class TestAccess(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def tearDown(self):
-        for user in CustomUser.objects.all():
-            user.delete()
+        CustomUser.objects.all().delete()
+        Token.objects.all().delete()
