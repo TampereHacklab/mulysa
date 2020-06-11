@@ -1,3 +1,2 @@
-{% load i18n %}
-{% include 'mail_content_and_post.txt' %}
+{% load i18n %}{% include 'mail_content_and_post.txt' %}
 

@@ -5,7 +5,9 @@
 {% block content %}
 <div class="container">
     <h1>{{email.subject}}</h1>
-    {% include 'mail_content_and_post.html' %}
+    <pre>
+    {% include 'mail_content_and_post.txt' %}
+    </pre>
 </div>
 {% endblock %}
 

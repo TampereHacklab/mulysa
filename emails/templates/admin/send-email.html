@@ -5,7 +5,11 @@
   <form action="" method="POST">
     {% csrf_token %}
 
-    {% include 'mail_content_and_post.html' %}
+    <h1>{% trans 'Subject' %}: {{email.subject}}</h1>
+    <h3>{% trans 'Body' %}:</h3>
+    <pre style="border: 1px solid grey;">
+    {% include 'mail_content_and_post.txt' %}
+    </pre>
 
     <div class="submit-row">
       <input type="submit" class="default" value="{% trans 'Send now' %}">
