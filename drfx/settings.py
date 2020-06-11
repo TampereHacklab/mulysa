@@ -176,6 +176,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 SITE_ID = 1
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+MAILER_EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 NOREPLY_FROM_ADDRESS = "noreply@mulysa.host.invalid"
 
 REST_FRAMEWORK = {
