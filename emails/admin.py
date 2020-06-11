@@ -15,12 +15,6 @@ class EmailAdmin(admin.ModelAdmin):
     list_filter = ("sent",)
     readonly_fields = ("slug", "created", "last_modified", "sent", "email_actions")
 
-    def has_delete_permission(self, request, obj=None):
-        """ don't allow deleting emails that have been sent """
-        if obj and obj.sent is None:
-            return True
-        return False
-
     def get_urls(self):
         """
         inject our new action urls
