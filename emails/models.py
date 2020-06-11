@@ -1,8 +1,15 @@
+import logging
+from django.utils import timezone
+
+from django.conf import settings
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from autoslug import AutoSlugField
+from mailer import send_mail
 
+logger = logging.getLogger(__name__)
 
 class Email(models.Model):
     """
@@ -40,6 +47,34 @@ class Email(models.Model):
     sent = models.DateTimeField(
         blank=True, null=True, verbose_name=_("Datetime the message was sent")
     )
+
+    def queue_to_recipients(self, qs):
+        """
+        Send this message to recipients defined in the queryset
+        """
+        for user in qs:
+            logger.info(
+                "Queuing email {email.subject} to {user.email}".format(
+                    user=user, email=self
+                )
+            )
+
+            context = {
+                "user": user,
+                "settings": settings,
+                "email": self,
+                "SITENAME": settings.SITENAME,
+                "SITE_URL": settings.SITE_URL,
+            }
+            subject = self.subject
+            from_email = settings.NOREPLY_FROM_ADDRESS
+            to = user.email
+            plaintext_content = render_to_string("mail/email.txt", context)
+            send_mail(subject, plaintext_content, from_email, [to])
+
+        # save sent date to object to prevent sending again
+        self.sent = timezone.now()
+        self.save()
 
     def get_url(self):
         return f"{self.sent.strftime('%s')}/{self.slug}"
