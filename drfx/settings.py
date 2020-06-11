@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     "api",
     "users",
     "www",
-    "dooractivator",
     "emails",
     # so that we don't have to write
     # hundreds of lines of css

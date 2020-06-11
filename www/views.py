@@ -1,11 +1,13 @@
+from datetime import datetime, timedelta
+
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
-from datetime import datetime, timedelta
-from django.http import HttpResponse
 
+from api.models import DeviceAccessLogEntry
 from drfx import settings
 from users.models import (
     BankTransaction,
@@ -13,25 +15,23 @@ from users.models import (
     CustomUser,
     MemberService,
     MembershipApplication,
+    NFCCard,
     ServiceSubscription,
     UsersLog,
-    NFCCard,
 )
 from www.forms import (
+    CreateUserForm,
     CustomInvoiceForm,
     FileImportForm,
     RegistrationApplicationForm,
     RegistrationServicesFrom,
     RegistrationUserForm,
-    CreateUserForm,
 )
 
-from api.models import DeviceAccessLogEntry
-
-from utils.businesslogic import BusinessLogic
-from utils.dataimport import DataImport
-from utils.dataexport import DataExport
 from utils import referencenumber
+from utils.businesslogic import BusinessLogic
+from utils.dataexport import DataExport
+from utils.dataimport import DataImport
 
 
 def register(request):

@@ -3,6 +3,7 @@
 
 from users.models import CustomUser, MemberService, ServiceSubscription
 
+
 """
 This class contains static members to export data to Mulysa.
 """
