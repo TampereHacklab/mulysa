@@ -30,7 +30,7 @@ class EmailAdminTestCase(TestCase):
         url = reverse('admin:emails_email_changelist')
         response = self.client.get(url)
         self.assertContains(response, reverse('admin:email-send', args=[self.email.pk]))
-        self.assertContains(response, '/email/'+ self.email_sent.get_url())
+        self.assertContains(response, '/email/' + self.email_sent.get_url())
 
     def test_send_preview(self):
         url = reverse('admin:email-send', args=[self.email.pk])
