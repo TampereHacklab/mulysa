@@ -54,6 +54,19 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
         logger.info("User creation done: {}".format(instance))
 
 
+@receiver(post_save, sender=models.ServiceSubscription)
+def service_subscription_create(sender, instance: models.ServiceSubscription, created, raw, **kwargs):
+    if raw:
+        return
+
+    if created:
+        if instance.reference_number is None:
+            refnum = referencenumber.generate(settings.SERVICE_INVOICE_REFERENCE_BASE + instance.id)
+            instance.reference_number = refnum
+            instance.save()
+            logger.info(f"ServiceSubscription {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it")
+
+
 @receiver(create_user)
 def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     """
