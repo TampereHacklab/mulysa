@@ -10,7 +10,7 @@ def strip_tags_and_whitespace(s: str):
     s = strip_tags(s)
 
     # strip every line. lstrip will remove the newline on "empty" lines also
-    s = "".join([l.lstrip() for l in s.splitlines(True)])
+    s = "".join([line.lstrip() for line in s.splitlines(True)])
 
     # strip the last newline if it exists
     s = s.rstrip()

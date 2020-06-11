@@ -3,15 +3,9 @@ from datetime import date, timedelta
 
 from django.utils import translation
 from django.utils.translation import gettext as _
-from drfx import settings
 
-from users.models import (
-    BankTransaction,
-    CustomInvoice,
-    CustomUser,
-    MemberService,
-    ServiceSubscription,
-)
+from drfx import settings
+from users.models import BankTransaction, CustomInvoice, CustomUser, MemberService, ServiceSubscription
 from users.signals import application_approved, application_denied
 
 from utils import referencenumber

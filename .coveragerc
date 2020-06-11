@@ -5,6 +5,9 @@ omit =
   */migrations/*
   */tests.py
   manage.py
+  */jobs/*
+  */apps.py
 
 [report]
 show_missing = True
+skip_covered = True

@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     "api",
     "users",
     "www",
-    "dooractivator",
     "emails",
     # so that we don't have to write
     # hundreds of lines of css
@@ -175,7 +174,10 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 SITE_ID = 1
 
+# NOTE: remember to set these to something sane in your settings_local for production!
+# utils.emailbackend has a nice smtp backend with logging available
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+MAILER_EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 NOREPLY_FROM_ADDRESS = "noreply@mulysa.host.invalid"
 
 REST_FRAMEWORK = {
