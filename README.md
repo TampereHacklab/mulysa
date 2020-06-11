@@ -58,10 +58,18 @@ Before committing, run
 * flake8
 * tox
 
+### Running just one test case
+
+To speed up writing your tests you can run only one test case with something like this
+
+```
+./manage.py test api.tests.TestAccess.test_access_phone_list_unauthenticated
+```
+
+
 # Future improvements
 
 * Automate fetching and processing of member payment data from bank
-
 
 # Door access api
 
@@ -115,3 +123,13 @@ There are two example implementations for esp32 based access readers that can be
 
 https://github.com/TampereHacklab/mulysa_callerid
 https://github.com/TampereHacklab/mulysa_nfc_reader
+
+# Door access api listings
+
+Door access information can also be fetched for local checking and caching.
+
+```
+curl -X GET -H "Authorization: Token xxxxxxxxxxxxxx" http://127.0.0.1:8000/api/v1/access/phone/
+```
+
+will return a list of users with access to the door. Calling this endpoint you must be authenticated and have superadmin permissions.
