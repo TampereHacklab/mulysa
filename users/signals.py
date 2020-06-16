@@ -89,6 +89,23 @@ def application_creation(
         logger.info("Membership application creation done {}".format(instance))
 
 
+@receiver(post_save, sender=models.CustomInvoice)
+def custominvoice_create(
+    sender, instance: models.CustomInvoice, created, raw, **kwargs
+):
+    """
+    When custominvoice is created, generate reference number automatically if it is not defined
+    """
+    if raw:
+        return
+
+    if created:
+        if instance.reference_number is None:
+            refnum = referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + instance.id)
+            instance.reference_number = refnum
+            instance.save()
+            logger.info(f"CustomInvoice {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it")
+
 @receiver(create_application, sender=models.MembershipApplication)
 def send_application_received_email(
     sender, instance: models.MembershipApplication, **kwargs
