@@ -163,3 +163,70 @@ class UsersAPITests(APITestCase):
         url = reverse("customuser-list")
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class CustomInvoiceTests(TestCase):
+    def setUp(self):
+        # one active user, one inactive user
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.memberservice = models.MemberService.objects.create(
+            name="TestService",
+            cost=10,
+            days_per_payment=30,
+        )
+        self.servicesubscription = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.OVERDUE
+        )
+
+    def test_automagic_reference_number(self):
+        # add new custominvoice, it should get a referencenumber automagically
+        days = 10
+        amount = self.servicesubscription.service.cost * days
+        invoice = models.CustomInvoice.objects.create(
+            user=self.user,
+            subscription=self.servicesubscription,
+            amount=amount,
+            days=days,
+        )
+
+        self.assertIsNotNone(invoice.reference_number)
+        self.assertIn(str(invoice.id), str(invoice.reference_number))
+
+        # but we can still forcibly clear it
+        invoice.reference_number = None
+        invoice.save()
+        invoice.refresh_from_db()
+        self.assertIsNone(invoice.reference_number)
+
+        # and set it to what ever we want
+        invoice.reference_number = 123
+        invoice.save()
+        invoice.refresh_from_db()
+        self.assertEqual(invoice.reference_number, 123)
+
+        # and if we create one with a specific number it wont be overwritten
+        invoice2 = models.CustomInvoice.objects.create(
+            user=self.user,
+            subscription=self.servicesubscription,
+            amount=amount,
+            days=days,
+            reference_number=999,
+        )
+        self.assertIsNotNone(invoice2.reference_number)
+        self.assertEqual(invoice2.reference_number, 999)
+
+    def tearDown(self):
+        models.CustomInvoice.objects.all().delete()
+        models.CustomUser.objects.all().delete()
+        models.MemberService.objects.all().delete()
+        models.ServiceSubscription.objects.all().delete()
