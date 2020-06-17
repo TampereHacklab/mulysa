@@ -1,14 +1,68 @@
 import datetime
 
+from django.contrib.auth import get_user_model
 from django.core import mail
 from django.db.utils import IntegrityError
 from django.dispatch import receiver
+from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from . import models, signals
+
+
+class ServiceSubscriptionTests(TestCase):
+    def setUp(self):
+        # one active user, one inactive user
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.memberservice = models.MemberService.objects.create(
+            name="TestService",
+            cost=10,
+            days_per_payment=30,
+        )
+
+    def test_automagic_reference_number(self):
+        # create will generate reference number for us
+        ss = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.OVERDUE
+        )
+        self.assertIsNotNone(ss.reference_number)
+        self.assertIn(str(ss.id), str(ss.reference_number))
+
+        # but we can still forcibly clear it
+        ss.reference_number = None
+        ss.save()
+        ss.refresh_from_db()
+        self.assertIsNone(ss.reference_number)
+
+        # and set it to what ever we want
+        ss.reference_number = 123
+        ss.save()
+        ss.refresh_from_db()
+        self.assertEqual(ss.reference_number, 123)
+
+        # and if we create one with a specific number it wont be overwritten
+        ss = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.OVERDUE,
+            reference_number=999
+        )
+        self.assertIsNotNone(ss.reference_number)
+        self.assertEqual(ss.reference_number, 999)
 
 
 class UserManagerTests(APITestCase):

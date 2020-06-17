@@ -16,7 +16,8 @@ from .models import (
 
 class ServiceSubscriptionInline(admin.TabularInline):
     model = ServiceSubscription
-
+    exclude = ['paid_until', 'last_payment', 'reference_number', 'reminder_sent']
+    readonly_fields = ("last_payment", "reference_number")
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
