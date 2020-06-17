@@ -220,7 +220,7 @@ class CustomUser(AbstractUser):
             )
             if subscription.state == ServiceSubscription.ACTIVE:
                 return True
-        except
+        except Exception:
             pass
         return False
 
