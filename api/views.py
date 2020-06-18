@@ -3,13 +3,13 @@ import logging
 from django.shortcuts import get_object_or_404
 
 from api.serializers import AccessDataSerializer, UserAccessSerializer
-from rest_framework import status, viewsets
+from drfx import settings as drfx_settings
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from rest_framework import mixins
-from users.models import CustomUser, NFCCard
+from users.models import CustomUser, NFCCard, ServiceSubscription
 
 from utils.phonenumber import normalize_number
 
@@ -109,15 +109,13 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         List all phone access users
         """
         # only for superusers
-        user = request.user
         if not request.user or not request.user.is_superuser:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
         # collect list of all users that have door access
         users_with_door_access = []
-        for user in CustomUser.objects.all():
-            if user.has_door_access():
-                users_with_door_access.append(user)
+        for ss in ServiceSubscription.objects.select_related('user').filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE).filter(state=ServiceSubscription.ACTIVE):
+            users_with_door_access.append(ss.user)
 
         # and output it
         outserializer = UserAccessSerializer(users_with_door_access, many=True)
