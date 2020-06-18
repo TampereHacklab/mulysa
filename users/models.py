@@ -220,8 +220,8 @@ class CustomUser(AbstractUser):
             )
             if subscription.state == ServiceSubscription.ACTIVE:
                 return True
-        except Exception as e:
-            logger.error(f"Tried to load servicesubscription that does not exists {e}")
+        except Exception:
+            pass
         return False
 
     def has_suspended_services(self):
