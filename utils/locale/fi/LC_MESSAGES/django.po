@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-06 15:07+0300\n"
+"POT-Creation-Date: 2020-06-19 03:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,42 +19,41 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: utils/businesslogic.py:75
+#: utils/businesslogic.py:69
 #, python-format
 msgid "Bank transaction of %(amount)s€ dated %(date)s"
 msgstr "Tilisiirto %(amount)s€ päiväyksellä %(date)s"
 
-#: utils/businesslogic.py:137
+#: utils/businesslogic.py:131
 msgid "Accepted as member"
 msgstr "Hyväksytty jäseneksi"
 
-#: utils/businesslogic.py:222
+#: utils/businesslogic.py:216
 #, python-format
 msgid "Service %(servicename)s state changed from %(oldstate)s to %(newstate)s"
 msgstr ""
 "Jäsenpalvelun %(servicename)s tila muuttui %(oldstate)s:sta %(newstate)s:ksi"
 
-#: utils/businesslogic.py:261
+#: utils/businesslogic.py:255
 #, python-format
 msgid ""
 "Paid %(days)s days of %(name)s, ending at %(until)s with transaction "
 "%(transaction)s"
 msgstr ""
-"%(name)s on nyt maksettu %(days)s päivää lisää, %(until)s asti tilisiirron "
-"%(transaction)s ansiosta"
+"%(name)s on nyt maksettu %(days)s päivää lisää, %(until)s asti tilisiirrolla "
+"%(transaction)s"
 
-#: utils/businesslogic.py:387
+#: utils/businesslogic.py:381
 #, python-format
 msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
-"%(servicename)s on nyt maksettu %(until)s asti tilisiirron %(transaction)s "
-"ansiosta"
+"%(servicename)s on nyt maksettu %(until)s asti tilisiirrolla %(transaction)s"
 
-#: utils/businesslogic.py:417
+#: utils/businesslogic.py:411
 #, python-format
 msgid ""
 "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s "
 "was paid"
 msgstr ""
-"%(servicename)s on nyt maksettu  %(until)s asti koska %(anotherservicename)s "
+"%(servicename)s on nyt maksettu %(until)s asti koska %(anotherservicename)s "
 "on maksettu"

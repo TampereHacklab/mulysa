@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-06 15:07+0300\n"
+"POT-Creation-Date: 2020-06-19 03:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr "Kirjaudu sisään"
 
 #: www/templates/registration/login.html:23
 msgid "Forgot password?"
-msgstr "Salasanan nollaus"
+msgstr "Unohtuiko salasana?"
 
 #: www/templates/registration/password_reset_complete.html:13
 msgid "Your password has been set.  You may go ahead and log in now."
@@ -73,7 +73,9 @@ msgstr "Salasanan vaihto"
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used. Please request a new password reset."
-msgstr "Salasanan vaihtolinkki on jo käytetty. Pyydä uusi vaihtolinkki."
+msgstr ""
+"Salasanan vaihtolinkki on epäkelpo, se on jo mahdollisesti käytetty. Pyydä "
+"uusi vaihtolinkki."
 
 #: www/templates/registration/password_reset_confirm.html:44
 msgid "Get new reset link"
@@ -85,7 +87,7 @@ msgid ""
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
 "Olemme lähettäneet sähköpostiisi ohjeet salasanan vaihtoon, olettaen että "
-"säköpostisi vastaa käyttäjätunnusta. Viestin pitiäisi olla pian perillä."
+"säköpostisi vastaa käyttäjätunnusta. Viestin pitäisi olla pian perillä."
 
 #: www/templates/registration/password_reset_done.html:17
 msgid ""
@@ -93,7 +95,7 @@ msgid ""
 "you registered with, and check your spam folder."
 msgstr ""
 "Jos et saanut sähköpostia, varmista että käytit samaa osoitetta kuin "
-"jäsenhakemuksen tehdessä ja tarkista myös roskapostisi."
+"jäsenhakemusta tehdessä ja tarkista myös roskapostisi."
 
 #: www/templates/registration/password_reset_done.html:21
 #: www/templates/registration/password_reset_form.html:25
@@ -112,7 +114,7 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 
 #: www/templates/registration/password_reset_form.html:23
 msgid "Send me instructions!"
-msgstr "Lähetä ohjeet"
+msgstr "Lähetä ohjeet!"
 
 #: www/templates/www/applications.html:6 www/templates/www/base.html:54
 msgid "Member applications"
@@ -147,7 +149,7 @@ msgstr "päivää"
 
 #: www/templates/www/base.html:50 www/templates/www/index.html:19
 msgid "Show my user information"
-msgstr "Näytä tietoni"
+msgstr "Näytä käyttäjätietoni"
 
 #: www/templates/www/base.html:51
 msgid "Change my settings"
@@ -212,7 +214,7 @@ msgstr "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
 
 #: www/templates/www/custominvoice.html:15
 msgid "Preview.."
-msgstr "Esikatsele lasku.."
+msgstr "Esikatsele.."
 
 #: www/templates/www/custominvoice.html:18
 #, python-format
@@ -291,16 +293,18 @@ msgid ""
 "This membership system is still under heavy development. If you find bugs or "
 "inconsistencies please report them for the team mulysa. Thank you in advance!"
 msgstr ""
-"Tätä jäsenyydenhallintajärjestelmää kehtitetään aktiivisesti. Jos löydät "
-"bugeja tai outoksia, ilmoita niistä. Kiitos."
+"Tätä jäsenhallintajärjestelmää kehitetään aktiivisesti. Jos löydät bugeja "
+"tai outoksia, ilmoitathan niistä. Kiitos."
 
 #: www/templates/www/ledger.html:32
 msgid "Modify"
 msgstr "Muokkaa"
 
 #: www/templates/www/register.html:8
-msgid "Apply membership to Tampere Hacklab"
-msgstr "Hae hacklabin jäsenyyttä"
+#, fuzzy, python-format
+#| msgid "Apply membership"
+msgid "Apply membership to %(SITENAME)s"
+msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/register.html:27
 #, python-format
@@ -570,3 +574,6 @@ msgstr "Vapautettu NFC-kortti"
 #: www/views.py:353 www/views.py:354
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
+
+#~ msgid "Apply membership to Tampere Hacklab"
+#~ msgstr "Hae hacklabin jäsenyyttä"

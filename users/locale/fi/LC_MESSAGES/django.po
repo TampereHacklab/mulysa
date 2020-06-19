@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-06 15:07+0300\n"
+"POT-Creation-Date: 2020-06-19 03:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,8 +24,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole käypäinen Matrix id - sen tulee olla muodossa @kayttaja:"
-"esimerkko.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttajä:"
+"esimerkki.org"
 
 #: users/models.py:34
 #, python-format
@@ -33,12 +33,12 @@ msgid ""
 "%(value)s is not a valid phone number. It must be in international format "
 "+35840123567"
 msgstr ""
-"%(value)s ei ole käypäinen puhelinnumero. Käytä kansainvälistä muotoa, "
+"%(value)s ei ole kelvollinen puhelinnumero. Käytä kansainvälistä muotoa, "
 "esimerkiksi +35840123567"
 
 #: users/models.py:61
 msgid "User must have an email address"
-msgstr "Sähköpostiosoite pitää olla"
+msgstr "Sähköpostiosoite vaaditaan"
 
 #: users/models.py:97
 msgid "Email address"
@@ -65,11 +65,11 @@ msgstr "Kotikunta"
 
 #: users/models.py:119
 msgid "Nick"
-msgstr "Kutsumanimi / nick"
+msgstr "Nimimerkki"
 
 #: users/models.py:120
 msgid "Nickname you are known with on Internet"
-msgstr "Kutsumanimi jolla sinut tunnetaan internetissä"
+msgstr "Nimimerkki jolla sinut tunnetaan Internetissä"
 
 #: users/models.py:128
 msgid "Matrix ID"
@@ -77,7 +77,7 @@ msgstr "Matrix ID"
 
 #: users/models.py:129
 msgid "Matrix ID (@user:example.org)"
-msgstr "Matrix ID (@kayttaja:esimerkki.org)"
+msgstr "Matrix ID (@käyttajä:esimerkki.org)"
 
 #: users/models.py:134
 msgid "Birthday"
@@ -85,7 +85,7 @@ msgstr "Syntymäpäivä"
 
 #: users/models.py:140
 msgid "Mobile phone number"
-msgstr "Puhelinnumero"
+msgstr "Matkapuhelinnumero"
 
 #: users/models.py:142
 msgid ""
@@ -130,7 +130,7 @@ msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
 #: users/models.py:183
 msgid "Marked for deletion"
-msgstr "Merkattu poistetuksi"
+msgstr "Merkattu poistettavaksi"
 
 #: users/models.py:185
 msgid ""
@@ -139,7 +139,7 @@ msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyde
 
 #: users/models.py:244
 msgid "You must agree to the terms"
-msgstr "Hyväksyn jäsenyyden ehdot"
+msgstr "Sinun tulee hyväksyä jäsenyyden ehdot"
 
 #: users/models.py:256 users/models.py:435 users/models.py:632
 msgid "Message"
@@ -188,7 +188,7 @@ msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms.
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
-"Tosi, jos tämän palvelun voivat käyttäjät omatoimisesti ottaa käyttöön."
+"Tosi, jos voivat käyttäjät omatoimisesti ottaa tämän palvelun käyttöön."
 
 #: users/models.py:384
 msgid "Member service"
@@ -290,7 +290,7 @@ msgstr "Jäsenpalvelun tila"
 
 #: users/models.py:536
 msgid "Paid until"
-msgstr "Mihin päivämäärään asti maksettu"
+msgstr "Maksettu tähän asti"
 
 #: users/models.py:537
 msgid "The service will stay active until this date"
@@ -302,7 +302,7 @@ msgstr "Viitenumero palvelun maksamiseen"
 
 #: users/models.py:550
 msgid "Pay for this service with this reference number"
-msgstr "Pakasa palvelu tällä viitteellä"
+msgstr "Maksa palvelu tällä viitteellä"
 
 #: users/models.py:557
 msgid ""
@@ -377,21 +377,21 @@ msgstr "NFC-kortin tunniste kortinlukijan lukemana"
 
 #: users/models.py:720
 msgid "Usually hex format"
-msgstr "Yleensä heksaa"
+msgstr "Yleensä heksamuodossa"
 
-#: users/signals.py:109
+#: users/signals.py:139
 msgid "Thank you for applying membership and next steps"
 msgstr "Kiitos hakemuksestasi, ja seuraavat toimenpiteet"
 
-#: users/signals.py:131
+#: users/signals.py:161
 msgid "New membership application received"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/signals.py:150
+#: users/signals.py:180
 msgid "Your application has been approved"
 msgstr "Hakemuksesi on hyväksytty"
 
-#: users/signals.py:169
+#: users/signals.py:199
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
@@ -499,7 +499,7 @@ msgstr ""
 #~ msgstr "BIC"
 
 #~ msgid "Best regards %(settings.SITENAME)s hackers!"
-#~ msgstr "Terveisin %(settings.SITENAME)s!"
+#~ msgstr "Terveisin %(settings.SITENAME)s hakkerit!"
 
 #~ msgid "Your application to %(settings.SITENAME)s has been rejected."
 #~ msgstr "Hakemuksesi %(settings.SITENAME)s:n on hylätty"
