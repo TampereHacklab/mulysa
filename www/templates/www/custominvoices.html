@@ -2,24 +2,36 @@
 {% load i18n %}
 {% block content %}
 <h2>{% trans 'Custom invoices' %}</h2>
-<table width="90%" border="1">
-<tr>
-<th>User</th><th>Subscription</th><th>Days</th><th>Reference</th><th>Amount</th><th>Paid by</th><th>Management</th>
-</tr>
-{% for custominvoice in custominvoices %}
-<tr>
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>User</th>
+      <th>Subscription</th>
+      <th>Days</th>
+      <th>Reference</th>
+      <th>Amount</th>
+      <th>Paid by</th>
+      <th>Management</th>
+    </tr>
+  </thead>
+  {% for custominvoice in custominvoices %}
+  <tr>
     <td>
-        <a href="{% url 'userdetails' custominvoice.user.id %}">
+      <a href="{% url 'userdetails' custominvoice.user.id %}">
         {{ custominvoice.user.first_name }} {{ custominvoice.user.last_name }}
-        </a>
+      </a>
     </td>
     <td>{{ custominvoice.subscription }}</td>
     <td>{{ custominvoice.days }}</td>
     <td>{{ custominvoice.reference_number }}</td>
     <td>{{ custominvoice.amount }}</td>
     <td>{{ custominvoice.payment_transaction|default_if_none:"" }}</td>
-    <td><a href="{% url 'admin:users_custominvoice_change' custominvoice.id %}">Modify</a></td>
-</tr>
-{% endfor %}
+    <td>
+      <a href="{% url 'admin:users_custominvoice_change' custominvoice.id %}"
+        >Modify</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
 </table>
 {% endblock %}

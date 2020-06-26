@@ -1,7 +1,6 @@
 {% extends "www/base.html" %}
 {% load i18n %}
 {% load bootstrap4 %}
-
 {% block content %}
 <div class="container">
   <h1>
@@ -45,7 +44,7 @@
       <tr>
         <td>{% trans 'State' %}</td>
         <td>
-          <span style="background-color: {{ subscription.statecolor }}">{{ subscription.statestring }}</span>
+          <span class="ss_state_{{subscription.state}}">{{ subscription.statestring }}</span>
         </td>
       </tr>
       <tr>
