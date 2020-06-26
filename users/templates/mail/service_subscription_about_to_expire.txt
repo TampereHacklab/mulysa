@@ -1,0 +1,13 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+{% blocktrans with name=user.first_name service_name=subscription.service.name paid_until=subscription.paid_until %}
+Hi {{name}}
+
+Our records indicate that your subscription {{ service_name }} is about to expire on {{ paid_until }}.
+
+If you have just paid for these services you can disregard this email.
+
+Thanks!
+{% endblocktrans %}
+{% endblock %}

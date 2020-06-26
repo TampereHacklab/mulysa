@@ -1,4 +1,5 @@
 import datetime
+from datetime import timedelta
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -11,7 +12,166 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from utils.businesslogic import BusinessLogic
+from mailer.models import Message
+
 from . import models, signals
+
+
+class TestBusinessLogicSubscriptionExpiries(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.user2 = get_user_model().objects.create_customuser(
+            first_name="FirstName2",
+            last_name="LastName2",
+            email="user2@example.com",
+            birthday=timezone.now(),
+            municipality="City2",
+            nick="user2",
+            phone="+358123124",
+        )
+
+        # this should be found
+        self.memberservice = models.MemberService.objects.create(
+            name="TestService",
+            cost=10,
+            days_per_payment=30,
+            days_before_warning=2
+        )
+        self.servicesubscription = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=2)
+        )
+
+        # this is found also another user
+        self.servicesubscription_user2 = models.ServiceSubscription.objects.create(
+            user=self.user2,
+            service=self.memberservice,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=2)
+        )
+
+        # and one more service
+        self.memberservice3 = models.MemberService.objects.create(
+            name="TestService3",
+            cost=10,
+            days_per_payment=30,
+            days_before_warning=5
+        )
+        # this should also be found
+        self.servicesubscription_user2_another = models.ServiceSubscription.objects.create(
+            user=self.user2,
+            service=self.memberservice3,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=5)
+        )
+        # but this should not be found
+        self.servicesubscription_user2_another2 = models.ServiceSubscription.objects.create(
+            user=self.user2,
+            service=self.memberservice3,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=3)
+        )
+
+        # this service should never be found (no days_before_warning defined)
+        self.memberservice2 = models.MemberService.objects.create(
+            name="TestService2",
+            cost=10,
+            days_per_payment=30,
+            days_before_warning=None
+        )
+        self.servicesubscription2 = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice2,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=2)
+        )
+
+        # this should not be found (too far in the future)
+        # note if we ever constraint having only one subscription per user / memberservice
+        # these test will fail and need to be rewritten
+        self.servicesubscription3 = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=3)
+        )
+
+        # this should not be found (in the past already)
+        self.servicesubscription4 = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=1)
+        )
+
+    def test_find(self):
+        about_to_expire = BusinessLogic.find_expiring_service_subscriptions()
+        self.assertEqual(len(about_to_expire), 3)
+        self.assertEqual(list(about_to_expire), [self.servicesubscription, self.servicesubscription_user2, self.servicesubscription_user2_another])
+
+    def tearDown(self):
+        models.ServiceSubscription.objects.all().delete()
+        models.MemberService.objects.all().delete()
+        get_user_model().objects.all().delete()
+
+class TestExpiryNotificationEmail(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        # this should be found
+        self.memberservice = models.MemberService.objects.create(
+            name="TestService",
+            cost=10,
+            days_per_payment=30,
+            days_before_warning=2
+        )
+        self.servicesubscription = models.ServiceSubscription.objects.create(
+            user=self.user,
+            service=self.memberservice,
+            state=models.ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=2)
+        )
+
+    def test_send_expiry_notification(self):
+        # get qs to pass to notification sender, should only have one result
+        about_to_expire = BusinessLogic.find_expiring_service_subscriptions()
+        self.assertEqual(len(about_to_expire), 1)
+
+        # queue the messages
+        BusinessLogic.notify_expiring_service_subscriptions(about_to_expire)
+
+        # one message queued
+        self.assertEqual(len(Message.objects.all()), 1)
+        # check that it contains somewhat valid data
+        message = Message.objects.first()
+        self.assertEqual(self.user.email, message.email.to[0])
+        self.assertIn(self.servicesubscription.service.name, message.email.subject)
+        self.assertIn(f"Hi {self.user.first_name}", message.email.body)
+        self.assertIn(self.servicesubscription.service.name, message.email.body)
+        self.assertIn(str(self.servicesubscription.paid_until.year), message.email.body)
+
+    def tearDown(self):
+        models.MemberService.objects.all().delete()
+        models.ServiceSubscription.objects.all().delete()
+        get_user_model().objects.all().delete()
 
 
 class ServiceSubscriptionTests(TestCase):
