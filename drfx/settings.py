@@ -84,6 +84,14 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+# use the management command update_local_bootstrap to fetch the files
+# and to get this section when needed
+BOOTSTRAP4 = {'css_url': '/static/www/bootstrap4/bootstrap.min.css',
+ 'javascript_url': '/static/www/bootstrap4/bootstrap.min.js',
+ 'jquery_slim_url': '/static/www/bootstrap4/jquery-3.3.1.slim.min.js',
+ 'jquery_url': '/static/www/bootstrap4/jquery-3.3.1.min.js',
+ 'popper_url': '/static/www/bootstrap4/popper.min.js'}
+
 MIDDLEWARE = [
     "log_request_id.middleware.RequestIDMiddleware",
     "django.middleware.security.SecurityMiddleware",

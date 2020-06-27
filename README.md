@@ -50,6 +50,17 @@ Most of this works around our "User" model which can do multiple things
 
 Push only .po files to git, not .mo's!
 
+## to update local bootstrap files
+
+* run
+
+```
+./manage.py update_local_bootstrap
+```
+
+* paste update settings.py with the new values
+* commit all the files
+
 ## Style checks & tests
 
 Before committing, run
