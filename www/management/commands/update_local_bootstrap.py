@@ -1,16 +1,20 @@
-from django.core.management.base import BaseCommand
-from bootstrap4 import bootstrap
-import requests
-import pprint
 import os
-from django.apps import apps
+import pprint
 from urllib.parse import urlparse
+
+from django.apps import apps
+from django.core.management.base import BaseCommand
+
+import requests
+from bootstrap4 import bootstrap
+
 
 class Command(BaseCommand):
     help = "Fetch bootstrap files as local static files"
 
     localurlbase = "/static/www/bootstrap4/"
-    localfolder = f"{apps.get_app_config('www').path}{localurlbase}"
+    appbase = apps.get_app_config('www').path
+    localfolder = f"{appbase}{localurlbase}"
 
     def handle(self, *args, **options):
         print(f"Fetching bootstrap4 files into folder: {self.localfolder}")
@@ -39,7 +43,7 @@ class Command(BaseCommand):
                 # build the settings section for it
                 newsettings[key] = f"{self.localurlbase}{filename}"
 
-        print(f"Done, now you can update your settings_local to use these files:")
+        print("Done, now you can update your settings_local to use these files:")
         print("BOOTSTRAP4 = ")
         pprint.pprint(newsettings)
 
