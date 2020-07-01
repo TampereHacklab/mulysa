@@ -7,13 +7,17 @@
 
     <h1>{% trans 'Subject' %}: {{email.subject}}</h1>
     <h3>{% trans 'Body' %}:</h3>
-    <pre style="border: 1px solid grey;">
+    <pre>
     {% include 'mail_content_and_post.txt' %}
     </pre>
 
     <div class="submit-row">
-      <input type="submit" class="default" value="{% trans 'Send now' %}">
-      <a class="button large" href="{% url 'admin:emails_email_change' email.id %}">{% trans 'Cancel' %}</a>
+      <input type="submit" class="default" value="{% trans 'Send now' %}" />
+      <a
+        class="button large"
+        href="{% url 'admin:emails_email_change' email.id %}"
+        >{% trans 'Cancel' %}</a
+      >
     </div>
   </form>
 </div>
