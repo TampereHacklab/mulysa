@@ -1,10 +1,13 @@
 import logging
 from datetime import date, timedelta
 
-from django.utils import translation
+from django.db.models import QuerySet
+from django.template.loader import render_to_string
+from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
 from drfx import settings
+from mailer import send_mail
 from users.models import BankTransaction, CustomInvoice, CustomUser, MemberService, ServiceSubscription
 from users.signals import application_approved, application_denied
 
@@ -20,6 +23,47 @@ class BusinessLogic:
     Contains a set of static methods callable from outside and some
     mostly internal ones.
     """
+
+    @staticmethod
+    def find_expiring_service_subscriptions():
+        """
+        Find users service subscriptions about to expire
+
+        returns a queryset of the subscriptions that are about to expire in timerange
+        defined by the service
+        """
+        today = timezone.now()
+        qs = ServiceSubscription.objects.none()
+
+        # each service has different timeframe, check each one independently
+        for service in MemberService.objects.filter(days_before_warning__isnull=False).all():
+            days = service.days_before_warning
+            checkdate = today + timedelta(days=days)
+            qs = qs | ServiceSubscription.objects.filter(
+                service=service,
+                state=ServiceSubscription.ACTIVE,
+                paid_until=checkdate.date()
+            )
+
+        return qs
+
+    @staticmethod
+    def notify_expiring_service_subscriptions(qs: QuerySet):
+        """
+        Send notification for service subscriptions
+        """
+        for ss in qs:
+            subject = _("Your subscription %(service_name)s is about to expire") % {"service_name": ss.service.name}
+            from_email = settings.NOREPLY_FROM_ADDRESS
+            to = ss.user.email
+            context = {
+                "user": ss.user,
+                "settings": settings,
+                "subscription": ss,
+            }
+            # note, this template will be found from users app
+            plaintext_content = render_to_string("mail/service_subscription_about_to_expire.txt", context)
+            send_mail(subject, plaintext_content, from_email, [to])
 
     @staticmethod
     def new_transaction(transaction):
