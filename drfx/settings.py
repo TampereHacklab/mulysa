@@ -14,6 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8"
 ACCOUNT_BIC = "BICCODE"
 ACCOUNT_IBAN = "FI12 3456 789"
+PHONE_NRO = "+358452692991"
 ACCOUNT_NAME = "Account name"
 
 # The service ID that opens hacklab door. Avoid using in code.
