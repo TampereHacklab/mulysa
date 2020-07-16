@@ -165,7 +165,7 @@ class TestExpiryNotificationEmail(TestCase):
         message = Message.objects.first()
         self.assertEqual(self.user.email, message.email.to[0])
         self.assertIn(self.servicesubscription.service.name, message.email.subject)
-        self.assertIn(f"Hi {self.user.first_name}", message.email.body)
+        self.assertIn(f"Hei {self.user.first_name}", message.email.body)
         self.assertIn(self.servicesubscription.service.name, message.email.body)
         self.assertIn(str(self.servicesubscription.paid_until.year), message.email.body)
 
@@ -224,7 +224,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
         mail.outbox = []
         BusinessLogic.accept_application(self.application)
         self.assertEqual(len(mail.outbox), 1)  # because this sends one email to the member and one to admins
-        self.assertIn("Welcome", mail.outbox[0].body, "Welcome")
+        self.assertIn(f"Tervetuloa jäseneksi {self.user.first_name}", mail.outbox[0].body, "Welcome")
         self.assertIn(self.memberservice.name, mail.outbox[0].body, "service found")
         self.assertIn(str(self.ss.reference_number), mail.outbox[0].body, "reference number found")
         self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
