@@ -1,8 +1,8 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans %}
-Welcome aboard!
+{% blocktrans with first_name=user.first_name siteurl=settings.SITE_URL wikiurl=settings.MEMBERS_GUIDE_URL %}
+Welcome aboard {{first_name}}!
 
 Great to have you onboard! Your membership application has been
 approved and now is a great time to to join our community by
@@ -12,13 +12,29 @@ highly recommendable to join our communication channels (Matrix,
 Telegram or IRC and email list). Be happy to ask if you like to
 know more!
 
+Now is the time to login to {{siteurl}} and check your payment information and status.
+
+If you have not yet read the membership guide please do so now: {{wikiurl}}
+{% endblocktrans %}
+
+{% trans 'Your services' %}
+{% for ss in user.servicesubscription_set.all %}
+{{ss.service.name}}
+{% trans 'Reference number' %}: {{ss.reference_number|default_if_none:"-"}}
+{% if ss.service.access_phone_number %}
+{% trans 'Door opening number' %}: {{ss.service.access_phone_number}}
+{% endif %}
+{% endfor %}
+
+{% blocktrans %}
+Important note about door access! The payment data from bank is synced only every two weeks or so and this might
+mean that your payment is not seen by the system until the next sync happens. You can check when the last sync happened in {{siteurl}}
+
 All Hacklab services work by voluntary basis so
-things might not work always. Please be patient. For the
+things might not always work. Please be patient. For the
 challenges help would be appreciated, and we would be more than
 happy for your contribution.
 
-Please see mulysa (our membership management service) on
-instructions how to pay your membership, unless you already have
-done so.
+Welcome!
 {% endblocktrans %}
 {% endblock %}

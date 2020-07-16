@@ -9,11 +9,12 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from mailer.models import Message
 from rest_framework import status
 from rest_framework.test import APITestCase
+from drfx import settings
 
 from utils.businesslogic import BusinessLogic
-from mailer.models import Message
 
 from . import models, signals
 
@@ -172,6 +173,63 @@ class TestExpiryNotificationEmail(TestCase):
         models.MemberService.objects.all().delete()
         models.ServiceSubscription.objects.all().delete()
         get_user_model().objects.all().delete()
+
+
+class TestNewApplicationHappyPathEmails(TestCase):
+    """
+    Test that user gets a "thank you for registering" email
+    and after the application has been approved test that they
+    get a "welcome" email
+    """
+
+    def setUp(self):
+        # test objects
+        self.memberservice = models.MemberService.objects.create(
+            name="TestService",
+            # access_phone_number="+358123",
+            cost=321,
+            days_per_payment=30,
+        )
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.ss = BusinessLogic.create_servicesubscription(
+            self.user, self.memberservice, models.ServiceSubscription.SUSPENDED
+        )
+
+    def test_emails(self):
+        mail.outbox = []
+
+        # create new application for our user
+        self.application = models.MembershipApplication.objects.create(
+            user=self.user,
+            agreement=True
+        )
+        self.assertEqual(len(mail.outbox), 2)  # because this sends one email to the member and one to admins
+        self.assertIn("Thank you", mail.outbox[0].body, "Thanks")
+        self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
+        self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
+
+        # for completenes sake, check the admin email also
+        self.assertIn("FirstName LastName", mail.outbox[1].body, "Admin notification")
+        self.assertIn(settings.SITE_URL, mail.outbox[1].body, "admin url")
+
+        # empty mailbox for next test
+        mail.outbox = []
+        BusinessLogic.accept_application(self.application)
+        self.assertEqual(len(mail.outbox), 1)  # because this sends one email to the member and one to admins
+        self.assertIn("Welcome", mail.outbox[0].body, "Welcome")
+        self.assertIn(self.memberservice.name, mail.outbox[0].body, "service found")
+        self.assertIn(str(self.ss.reference_number), mail.outbox[0].body, "reference number found")
+        # self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
+        self.assertIn(settings.SITE_URL, mail.outbox[0].body, "url")
+        self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
 
 class ServiceSubscriptionTests(TestCase):
