@@ -59,6 +59,13 @@
         <td>{% trans 'Last payment' %}</td>
         <td>{{subscription.last_payment|default_if_none:"-"}}</td>
       </tr>
+      {% if subscription.service.access_phone_number %}
+      <tr>
+        <td>{% trans 'Door opening number' %}</td>
+        <td>{{subscription.service.access_phone_number}}</td>
+      </tr>
+      {% endif %}
+
       <tr>
         <td colspan="2">
           {% if subscription.state == "SUSPENDED" %}

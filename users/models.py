@@ -370,6 +370,13 @@ class MemberService(models.Model):
         ),
     )
 
+    access_phone_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        help_text=_("Phone number that can be used to use this memberservice")
+    )
+
     # True if users are allowed to subscribe and unsubscribe themselves with this service
     self_subscribe = models.BooleanField(
         blank=False,
