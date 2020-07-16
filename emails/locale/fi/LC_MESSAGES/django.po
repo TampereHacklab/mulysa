@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-16 11:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: emails/admin.py:40
+msgid "Show browser version"
+msgstr ""
+
+#: emails/admin.py:46 emails/templates/admin/send-email.html:15
+msgid "Send now"
+msgstr ""
+
+#: emails/admin.py:84
+msgid "Send email"
+msgstr ""
+
+#: emails/models.py:22 emails/templates/admin/send-email.html:8
+msgid "Subject"
+msgstr ""
+
+#: emails/models.py:24
+msgid ""
+"Descriptive subject for the email. Finnish / English both should be written "
+"here"
+msgstr ""
+
+#: emails/models.py:34
+msgid "Content"
+msgstr ""
+
+#: emails/models.py:36
+msgid ""
+"Content of the email. All emails will start with default 'View this message "
+"in browser' and end with 'You are receiving this message because') texts"
+msgstr ""
+
+#: emails/models.py:41
+msgid "Creation date"
+msgstr ""
+
+#: emails/models.py:44
+msgid "Last modified datetime"
+msgstr ""
+
+#: emails/models.py:48
+msgid "Datetime the message was sent"
+msgstr ""
+
+#: emails/templates/admin/send-email.html:9
+msgid "Body"
+msgstr ""
+
+#: emails/templates/admin/send-email.html:19
+msgid "Cancel"
+msgstr ""
+
+#: emails/templates/mail_content_and_post.txt:5
+#, python-format
+msgid ""
+"You are receiving this email because you are registered member of "
+"%(SITENAME)s"
+msgstr ""
