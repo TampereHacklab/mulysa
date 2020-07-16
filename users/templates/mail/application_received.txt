@@ -18,6 +18,6 @@ You should have received e-mail link to create a password to our membership
 management system. Please login and check your membership status: {{siteurl}}
 
 If you want to speed things up you can already pay your monthly fee using the
-payment information below found in the membership system.
+payment information found in the membership system.
 {% endblocktrans %}
 {% endblock %}
