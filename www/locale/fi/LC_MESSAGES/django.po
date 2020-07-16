@@ -404,10 +404,10 @@ msgstr ""
 #, python-format
 msgid ""
 "This service can be paid with reference number %(ref)s\n"
-"                to bank account %(bank_iban)s. Service price is %(cost)s. Door opening number +358452692991"
+"                to bank account %(bank_iban)s. Service price is %(cost)s. Door opening number %(key_nro)s"
 msgstr ""
 "Tämän palvelun voit maksaa viitenumerolla %(ref)s tilille %(bank_iban)s. "
-"Palvelun hinta on %(cost)s. Ovenavaus numero +358452692991"
+"Palvelun hinta on %(cost)s. Ovenavaus numero %(key_nro)s"
 
 #: www/templates/www/user.html:78
 msgid "To pay this service multiple times, you can create a custom invoice."
