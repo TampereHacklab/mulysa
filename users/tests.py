@@ -186,7 +186,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
         # test objects
         self.memberservice = models.MemberService.objects.create(
             name="TestService",
-            # access_phone_number="+358123",
+            access_phone_number="+358123",
             cost=321,
             days_per_payment=30,
         )
@@ -227,7 +227,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
         self.assertIn("Welcome", mail.outbox[0].body, "Welcome")
         self.assertIn(self.memberservice.name, mail.outbox[0].body, "service found")
         self.assertIn(str(self.ss.reference_number), mail.outbox[0].body, "reference number found")
-        # self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
+        self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "url")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
