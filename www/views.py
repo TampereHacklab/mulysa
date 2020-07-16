@@ -222,6 +222,7 @@ def userdetails(request, id):
         {
             "userdetails": userdetails,
             "bank_iban": settings.ACCOUNT_IBAN,
+            "key_nro": settings.PHONE_NRO,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
