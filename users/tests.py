@@ -199,6 +199,9 @@ class TestNewApplicationHappyPathEmails(TestCase):
             nick="user1",
             phone="+358123123",
         )
+        # be specific about the language to use for the test user
+        self.user.language = 'fi'
+        self.user.save()
         self.ss = BusinessLogic.create_servicesubscription(
             self.user, self.memberservice, models.ServiceSubscription.SUSPENDED
         )
