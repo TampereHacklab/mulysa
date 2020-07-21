@@ -170,7 +170,7 @@ def send_new_application_waiting_processing_email(
 def send_application_approved_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
-    logger.info("Application approved, sending welcome email {}".format(instance))
+    logger.info("Application approved, sending welcome email {}, language {}".format(instance, instance.user.language))
     context = {
         "user": instance.user,
         "settings": settings,
