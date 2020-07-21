@@ -137,6 +137,8 @@ class TestExpiryNotificationEmail(TestCase):
             nick="user1",
             phone="+358123123",
         )
+        self.user.language = 'fi'
+        self.user.save()
         # this should be found
         self.memberservice = models.MemberService.objects.create(
             name="TestService",
