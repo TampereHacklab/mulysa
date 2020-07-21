@@ -217,7 +217,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
             agreement=True
         )
         self.assertEqual(len(mail.outbox), 2)  # because this sends one email to the member and one to admins
-        self.assertIn("Thank you", mail.outbox[0].body, "Thanks")
+        self.assertIn("Kiitos jäsenhakemuksestasi", mail.outbox[0].body, "Thanks")
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
