@@ -14,6 +14,7 @@ from users.models import CustomUser, NFCCard, ServiceSubscription
 from utils.phonenumber import normalize_number
 
 from .models import AccessDevice, DeviceAccessLogEntry
+from users.signals import door_access_denied
 
 logger = logging.getLogger(__name__)
 
@@ -98,6 +99,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         # user does not have access rights
         if not user.has_door_access():
+            door_access_denied.send(sender=self.__class__, user=user, method="phone")
             return Response(status=481)
 
         outserializer = UserAccessSerializer(user)
@@ -154,6 +156,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
             # user does not have access rights
             if not user.has_door_access():
+                door_access_denied.send(sender=self.__class__, user=user, method="nfc")
                 response_status = 481
 
         logentry.granted = response_status == 0
@@ -196,6 +199,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
             # user does not have access rights
             if not user.has_door_access():
+                door_access_denied.send(sender=self.__class__, user=user, method="mxid")
                 response_status = 481
 
         logentry.granted = response_status == 0

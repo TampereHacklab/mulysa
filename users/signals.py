@@ -6,8 +6,8 @@ from django.core.mail import send_mail
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
 
 from utils import referencenumber
 
@@ -233,3 +233,28 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         logger.info("User becoming deactive {}".format(instance))
         deactivate_user.send(instance.__class__, instance=instance)
         logger.info("User deactivation done {}".format(instance))
+
+
+#
+# Signal door access denied
+#
+# This allows other modules to catch door opening failures.
+# instance is the user object (this signal will only trigger if the user was
+# succesfully identified)
+# method is the method that was tried (phone, nfc etc)
+door_access_denied = Signal(providing_args=["user", "method", "reason", "args", "kwargs"])
+
+
+@receiver(door_access_denied)
+def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kwargs):
+    context = {
+        "user": user,
+        "settings": settings,
+    }
+    translation.activate(user.language)
+    subject = _("Door access denied")
+    from_email = settings.NOREPLY_FROM_ADDRESS
+    to = [user.email]
+    plaintext_content = render_to_string("mail/door_access_denied.txt", context)
+
+    send_mail(subject, plaintext_content, from_email, to)

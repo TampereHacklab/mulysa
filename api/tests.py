@@ -1,14 +1,15 @@
 from datetime import datetime
+from unittest.mock import patch
 
+from django.core import mail
 from django.urls import reverse
 
 from api.models import AccessDevice
 from drfx import settings
 from rest_framework import status
-from rest_framework.test import APITestCase
-from users.models import CustomUser, MemberService, ServiceSubscription, NFCCard
 from rest_framework.authtoken.models import Token
-from unittest.mock import patch
+from rest_framework.test import APITestCase
+from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
 
 
 @patch("api.views.VerySlowThrottle.allow_request", return_value=True)
@@ -152,9 +153,17 @@ class TestAccess(APITestCase):
 
     def test_access_phone_notok(self, mock):
         url = reverse("access-phone")
+        # empty mail queue
+        mail.outbox = []
+
         response = self.client.post(
             url, {"deviceid": self.device.deviceid, "payload": self.fail_user.phone}
         )
+
+        # check that we notified the user by email of this failure
+        self.assertIn("Hi", mail.outbox[0].body, "Hi")
+        self.assertIn("Your account does not currently have access to the door", mail.outbox[0].body, "failure notification")
+        self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
 
     def test_access_phone_empty(self, mock):

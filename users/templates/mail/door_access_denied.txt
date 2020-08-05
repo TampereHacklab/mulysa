@@ -1,0 +1,15 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+{% blocktrans with first_name=user.first_name siteurl=settings.SITE_URL wikiurl=settings.MEMBERS_GUIDE_URL %}
+Hi {{first_name}}!
+
+We noticed that you tried to access the door by using {{method}} to open it.
+
+Your account does not currently have access to the door.
+
+Please check your access status by logging into the member service.
+
+{{siteurl}}
+{% endblocktrans %}
+{% endblock %}
