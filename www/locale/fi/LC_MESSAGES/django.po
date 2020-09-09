@@ -291,7 +291,7 @@ msgid ""
 "This membership system is still under heavy development. If you find bugs or "
 "inconsistencies please report them for the team mulysa. Thank you in advance!"
 msgstr ""
-"Tätä jäsenyydenhallintajärjestelmää kehtitetään aktiivisesti. Jos löydät "
+"Tätä jäsenyydenhallintajärjestelmää kehitetään aktiivisesti. Jos löydät "
 "bugeja tai outoksia, ilmoita niistä. Kiitos."
 
 #: www/templates/www/ledger.html:41
