@@ -75,7 +75,7 @@ class BusinessLogic:
         # Figure out a user for this transaction, if possible
         transaction_user = None
 
-        if transaction.reference_number and transaction.reference_number > 0:
+        if transaction.reference_number and transaction.reference_number != "":
             # Search subscriptions for reference..
             subscriptions = ServiceSubscription.objects.filter(
                 reference_number=transaction.reference_number

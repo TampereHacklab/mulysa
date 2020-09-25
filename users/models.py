@@ -452,13 +452,15 @@ class BankTransaction(models.Model):
         help_text=_("Sender of the transaction, if known."),
         max_length=512,
     )
-    reference_number = models.BigIntegerField(
+    # https://en.wikipedia.org/wiki/Creditor_Reference#:~:text=The%20Creditor%20Reference%20is%20an,reference%20will%20be%20entered%20correctly.
+    reference_number = models.CharField(
         blank=True,
         null=True,
         verbose_name=_("Reference number of transaction"),
         help_text=_(
             "Reference number is set by transaction sender and should normally always be used."
         ),
+        max_length=25,
     )
     transaction_id = models.CharField(
         blank=True,
@@ -549,12 +551,14 @@ class ServiceSubscription(models.Model):
         BankTransaction, on_delete=models.SET_NULL, blank=True, null=True
     )
 
-    reference_number = models.BigIntegerField(
+    # https://en.wikipedia.org/wiki/Creditor_Reference#:~:text=The%20Creditor%20Reference%20is%20an,reference%20will%20be%20entered%20correctly.
+    reference_number = models.CharField(
         blank=True,
         null=True,
         unique=True,
         verbose_name=_("Reference number for paying for this service subscription"),
         help_text=_("Pay for this service with this reference number"),
+        max_length=25,
     )
 
     reminder_sent = models.DateField(
@@ -657,7 +661,8 @@ class CustomInvoice(models.Model):
             "For example value 14 with access right service pays two weeks of access."
         ),
     )
-    reference_number = models.BigIntegerField(
+    # https://en.wikipedia.org/wiki/Creditor_Reference#:~:text=The%20Creditor%20Reference%20is%20an,reference%20will%20be%20entered%20correctly.
+    reference_number = models.CharField(
         blank=True,
         null=True,
         unique=True,
@@ -665,6 +670,7 @@ class CustomInvoice(models.Model):
         help_text=_(
             "Reference number is set by transaction sender and must match this."
         ),
+        max_length=25,
     )
     amount = models.DecimalField(
         verbose_name=_("Amount"),
