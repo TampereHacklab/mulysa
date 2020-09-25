@@ -189,10 +189,6 @@ class DataImport:
                     peer = peer.replace("]", "Å")
                     peer = peer.replace("\\", "Ö")
                     reference = line[159:179].strip()
-                    if len(reference) > 0:
-                        reference = int(reference)
-                    else:
-                        reference = None
 
                     # Done parsing, add the transaction
 
@@ -253,14 +249,6 @@ class DataImport:
                 amount = int(line["Amount"])
                 peer = line["Counterparty"]
                 reference = line["Reference"].strip()
-                if reference.startswith("RF"):
-                    reference = reference[4:]
-                if len(reference) > 0 and reference.isdigit():
-                    reference = int(reference)
-                else:
-                    if len(message) == 0:
-                        message = reference
-                    reference = None
 
                 # Done parsing, add the transaction
 
