@@ -37,8 +37,7 @@ Most of this works around our "User" model which can do multiple things
 * install pipenv
 * pipenv shell
 * pipenv install --dev
-* ./manage.py makemigrations
-* ./manage.py migrate
+* ./manage.py migrate --skip-checks
 * ./manage.py loaddata memberservices
 * ./manage.py runserver
 
