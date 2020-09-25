@@ -236,7 +236,7 @@ class DataImport:
         holvi = HolviToolbox.parse_account_statement(f)
         imported = exists = error = 0
         failedrows = []
-        for line in holvi[1:]:
+        for line in holvi[0:]:
             logger.debug(f"import_holvi - Processing line: {line}")
             try:
                 if len(line) == 0:
