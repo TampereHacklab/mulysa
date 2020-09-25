@@ -1,7 +1,10 @@
 import unittest
 import io
 
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 from .dataimport import DataImport
+from users.models import BankTransaction
 
 
 class TestTitoImporter(unittest.TestCase):
@@ -22,6 +25,16 @@ class TestTitoImporter(unittest.TestCase):
 
 
 class TestHolviImporter(unittest.TestCase):
-    # check above and try to make the same for Holvi ;)
     def test_holvi_import(self):
-        pass
+        xls = open('utils/holvi-account-test-statement.xls', 'rb')
+        name = xls.name
+        data = xls.read()
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(res, {'imported': 2, 'exists': 0, 'error': 0, 'failedrows': []})
+
+        # and again to test that it found the same rows
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(res, {'imported': 0, 'exists': 2, 'error': 0, 'failedrows': []})
+
+    def tearDown(self):
+        BankTransaction.objects.all().delete()
