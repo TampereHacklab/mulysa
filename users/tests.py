@@ -272,20 +272,20 @@ class ServiceSubscriptionTests(TestCase):
         self.assertIsNone(ss.reference_number)
 
         # and set it to what ever we want
-        ss.reference_number = 123
+        ss.reference_number = "123"
         ss.save()
         ss.refresh_from_db()
-        self.assertEqual(ss.reference_number, 123)
+        self.assertEqual(ss.reference_number, "123")
 
         # and if we create one with a specific number it wont be overwritten
         ss = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.OVERDUE,
-            reference_number=999
+            reference_number="999"
         )
         self.assertIsNotNone(ss.reference_number)
-        self.assertEqual(ss.reference_number, 999)
+        self.assertEqual(ss.reference_number, "999")
 
 
 class UserManagerTests(APITestCase):
@@ -432,10 +432,10 @@ class CustomInvoiceTests(TestCase):
         self.assertIsNone(invoice.reference_number)
 
         # and set it to what ever we want
-        invoice.reference_number = 123
+        invoice.reference_number = "123"
         invoice.save()
         invoice.refresh_from_db()
-        self.assertEqual(invoice.reference_number, 123)
+        self.assertEqual(invoice.reference_number, "123")
 
         # and if we create one with a specific number it wont be overwritten
         invoice2 = models.CustomInvoice.objects.create(
@@ -443,10 +443,10 @@ class CustomInvoiceTests(TestCase):
             subscription=self.servicesubscription,
             amount=amount,
             days=days,
-            reference_number=999,
+            reference_number="999",
         )
         self.assertIsNotNone(invoice2.reference_number)
-        self.assertEqual(invoice2.reference_number, 999)
+        self.assertEqual(invoice2.reference_number, "999")
 
     def tearDown(self):
         models.CustomInvoice.objects.all().delete()
