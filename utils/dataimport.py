@@ -236,7 +236,7 @@ class DataImport:
         holvi = HolviToolbox.parse_account_statement(f)
         imported = exists = error = 0
         failedrows = []
-        for line in holvi[1:]:
+        for line in holvi:
             logger.debug(f"import_holvi - Processing line: {line}")
             try:
                 if len(line) == 0:
@@ -253,7 +253,7 @@ class DataImport:
                 amount = int(line["Amount"])
                 peer = line["Counterparty"]
                 # holvi reference has leading zeroes, clean them up here also
-                reference = line["Reference"].strip()
+                reference = line["Reference"].strip().lstrip("0")
 
                 # Done parsing, add the transaction
 
