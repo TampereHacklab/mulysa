@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import logging
 import datetime
 
 from django.db.utils import IntegrityError
@@ -9,6 +9,8 @@ from users.models import BankTransaction, CustomUser, MemberService, ServiceSubs
 
 from utils.businesslogic import BusinessLogic
 from utils.holvitoolbox import HolviToolbox
+
+logger = logging.getLogger(__name__)
 
 
 class ParseError(Exception):
@@ -157,7 +159,7 @@ class DataImport:
         imported = exists = error = 0
         failedrows = []
         for line in lines[1:]:
-            print("import_tito - Processing line:", str(line))
+            logger.debug(f"import_tito - Processing line: {line}")
             try:
                 if len(line) == 0 or line[0] != "T":
                     raise ParseError("Empty line or not starting with T")
@@ -211,19 +213,21 @@ class DataImport:
                         BusinessLogic.new_transaction(transaction)
                         imported = imported + 1
             except ParseError as err:
-                print("Error parsing data: ", str(err))
+                logger.error(f"Error parsing data: {err}")
                 error = error + 1
                 failedrows.append(line + " (" + str(err) + ")")
-        print("Data imported, now updating all users..")
 
-        BusinessLogic.update_all_users()
-
-        return {
+        results = {
             "imported": imported,
             "exists": exists,
             "error": error,
             "failedrows": failedrows,
         }
+        logger.info(f"Data imported: {results} - now updating all users..")
+
+        BusinessLogic.update_all_users()
+
+        return results
 
     # Holvi TITO import. TITO spec here: ???
     # Note: this is the XSL-based TITO.
@@ -233,7 +237,7 @@ class DataImport:
         imported = exists = error = 0
         failedrows = []
         for line in holvi[1:]:
-            print("import_holvi - Processing line:", str(line))
+            logger.debug(f"import_holvi - Processing line: {line}")
             try:
                 if len(line) == 0:
                     raise ParseError("Empty line or not starting with T")
@@ -248,7 +252,8 @@ class DataImport:
                     message = None
                 amount = int(line["Amount"])
                 peer = line["Counterparty"]
-                reference = line["Reference"].strip()
+                # holvi reference has leading zeroes, clean them up here also
+                reference = line["Reference"].strip().lstrip("0")
 
                 # Done parsing, add the transaction
 
@@ -267,16 +272,18 @@ class DataImport:
                     BusinessLogic.new_transaction(transaction)
                     imported = imported + 1
             except ParseError as err:
-                print("Error parsing data: ", str(err))
+                logger.error(f"Error parsing data: {err}")
                 error = error + 1
                 failedrows.append(line + " (" + str(err) + ")")
-        print("Data imported, now updating all users..")
 
-        BusinessLogic.update_all_users()
-
-        return {
+        results = {
             "imported": imported,
             "exists": exists,
             "error": error,
             "failedrows": failedrows,
         }
+        logger.info(f"Data imported: {results} - now updating all users..")
+
+        BusinessLogic.update_all_users()
+
+        return results
