@@ -166,7 +166,7 @@ class DataImport:
                 data_type = int(line[1:3])
                 # Currently handle only type 10 (basic transaction data)
                 if data_type == 10:
-                    if int(line[3:6]) != 188:
+                    if int(line[3:6]) != 188 or len(line) != 188:
                         raise ParseError("Length should be 188")
                     transaction_id = line[6:12]
                     archival_reference = line[12:30].strip()
@@ -190,7 +190,8 @@ class DataImport:
                     peer = peer.replace("[", "Ä")
                     peer = peer.replace("]", "Å")
                     peer = peer.replace("\\", "Ö")
-                    reference = line[159:179].strip()
+                    # tito format has leading zeroes in reference number, strip them
+                    reference = line[159:179].strip().lstrip("0")
 
                     # Done parsing, add the transaction
 
@@ -240,7 +241,7 @@ class DataImport:
             logger.debug(f"import_holvi - Processing line: {line}")
             try:
                 if len(line) == 0:
-                    raise ParseError("Empty line or not starting with T")
+                    raise ParseError("Empty line")
                 archival_reference = line["Filing ID"].strip()
                 if len(archival_reference) < 32:
                     raise ParseError(
