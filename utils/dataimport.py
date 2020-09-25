@@ -253,7 +253,7 @@ class DataImport:
                 amount = int(line["Amount"])
                 peer = line["Counterparty"]
                 # holvi reference has leading zeroes, clean them up here also
-                reference = line["Reference"].strip().lstrip("0")
+                reference = line["Reference"].strip()
 
                 # Done parsing, add the transaction
 
