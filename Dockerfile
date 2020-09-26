@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 RUN apt update
 RUN apt -y install gettext git python3-dev default-libmysqlclient-dev
 ENV PYTHONUNBUFFERED 1
