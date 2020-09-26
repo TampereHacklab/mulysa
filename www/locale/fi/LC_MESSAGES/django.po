@@ -422,7 +422,7 @@ msgid ""
 "This service can be paid with reference number %(ref)s\n"
 "                to bank account %(bank_iban)s. Service price is %(cost)s."
 msgstr ""
-"Tilankäyttöoikeus tulee maksaa kuukausittain viitenumerolla %(ref)s\n"
+"Tämä palvelu tulee maksaa kuukausittain viitenumerolla %(ref)s\n"
 "tilille %(bank_iban)s. Palvelun hinta on %(cost)s."
 
 #: www/templates/www/user.html:84
