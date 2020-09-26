@@ -161,8 +161,8 @@ class TestAccess(APITestCase):
         )
 
         # check that we notified the user by email of this failure
-        self.assertIn("Hi", mail.outbox[0].body, "Hi")
-        self.assertIn("Your account does not currently have access to the door", mail.outbox[0].body, "failure notification")
+        self.assertIn("Hei", mail.outbox[0].body, "Hei")
+        self.assertIn("Käyttäjätililläsi ei ole tällähetkellä pääsyä oveen.", mail.outbox[0].body, "failure notification")
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
 
