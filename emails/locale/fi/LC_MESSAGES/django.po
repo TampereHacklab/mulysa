@@ -51,8 +51,8 @@ msgid ""
 "Content of the email. All emails will start with default 'View this message "
 "in browser' and end with 'You are receiving this message because') texts"
 msgstr ""
-"Sähköpostin sisältö. Kaikkien viestien pitäisi alkaa oletus 'Katsele "
-"viestiä selaimessa' ja loppua 'Sait tämän viestin koska' teksteillä"
+"Sähköpostin sisältö. Kaikki viestit alkavat 'Katsele "
+"viestiä selaimessa' ja loppuvat 'Sait tämän viestin koska' teksteillä"
 
 #: emails/models.py:41
 msgid "Creation date"
