@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import datetime
+from decimal import Decimal
 
 from django.db.utils import IntegrityError
 
@@ -251,7 +252,7 @@ class DataImport:
                 message = line["Message"].strip()
                 if message == "Viitemaksu":
                     message = None
-                amount = int(line["Amount"])
+                amount = Decimal(line["Amount"])
                 peer = line["Counterparty"]
                 # holvi reference has leading zeroes, clean them up here also
                 reference = line["Reference"].strip().lstrip("0")
