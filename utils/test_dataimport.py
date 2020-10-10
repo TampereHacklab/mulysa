@@ -1,5 +1,6 @@
 import io
 from datetime import timedelta
+from decimal import *
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -218,6 +219,19 @@ class TestTitoImporter(TestCase):
             results, {"imported": 0, "exists": 1, "error": 0, "failedrows": []}
         )
 
+    def test_tito_cents(self):
+        models.BankTransaction.objects.all().delete()
+        data = self._getbasetitodata()
+        # with 45 cents
+        data['rahamaara'] = "12345".rjust(18, "0")
+        dataline = "".join(data.values())
+        lines = io.BytesIO(b"header\n" + dataline.encode())
+        results = DataImport.import_tito(lines)
+        self.assertDictEqual(
+            results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
+        )
+        self.assertEqual(models.BankTransaction.objects.first().reference_number, data['viite'].strip().strip("0"))
+        self.assertEqual(models.BankTransaction.objects.first().amount, Decimal('123.45'), 'Check decimals')
 
 class TestHolviImporter(TestCase):
     def test_holvi_import(self):
