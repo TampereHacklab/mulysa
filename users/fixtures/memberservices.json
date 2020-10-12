@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Vuosimaksu",
-            "cost": 20,
+            "cost": 30,
             "pays_also_service": null,
             "cost_min": null,
             "cost_max": null,
@@ -18,10 +18,10 @@
         "pk": 2,
         "fields": {
             "name": "Tilankäyttöoikeus",
-            "cost": 35,
+            "cost": 40,
             "pays_also_service": 1,
             "cost_min": 10,
-            "cost_max": 50,
+            "cost_max": N/A,
             "days_per_payment": 31,
             "days_bonus_for_first": 14,
             "days_before_warning": null
