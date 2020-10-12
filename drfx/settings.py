@@ -89,8 +89,8 @@ AUTH_USER_MODEL = "users.CustomUser"
 BOOTSTRAP4 = {
     'css_url': '/static/www/bootstrap4/bootstrap.min.css',
     'javascript_url': '/static/www/bootstrap4/bootstrap.min.js',
-    'jquery_slim_url': '/static/www/bootstrap4/jquery-3.3.1.slim.min.js',
-    'jquery_url': '/static/www/bootstrap4/jquery-3.3.1.min.js',
+    'jquery_slim_url': '/static/www/bootstrap4/jquery-3.5.1.slim.min.js',
+    'jquery_url': '/static/www/bootstrap4/jquery-3.5.1.min.js',
     'popper_url': '/static/www/bootstrap4/popper.min.js'
 }
 
