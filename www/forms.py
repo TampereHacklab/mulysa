@@ -134,7 +134,6 @@ class CustomInvoiceForm(forms.Form):
             )
 
 
-
 class CreateUserForm(forms.ModelForm):
     class Meta:
         model = models.CustomUser
