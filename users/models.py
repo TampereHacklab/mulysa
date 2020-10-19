@@ -393,6 +393,10 @@ class MemberService(models.Model):
     # Returns the cost of the service in human-readable string
     def cost_string(self):
         cs = str(self.cost) + "€ "
+        if self.cost_min and not self.cost_max:
+            cs = cs + "(" + str(self.cost_min) + "€ min)"
+        if not self.cost_min and self.cost_max:
+            cs = cs + "(" + str(self.cost_max) + "€ max)"
         if self.cost_min and self.cost_max:
             cs = cs + "(" + str(self.cost_min) + "€ - " + str(self.cost_max) + "€)"
         return cs
