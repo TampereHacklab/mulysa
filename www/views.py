@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
+from decimal import Decimal
 
 from api.models import DeviceAccessLogEntry
 from drfx import settings
@@ -375,14 +376,12 @@ def custominvoice(request):
         ).exclude(state=ServiceSubscription.SUSPENDED)
 
         if form.is_valid():
-            count = int(form.cleaned_data["count"])
-            if count <= 0:
-                raise Exception("Invalid count, should never happen!")
+            count = form.cleaned_data["count"]
+            subscription = form.cleaned_data['service']
+            cost = form.cleaned_data['price']
 
-            service_subscription_id = int(request.POST["service"])
-            subscription = ServiceSubscription.objects.get(id=service_subscription_id)
             days = subscription.service.days_per_payment * count
-            amount = subscription.service.cost * count
+            amount = cost * count
             servicename = subscription.service.name
 
             if "create" in request.POST:
