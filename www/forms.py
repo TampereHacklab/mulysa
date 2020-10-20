@@ -7,7 +7,6 @@ from users import models
 from users.models import MemberService, ServiceSubscription
 from django.db.utils import OperationalError
 
-
 class RegistrationUserForm(forms.ModelForm):
     class Meta:
         model = models.CustomUser
@@ -104,7 +103,8 @@ class CustomInvoiceForm(forms.Form):
     )
     price = forms.DecimalField(
         label=_("Price per unit"),
-        help_text=_("See price from the service selected above")
+        help_text=_("See price from the service selected above"),
+        min_value=0.01
     )
 
     def clean(self):
