@@ -7,6 +7,7 @@ from users import models
 from users.models import MemberService, ServiceSubscription
 from django.db.utils import OperationalError
 
+
 class RegistrationUserForm(forms.ModelForm):
     class Meta:
         model = models.CustomUser
@@ -81,10 +82,12 @@ class FileImportForm(forms.Form):
     )
     file = forms.FileField()
 
+
 class CustomInvoiceServiceChoiceField(forms.ModelChoiceField):
     """
     Get better selection text for services in custom invoices.
     """
+
     def label_from_instance(self, obj):
         return _("%(servicename)s, %(cost)s") % {
             "servicename": obj.service.name,
@@ -104,7 +107,7 @@ class CustomInvoiceForm(forms.Form):
     price = forms.DecimalField(
         label=_("Price per unit"),
         help_text=_("See price from the service selected above"),
-        min_value=0.01
+        min_value=0.01,
     )
 
     def clean(self):
@@ -116,21 +119,21 @@ class CustomInvoiceForm(forms.Form):
         subscription = cleaned_data["service"]
         service = subscription.service
         price = cleaned_data["price"]
-        if(service.cost_max and price > service.cost_max):
+        if service.cost_max and price > service.cost_max:
             raise forms.ValidationError(
-                _('Price cannot be above service max cost: %(max)s'),
-                params={'max': service.cost_max},
+                _("Price cannot be above service max cost: %(max)s"),
+                params={"max": service.cost_max},
             )
-        if(service.cost_min and price < service.cost_min):
+        if service.cost_min and price < service.cost_min:
             raise forms.ValidationError(
-                _('Cost cannot be below service min cost: %(min)s'),
-                params={'min': service.cost_min},
+                _("Cost cannot be below service min cost: %(min)s"),
+                params={"min": service.cost_min},
             )
         # too tired to minimize these if statements :D
-        if((not service.cost_min and not service.cost_max) and price != service.cost):
+        if (not service.cost_min and not service.cost_max) and price != service.cost:
             raise forms.ValidationError(
-                _('Price must be the service cost: %(cost)s'),
-                params={'cost': service.cost},
+                _("Price must be the service cost: %(cost)s"),
+                params={"cost": service.cost},
             )
 
 
