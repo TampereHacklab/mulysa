@@ -167,7 +167,8 @@ class DataImport:
                 data_type = int(line[1:3])
                 # Currently handle only type 10 (basic transaction data)
                 if data_type == 10:
-                    if int(line[3:6]) != 188 or len(line) != 188:
+                    # normalize the line ending before checking the length
+                    if int(line[3:6]) != 188 or len(line.rstrip("\r\n")) != 188:
                         raise ParseError("Length should be 188")
                     transaction_id = line[6:12]
                     archival_reference = line[12:30].strip()
