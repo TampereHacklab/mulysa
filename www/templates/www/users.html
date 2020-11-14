@@ -13,12 +13,14 @@
   <thead class="thead-light">
     <tr>
       <th>Name</th>
+      <th>Nick</th>
       <th>Email</th>
       <th>Phone</th>
       {% for service in services %}
       <th>{{ service.name }}</th>
       {% endfor %}
       <th>Extra services</th>
+      <th>Last login</th>
       <th>Management</th>
     </tr>
   </thead>
@@ -28,11 +30,9 @@
       <a href="{% url 'userdetails' user.id %}">
         {{ user.first_name }}
         {{ user.last_name }}
-        {% if user.nick %}
-          ({{user.nick}})
-        {% endif %}
       </a>
     </td>
+    <td>{{ user.nick }}</td>
     <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
     <td>{{ user.phone }}</td>
     {% for service in services %}
@@ -57,6 +57,7 @@
       {% endif %}
       {% endfor %}
     </td>
+    <td>{{ user.last_login }}</td>
     <td>
       <a href="{% url 'admin:users_customuser_change' user.id %}">Modify</a>
     </td>
