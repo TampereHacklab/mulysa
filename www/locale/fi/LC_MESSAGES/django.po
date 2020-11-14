@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-14 21:30+0200\n"
+"POT-Creation-Date: 2020-11-14 20:14+0000\n"
 "PO-Revision-Date: 2020-11-14 21:49+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -266,15 +266,12 @@ msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
 #: www/templates/www/base.html:84
-#, fuzzy, python-format
-#| msgid ""
-#| " Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
-msgid ""
-" Report bugs at: <a target=\"_blank\" rel=\"noopener noreferrer\" href="
-"\"%(GITHUB_URL)s\">GitHub</a>"
+msgid "Report bugs at"
+msgstr "Raportoi bugit ja osallistu projektiin"
+
+#: www/templates/www/base.html:84
+msgid "GitHub"
 msgstr ""
-"Raportoi bugit ja osallistu projektiin <a href=\"%(GITHUB_URL)s"
-"\">GitHubissa</a>"
 
 #: www/templates/www/createuser.html:8
 msgid "Create user"
@@ -326,7 +323,7 @@ msgstr ""
 #: www/templates/www/custominvoice.html:36
 #: www/templates/www/custominvoice.html:59 www/templates/www/user.html:104
 msgid "days of"
-msgstr "päivää jäljellä"
+msgstr "päivää"
 
 #: www/templates/www/custominvoice.html:39
 msgid "delete"
@@ -338,7 +335,9 @@ msgid ""
 " Custominvoices are paid with the custominvoice specific amount and "
 "reference number to bank account: <b>%(bank_iban)s</b>. If the amount or "
 "reference number does not match the payment wont be registered. "
-msgstr ""
+msgstr "Vapaamuotoiset laskut maksetaan omilla summillaan ja viitenumeroillaan. "
+"Maksut tilille: <b>%(bank_iban)s</b>. Jos suorituksen summa tai viitenumero "
+"ei ole oikein maksua ei rekisteröidä"
 
 #: www/templates/www/custominvoice.html:46
 msgid "Paid invoices"
@@ -346,12 +345,12 @@ msgstr "Maksetut laskut"
 
 #: www/templates/www/custominvoice.html:54 www/templates/www/user.html:99
 msgid "Paid"
-msgstr ""
+msgstr "Maksettu"
 
 #: www/templates/www/custominvoice.html:66
 #: www/templates/www/custominvoices.html:35 www/templates/www/user.html:111
 msgid "Not paid yet"
-msgstr ""
+msgstr "Ei maksettu"
 
 #: www/templates/www/index.html:11
 msgid "Welcome back!"
@@ -688,6 +687,3 @@ msgstr "Vapautettu NFC-kortti"
 #: www/views.py:353 www/views.py:354
 msgid "NFC Card successfully claimed"
 msgstr "NFC-kortti yhdistetty"
-
-#~ msgid "Access number"
-#~ msgstr "Numero"
