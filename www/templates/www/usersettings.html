@@ -2,12 +2,9 @@
 {% load i18n %}
 {% load bootstrap4 %}
 {% block content %}
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-6 offset-lg-3">
-        <h1>{% trans 'User settings' %}</h1>
-    </div>
-  </div>
+<div class="container">
+  <h1>{% trans 'User settings' %}</h1>
+
   <form class="form-horizontal" action="{% url 'usersettings' userdetails.id %}" method="post">{% csrf_token %}
     {% bootstrap_messages %}
   <table class="table">
@@ -36,16 +33,16 @@
         <td>
             {% if userdetails.nfccard %}
                 {{ userdetails.nfccard.censored_id }}
-                <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id 'RELEASE' %}">{% trans 'Release' %}</a> 
+                <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id 'RELEASE' %}">{% trans 'Release' %}</a>
             {% else %}
                 {% if userdetails.nfclog %}
                     {% for entry in userdetails.nfclog %}
-                        <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id entry.payload %}">{% trans 'Claim NFC card' %} {{ entry.payload }}</a>                
+                        <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id entry.payload %}">{% trans 'Claim NFC card' %} {{ entry.payload }}</a>
                     {% endfor %}
                 {% else %}
                     {% trans 'No NFC card claimed - go to door, use a card and claim it here in 5 minutes' %}
-                {% endif %}            
-            {% endif %}            
+                {% endif %}
+            {% endif %}
             </td>
       </tr>
     </table>
@@ -55,9 +52,8 @@
     value="{% trans 'Save changes' %}"
   />
   </form>
-  <div class="col-lg-6 offset-lg-3">
-    <h1>{% trans 'Extra Services' %}</h1>
-  </div>
+
+  <h1>{% trans 'Extra Services' %}</h1>
   {% blocktrans %}Here you can see extra services that you can subscribe yourself. You can only unsubscribe services when you have
   paid them fully. {% endblocktrans %}
   <ul>
@@ -69,7 +65,7 @@
   </ul>
   <ul>
     {% for service in unsubscribable_services %}
-      <li> {{service.name}} 
+      <li> {{service.name}}
         <a class="btn btn-primary" href="{% url 'unsubscribe_service' userdetails.id service.id %}">{% trans 'Unsubscribe service' %}</a>
       </li>
     {% endfor %}
