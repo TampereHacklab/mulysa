@@ -114,8 +114,9 @@
       </tr>
       {% endfor %}
     </table>
-    <a class="btn btn-primary" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-
+    <p>
+      <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+    </p>
     <h2>{% trans 'Activity log' %}</h2>
     <table class="table table-sm table-responsive-sm">
       <tr>
