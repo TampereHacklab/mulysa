@@ -2,9 +2,10 @@
 {% load i18n %}
 {% block content %}
 <h2>{% trans 'Custom invoices' %}</h2>
-<table class="table table-striped">
+<table class="table table-striped table-responsive-sm">
   <thead class="thead-light">
     <tr>
+      <th>Created</th>
       <th>User</th>
       <th>Subscription</th>
       <th>Days</th>
@@ -16,6 +17,8 @@
   </thead>
   {% for custominvoice in custominvoices %}
   <tr>
+    <td>{{ custominvoice.created }}
+    </td>
     <td>
       <a href="{% url 'userdetails' custominvoice.user.id %}">
         {{ custominvoice.user.first_name }} {{ custominvoice.user.last_name }}
@@ -25,7 +28,13 @@
     <td>{{ custominvoice.days }}</td>
     <td>{{ custominvoice.reference_number }}</td>
     <td>{{ custominvoice.amount }}</td>
-    <td>{{ custominvoice.payment_transaction|default_if_none:"" }}</td>
+    <td>
+      {% if custominvoice.payment_transaction %}
+        <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction }}</a>
+      {% else %}
+        {% trans 'Not paid yet' %}
+      {% endif %}
+    </td>
     <td>
       <a href="{% url 'admin:users_custominvoice_change' custominvoice.id %}"
         >Modify</a

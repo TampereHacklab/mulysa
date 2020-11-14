@@ -21,15 +21,53 @@
 {% endif %}
 </form>
 <h2>{% trans 'Pending invoices'%}</h2>
-<ul>
-    {% for invoice in unpaid_invoices %}
-    <li>{{ invoice }} - <a href="{% url 'custominvoice_action' action='delete' invoiceid=invoice.id %}">{% trans 'delete' %}</a></li>
-    {% endfor %}
-</ul>
+
+<table class="table table-responsive-sm">
+  <tr>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Service' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th>{% trans 'Reference number' %}</th>
+    <th>{% trans 'Action' %}</th>
+  </tr>
+  {% for custominvoice in unpaid_invoices %}
+  <tr>
+    <td>{{ custominvoice.created }}</td>
+    <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
+    <td>{{ custominvoice.amount }}</td>
+    <td>{{ custominvoice.reference_number }}</td>
+    <td><a href="{% url 'custominvoice_action' action='delete' invoiceid=custominvoice.id %}">{% trans 'delete' %}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p>{% blocktrans with bank_iban=settings.ACCOUNT_IBAN %} Custominvoices are paid with the custominvoice specific amount and reference number to bank account: <b>{{bank_iban}}</b>. If the amount or reference number does not match the payment wont be registered. {% endblocktrans %}</p>
+
 <h2>{% trans 'Paid invoices'%}</h2>
-<ul>
-    {% for invoice in paid_invoices %}
-    <li>{{ invoice }}</li>
-    {% endfor %}
-</ul>
+
+<table class="table table-responsive-sm">
+  <tr>
+    <th>{% trans 'Date' %}</th>
+    <th>{% trans 'Service' %}</th>
+    <th>{% trans 'Amount' %}</th>
+    <th>{% trans 'Reference number' %}</th>
+    <th>{% trans 'Paid' %}</th>
+  </tr>
+  {% for custominvoice in paid_invoices %}
+  <tr>
+    <td>{{ custominvoice.created }}</td>
+    <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
+    <td>{{ custominvoice.amount }}</td>
+    <td>{{ custominvoice.reference_number }}</td>
+    <td>
+      {% if custominvoice.payment_transaction %}
+        <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
+      {% else %}
+        {% trans 'Not paid yet' %}
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% endblock %}

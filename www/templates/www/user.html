@@ -96,6 +96,7 @@
         <th>{% trans 'Service' %}</th>
         <th>{% trans 'Amount' %}</th>
         <th>{% trans 'Reference number' %}</th>
+        <th>{% trans 'Paid' %}</th>
       </tr>
       {% for custominvoice in userdetails.custominvoices %}
       <tr>
@@ -103,11 +104,19 @@
         <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
         <td>{{ custominvoice.amount }}</td>
         <td>{{ custominvoice.reference_number }}</td>
+        <td>
+          {% if custominvoice.payment_transaction %}
+            <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
+          {% else %}
+            {% trans 'Not paid yet' %}
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </table>
-    <a class="btn btn-primary" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-
+    <p>
+      <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+    </p>
     <h2>{% trans 'Activity log' %}</h2>
     <table class="table table-sm table-responsive-sm">
       <tr>
@@ -136,7 +145,7 @@
       </tr>
       {% for transaction in userdetails.transactions %}
       <tr>
-        <td>{{ transaction.date }}</td>
+        <td><a href="{% url 'banktransaction-view' transaction.id %}">{{ transaction.date }}</a></td>
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.reference_number }}</td>
         <td>{{ transaction.sender|default_if_none:"" }}</td>

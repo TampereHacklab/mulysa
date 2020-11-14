@@ -1,0 +1,55 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+{% load verbose_names %}
+
+<h2>{% trans 'Bank Transaction' %}</h2>
+
+<div id="receiptinfo">
+  <p>
+    {{ settings.RECEIPTNAME }}<br />
+    {{ settings.RECEIPTSTREET}}<br />
+    {% trans 'Business ID' %}: {{ settings.RECEIPTREGID}}<br />
+  </p>
+  <p>
+    {% get_verbose_field_name banktransaction "date" %}: {{ banktransaction.date }}<br />
+    {% trans 'Transaction id' %}: {{ banktransaction.id }}<br />
+    {% get_verbose_field_name banktransaction "reference_number" %}: {{ banktransaction.reference_number }}<br />
+    {% get_verbose_field_name banktransaction "archival_reference" %}: {{ banktransaction.archival_reference }}<br />
+    {% get_verbose_field_name banktransaction "sender" %}: {{ banktransaction.sender }}<br />
+    {% trans 'User' %}: {{ banktransaction.user }}
+  </p>
+
+  <ul>
+    {% for servicesubscription in banktransaction.servicesubscription_set.all %}
+      <li>{{servicesubscription.service.name}}</li>
+    {% endfor %}
+    {% for custominvoice in banktransaction.custominvoice_set.all %}
+      <li>{{custominvoice.subscription.service.name}}</li>
+    {% endfor %}
+  </ul>
+  <p>
+    {% trans 'Grand total' %}: {{ banktransaction.amount }}€
+  </p>
+</div>
+
+<div id="vatinfo">
+  {# This might require tweaking... for now it seems to be #}
+  {# enough that it is mentioned that everything is VAT 0% #}
+  <p>
+    {% blocktrans %}
+      Seller not VAT-liable
+    {% endblocktrans %}
+  </p>
+</div>
+
+<div id="promoinfo">
+  <p>
+    {% blocktrans with name=settings.SITENAME %}
+     Thank you and please tell your friends about {{ name }} :)
+    {% endblocktrans %}
+  </p>
+</div>
+
+{% endblock %}

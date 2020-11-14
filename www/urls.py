@@ -44,5 +44,6 @@ urlpatterns = [
         views.application_operation,
         name="application_operation",
     ),
+    path("banktransaction/<int:banktransactionid>/", views.banktransaction_view, name="banktransaction-view"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]

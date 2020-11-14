@@ -17,7 +17,6 @@
 
     {% if user.is_authenticated %}
     <a class="btn btn-primary btn-lg" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a>
-    <a class="btn btn-primary btn-lg" href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
      {% else %}
     <a class="btn btn-primary btn-lg" href="{% url 'register' %}">{% trans 'Apply membership in hacklab' %}</a>
      {% endif %}

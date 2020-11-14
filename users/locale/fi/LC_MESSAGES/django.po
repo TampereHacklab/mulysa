@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 02:12+0300\n"
-"PO-Revision-Date: 2020-09-26 13:40+0300\n"
-"Last-Translator: Tatu Wikman <tatu.wikman@gmail.com>\n"
+"POT-Creation-Date: 2020-11-14 21:30+0200\n"
+"PO-Revision-Date: 2020-11-14 21:45+0200\n"
+"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: users/models.py:24
 #, python-format
@@ -244,7 +244,7 @@ msgid "Sender of the transaction, if known."
 msgstr "Tilisiirron maksaja, jos tiedossa."
 
 #: users/models.py:463
-msgid "Reference number of transaction"
+msgid "Transaction reference"
 msgstr "Tilisiirron viitenumero"
 
 #: users/models.py:465
@@ -578,6 +578,9 @@ msgstr ""
 "Muistathan että kaikki Hacklabin palvelut toimivat vapaaehtoisvoimin.\n"
 "\n"
 "Tervetuloa!\n"
+
+#~ msgid "Reference number of transaction"
+#~ msgstr "Tilisiirron viitenumero"
 
 #~ msgid "Reference number of membership fee payments"
 #~ msgstr "Viitenumero jäsenmaksujen maksamista varten"
