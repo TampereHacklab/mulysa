@@ -605,7 +605,7 @@ msgstr "Tallenna muutokset"
 
 #: www/templates/www/usersettings.html:59
 msgid "Extra Services"
-msgstr "Ylimääräiset jäsenpalvelut"
+msgstr "Lisäpalvelut"
 
 #: www/templates/www/usersettings.html:61
 msgid ""
@@ -613,7 +613,7 @@ msgid ""
 "only unsubscribe services when you have\n"
 "  paid them fully. "
 msgstr ""
-"Tässä näet ylimääräiset jäsenpalvelut jotka voit halutessasi ottaa käyttöön. "
+"Tässä näet lisäpalvelut jotka voit halutessasi ottaa käyttöön. "
 "Voit poistaa käytöstä palveluita ainoastaan kun ne ovat maksettu ja "
 "aktiivisessa tilassa."
 
