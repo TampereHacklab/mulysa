@@ -20,8 +20,6 @@ body > main {
   padding-top: 80px;
 }
 
-
-
 .ss_state_ACTIVE {
   background-color: green;
 }
@@ -30,4 +28,8 @@ body > main {
 }
 .ss_state_OVERDUE {
   background-color: yellow;
+}
+
+@media print {
+  footer { display: none; }
 }

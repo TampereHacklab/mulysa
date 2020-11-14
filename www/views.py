@@ -410,6 +410,7 @@ def custominvoice(request):
             "days": days,
             "amount": amount,
             "servicename": servicename,
+            "settings": settings,
         },
     )
 
@@ -426,6 +427,23 @@ def custominvoice_action(request, action, invoiceid):
 
     return custominvoice(request)
 
+@login_required
+def banktransaction_view(request, banktransactionid):
+    """
+    Allow user to view a "receipt" of a bank transaction
+    """
+    if(request.user.is_staff):
+        banktransaction = BankTransaction.objects.get(id=banktransactionid)
+    else:
+        banktransaction = BankTransaction.objects.get(user=request.user, id=banktransactionid)
+    return render(
+        request,
+        "www/banktransaction.html",
+        {
+            "banktransaction": banktransaction,
+            "settings": settings,
+        },
+    )
 
 @login_required
 @staff_member_required
