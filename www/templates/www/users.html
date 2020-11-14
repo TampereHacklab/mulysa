@@ -1,5 +1,6 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load humanize %}
 {% block content %}
 <h2>
   User list
@@ -57,7 +58,7 @@
       {% endif %}
       {% endfor %}
     </td>
-    <td>{{ user.last_login }}</td>
+    <td>{{ user.last_login|naturaltime }}</td>
     <td>
       <a href="{% url 'admin:users_customuser_change' user.id %}">Modify</a>
     </td>
