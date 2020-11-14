@@ -460,7 +460,7 @@ class BankTransaction(models.Model):
     reference_number = models.CharField(
         blank=True,
         null=True,
-        verbose_name=_("Reference number of transaction"),
+        verbose_name=_("Transaction reference"),
         help_text=_(
             "Reference number is set by transaction sender and should normally always be used."
         ),

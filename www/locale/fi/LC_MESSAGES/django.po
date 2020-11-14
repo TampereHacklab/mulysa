@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-14 16:32+0000\n"
-"PO-Revision-Date: 2020-10-29 12:02+0200\n"
+"POT-Creation-Date: 2020-11-14 21:30+0200\n"
+"PO-Revision-Date: 2020-11-14 21:49+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -180,45 +180,45 @@ msgid "days"
 msgstr "päivää"
 
 #: www/templates/www/banktransaction.html:7
-#, fuzzy
-#| msgid "Bank transactions"
 msgid "Bank Transaction"
-msgstr "Tilisiirrot"
+msgstr "Tilisiirto"
 
 #: www/templates/www/banktransaction.html:13
 msgid "Business ID"
-msgstr ""
+msgstr "Y-tunnus"
 
-#: www/templates/www/banktransaction.html:16
-#, fuzzy
-#| msgid "Bank transactions"
+#: www/templates/www/banktransaction.html:17
 msgid "Transaction id"
-msgstr "Tilisiirrot"
+msgstr "Tilisiirron tunnus"
 
-#: www/templates/www/banktransaction.html:19
-#, fuzzy
-#| msgid "Users"
+#: www/templates/www/banktransaction.html:21
 msgid "User"
-msgstr "Käyttäjät"
+msgstr "Käyttäjä"
 
-#: www/templates/www/banktransaction.html:31
+#: www/templates/www/banktransaction.html:33
 msgid "Grand total"
-msgstr ""
+msgstr "Yhteensä"
 
-#: www/templates/www/banktransaction.html:39
+#: www/templates/www/banktransaction.html:41
 msgid ""
 "\n"
 "      Seller not VAT-liable\n"
 "    "
 msgstr ""
+"\n"
+"      Myyjä ei ALV-velvollinen\n"
+"    "
 
-#: www/templates/www/banktransaction.html:47
+#: www/templates/www/banktransaction.html:49
 #, python-format
 msgid ""
 "\n"
 "     Thank you and please tell your friends about %(name)s :)\n"
 "    "
 msgstr ""
+"\n"
+"     Kiitos ja kerrohan kavereillekkin %(name)s:sta :)\n"
+"    "
 
 #: www/templates/www/base.html:28 www/templates/www/index.html:19
 msgid "Show my user information"
@@ -420,15 +420,7 @@ msgid "Apply membership to %(SITENAME)s"
 msgstr "Hae %(SITENAME)s jäsenyyttä"
 
 #: www/templates/www/register.html:27
-#, fuzzy, python-format
-#| msgid ""
-#| "Terms for membership: I have read and agree to\n"
-#| "          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members "
-#| "guide</a>\n"
-#| "          and\n"
-#| "          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
-#| "            >association rules</a\n"
-#| "          >."
+#, python-format
 msgid ""
 "Terms for membership: I have read and agree to\n"
 "          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\" rel=\"noopener "
@@ -440,8 +432,9 @@ msgid ""
 "          >."
 msgstr ""
 "Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a href=\"%(MEMBERS_GUIDE_URL)s"
-"\" target=\"_blank\">jäsenen ohjeen</a> ja <a href="
-"\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\">yhdistyksen säännöt</a>."
+"\" target=\"_blank\" rel=\"noopener noreferrer\">jäsenen ohjeen</a> ja <a "
+"href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">yhdistyksen säännöt</a>."
 
 #: www/templates/www/register.html:36
 msgid ""
