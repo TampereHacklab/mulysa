@@ -15,6 +15,7 @@ isort = "*"
 rope = "*"
 python-coveralls = "*"
 black = "*"
+werkzeug = "*"
 
 [packages]
 django = "==3.0.*"
