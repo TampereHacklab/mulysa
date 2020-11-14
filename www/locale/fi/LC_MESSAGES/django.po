@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-21 02:12+0300\n"
+"POT-Creation-Date: 2020-11-14 16:32+0000\n"
 "PO-Revision-Date: 2020-10-29 12:02+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -37,7 +37,8 @@ msgstr "Valitse vähintään yksi jäsenpalvelu"
 msgid "%(servicename)s, %(cost)s"
 msgstr "%(servicename)s, %(cost)s"
 
-#: www/forms.py:100 www/templates/www/user.html:96
+#: www/forms.py:100 www/templates/www/custominvoice.html:28
+#: www/templates/www/custominvoice.html:51 www/templates/www/user.html:96
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
@@ -149,8 +150,10 @@ msgstr "Lähetä minulle ohjeet!"
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
-#: www/templates/www/applications.html:12 www/templates/www/user.html:95
-#: www/templates/www/user.html:114 www/templates/www/user.html:130
+#: www/templates/www/applications.html:12
+#: www/templates/www/custominvoice.html:27
+#: www/templates/www/custominvoice.html:50 www/templates/www/user.html:95
+#: www/templates/www/user.html:122 www/templates/www/user.html:138
 msgid "Date"
 msgstr "Päiväys"
 
@@ -163,8 +166,8 @@ msgstr "Nimi"
 msgid "E-mail"
 msgstr "Sähköposti"
 
-#: www/templates/www/applications.html:15 www/templates/www/user.html:115
-#: www/templates/www/user.html:134
+#: www/templates/www/applications.html:15 www/templates/www/user.html:123
+#: www/templates/www/user.html:142
 msgid "Message"
 msgstr "Viesti"
 
@@ -175,6 +178,47 @@ msgstr "Hyväksyntä"
 #: www/templates/www/applications.html:22 www/templates/www/users.html:44
 msgid "days"
 msgstr "päivää"
+
+#: www/templates/www/banktransaction.html:7
+#, fuzzy
+#| msgid "Bank transactions"
+msgid "Bank Transaction"
+msgstr "Tilisiirrot"
+
+#: www/templates/www/banktransaction.html:13
+msgid "Business ID"
+msgstr ""
+
+#: www/templates/www/banktransaction.html:16
+#, fuzzy
+#| msgid "Bank transactions"
+msgid "Transaction id"
+msgstr "Tilisiirrot"
+
+#: www/templates/www/banktransaction.html:19
+#, fuzzy
+#| msgid "Users"
+msgid "User"
+msgstr "Käyttäjät"
+
+#: www/templates/www/banktransaction.html:31
+msgid "Grand total"
+msgstr ""
+
+#: www/templates/www/banktransaction.html:39
+msgid ""
+"\n"
+"      Seller not VAT-liable\n"
+"    "
+msgstr ""
+
+#: www/templates/www/banktransaction.html:47
+#, python-format
+msgid ""
+"\n"
+"     Thank you and please tell your friends about %(name)s :)\n"
+"    "
+msgstr ""
 
 #: www/templates/www/base.html:28 www/templates/www/index.html:19
 msgid "Show my user information"
@@ -222,9 +266,12 @@ msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
 #: www/templates/www/base.html:84
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| " Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
 msgid ""
-" Report bugs at: <a target=\"_blank\" href=\"%(GITHUB_URL)s\">GitHub</a>"
+" Report bugs at: <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"\"%(GITHUB_URL)s\">GitHub</a>"
 msgstr ""
 "Raportoi bugit ja osallistu projektiin <a href=\"%(GITHUB_URL)s"
 "\">GitHubissa</a>"
@@ -260,13 +307,51 @@ msgstr "Luo lasku"
 msgid "Pending invoices"
 msgstr "Maksamattomat laskut"
 
-#: www/templates/www/custominvoice.html:26
+#: www/templates/www/custominvoice.html:29
+#: www/templates/www/custominvoice.html:52 www/templates/www/user.html:97
+#: www/templates/www/user.html:139
+msgid "Amount"
+msgstr "Määrä"
+
+#: www/templates/www/custominvoice.html:30
+#: www/templates/www/custominvoice.html:53 www/templates/www/user.html:55
+#: www/templates/www/user.html:98 www/templates/www/user.html:140
+msgid "Reference number"
+msgstr "Viitenumero"
+
+#: www/templates/www/custominvoice.html:31
+msgid "Action"
+msgstr ""
+
+#: www/templates/www/custominvoice.html:36
+#: www/templates/www/custominvoice.html:59 www/templates/www/user.html:104
+msgid "days of"
+msgstr "päivää jäljellä"
+
+#: www/templates/www/custominvoice.html:39
 msgid "delete"
 msgstr "poista"
 
-#: www/templates/www/custominvoice.html:29
+#: www/templates/www/custominvoice.html:44
+#, python-format
+msgid ""
+" Custominvoices are paid with the custominvoice specific amount and "
+"reference number to bank account: <b>%(bank_iban)s</b>. If the amount or "
+"reference number does not match the payment wont be registered. "
+msgstr ""
+
+#: www/templates/www/custominvoice.html:46
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
+
+#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:99
+msgid "Paid"
+msgstr ""
+
+#: www/templates/www/custominvoice.html:66
+#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:111
+msgid "Not paid yet"
+msgstr ""
 
 #: www/templates/www/index.html:11
 msgid "Welcome back!"
@@ -277,7 +362,7 @@ msgid "Welcome! Wanna join us?"
 msgstr "Tervetuloa! Haluatko liittyä?"
 
 #: www/templates/www/index.html:20 www/templates/www/user.html:85
-#: www/templates/www/user.html:109
+#: www/templates/www/user.html:117
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 
@@ -335,13 +420,22 @@ msgid "Apply membership to %(SITENAME)s"
 msgstr "Hae %(SITENAME)s jäsenyyttä"
 
 #: www/templates/www/register.html:27
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "Terms for membership: I have read and agree to\n"
+#| "          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members "
+#| "guide</a>\n"
+#| "          and\n"
+#| "          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
+#| "            >association rules</a\n"
+#| "          >."
 msgid ""
 "Terms for membership: I have read and agree to\n"
-"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\">members guide</"
-"a>\n"
+"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">members guide</a>\n"
 "          and\n"
-"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\"\n"
+"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\" rel="
+"\"noopener noreferrer\"\n"
 "            >association rules</a\n"
 "          >."
 msgstr ""
@@ -417,11 +511,6 @@ msgstr "Voimassaoloaika"
 msgid "days left"
 msgstr "päivää jäljellä"
 
-#: www/templates/www/user.html:55 www/templates/www/user.html:98
-#: www/templates/www/user.html:132
-msgid "Reference number"
-msgstr "Viitenumero"
-
 #: www/templates/www/user.html:59
 msgid "Last payment"
 msgstr "Viimeisin maksu"
@@ -459,23 +548,15 @@ msgstr ""
 "Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit tehdä "
 "vapaamuotoisen laskun."
 
-#: www/templates/www/user.html:97 www/templates/www/user.html:131
-msgid "Amount"
-msgstr "Määrä"
-
-#: www/templates/www/user.html:103
-msgid "days of"
-msgstr "päivää jäljellä"
-
-#: www/templates/www/user.html:111
+#: www/templates/www/user.html:119
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:125
+#: www/templates/www/user.html:133
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:126
+#: www/templates/www/user.html:134
 msgid ""
 "Transactions are not processed in real time. Newest bank transactions "
 "uploaded to the system"
@@ -483,11 +564,11 @@ msgstr ""
 "Tilisiirrot eivät tule näkyviin reaaliajassa. Viimeisimmän tuodun "
 "tilisiirron päiväys on"
 
-#: www/templates/www/user.html:133
+#: www/templates/www/user.html:141
 msgid "Sender"
 msgstr "Lähettäjä"
 
-#: www/templates/www/user.html:135
+#: www/templates/www/user.html:143
 msgid "Comment"
 msgstr "Kommentti"
 
