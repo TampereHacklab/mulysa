@@ -21,6 +21,7 @@ from users.models import (
 )
 from www.forms import (
     CreateUserForm,
+    EditUserForm,
     CustomInvoiceForm,
     FileImportForm,
     RegistrationApplicationForm,
@@ -231,50 +232,32 @@ def userdetails(request, id):
 def usersettings(request, id):
     if not request.user.is_superuser and request.user.id != id:
         return redirect("/www/login/?next=%s" % request.path)
-    if request.method == "POST":
-        mxid = request.POST["mxid"]
 
-        # Check if mxid changed
-        if mxid != request.user.mxid:
-            # Check for dupes:
-            users = CustomUser.objects.filter(mxid=mxid).exclude(id=request.user.id)
-            if len(users) > 0:
-                messages.error(request, _("Matrix ID already in use"))
-            else:
-                if ("@" in mxid and ":" in mxid) or (len(mxid) == 0):
-                    if len(mxid) == 0:
-                        mxid = None
-                    request.user.mxid = mxid
-                    request.user.save()
-                    messages.success(request, _("Matrix ID changed successfully"))
-                    request.user.log(_("Set Matrix ID to %(mxid)s") % {"mxid": mxid})
-                else:
-                    messages.error(request, _("Invalid Matrix ID"))
-        nick = request.POST["nick"]
+    # the base form for users basic information
+    customuser = get_object_or_404(CustomUser, id=id)
+    usereditform = EditUserForm(request.POST or None, instance=customuser)
+    if usereditform.is_valid():
+        usereditform.save()
+        messages.success(request, _("User details saved"))
 
-        if nick != request.user.nick:
-            request.user.nick = nick
-            request.user.save()
-            messages.success(request, _("Nickname changed successfully"))
+    # services we can unsubscribe from
+    # we are the user
+    # service selfsubscribe is on
+    # subscription state is active
+    unsubscribable_services = ServiceSubscription.objects.filter(
+        user=customuser, service__self_subscribe=True, state=ServiceSubscription.ACTIVE
+    )
+    # services we can subsribe to
+    # service that has self_subscribe
+    # and is not on the unsubscribable_services list
+    subscribable_services = MemberService.objects.filter(self_subscribe=True).exclude(
+        id__in=unsubscribable_services.values_list("id")
+    )
 
-    own_services = ServiceSubscription.objects.filter(user=request.user)
-    self_services = MemberService.objects.filter(self_subscribe=True)
-    subscribable_services = []
-    unsubscribable_services = []
+    # find unclaimed nfc cards from the last XX minutes
+    unclaimed_nfccards = []
 
-    for service in self_services:
-        found = False
-        for ssub in own_services:
-            if ssub.service == service:
-                found = True
-        if found:
-            if ssub.state == ServiceSubscription.ACTIVE:
-                unsubscribable_services.append(service)
-        else:
-            subscribable_services.append(service)
-
-    userdetails = CustomUser.objects.get(id=id)
-    userdetails.nfccard = NFCCard.objects.filter(user=userdetails).first()
+    """     # if no nfc card
     if not userdetails.nfccard:
         # This monster finds unclaimed NFC cards stamped in last 5 minutes.
         userdetails.nfclog = (
@@ -285,14 +268,17 @@ def usersettings(request, id):
             )
             .exclude(payload__isnull=True)
             .order_by("-date")
-        )
+        ) """
+
     return render(
         request,
         "www/usersettings.html",
         {
-            "userdetails": userdetails,
+            "usereditform": usereditform,
+            "userdetails": customuser,
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
+            "unclaimed_nfccards": unclaimed_nfccards,
         },
     )
 
@@ -376,8 +362,8 @@ def custominvoice(request):
 
         if form.is_valid():
             count = form.cleaned_data["count"]
-            subscription = form.cleaned_data['service']
-            cost = form.cleaned_data['price']
+            subscription = form.cleaned_data["service"]
+            cost = form.cleaned_data["price"]
 
             days = subscription.service.days_per_payment * count
             amount = cost * count
@@ -427,15 +413,18 @@ def custominvoice_action(request, action, invoiceid):
 
     return custominvoice(request)
 
+
 @login_required
 def banktransaction_view(request, banktransactionid):
     """
     Allow user to view a "receipt" of a bank transaction
     """
-    if(request.user.is_staff):
+    if request.user.is_staff:
         banktransaction = BankTransaction.objects.get(id=banktransactionid)
     else:
-        banktransaction = BankTransaction.objects.get(user=request.user, id=banktransactionid)
+        banktransaction = BankTransaction.objects.get(
+            user=request.user, id=banktransactionid
+        )
     return render(
         request,
         "www/banktransaction.html",
@@ -444,6 +433,7 @@ def banktransaction_view(request, banktransactionid):
             "settings": settings,
         },
     )
+
 
 @login_required
 @staff_member_required

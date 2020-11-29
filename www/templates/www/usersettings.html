@@ -3,72 +3,92 @@
 {% load bootstrap4 %}
 {% block content %}
 <div class="container">
+
   <h1>{% trans 'User settings' %}</h1>
 
-  <form class="form-horizontal" action="{% url 'usersettings' userdetails.id %}" method="post">{% csrf_token %}
-    {% bootstrap_messages %}
-  <table class="table">
-    <tr>
-      <td>{% trans 'Name' %}</td>
-      <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'Nickname' %}</td>
-      <td><input type="text" id="nick" name="nick" value={{ userdetails.nick|default_if_none:"" }}></td>
-    </tr>
-    <tr>
-      <td>{% trans 'Email' %}</td>
-      <td>{{ userdetails.email }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'Phone' %}</td>
-      <td>{{ userdetails.phone }}</td>
-    </tr>
-    <tr>
-      <td>{% trans 'Matrix ID' %}</td>
-      <td><input type="text" id="mxid" name="mxid" value={{ userdetails.mxid|default_if_none:"" }}></td>
-    </tr>
-    <tr>
-        <td>{% trans 'NFC Card' %}</td>
-        <td>
-            {% if userdetails.nfccard %}
-                {{ userdetails.nfccard.censored_id }}
-                <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id 'RELEASE' %}">{% trans 'Release' %}</a>
-            {% else %}
-                {% if userdetails.nfclog %}
-                    {% for entry in userdetails.nfclog %}
-                        <a class="btn btn-primary" href="{% url 'claim_nfc' userdetails.id entry.payload %}">{% trans 'Claim NFC card' %} {{ entry.payload }}</a>
-                    {% endfor %}
-                {% else %}
-                    {% trans 'No NFC card claimed - go to door, use a card and claim it here in 5 minutes' %}
-                {% endif %}
-            {% endif %}
-            </td>
-      </tr>
-    </table>
+  {% bootstrap_messages %}
+
+  <form action="{% url 'usersettings' userdetails.id %}" method="post">
+    {% csrf_token %}
+    {{ usereditform.media }}
+
+    {% bootstrap_form_errors usereditform %}
+
+    {% bootstrap_form usereditform %}
+
+    {% buttons %}
     <input
-    type="submit"
-    class="btn btn-primary"
-    value="{% trans 'Save changes' %}"
-  />
+      type="submit"
+      class="btn btn-primary"
+      value="{% trans 'Save' %}"
+    />
+    {% endbuttons %}
   </form>
 
+  {% if settings.ENABLE_NFC %}
+  <hr />
+  <h1>{% trans 'NFC Card access' %}</h1>
+  <table class="table table-striped table-responsive-sm">
+    <tr>
+      <th>{% trans 'NFC Card' %}</th>
+      <th>{% trans 'Action' %}</th>
+    </tr>
+    {% for nfccard in userdetails.nfccard_set.all %}
+    <tr>
+      <td>{nfccard.censored_id}</td>
+      <td><a class="btn btn-danger" href="{% url 'release_nfccard' nfccard.id %}">{% trans 'Release' %}</a></td>
+    </tr>
+    {% empty %}
+      {% for newcard in unclaimed_nfccards %}
+      <tr>
+        <td></td>
+        <td><a class="btn btn-primary" href="{% url 'claim_nfccard' nfccard.id %}"></a></td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">{% trans 'No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 minutes' %}</td>
+      </tr>
+      {% endfor %}
+    {% endfor %}
+
+    </tr>
+  </table>
+  {% endif %}
+
+  <hr />
   <h1>{% trans 'Extra Services' %}</h1>
   {% blocktrans %}Here you can see extra services that you can subscribe yourself. You can only unsubscribe services when you have
   paid them fully. {% endblocktrans %}
-  <ul>
-  {% for service in subscribable_services %}
-    <li> <b>{{service.name}}</b> -  {{ service.cost_string }} / {{ service.period_string }}
-      <a class="btn btn-primary" href="{% url 'subscribe_service' userdetails.id service.id %}">{% trans 'Subscribe service' %}</a>
-    </li>
-  {% endfor %}
-  </ul>
-  <ul>
-    {% for service in unsubscribable_services %}
-      <li> {{service.name}}
-        <a class="btn btn-primary" href="{% url 'unsubscribe_service' userdetails.id service.id %}">{% trans 'Unsubscribe service' %}</a>
-      </li>
+
+  <table class="table table-striped table-responsive-sm">
+    <tr>
+      <th>{% trans 'Service' %}</th>
+      <th>{% trans 'Information' %}</th>
+      <th>{% trans 'Action' %}</th>
+    </tr>
+    {% for service in subscribable_services %}
+    <tr>
+      <td>{{service.name}}</td>
+      <td>{{ service.cost_string }} / {{ service.period_string }}</td>
+      <td><a class="btn btn-primary" href="{% url 'subscribe_service' userdetails.id service.id %}">{% trans 'Subscribe service' %}</a></td>
+    </tr>
     {% endfor %}
-    </ul>
+    {% for ss in unsubscribable_services %}
+    <tr>
+      <td>{{ ss.service.name }}</td>
+      <td>{{ ss.service.cost_string }} / {{ ss.service.period_string }}</td>
+      <td><a class="btn btn-danger btn-sm" href="{% url 'unsubscribe_service' userdetails.id ss.service.id %}">{% trans 'Unsubscribe service' %}</a></td>
+    </tr>
+    {% endfor %}
+    {% if subscribable_services.count == 0 and unsubscribable_services.count == 0 %}
+    <tr>
+      <td colspan="2">{% trans 'No services available to subscribe or unsubscribe ' %}</td>
+    </tr>
+    {% endif %}
+  </table>
+
+  <div class="alert alert-info" role="alert">
+    {% blocktrans %}If you have questions and or want to change something that is not available here please send an email.{% endblocktrans %}
   </div>
+</div>
 {% endblock %}
