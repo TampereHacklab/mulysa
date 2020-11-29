@@ -42,7 +42,7 @@
         {% if service == subscription.service %}
           <span class="ss_state_{{subscription.state}}">{{ subscription.statestring }}</span>
           {% if subscription.state == "OVERDUE" %}
-            <br />{{ subscription.paid_until|naturaltime }} {% trans 'days'%}
+            {{ subscription.days_overdue }} {% trans 'days'%}
           {% endif %}
         {% endif %}
       {% endfor %}
