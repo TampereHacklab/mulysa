@@ -1,8 +1,8 @@
-from datetime import datetime
 from unittest.mock import patch
 
 from django.core import mail
 from django.urls import reverse
+from django.utils import timezone
 
 from api.models import AccessDevice
 from drfx import settings
@@ -29,7 +29,7 @@ class TestAccess(APITestCase):
         # and test user
         self.ok_user = CustomUser.objects.create(
             email="test1@example.com",
-            birthday=datetime.now(),
+            birthday=timezone.now(),
             phone="+35844055066",
             mxid="@ok:exmaple.com",
         )
@@ -40,12 +40,12 @@ class TestAccess(APITestCase):
         # when that happens this test can be removed
         # and the check in the view can also be removed
         self.duplicate_user1 = CustomUser.objects.create(
-            email="test3@example.com", birthday=datetime.now(), phone="+358440778899"
+            email="test3@example.com", birthday=timezone.now(), phone="+358440778899"
         )
         self.duplicate_user1.save()
 
         self.duplicate_user2 = CustomUser.objects.create(
-            email="test4@example.com", birthday=datetime.now(), phone="+358440778899"
+            email="test4@example.com", birthday=timezone.now(), phone="+358440778899"
         )
         self.duplicate_user2.save()
 
@@ -67,7 +67,7 @@ class TestAccess(APITestCase):
         # user with no access
         self.fail_user = CustomUser.objects.create(
             email="test2@example.com",
-            birthday=datetime.now(),
+            birthday=timezone.now(),
             phone="+35855044033",
             mxid="@fail:exmaple.com",
         )
