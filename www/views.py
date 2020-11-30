@@ -3,8 +3,9 @@ from datetime import datetime, timedelta
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from api.models import DeviceAccessLogEntry
@@ -19,20 +20,19 @@ from users.models import (
     ServiceSubscription,
     UsersLog,
 )
+from utils import referencenumber
+from utils.businesslogic import BusinessLogic
+from utils.dataexport import DataExport
+from utils.dataimport import DataImport
 from www.forms import (
     CreateUserForm,
-    EditUserForm,
     CustomInvoiceForm,
+    EditUserForm,
     FileImportForm,
     RegistrationApplicationForm,
     RegistrationServicesFrom,
     RegistrationUserForm,
 )
-
-from utils import referencenumber
-from utils.businesslogic import BusinessLogic
-from utils.dataexport import DataExport
-from utils.dataimport import DataImport
 
 
 def register(request):
@@ -202,8 +202,9 @@ def applications(request):
 
 @login_required
 def userdetails(request, id):
-    if not request.user.is_superuser and request.user.id != id:
+    if not request.user.is_staff and request.user.id != id:
         return redirect("/www/login/?next=%s" % request.path)
+
     userdetails = CustomUser.objects.get(id=id)
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(
         user=userdetails
@@ -230,7 +231,7 @@ def userdetails(request, id):
 
 @login_required
 def usersettings(request, id):
-    if not request.user.is_superuser and request.user.id != id:
+    if not request.user.is_staff and request.user.id != id:
         return redirect("/www/login/?next=%s" % request.path)
 
     # the base form for users basic information
@@ -279,62 +280,107 @@ def usersettings(request, id):
 
 
 @login_required
-def subscribe_service(request, id, serviceid):
-    service = MemberService.objects.get(id=serviceid)
-    already_existing = ServiceSubscription.objects.filter(
-        user=request.user, service=service
-    )
-    if len(already_existing):
-        messages.error(request, _("You already have this service"))
-    else:
+def usersettings_subscribe_service(request, id):
+    """
+    Subscribe user to new service
+    """
+    if not request.user.is_staff and request.user.id != id:
+        return redirect("/www/login/?next=%s" % request.path)
+
+    customuser = get_object_or_404(CustomUser, id=id)
+    if request.method == "POST":
+        service = get_object_or_404(
+            MemberService, id=request.POST["serviceid"]
+        )
+
+        # double check that it is ok to subsribe this service
+        if(ServiceSubscription.objects.filter(user=request.user, service=service).count()):
+            messages.error(request, _("You already have this service"))
+            return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+        if(not service.self_subscribe):
+            messages.error(request, _("This service cannot be self subscribed to"))
+            return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+        # and subscribe
         BusinessLogic.create_servicesubscription(
-            request.user, service, ServiceSubscription.OVERDUE
+            customuser, service, ServiceSubscription.OVERDUE
         )
         messages.success(request, _("Service subscribed. You may now pay for it."))
-    return usersettings(request, id)
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
 
 @login_required
-def unsubscribe_service(request, id, serviceid):
-    service = MemberService.objects.get(id=serviceid)
-    subscriptions = ServiceSubscription.objects.filter(
-        user=request.user, service=service
-    )
-    if len(subscriptions):
-        for sub in subscriptions:
-            if sub.state == ServiceSubscription.ACTIVE:
-                subscriptions.delete()
-                messages.success(request, _("Service unsubscribed"))
-            else:
-                messages.error(
-                    request,
-                    _(
-                        "Service is not active. You must pay for the service first. Contact staff if needed."
-                    ),
-                )
-    else:
-        messages.error(request, _("You are not subscribed to that service"))
-    return usersettings(request, id)
+def usersettings_unsubscribe_service(request, id):
+    """
+    Unsubscribe user from service
+    """
+    if not request.user.is_staff and request.user.id != id:
+        return redirect("/www/login/?next=%s" % request.path)
+
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST":
+        subscription = get_object_or_404(
+            ServiceSubscription, id=request.POST["subscriptionid"]
+        )
+        if subscription.state == ServiceSubscription.ACTIVE:
+            subscription.delete()
+            messages.success(request, _("Service unsubscribed"))
+        else:
+            messages.error(
+                request,
+                _(
+                    "Service is not active. You must pay for the service first. Contact staff if needed."
+                ),
+            )
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
 
 @login_required
-def claim_nfc(request, id, cardid):
-    userdetails = CustomUser.objects.get(id=id)
+def usersettings_claim_nfc(request, id):
+    """
+    claim nfc card for user
+    """
+    if not request.user.is_staff and request.user.id != id:
+        return redirect("/www/login/?next=%s" % request.path)
 
-    if cardid == "RELEASE":
-        nfccard = NFCCard.objects.get(user=userdetails)
-        nfccard.delete()
-        messages.success(request, _("Released NFC card"))
-        userdetails.log(_("Released NFC card"))
-    else:
-        nfccards = NFCCard.objects.filter(cardid=cardid)
-        if len(nfccards) > 0:
-            raise Exception("This card is already claimed, should never happen!")
-        newcard = NFCCard(cardid=cardid, user=userdetails)
-        messages.success(request, _("NFC Card successfully claimed"))
-        userdetails.log(_("NFC Card successfully claimed"))
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST":
+        newcarddata = request.POST["newcarddata"]
+
+        # some minimal checks for the card data, could use some more..
+        if len(newcarddata) < 3:
+            messages.error(request, _("NFC Card validation failed"))
+            return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+        # save as a new card
+        newcard = NFCCard(cardid=newcarddata, user=userdetails)
         newcard.save()
-    return usersettings(request, id)
+
+        messages.success(request, _("NFC Card successfully claimed"))
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+
+@login_required
+def usersettings_delete_nfc(request, id):
+    """
+    delete nfc card
+    """
+    if not request.user.is_staff and request.user.id != id:
+        return redirect("/www/login/?next=%s" % request.path)
+
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST":
+        card = get_object_or_404(NFCCard, id=request.POST["nfccardid"])
+        card.delete()
+        messages.success(request, _("NFC Card successfully deleted"))
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
 
 @login_required

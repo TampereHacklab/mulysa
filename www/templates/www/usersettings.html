@@ -25,56 +25,6 @@
     {% endbuttons %}
   </form>
 
-  <hr />
-  <h1>{% trans 'NFC Card access' %}</h1>
-  <table class="table table-striped table-responsive-sm">
-    <thead class="thead-light">
-      <tr>
-        <th>{% trans 'NFC Card' %}</th>
-        <th>{% trans 'Action' %}</th>
-      </tr>
-    </thead>
-    {% for nfccard in userdetails.nfccard_set.all %}
-    <tr>
-      <td>{nfccard.censored_id}</td>
-      <td>
-        <form action="{% url 'usersettings' userdetails.id %}" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="nfccardid" value="{{nfccard.id}}"
-          <input
-          type="submit"
-          class="btn btn-danger"
-          value="{% trans 'Release' %}"
-        />
-        </form>
-      </td>
-    </tr>
-    {% empty %}
-      {% for newcard in unclaimed_nfccards %}
-      <tr>
-        <td>{{ newcard.payload }}</td>
-        <td>
-          <form action="{% url 'usersettings' userdetails.id %}" method="post">
-            {% csrf_token %}
-            <input type="hidden" name="action" value="capturecard" />
-            <input type="hidden" name="nfccardid" value="{{nfccard.payload}}" />
-            <input
-            type="submit"
-            class="btn btn-primary btn-sm"
-            value="{% trans 'capture' %}"
-          />
-          </form>
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="2">{% trans 'No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 minutes' %}</td>
-      </tr>
-      {% endfor %}
-    {% endfor %}
-
-    </tr>
-  </table>
 
   <hr />
   <h1>{% trans 'Extra Services' %}</h1>
@@ -93,14 +43,34 @@
     <tr>
       <td>{{service.name}}</td>
       <td>{{ service.cost_string }} / {{ service.period_string }}</td>
-      <td><a class="btn btn-primary" href="{% url 'subscribe_service' userdetails.id service.id %}">{% trans 'Subscribe service' %}</a></td>
+      <td>
+        <form action="{% url 'usersettings_subscribe_service' userdetails.id %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="serviceid" value="{{service.id}}" />
+          <input
+          type="submit"
+          class="btn btn-primary btn-sm"
+          value="{% trans 'Subscribe service' %}"
+        />
+        </form>
+      </td>
     </tr>
     {% endfor %}
     {% for ss in unsubscribable_services %}
     <tr>
       <td>{{ ss.service.name }}</td>
       <td>{{ ss.service.cost_string }} / {{ ss.service.period_string }}</td>
-      <td><a class="btn btn-danger btn-sm" href="{% url 'unsubscribe_service' userdetails.id ss.service.id %}">{% trans 'Unsubscribe service' %}</a></td>
+      <td>
+        <form action="{% url 'usersettings_unsubscribe_service' userdetails.id  %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="subscriptionid" value="{{ss.id}}" />
+          <input
+          type="submit"
+          class="btn btn-danger btn-sm"
+          value="{% trans 'Unsubscribe service' %}"
+        />
+        </form>
+      </td>
     </tr>
     {% endfor %}
     {% if subscribable_services.count == 0 and unsubscribable_services.count == 0 %}
@@ -109,6 +79,58 @@
     </tr>
     {% endif %}
   </table>
+
+  <hr />
+  <h1>{% trans 'NFC Card access' %}</h1>
+  <table class="table table-striped table-responsive-sm">
+    <thead class="thead-light">
+      <tr>
+        <th>{% trans 'NFC Card' %}</th>
+        <th>{% trans 'Action' %}</th>
+      </tr>
+    </thead>
+    {% for nfccard in userdetails.nfccard_set.all %}
+    <tr>
+      <td>{nfccard.censored_id}</td>
+      <td>
+        <form action="{% url 'usersettings_delete_nfc' userdetails.id %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="nfccardid" value="{{nfccard.id}}"
+          <input
+          type="submit"
+          class="btn btn-danger"
+          value="{% trans 'Release' %}"
+        />
+        </form>
+      </td>
+    </tr>
+    {% empty %}
+      {% for newcard in unclaimed_nfccards %}
+      <tr>
+        <td>{{ newcard.payload }}</td>
+        <td>
+          <form action="{% url 'usersettings_claim_nfc' userdetails.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="newcarddata" value="{{nfccard.payload}}" />
+            <input
+            type="submit"
+            class="btn btn-primary btn-sm"
+            value="{% trans 'capture' %}"
+          />
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">{% trans 'No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 minutes' %}</td>
+      </tr>
+      {% endfor %}
+    {% endfor %}
+
+    </tr>
+  </table>
+
+
 
   <div class="alert alert-info" role="alert">
     {% blocktrans %}If you have questions and or want to change something that is not available here please send an email.{% endblocktrans %}
