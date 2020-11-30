@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from users.models import MemberService
 
 class TestBasicSmoke(TestCase):
     def setUp(self):
@@ -87,6 +88,13 @@ class TestUserViews(TestCase):
             phone="+358123123",
         )
         self.client.force_login(self.user)
+        # test service
+        self.memberservice = MemberService.objects.create(
+            name="TestService",
+            cost=10,
+            days_per_payment=30,
+            days_before_warning=2
+        )
 
     def test_my_info(self):
         response = self.client.get(
@@ -94,6 +102,9 @@ class TestUserViews(TestCase):
         )
         self.assertContains(response, self.user.first_name)
         self.assertContains(response, self.user.last_name)
+
+        # no memberservices
+        self.assertEqual(len(response.context['userdetails.servicesubscriptions']), 0)
 
     def tearDown(self):
         get_user_model().objects.all().delete()
