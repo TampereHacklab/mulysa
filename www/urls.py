@@ -20,7 +20,6 @@ urlpatterns = [
     path("usersettings/<int:id>/unsubscribe_service", views.usersettings_unsubscribe_service, name="usersettings_unsubscribe_service"),
     path("usersettings/<int:id>/claim_nfc", views.usersettings_claim_nfc, name="usersettings_claim_nfc"),
     path("usersettings/<int:id>/delete_nfc", views.usersettings_delete_nfc, name="usersettings_delete_nfc"),
-    path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",
