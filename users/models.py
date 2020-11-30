@@ -579,6 +579,12 @@ class ServiceSubscription(models.Model):
         SUSPENDED: "red",
     }
 
+    def is_active(self):
+        """
+        helper method for checking if the service is active
+        """
+        return True if self.state == ServiceSubscription.ACTIVE else False
+
     # Convenince method to get color of the state for ui
     def statecolor(self):
         return self.SERVICE_STATE_COLORS[self.state]
