@@ -1,5 +1,6 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load humanize %}
 {% block content %}
 <h2>
   User list
@@ -13,12 +14,14 @@
   <thead class="thead-light">
     <tr>
       <th>Name</th>
+      <th>Nick</th>
       <th>Email</th>
       <th>Phone</th>
       {% for service in services %}
       <th>{{ service.name }}</th>
       {% endfor %}
       <th>Extra services</th>
+      <th>Last login</th>
       <th>Management</th>
     </tr>
   </thead>
@@ -28,11 +31,9 @@
       <a href="{% url 'userdetails' user.id %}">
         {{ user.first_name }}
         {{ user.last_name }}
-        {% if user.nick %}
-          ({{user.nick}})
-        {% endif %}
       </a>
     </td>
+    <td>{{ user.nick }}</td>
     <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
     <td>{{ user.phone }}</td>
     {% for service in services %}
@@ -57,6 +58,7 @@
       {% endif %}
       {% endfor %}
     </td>
+    <td>{{ user.last_login|naturaltime }}</td>
     <td>
       <a class="btn btn-primary btn-sm" href="{% url 'usersettings' user.id %}">Edit</a>
       {% if request.user.is_superuser %}
