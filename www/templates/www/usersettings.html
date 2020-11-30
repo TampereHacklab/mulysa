@@ -25,24 +25,46 @@
     {% endbuttons %}
   </form>
 
-  {% if settings.ENABLE_NFC %}
   <hr />
   <h1>{% trans 'NFC Card access' %}</h1>
   <table class="table table-striped table-responsive-sm">
-    <tr>
-      <th>{% trans 'NFC Card' %}</th>
-      <th>{% trans 'Action' %}</th>
-    </tr>
+    <thead class="thead-light">
+      <tr>
+        <th>{% trans 'NFC Card' %}</th>
+        <th>{% trans 'Action' %}</th>
+      </tr>
+    </thead>
     {% for nfccard in userdetails.nfccard_set.all %}
     <tr>
       <td>{nfccard.censored_id}</td>
-      <td><a class="btn btn-danger" href="{% url 'release_nfccard' nfccard.id %}">{% trans 'Release' %}</a></td>
+      <td>
+        <form action="{% url 'usersettings' userdetails.id %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="nfccardid" value="{{nfccard.id}}"
+          <input
+          type="submit"
+          class="btn btn-danger"
+          value="{% trans 'Release' %}"
+        />
+        </form>
+      </td>
     </tr>
     {% empty %}
       {% for newcard in unclaimed_nfccards %}
       <tr>
-        <td></td>
-        <td><a class="btn btn-primary" href="{% url 'claim_nfccard' nfccard.id %}"></a></td>
+        <td>{{ newcard.payload }}</td>
+        <td>
+          <form action="{% url 'usersettings' userdetails.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="capturecard" />
+            <input type="hidden" name="nfccardid" value="{{nfccard.payload}}" />
+            <input
+            type="submit"
+            class="btn btn-primary btn-sm"
+            value="{% trans 'capture' %}"
+          />
+          </form>
+        </td>
       </tr>
       {% empty %}
       <tr>
@@ -53,7 +75,6 @@
 
     </tr>
   </table>
-  {% endif %}
 
   <hr />
   <h1>{% trans 'Extra Services' %}</h1>
@@ -61,11 +82,13 @@
   paid them fully. {% endblocktrans %}
 
   <table class="table table-striped table-responsive-sm">
-    <tr>
-      <th>{% trans 'Service' %}</th>
-      <th>{% trans 'Information' %}</th>
-      <th>{% trans 'Action' %}</th>
-    </tr>
+    <thead class="thead-light">
+      <tr>
+        <th>{% trans 'Service' %}</th>
+        <th>{% trans 'Information' %}</th>
+        <th>{% trans 'Action' %}</th>
+      </tr>
+    </thead>
     {% for service in subscribable_services %}
     <tr>
       <td>{{service.name}}</td>

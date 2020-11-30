@@ -255,20 +255,15 @@ def usersettings(request, id):
     )
 
     # find unclaimed nfc cards from the last XX minutes
-    unclaimed_nfccards = []
-
-    """     # if no nfc card
-    if not userdetails.nfccard:
-        # This monster finds unclaimed NFC cards stamped in last 5 minutes.
-        userdetails.nfclog = (
-            DeviceAccessLogEntry.objects.filter(
-                granted=False,
-                nfccard=None,
-                date__gte=datetime.now() - timedelta(minutes=5),
-            )
-            .exclude(payload__isnull=True)
-            .order_by("-date")
-        ) """
+    unclaimed_nfccards = (
+        DeviceAccessLogEntry.objects.filter(
+            granted=False,
+            nfccard=None,
+            date__gte=datetime.now() - timedelta(minutes=5),
+        )
+        .exclude(payload__isnull=True)
+        .order_by("-date")
+    )
 
     return render(
         request,
