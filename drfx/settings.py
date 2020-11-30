@@ -1,5 +1,6 @@
 import logging.config
 import os
+import sys
 
 # import datetime
 
@@ -253,6 +254,9 @@ logging.config.dictConfig(
         },
     }
 )
+
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    logging.disable(logging.CRITICAL)
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
