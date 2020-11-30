@@ -68,6 +68,9 @@
           type="submit"
           class="btn btn-danger btn-sm"
           value="{% trans 'Unsubscribe service' %}"
+          {% if not ss.is_active %}
+          disabled=disabled
+          {% endif %}
         />
         </form>
       </td>
@@ -91,11 +94,11 @@
     </thead>
     {% for nfccard in userdetails.nfccard_set.all %}
     <tr>
-      <td>{nfccard.censored_id}</td>
+      <td>{{ nfccard.censored_id }}</td>
       <td>
         <form action="{% url 'usersettings_delete_nfc' userdetails.id %}" method="post">
           {% csrf_token %}
-          <input type="hidden" name="nfccardid" value="{{nfccard.id}}"
+          <input type="hidden" name="nfccardid" value="{{nfccard.id}}" />
           <input
           type="submit"
           class="btn btn-danger"
@@ -111,7 +114,7 @@
         <td>
           <form action="{% url 'usersettings_claim_nfc' userdetails.id %}" method="post">
             {% csrf_token %}
-            <input type="hidden" name="newcarddata" value="{{nfccard.payload}}" />
+            <input type="hidden" name="logentryid" value="{{newcard.id}}" />
             <input
             type="submit"
             class="btn btn-primary btn-sm"

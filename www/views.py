@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from api.models import DeviceAccessLogEntry
@@ -245,14 +246,15 @@ def usersettings(request, id):
     # we are the user
     # service selfsubscribe is on
     # subscription state is active
-    unsubscribable_services = ServiceSubscription.objects.filter(
-        user=customuser, service__self_subscribe=True, state=ServiceSubscription.ACTIVE
+    own_self_subscribe_services = customuser.servicesubscription_set.all()
+    unsubscribable_services = own_self_subscribe_services.filter(
+        service__self_subscribe=True
     )
     # services we can subsribe to
     # service that has self_subscribe
-    # and is not on the unsubscribable_services list
+    # and we don't already have that service (TODO: actually you could have one service multiple times...)
     subscribable_services = MemberService.objects.filter(self_subscribe=True).exclude(
-        id__in=unsubscribable_services.values_list("id")
+        id__in=own_self_subscribe_services.values_list("service__id")
     )
 
     # find unclaimed nfc cards from the last XX minutes
@@ -260,7 +262,8 @@ def usersettings(request, id):
         DeviceAccessLogEntry.objects.filter(
             granted=False,
             nfccard=None,
-            date__gte=datetime.now() - timedelta(minutes=5),
+            claimed_by=None,
+            date__gte=timezone.now() - timedelta(minutes=5),
         )
         .exclude(payload__isnull=True)
         .order_by("-date")
@@ -288,16 +291,17 @@ def usersettings_subscribe_service(request, id):
         return redirect("/www/login/?next=%s" % request.path)
 
     customuser = get_object_or_404(CustomUser, id=id)
+
     if request.method == "POST":
-        service = get_object_or_404(
-            MemberService, id=request.POST["serviceid"]
-        )
+        service = get_object_or_404(MemberService, id=request.POST["serviceid"])
 
         # double check that it is ok to subsribe this service
-        if(ServiceSubscription.objects.filter(user=request.user, service=service).count()):
+        if ServiceSubscription.objects.filter(
+            user=request.user, service=service
+        ).count():
             messages.error(request, _("You already have this service"))
             return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
-        if(not service.self_subscribe):
+        if not service.self_subscribe:
             messages.error(request, _("This service cannot be self subscribed to"))
             return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
@@ -305,6 +309,7 @@ def usersettings_subscribe_service(request, id):
         BusinessLogic.create_servicesubscription(
             customuser, service, ServiceSubscription.OVERDUE
         )
+        customuser.log(f"Self subscribed to {service.name}")
         messages.success(request, _("Service subscribed. You may now pay for it."))
 
     return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
@@ -325,6 +330,7 @@ def usersettings_unsubscribe_service(request, id):
             ServiceSubscription, id=request.POST["subscriptionid"]
         )
         if subscription.state == ServiceSubscription.ACTIVE:
+            customuser.log(f"Self unsubscribing from {subscription.service.name}")
             subscription.delete()
             messages.success(request, _("Service unsubscribed"))
         else:
@@ -349,16 +355,19 @@ def usersettings_claim_nfc(request, id):
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
-        newcarddata = request.POST["newcarddata"]
+        logentry = get_object_or_404(DeviceAccessLogEntry, id=request.POST["logentryid"])
 
-        # some minimal checks for the card data, could use some more..
-        if len(newcarddata) < 3:
-            messages.error(request, _("NFC Card validation failed"))
-            return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+        # mark the entry claimed
+        logentry.claimed_by = customuser
+        logentry.save()
 
         # save as a new card
-        newcard = NFCCard(cardid=newcarddata, user=userdetails)
+        newcard = NFCCard(cardid=logentry.payload, user=customuser)
         newcard.save()
+
+        # customer log entry
+        censoredid = newcard.censored_id()
+        customuser.log(f"Registered new NFC card {censoredid}")
 
         messages.success(request, _("NFC Card successfully claimed"))
 
@@ -377,7 +386,13 @@ def usersettings_delete_nfc(request, id):
 
     if request.method == "POST":
         card = get_object_or_404(NFCCard, id=request.POST["nfccardid"])
+
         card.delete()
+
+        # customer log entry
+        censoredid = card.censored_id()
+        customuser.log(f"Deleted NFC card {censoredid}")
+
         messages.success(request, _("NFC Card successfully deleted"))
 
     return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
