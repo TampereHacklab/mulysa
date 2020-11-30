@@ -1,16 +1,10 @@
-import datetime
-from datetime import timedelta
-
 from django.contrib.auth import get_user_model
-from django.core import mail
-from django.db.utils import IntegrityError
-from django.dispatch import receiver
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
 
-class IndexViewTestsNotLoggedIn(TestCase):
+class TestBasicSmoke(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_customuser(
             first_name="FirstName",
@@ -55,12 +49,84 @@ class IndexViewTestsNotLoggedIn(TestCase):
             response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
             self.assertNotEqual(response.status_code, 200)
 
+        # and some urls we should not see as basic logged in user
+        self.client.force_login(self.user)
+        ownurls = [
+            reverse("dataimport"),
+            reverse("dataexport"),
+            reverse("users"),
+            reverse("users/create"),
+            reverse("ledger"),
+            reverse("custominvoices"),
+            reverse("application_operation", args=(1, "test")),
+        ]
+        for url in ownurls:
+            response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
+            self.assertNotEqual(response.status_code, 200)
+
     def test_index_logged(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
         self.assertContains(response, "Welcome back")
         response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="fi")
         self.assertContains(response, "Tervetuloa takaisin")
+
+    def tearDown(self):
+        get_user_model().objects.all().delete()
+
+
+class TestUserViews(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.client.force_login(self.user)
+
+    def test_my_info(self):
+        response = self.client.get(
+            reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
+        )
+        self.assertContains(response, self.user.first_name)
+        self.assertContains(response, self.user.last_name)
+
+    def tearDown(self):
+        get_user_model().objects.all().delete()
+
+
+class TestStaffVies(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="Test",
+            last_name="Admin",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.client.force_login(self.user)
+
+    def smokeViews(self):
+        urls = [
+            reverse("dataimport"),
+            reverse("dataexport"),
+            reverse("users"),
+            reverse("users/create"),
+            reverse("ledger"),
+            reverse("custominvoices"),
+            reverse("custominvoice"),
+            reverse("custominvoice_action", args=("test", 1)),
+            reverse("application_operation", args=(1, "test")),
+        ]
+        for url in urls:
+            response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
+            self.assertEqual(response.status_code, 200)
 
     def tearDown(self):
         get_user_model().objects.all().delete()
