@@ -2,6 +2,7 @@ import logging
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import get_user_model
 
 from users.models import NFCCard
 
@@ -73,5 +74,13 @@ class DeviceAccessLogEntry(models.Model):
         null=True,
         verbose_name=_("NFC card"),
         help_text=_("NFC card this was mapped to, if any"),
+        on_delete=models.SET_NULL,
+    )
+
+    claimed_by = models.ForeignKey(
+        get_user_model(),
+        null=True,
+        verbose_name=_("User who claimed this"),
+        help_text=_("Who claimed this entry"),
         on_delete=models.SET_NULL,
     )
