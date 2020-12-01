@@ -4,7 +4,7 @@
 
 # Mulysa
 
-asylym[::-1] is a member management system for Tampere Hacklab.
+asylum[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
