@@ -80,7 +80,7 @@ class DeviceAccessLogEntry(models.Model):
     claimed_by = models.ForeignKey(
         get_user_model(),
         null=True,
-        verbose_name=_("User who claimed this"),
+        verbose_name=_("Claimed by"),
         help_text=_("Who claimed this entry"),
         on_delete=models.SET_NULL,
     )
