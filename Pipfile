@@ -18,7 +18,7 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-django = "==3.0.*"
+django = "==3.1.*"
 djangorestframework = "*"
 django-rest-auth = "*"
 django-allauth = "*"
@@ -30,9 +30,7 @@ djangorestframework-filters = "*"
 twilio = "*"
 django-user-language-middleware = "*"
 mysqlclient = "*"
-# the version from pypi is way too old to work..
-# TODO: try to switch to pypi package as soon as new release is available
-drf-tracking = {editable = true,git = "https://github.com/aschn/drf-tracking.git"}
+drf-api-tracking = "*"
 phonenumbers = "*"
 gunicorn = "*"
 django-bootstrap4 = "*"
