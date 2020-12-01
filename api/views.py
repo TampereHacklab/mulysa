@@ -63,8 +63,6 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         users with enough power will also get a list of all users with door access with this endpoint
         """
 
-        # TODO: Generate log entry for phone events also!
-
         inserializer = AccessDataSerializer(data=request.data)
         inserializer.is_valid(raise_exception=True)
 
@@ -99,9 +97,11 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         # user does not have access rights
         if not user.has_door_access():
+            user.log("Door access denied with phone")
             door_access_denied.send(sender=self.__class__, user=user, method="phone")
             return Response(status=481)
 
+        user.log("Door opened with phone")
         outserializer = UserAccessSerializer(user)
         return Response(outserializer.data)
 
@@ -116,7 +116,11 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         # collect list of all users that have door access
         users_with_door_access = []
-        for ss in ServiceSubscription.objects.select_related('user').filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE).filter(state=ServiceSubscription.ACTIVE):
+        for ss in (
+            ServiceSubscription.objects.select_related("user")
+            .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
+            .filter(state=ServiceSubscription.ACTIVE)
+        ):
             users_with_door_access.append(ss.user)
 
         # and output it
@@ -156,6 +160,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
             # user does not have access rights
             if not user.has_door_access():
+                user.log("Door access denied with NFC")
                 door_access_denied.send(sender=self.__class__, user=user, method="nfc")
                 response_status = 481
 
@@ -164,6 +169,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         logentry.save()
 
         if response_status == 0:
+            user.log("Door opened with NFC")
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data)
 
