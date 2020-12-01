@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 12:22+0200\n"
-"PO-Revision-Date: 2020-12-01 12:53+0200\n"
+"POT-Creation-Date: 2020-12-01 18:23+0200\n"
+"PO-Revision-Date: 2020-12-01 18:25+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -320,7 +320,7 @@ msgstr "Viitenumero"
 #: www/templates/www/usersettings.html:39
 #: www/templates/www/usersettings.html:92
 msgid "Action"
-msgstr "Toiminta"
+msgstr "Toiminto"
 
 #: www/templates/www/custominvoice.html:36
 #: www/templates/www/custominvoice.html:59 www/templates/www/user.html:104
@@ -507,7 +507,7 @@ msgstr "Viimeisin maksu"
 
 #: www/templates/www/user.html:64
 msgid "Door opening number"
-msgstr "Ovenavaus numero"
+msgstr "Oven avausnumero"
 
 #: www/templates/www/user.html:72
 msgid ""
@@ -620,24 +620,24 @@ msgid "Release"
 msgstr "Vapauta"
 
 #: www/templates/www/usersettings.html:121
-msgid "capture"
-msgstr "haltuunota"
+msgid "Claim"
+msgstr "Varaa"
 
 #: www/templates/www/usersettings.html:128
 msgid ""
 "No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 "
 "minutes"
 msgstr ""
-"Ei NFC-korttia yhdistettynä - mene ovelle, leimaa kortti ja yhdistä se "
+"Ei varattavia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä se "
 "täällä 5 minuutin kuluessa"
 
 #: www/templates/www/usersettings.html:139
 msgid ""
 "If you have questions and or want to change something that is not available "
-"here please send an email."
+"here, please send an email."
 msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
-"täällä voit lähettää ehdotuksen sähköpostilla."
+"täällä, voit lähettää ehdotuksen sähköpostilla."
 
 #: www/views.py:181
 #, python-format
@@ -679,11 +679,14 @@ msgstr ""
 
 #: www/views.py:372
 msgid "NFC Card successfully claimed"
-msgstr "NFC-Kortti haltuunotettu onnistuneesti"
+msgstr "NFC-Kortti varattu onnistuneesti"
 
 #: www/views.py:396
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
+
+#~ msgid "capture"
+#~ msgstr "haltuunota"
 
 #~ msgid "Nickname"
 #~ msgstr "Kutsumanimi"
