@@ -18,6 +18,7 @@ body {
 
 body > main {
   padding-top: 80px;
+  padding-bottom: 30px;
 }
 
 .ss_state_ACTIVE {

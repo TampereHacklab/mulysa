@@ -67,8 +67,6 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         }
 
     def test_user_gets_more_time(self):
-        print(self.servicesubscription.paid_until)
-
         paid_delta = -50
         # starts of as overdue
         self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.OVERDUE)
@@ -159,7 +157,6 @@ class TestTitoImporter(TestCase):
         data = self._getbasetitodata()
         # remove one character from the end
         dataline = "".join(data.values())[:-1]
-        print(len(dataline))
         lines = io.BytesIO(b"header\n" + dataline.encode())
         results = DataImport.import_tito(lines)
         self.assertDictContainsSubset({"imported": 0, "exists": 0, "error": 1}, results)

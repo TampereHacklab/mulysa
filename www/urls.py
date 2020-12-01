@@ -16,21 +16,10 @@ urlpatterns = [
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
-    path(
-        "usersettings/<int:id>/claim_nfc/<str:cardid>",
-        views.claim_nfc,
-        name="claim_nfc",
-    ),
-    path(
-        "usersettings/<int:id>/subscribe_service/<int:serviceid>",
-        views.subscribe_service,
-        name="subscribe_service",
-    ),
-    path(
-        "usersettings/<int:id>/unsubscribe_service/<int:serviceid>",
-        views.unsubscribe_service,
-        name="unsubscribe_service",
-    ),
+    path("usersettings/<int:id>/subscribe_service", views.usersettings_subscribe_service, name="usersettings_subscribe_service"),
+    path("usersettings/<int:id>/unsubscribe_service", views.usersettings_unsubscribe_service, name="usersettings_unsubscribe_service"),
+    path("usersettings/<int:id>/claim_nfc", views.usersettings_claim_nfc, name="usersettings_claim_nfc"),
+    path("usersettings/<int:id>/delete_nfc", views.usersettings_delete_nfc, name="usersettings_delete_nfc"),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",

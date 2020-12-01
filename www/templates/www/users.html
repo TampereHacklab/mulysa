@@ -60,7 +60,10 @@
     </td>
     <td>{{ user.last_login|naturaltime }}</td>
     <td>
-      <a href="{% url 'admin:users_customuser_change' user.id %}">Modify</a>
+      <a class="btn btn-primary btn-sm" href="{% url 'usersettings' user.id %}">Edit</a>
+      {% if request.user.is_superuser %}
+      <a class="btn btn-danger btn-sm" href="{% url 'admin:users_customuser_change' user.id %}">View in admin</a>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}
