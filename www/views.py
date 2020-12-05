@@ -212,8 +212,8 @@ def userdetails(request, id):
     )
     userdetails.transactions = BankTransaction.objects.filter(
         user=userdetails
-    ).order_by("date")
-    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by("date")
+    ).order_by("-date")
+    userdetails.userslog = UsersLog.objects.filter(user=userdetails).order_by("-date")
     userdetails.custominvoices = CustomInvoice.objects.filter(user=userdetails)
     userdetails.membership_application = MembershipApplication.objects.filter(
         user=userdetails
@@ -355,7 +355,9 @@ def usersettings_claim_nfc(request, id):
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
-        logentry = get_object_or_404(DeviceAccessLogEntry, id=request.POST["logentryid"])
+        logentry = get_object_or_404(
+            DeviceAccessLogEntry, id=request.POST["logentryid"]
+        )
 
         # mark the entry claimed
         logentry.claimed_by = customuser
