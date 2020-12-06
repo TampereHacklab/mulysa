@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import html, timezone
 
 from mailer.models import Message
 
@@ -15,7 +15,7 @@ class EmailAdminTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.email = Email.objects.create(subject="Test email 1", content="Test message 1\nWith\nNewlines")
+        self.email = Email.objects.create(subject="Test email 1", content="Test message 1\nWith\nNewlines\n and special characters öä'\"&<>\n\nand utf-8 test string ᚻᛖ ᚳᚹᚫᚦ ᚦᚫᛏ ᚻᛖ ᛒᚢᛞᛖ ᚩᚾ ᚦᚫᛗ ᛚᚪᚾᛞᛖ ᚾᚩᚱᚦᚹᛖᚪᚱᛞᚢᛗ ᚹᛁᚦ ᚦᚪ ᚹᛖᛥᚫ")
         self.email_sent = Email.objects.create(subject="Test email 1", content="Test message 1\nWith\nNewlines", sent=timezone.now())
         self.user = get_user_model().objects.create_superuser(
             email="testsuper@example.com",
@@ -36,7 +36,7 @@ class EmailAdminTestCase(TestCase):
         url = reverse('admin:email-send', args=[self.email.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.email.content)
+        self.assertContains(response, html.escape(self.email.content))
 
     def test_sending(self):
         self.assertIsNone(self.email.sent)
@@ -52,7 +52,7 @@ class EmailAdminTestCase(TestCase):
         # check that the view in browser is accessible
         url = '/email/'+self.email.get_url()
         preview = self.client.get(url)
-        self.assertContains(preview, self.email.content)
+        self.assertContains(preview, html.escape(self.email.content))
 
         # and check that non auth users cannot view it
         self.client.logout()
@@ -63,7 +63,7 @@ class EmailAdminTestCase(TestCase):
 class EmailTestCase(TestCase):
     def setUp(self):
         # few test emails
-        self.email1 = Email.objects.create(subject="Test email 1", content="Test message 1\nWith\nNewlines")
+        self.email1 = Email.objects.create(subject="Test email 1", content="Test message 1\nWith\nNewlines\n and special characters öä'\"&<>\n\nand utf-8 test string ᚻᛖ ᚳᚹᚫᚦ ᚦᚫᛏ ᚻᛖ ᛒᚢᛞᛖ ᚩᚾ ᚦᚫᛗ ᛚᚪᚾᛞᛖ ᚾᚩᚱᚦᚹᛖᚪᚱᛞᚢᛗ ᚹᛁᚦ ᚦᚪ ᚹᛖᛥᚫ")
 
         # one active user, one inactive user
         self.user1 = get_user_model().objects.create_customuser(first_name="FirstName",

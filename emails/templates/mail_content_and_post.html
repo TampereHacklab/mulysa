@@ -1,0 +1,5 @@
+{# Preview and web version of the email #}
+{% load i18n %}{{ email.content }}
+
+---
+{% blocktrans %}You are receiving this email because you are registered member of {{ SITENAME }}{% endblocktrans %}
