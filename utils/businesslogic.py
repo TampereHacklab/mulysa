@@ -64,6 +64,7 @@ class BusinessLogic:
             # note, this template will be found from users app
             plaintext_content = render_to_string("mail/service_subscription_about_to_expire.txt", context)
             send_mail(subject, plaintext_content, from_email, [to])
+            ss.user.log(f"Expiry email notification sent. Subject: {subject} To: {to}")
 
     @staticmethod
     def new_transaction(transaction):
