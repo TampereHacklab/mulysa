@@ -1,5 +1,5 @@
 {# The real content of the email, first the content and then the "post" stuff like, why this email was sent #}
-{% load i18n %}{{ email.content }}
+{% load i18n %}{% autoescape off %}{{ email.content }}
 
 ---
-{% blocktrans %}You are receiving this email because you are registered member of {{ SITENAME }}{% endblocktrans %}
+{% blocktrans %}You are receiving this email because you are registered member of {{ SITENAME }}{% endblocktrans %}{% endautoescape %}
