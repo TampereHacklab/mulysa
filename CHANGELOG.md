@@ -1,6 +1,5 @@
 # Changelog
 
-* [pull] master from TampereHacklab:master. PR [#54](https://github.com/vaasahacklab/mulysa/pull/54) by [@pull[bot]](https://github.com/apps/pull).
 * Subscription information in accessdenied email, fixes #291. PR [#293](https://github.com/TampereHacklab/mulysa/pull/293) by [@tswfi](https://github.com/tswfi).
 * Fix email encoding, fixes #289. PR [#290](https://github.com/TampereHacklab/mulysa/pull/290) by [@tswfi](https://github.com/tswfi).
 
