@@ -174,6 +174,10 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data)
 
+        if response_status == 481:
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=response_status)
+
         return Response(status=response_status)
 
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
