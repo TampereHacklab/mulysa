@@ -13,7 +13,7 @@ coverage = "*"
 tox = "*"
 isort = "*"
 rope = "*"
-python-coveralls = "*"
+coveralls = "*"
 black = "*"
 werkzeug = "*"
 
