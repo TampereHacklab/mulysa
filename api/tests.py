@@ -41,7 +41,7 @@ class TestLogging(APITestCase):
         # check that we have a drf-tracking log entry
         self.assertEqual(APIRequestLog.objects.count(), 1)
         self.assertIn(self.ok_user.phone, APIRequestLog.objects.first().data)
-        self.assertEqual(APIRequestLog.objects.first().response, "")
+        self.assertNotEqual(APIRequestLog.objects.first().response, "")
 
     def tearDown(self):
         CustomUser.objects.all().delete()
