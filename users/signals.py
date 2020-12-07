@@ -250,6 +250,7 @@ def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kw
     context = {
         "user": user,
         "settings": settings,
+        "method": method,
     }
     translation.activate(user.language)
     subject = _("Door access denied")

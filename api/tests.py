@@ -210,7 +210,13 @@ class TestAccess(APITestCase):
         self.assertIn(
             "Käyttäjätililläsi ei ole tällähetkellä pääsyä oveen.",
             mail.outbox[0].body,
-            "failure notification",
+            "failure notification intro text",
+        )
+        # list of services in the mail
+        self.assertIn(
+            f"{self.fail_user.servicesubscription_set.first().service.name}: {self.fail_user.servicesubscription_set.first().state}",
+            mail.outbox[0].body,
+            "first ss state",
         )
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
