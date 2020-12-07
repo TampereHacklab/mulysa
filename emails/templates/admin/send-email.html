@@ -7,9 +7,7 @@
 
     <h1>{% trans 'Subject' %}: {{email.subject}}</h1>
     <h3>{% trans 'Body' %}:</h3>
-    <pre>
-    {% include 'mail_content_and_post.txt' %}
-    </pre>
+    <pre>{% include 'mail_content_and_post.html' %}</pre>
 
     <div class="submit-row">
       <input type="submit" class="default" value="{% trans 'Send now' %}" />
