@@ -99,7 +99,8 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if not user.has_door_access():
             user.log("Door access denied with phone")
             door_access_denied.send(sender=self.__class__, user=user, method="phone")
-            return Response(status=481)
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=481)
 
         user.log("Door opened with phone")
         outserializer = UserAccessSerializer(user)
