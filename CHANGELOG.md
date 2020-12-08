@@ -1,5 +1,6 @@
 # Changelog
 
+* Cleanup extra staff actions in user views. PR [#296](https://github.com/TampereHacklab/mulysa/pull/296) by [@tswfi](https://github.com/tswfi).
 * Feat/report userdata on api failed dooropen. PR [#297](https://github.com/TampereHacklab/mulysa/pull/297) by [@olmari](https://github.com/olmari).
 * Subscription information in accessdenied email, fixes #291. PR [#293](https://github.com/TampereHacklab/mulysa/pull/293) by [@tswfi](https://github.com/tswfi).
 * Fix email encoding, fixes #289. PR [#290](https://github.com/TampereHacklab/mulysa/pull/290) by [@tswfi](https://github.com/tswfi).
