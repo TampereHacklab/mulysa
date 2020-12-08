@@ -127,7 +127,7 @@ API will return these responses on certain error conditions:
  - 400 when query has invalid content
  - 404 when deviceid isn't found
  - 480 when phone number/NFC id/mxid is not found at all
- - 481 when phone number/NFC id/mxid is found within member but has no access rights
+ - 481 when phone number/NFC id/mxid is found within member but has no access rights, response will also contain basic user data for example executing proper procedures and admin logs
 
 There are two example implementations for esp32 based access readers that can be found here:
 
