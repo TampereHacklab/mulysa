@@ -3,13 +3,8 @@
 {% load humanize %}
 {% block content %}
 <h2>
-  User list
+  User list <a class="small" href="{% url 'users/create' %}">{% trans 'Create new user' %}</a>
 </h2>
-<ul>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'users/create' %}">{% trans 'Create new user' %}</a>
-  </li>
-</ul>
 <table class="table table-striped table-responsive-sm">
   <thead class="thead-light">
     <tr>

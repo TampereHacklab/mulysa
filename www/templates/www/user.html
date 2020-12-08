@@ -7,13 +7,6 @@
     {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
   </h1>
 
-  {% if user.is_staff %}
-    <p>
-      <a href="{% url 'updateuser' userdetails.id %}">{% trans "Update user's data" %}</a> |
-      <a href="{% url 'admin:users_customuser_change' userdetails.id %}">{% trans "View in admin" %}</a>
-    </p>
-  {% endif %}
-
   <table class="table">
     <tr>
       <td>{% trans 'Name' %}</td>
