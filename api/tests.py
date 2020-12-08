@@ -37,11 +37,10 @@ class TestLogging(APITestCase):
         response = self.client.post(url, data)
         # someone wanted these strange status_codes :)
         self.assertEqual(response.status_code, 481)
-
         # check that we have a drf-tracking log entry
         self.assertEqual(APIRequestLog.objects.count(), 1)
         self.assertIn(self.ok_user.phone, APIRequestLog.objects.first().data)
-        self.assertNotEqual(APIRequestLog.objects.first().response, "")
+        self.assertIn(self.ok_user.email, APIRequestLog.objects.first().response)
 
     def tearDown(self):
         CustomUser.objects.all().delete()
