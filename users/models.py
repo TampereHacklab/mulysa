@@ -136,7 +136,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(
         blank=False,
         null=True,
-        #    unique=True, # TODO: Fix production db to have unique OR null values, then apply this
+        unique=True,
         verbose_name=_("Mobile phone number"),
         help_text=_(
             "This number will also be the one that gets access to the"
