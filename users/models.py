@@ -142,6 +142,7 @@ class CustomUser(AbstractUser):
             "This number will also be the one that gets access to the"
             " hacklab premises. International format (+35840123567)."
         ),
+        error_messages={'unique': _("This phone number is already registered to a member"),},
         max_length=255,
         validators=[validate_phone],
     )
