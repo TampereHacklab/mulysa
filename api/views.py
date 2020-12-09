@@ -83,15 +83,6 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if qs.count() == 0:
             return Response(status=480)
 
-        # multiple users found. this cannot work...
-        # phone number is going to get unique constraint. When that happens
-        # this can be removed completely
-        if qs.count() != 1:
-            logger.error(
-                f"Found multiple users with number: {number} this should not happen"
-            )
-            return Response(status=status.HTTP_409_CONFLICT)
-
         # our user
         user = qs.first()
 
