@@ -72,20 +72,6 @@ class TestAccess(APITestCase):
         )
         self.ok_user.save()
 
-        # duplicated phone number for these two users
-        # this will start failing when phone number is made mandatory
-        # when that happens this test can be removed
-        # and the check in the view can also be removed
-        self.duplicate_user1 = CustomUser.objects.create(
-            email="test3@example.com", birthday=timezone.now(), phone="+358440778899"
-        )
-        self.duplicate_user1.save()
-
-        self.duplicate_user2 = CustomUser.objects.create(
-            email="test4@example.com", birthday=timezone.now(), phone="+358440778899"
-        )
-        self.duplicate_user2.save()
-
         # add subscription for the user
         self.ok_subscription = ServiceSubscription.objects.create(
             user=self.ok_user,
@@ -166,14 +152,6 @@ class TestAccess(APITestCase):
             url, {"deviceid": self.device.deviceid, "payload": ""}
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_access_duplicate_users(self, mock):
-        url = reverse("access-phone")
-        response = self.client.post(
-            url,
-            {"deviceid": self.device.deviceid, "payload": self.duplicate_user1.phone},
-        )
-        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
     def test_access_phone_not_found(self, mock):
         """
