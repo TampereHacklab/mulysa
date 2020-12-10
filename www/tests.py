@@ -25,6 +25,15 @@ class TestBasicSmoke(TestCase):
         response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="fi")
         self.assertContains(response, "Haluatko liittyä")
 
+    def test_changelog(self):
+        self.client.logout()
+        response = self.client.get(reverse("changelog-view"))
+        self.assertNotEqual(response.status_code, 200)
+
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("changelog-view"))
+        self.assertContains(response, "Changelog")
+
     def test_secured_urls(self):
         """
         Just very crude test that the urls don't give 200 ok when not logged in
