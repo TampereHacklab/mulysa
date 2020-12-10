@@ -1,10 +1,10 @@
-from api.models import AccessDevice, DeviceAccessLogEntry
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from users.models import MemberService, ServiceSubscription
+from api.models import AccessDevice, DeviceAccessLogEntry
+from users.models import CustomUser, MemberService, ServiceSubscription
 
 
 class TestBasicSmoke(TestCase):
@@ -289,9 +289,11 @@ class TestStaffViews(TestCase):
             nick="user1",
             phone="+358123123",
         )
+        self.user.is_staff = True
+        self.user.save()
         self.client.force_login(self.user)
 
-    def smokeViews(self):
+    def test_smoke_views(self):
         urls = [
             reverse("dataimport"),
             reverse("dataexport"),
@@ -300,12 +302,50 @@ class TestStaffViews(TestCase):
             reverse("ledger"),
             reverse("custominvoices"),
             reverse("custominvoice"),
-            reverse("custominvoice_action", args=("test", 1)),
-            reverse("application_operation", args=(1, "test")),
         ]
         for url in urls:
             response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
             self.assertEqual(response.status_code, 200)
+
+    def test_create_user(self):
+        # with invalid data
+        response = self.client.post(
+            reverse("users/create"),
+            {
+                "first_name": "test_firstname",
+                "last_name": "test_lastname",
+                "email": "",
+                "language": "fi",
+                "municipality": "TestPlace",
+                "nick": "testuser",
+                "mxid": "",
+                "birthday_year": "2000",
+                "birthday_month": "1",
+                "birthday_day": "1",
+                "phone": "+358123123321",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+
+        # with valid data
+        response = self.client.post(
+            reverse("users/create"),
+            {
+                "first_name": "test_firstname",
+                "last_name": "test_lastname",
+                "email": "testuser@example.com",
+                "language": "fi",
+                "municipality": "TestPlace",
+                "nick": "testuser",
+                "mxid": "",
+                "birthday_year": "2000",
+                "birthday_month": "1",
+                "birthday_day": "1",
+                "phone": "+358123123321",
+            },
+        )
+        u = CustomUser.objects.get(email="testuser@example.com")
+        self.assertRedirects(response, reverse("userdetails", args=(u.id,)))
 
     def tearDown(self):
         get_user_model().objects.all().delete()

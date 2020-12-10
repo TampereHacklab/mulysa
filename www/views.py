@@ -510,7 +510,7 @@ def createuser(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             new_user = form.save()
-            return userdetails(request, new_user.id)
+            return HttpResponseRedirect(reverse("userdetails", args=(new_user.id,)))
     else:
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
