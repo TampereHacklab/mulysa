@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+import markdown
+from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
 from drfx import settings
@@ -514,3 +516,14 @@ def createuser(request):
     else:
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
+
+@login_required
+def changelog_view(request):
+    """
+    Just render the CHANGELOG.md file for users.
+    """
+    with open("CHANGELOG.md", "r", encoding="utf-8") as input_file:
+        text = input_file.read()
+    changelog = mark_safe(markdown.markdown(text))
+
+    return render(request, "www/changelog.html", {"changelog": changelog})
