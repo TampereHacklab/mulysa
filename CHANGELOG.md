@@ -1,5 +1,6 @@
 # Changelog
 
+* Add tests for usercreation and fix post redirect. PR [#303](https://github.com/TampereHacklab/mulysa/pull/303) by [@tswfi](https://github.com/tswfi).
 * Show changelog, fixes #301. PR [#302](https://github.com/TampereHacklab/mulysa/pull/302) by [@tswfi](https://github.com/tswfi).
 * reintroduce the updateuser functionality for admins. PR [#300](https://github.com/TampereHacklab/mulysa/pull/300) by [@tswfi](https://github.com/tswfi).
 * make users phone number unique, fixes #279. PR [#299](https://github.com/TampereHacklab/mulysa/pull/299) by [@tswfi](https://github.com/tswfi).
