@@ -12,6 +12,7 @@
 <table class="table table-striped table-responsive-sm">
   <thead class="thead-light">
     <tr>
+      <th>{% trans 'Active' %}</th>
       <th>{% trans 'Name' %}</th>
       <th>{% trans 'Nick' %}</th>
       <th>{% trans 'Email' %}</th>
@@ -26,6 +27,7 @@
   </thead>
   {% for user in users %}
   <tr>
+    <td>{{user.is_active}}</td>
     <td>
       <a href="{% url 'userdetails' user.id %}">
         {{ user.first_name }}
