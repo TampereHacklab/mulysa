@@ -1,5 +1,6 @@
 # Changelog
 
+* Show active status in user list for admins. PR [#307](https://github.com/TampereHacklab/mulysa/pull/307) by [@tswfi](https://github.com/tswfi).
 * highlight required fields in forms, fixes #277. PR [#304](https://github.com/TampereHacklab/mulysa/pull/304) by [@tswfi](https://github.com/tswfi).
 * Add tests for usercreation and fix post redirect. PR [#303](https://github.com/TampereHacklab/mulysa/pull/303) by [@tswfi](https://github.com/tswfi).
 * Show changelog, fixes #301. PR [#302](https://github.com/TampereHacklab/mulysa/pull/302) by [@tswfi](https://github.com/tswfi).
