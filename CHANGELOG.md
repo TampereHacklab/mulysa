@@ -1,5 +1,6 @@
 # Changelog
 
+* Update django to 3.1.5. PR [#309](https://github.com/TampereHacklab/mulysa/pull/309) by [@tswfi](https://github.com/tswfi).
 * Update all dependencies.. PR [#308](https://github.com/TampereHacklab/mulysa/pull/308) by [@tswfi](https://github.com/tswfi).
 * Show active status in user list for admins. PR [#307](https://github.com/TampereHacklab/mulysa/pull/307) by [@tswfi](https://github.com/tswfi).
 * highlight required fields in forms, fixes #277. PR [#304](https://github.com/TampereHacklab/mulysa/pull/304) by [@tswfi](https://github.com/tswfi).
