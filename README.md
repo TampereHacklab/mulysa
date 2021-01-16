@@ -171,3 +171,9 @@ curl -X GET -H "Authorization: Token xxxxxxxxxxxxxx" http://127.0.0.1:8000/api/v
 ```
 
 will return a list of users with access to the door. Calling this endpoint you must be authenticated and have superadmin permissions.
+
+# use oauth auth (advanced usage with keycloak integration)
+
+* first define your application (keycloak) in: `/o/applications/`
+* take your clientid and client secret and endpoint and configure them in keycloak
+* test it out

@@ -91,6 +91,8 @@ INSTALLED_APPS = [
     # so that we don't have to write
     # hundreds of lines of css
     "bootstrap4",
+    # oauth provider for keycloack integration
+    "oauth2_provider",
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
@@ -98,11 +100,11 @@ AUTH_USER_MODEL = "users.CustomUser"
 # use the management command update_local_bootstrap to fetch the files
 # and to get this section when needed
 BOOTSTRAP4 = {
-    'css_url': '/static/www/bootstrap4/bootstrap.min.css',
-    'javascript_url': '/static/www/bootstrap4/bootstrap.min.js',
-    'jquery_slim_url': '/static/www/bootstrap4/jquery-3.5.1.slim.min.js',
-    'jquery_url': '/static/www/bootstrap4/jquery-3.5.1.min.js',
-    'popper_url': '/static/www/bootstrap4/popper.min.js'
+    "css_url": "/static/www/bootstrap4/bootstrap.min.css",
+    "javascript_url": "/static/www/bootstrap4/bootstrap.min.js",
+    "jquery_slim_url": "/static/www/bootstrap4/jquery-3.5.1.slim.min.js",
+    "jquery_url": "/static/www/bootstrap4/jquery-3.5.1.min.js",
+    "popper_url": "/static/www/bootstrap4/popper.min.js",
 }
 
 MIDDLEWARE = [
@@ -162,9 +164,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
 
 
@@ -213,12 +221,17 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework_filters.backends.RestFrameworkFilterBackend",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 100,
+}
+
+OAUTH2_PROVIDER = {
+    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'me': 'myself'}
 }
 
 # tell all auth to use email as username
@@ -245,16 +258,37 @@ logging.config.dictConfig(
             "console": {
                 "class": "logging.StreamHandler",
                 "formatter": "default",
-                "filters": ["request_id",],
+                "filters": [
+                    "request_id",
+                ],
             },
         },
         "loggers": {
             # default for all undefined Python modules
-            "": {"level": "WARNING", "handlers": ["console",],},
-            "users": {"level": LOGLEVEL, "handlers": ["console",], "propagate": False,},
-            "utils": {"level": LOGLEVEL, "handlers": ["console",], "propagate": False,},
+            "": {
+                "level": "WARNING",
+                "handlers": [
+                    "console",
+                ],
+            },
+            "users": {
+                "level": LOGLEVEL,
+                "handlers": [
+                    "console",
+                ],
+                "propagate": False,
+            },
+            "utils": {
+                "level": LOGLEVEL,
+                "handlers": [
+                    "console",
+                ],
+                "propagate": False,
+            },
             "django.server": {
-                "handlers": ["console",],
+                "handlers": [
+                    "console",
+                ],
                 "level": "INFO",
                 "propagate": False,
             },
@@ -262,7 +296,7 @@ logging.config.dictConfig(
     }
 )
 
-if len(sys.argv) > 1 and sys.argv[1] == 'test':
+if len(sys.argv) > 1 and sys.argv[1] == "test":
     logging.disable(logging.CRITICAL)
 
 LOGIN_URL = "login"

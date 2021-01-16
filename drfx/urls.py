@@ -12,4 +12,5 @@ urlpatterns = [
     path("docs/", include_docs_urls(title="mulysa docs")),
     path("www/", include("www.urls")),
     path("email/", include("emails.urls")),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
