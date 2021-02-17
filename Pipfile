@@ -39,6 +39,7 @@ xlrd = "*"
 markdown = "*"
 django-admin-rangefilter = "*"
 django-oauth-toolkit = "*"
+django-oauth-toolkit = {editable = true, git = "https://github.com/tevansuk/django-oauth-toolkit/", ref = "feat/oidc-round-three"}
 
 [requires]
 python_version = "3.7"
