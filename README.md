@@ -52,7 +52,7 @@ pipenv shell
 
 ## To update localizations
 
-Always start everything by opening the pipenv shell for this project first! (`pipenv shell`)
+Always start everything by opening the pipenv shell for this project first! (`pipenv shell`) or by prepending individual commands with (`pipenv run`) for system users that does not have shell access normally.
 
 ```bash
 ./manage.py makemessages -l fi
