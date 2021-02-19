@@ -13,14 +13,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python 3.7
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
+
+      - name: Install GNU gettext
+        run: sudo apt install gettext
+
       - name: Install pipenv
         run: pip install pipenv
+
       - name: run tox
         run: |
           pipenv sync --dev
           pipenv run tox
-          pipenv run coveralls
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
