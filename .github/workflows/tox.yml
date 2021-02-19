@@ -22,5 +22,6 @@ jobs:
       - name: run tox
         run: |
           pipenv install --dev
+          pipenv shell
           tox
           coveralls
