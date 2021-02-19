@@ -21,7 +21,6 @@ jobs:
         run: pip install pipenv
       - name: run tox
         run: |
-          pipenv install --dev
-          pipenv shell
-          tox
-          coveralls
+          pipenv sync --dev
+          pipenv run tox
+          pipenv run coveralls
