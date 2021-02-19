@@ -33,27 +33,56 @@ Most of this works around our "User" model which can do multiple things
 
 # Start developing
 
-* clone the repo
-* install pipenv
-* pipenv shell
-* pipenv install --dev
-* ./manage.py migrate --skip-checks
-* ./manage.py loaddata memberservices
-* ./manage.py runserver
+Make sure you have proper python installation on your machine
+
+* python 3.7
+* pipenv from here: https://github.com/pypa/pipenv
+
+Then run
+
+```bash
+git clone git@github.com:TampereHacklab/mulysa.git
+cd mulysa
+pipenv sync --dev
+pipenv shell
+./manage.py migrate --skip-checks
+./manage.py loaddata memberservices
+./manage.py runserver
+```
 
 ## To update localizations
 
-* django-admin makemessages -l fi
-* (edit .po files)
-* django-admin compilemessages
+Always start everything by opening the pipenv shell for this project first! (`pipenv shell`)
 
-Push only .po files to git, not .mo's!
+```bash
+./manage.py makemessages -l fi
+```
+
+Edit the .po files
+
+```bash
+./manage.py compilemessages
+```
+
+Push only the .po files to git, not .mo's!
+
+# to update dependecies
+
+run:
+
+```bash
+pipenv update
+pipenv lock
+pipenv sync
+tox
+```
+
 
 ## to update local bootstrap files
 
-* run
+run:
 
-```
+```bash
 ./manage.py update_local_bootstrap
 ```
 
@@ -65,8 +94,6 @@ Push only .po files to git, not .mo's!
 Before committing, run
 
 * black
-* flake8
-* tox
 
 ### Running just one test case
 
