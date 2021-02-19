@@ -42,4 +42,9 @@ markdown = "*"
 python_version = "3.7"
 
 [pipenv]
+#
+# prereleases are allowed because of black
+# this should be removed as soon as either black is released (https://github.com/psf/black/issues/517)
+# or pipenv starts supporting prereleases for one package (https://github.com/pypa/pipenv/pull/4607)
+#
 allow_prereleases = true

@@ -1,0 +1,43 @@
+# run tox in master and pr's
+name: "CI tox"
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  tox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Install GNU gettext
+        run: sudo apt install gettext
+
+      - name: Install pipenv
+        run: pip install pipenv
+
+      - name: run tox
+        run: |
+          pipenv sync --dev
+          pipenv run tox
+
+      # https://github.com/marketplace/actions/coveralls-python
+      - name: Coveralls
+        uses: AndreMiras/coveralls-python-action@develop
+
+      # maybe someday
+      # see: https://github.com/coverallsapp/github-action/issues/30
+      #- name: Coveralls
+      #  uses: coverallsapp/github-action@master
+      #  with:
+      #    path-to-lcov: './coverage'
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}

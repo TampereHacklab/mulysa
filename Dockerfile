@@ -8,5 +8,5 @@ RUN mkdir /code/static
 WORKDIR /code
 ADD . /code/
 WORKDIR /code
-RUN pipenv install
+RUN pipenv sync
 ENTRYPOINT ["/code/entrypoint.sh"]
