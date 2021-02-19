@@ -30,8 +30,14 @@ jobs:
           pipenv sync --dev
           pipenv run tox
 
+      # https://github.com/marketplace/actions/coveralls-python
       - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          path-to-lcov: './coverage'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        uses: AndreMiras/coveralls-python-action@develop
+
+      # maybe someday
+      # see: https://github.com/coverallsapp/github-action/issues/30
+      #- name: Coveralls
+      #  uses: coverallsapp/github-action@master
+      #  with:
+      #    path-to-lcov: './coverage'
+      #    github-token: ${{ secrets.GITHUB_TOKEN }}
