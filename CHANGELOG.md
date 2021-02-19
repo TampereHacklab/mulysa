@@ -1,5 +1,6 @@
 # Changelog
 
+* Django 3.1.7. PR [#314](https://github.com/TampereHacklab/mulysa/pull/314) by [@tswfi](https://github.com/tswfi).
 * Bump cryptography from 3.3.1 to 3.3.2. PR [#313](https://github.com/TampereHacklab/mulysa/pull/313) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Update dependencies (mainly django 3.1.6). PR [#311](https://github.com/TampereHacklab/mulysa/pull/311) by [@tswfi](https://github.com/tswfi).
 * Update django to 3.1.5. PR [#309](https://github.com/TampereHacklab/mulysa/pull/309) by [@tswfi](https://github.com/tswfi).
