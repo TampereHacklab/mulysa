@@ -53,7 +53,6 @@
             <li class="nav-item">
               <form id="langform" class="form-inline" action="{% url 'set_language' %}" method="post">{% csrf_token %}
                 <div class="input-group input-group-sm">
-                <input name="next" type="hidden" value="{{ redirect_to }}">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{% trans 'Language' %}</span>
                 </div>
