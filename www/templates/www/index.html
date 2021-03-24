@@ -26,7 +26,7 @@
 <div class="container">
   {# important warnings etc first #}
   {% if user.is_authenticated %}
-    {% if user.membershipapplication_set.all.0 %}
+    {% if user.membershipapplication_set.all.count %}
     <div class="alert alert-info">
       {% trans 'Your membership application is still being processed. Please be patient!' %}
     </div>
