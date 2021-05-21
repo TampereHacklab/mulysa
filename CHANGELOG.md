@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump urllib3 from 1.26.3 to 1.26.4. PR [#321](https://github.com/TampereHacklab/mulysa/pull/321) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Better way to check if membershipapplication is still pending. PR [#320](https://github.com/TampereHacklab/mulysa/pull/320) by [@olmari](https://github.com/olmari).
 * Fix/no redirect error. PR [#319](https://github.com/TampereHacklab/mulysa/pull/319) by [@olmari](https://github.com/olmari).
 * Fix and test for new Holvi Excel header format for data import, fixes #316. PR [#317](https://github.com/TampereHacklab/mulysa/pull/317) by [@mikeful](https://github.com/mikeful).
