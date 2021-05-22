@@ -78,7 +78,7 @@ class ServiceSubscriptionAdmin(admin.ModelAdmin):
 
 
 class MemberServiceAdmin(admin.ModelAdmin):
-    list_display = ["name", "cost", "pays_also_service"]
+    list_display = ["name", "cost", "pays_also_service", "accounting_id"]
 
 
 class BankTransactionAdmin(admin.ModelAdmin):
