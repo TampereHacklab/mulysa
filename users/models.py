@@ -388,6 +388,14 @@ class MemberService(models.Model):
         ),
     )
 
+    # for accounting
+    accounting_id = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        help_text=_("For accounting export")
+    )
+
     def __str__(self):
         return _("Member service") + " " + str(self.name)
 
