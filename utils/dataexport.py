@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from users.models import CustomUser, MemberService, ServiceSubscription
+from users.models import CustomInvoice, CustomUser, MemberService, ServiceSubscription
+import csv
+import io
 
 
 """
@@ -29,3 +31,36 @@ class DataExport:
 
             out += f"{user.first_name}\t{user.last_name}\t{user.phone}\t{tko_ref}\n"
         return out
+
+    @staticmethod
+    def exportaccounting():
+        output = io.StringIO()
+
+        fields = ["reference_number", "type", "accounting_id", "comment"]
+        writer = csv.DictWriter(output, fieldnames=fields)
+
+        writer.writeheader()
+
+        subscriptions = ServiceSubscription.objects.all()
+        for subscription in subscriptions:
+            writer.writerow(
+                {
+                    "reference_number": subscription.reference_number,
+                    "type": "service_subscription",
+                    "accounting_id": subscription.service.accounting_id,
+                    "comment": subscription.__str__(),
+                },
+            )
+
+        custominvoices = CustomInvoice.objects.all()
+        for custominvoice in custominvoices:
+            writer.writerow(
+                {
+                    "reference_number": custominvoice.reference_number,
+                    "type": "custominvoice",
+                    "accounting_id": custominvoice.subscription.service.accounting_id,
+                    "comment": custominvoice.subscription.__str__(),
+                },
+            )
+
+        return output.getvalue()

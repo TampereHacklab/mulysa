@@ -125,6 +125,11 @@ def dataexport(request):
                 DataExport.exportmembers(), content_type="application/tsv"
             )
 
+        if request.GET["data"] == "accountingcsv":
+            return HttpResponse(
+                DataExport.exportaccounting(), content_type="application/csv"
+            )
+
     return render(request, "www/export.html")
 
 
