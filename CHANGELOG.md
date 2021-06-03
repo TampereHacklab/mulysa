@@ -1,5 +1,6 @@
 # Changelog
 
+* Django 3.2 and update to all other packages also. PR [#324](https://github.com/TampereHacklab/mulysa/pull/324) by [@tswfi](https://github.com/tswfi).
 * Add accounting exporter. PR [#325](https://github.com/TampereHacklab/mulysa/pull/325) by [@tswfi](https://github.com/tswfi).
 * Bump urllib3 from 1.26.3 to 1.26.4. PR [#321](https://github.com/TampereHacklab/mulysa/pull/321) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Better way to check if membershipapplication is still pending. PR [#320](https://github.com/TampereHacklab/mulysa/pull/320) by [@olmari](https://github.com/olmari).
