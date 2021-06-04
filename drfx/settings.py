@@ -154,7 +154,7 @@ DATABASES = {
 
 
 # https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
 # Password validation
@@ -231,7 +231,7 @@ REST_FRAMEWORK = {
 }
 
 OAUTH2_PROVIDER = {
-    'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'me': 'myself'}
+    "SCOPES": {"read": "Read scope", "write": "Write scope", "me": "myself"}
 }
 
 # tell all auth to use email as username
