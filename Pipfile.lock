@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< HEAD
             "sha256": "091bb6a6b1219f96cc78a77ebaed6980abbf3d47f5f7b89a97799766b7453e57"
+=======
+            "sha256": "f709a26bde6d530c989c2928103fa121cfd961d03baa484b809c0d4709791c74"
+>>>>>>> 9452924 (Update dependencies)
         },
         "pipfile-spec": 6,
         "requires": {
@@ -139,6 +143,7 @@
             "hashes": [
                 "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69",
                 "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"
+<<<<<<< HEAD
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==0.7.1"
@@ -150,6 +155,19 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.2.13"
+=======
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
+            "version": "==0.7.1"
+        },
+        "deprecated": {
+            "hashes": [
+                "sha256:08452d69b6b5bc66e8330adde0a4f8642e969b9e1702904d137eeb29c8ffc771",
+                "sha256:6d2de2de7931a968874481ef30208fd4e08da39177d61d3d4ebdf4366e7dbca1"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==1.2.12"
+>>>>>>> 9452924 (Update dependencies)
         },
         "django": {
             "hashes": [
@@ -223,12 +241,18 @@
             "version": "==2.1"
         },
         "django-oauth-toolkit": {
+<<<<<<< HEAD
             "hashes": [
                 "sha256:650e5ef2244d1d8db8f507137e0d1e8b8aad1f4086a4a610526e8851f9a38308",
                 "sha256:b2e346a7c1e222774bfb370f21b556b92b408395b4c23914e2d1b241b2e5376a"
             ],
             "index": "pypi",
             "version": "==1.5.0"
+=======
+            "editable": true,
+            "git": "https://github.com/tevansuk/django-oauth-toolkit/",
+            "ref": "ec061986806d8dd368263a5d49ac530bedd2cc44"
+>>>>>>> 9452924 (Update dependencies)
         },
         "django-rest-auth": {
             "hashes": [
@@ -246,8 +270,15 @@
         },
         "djangorestframework": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf",
                 "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2"
+=======
+                "sha256:0898182b4737a7b584a2c73735d89816343369f259fea932d90dc78e35d8ac33",
+                "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2",
+                "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf",
+                "sha256:0209bafcb7b5010fdfec784034f059d512256424de2a0f084cb82b096d6dd6a7"
+>>>>>>> 9452924 (Update dependencies)
             ],
             "index": "pypi",
             "version": "==3.12.4"
@@ -309,10 +340,17 @@
         },
         "jwcrypto": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:db93a656d9a7a35dda5a68deb5c9f301f4e60507d8aef1559e0637b9ac497137",
                 "sha256:f88816eb0a41b8f006af978ced5f171f33782525006cdb055b536a40f4d46ac9"
             ],
             "version": "==1.0"
+=======
+                "sha256:5a608f494801433946697a5195c35450c4ae1374d484b56a44499953b35de52e",
+                "sha256:c357f62eed1edbd0b025b302ea8b09c262989048dabce8a325128ebfdc54c84f"
+            ],
+            "version": "==0.9"
+>>>>>>> 9452924 (Update dependencies)
         },
         "lockfile": {
             "hashes": [
@@ -410,11 +448,19 @@
         },
         "phonenumbers": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:091ed2b3158567f12c99f719570a1ccace00179f39b44f1e6b895f59d93dadc8",
                 "sha256:3ede2a2fce9b2ed335c0168e8276546d717fceeffe23761877925dff0a8f54f1"
             ],
             "index": "pypi",
             "version": "==8.12.31"
+=======
+                "sha256:10204e005b1b887c7c96ce17c8b8ba4694693f3158199887874f9f857398b32d",
+                "sha256:c6c8c7fa69c553edbc88a95bfa5a0e9630ad19ac55f40c014a86cd061ad661ae"
+            ],
+            "index": "pypi",
+            "version": "==8.12.24"
+>>>>>>> 9452924 (Update dependencies)
         },
         "pycparser": {
             "hashes": [
@@ -491,12 +537,21 @@
         },
         "typing-extensions": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e",
                 "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7",
                 "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"
             ],
             "markers": "python_version < '3.8'",
             "version": "==3.10.0.2"
+=======
+                "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497",
+                "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342",
+                "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"
+            ],
+            "markers": "python_version < '3.8'",
+            "version": "==3.10.0.0"
+>>>>>>> 9452924 (Update dependencies)
         },
         "uritemplate": {
             "hashes": [
@@ -513,6 +568,12 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
             "version": "==1.26.6"
+        },
+        "wrapt": {
+            "hashes": [
+                "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7"
+            ],
+            "version": "==1.12.1"
         },
         "wrapt": {
             "hashes": [
@@ -660,11 +721,19 @@
         },
         "coveralls": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:15a987d9df877fff44cd81948c5806ffb6eafb757b3443f737888358e96156ee",
                 "sha256:aedfcc5296b788ebaf8ace8029376e5f102f67c53d1373f2e821515c15b36527"
             ],
             "index": "pypi",
             "version": "==3.2.0"
+=======
+                "sha256:172fb79c5f61c6ede60554f2cac46deff6d64ee735991fb2124fb414e188bdb4",
+                "sha256:9b3236e086627340bf2c95f89f757d093cbed43d17179d3f4fb568c347e7d29a"
+            ],
+            "index": "pypi",
+            "version": "==3.1.0"
+>>>>>>> 9452924 (Update dependencies)
         },
         "decorator": {
             "hashes": [
@@ -856,11 +925,19 @@
         },
         "prompt-toolkit": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:6076e46efae19b1e0ca1ec003ed37a933dc94b4d20f486235d436e64771dcd5c",
                 "sha256:eb71d5a6b72ce6db177af4a7d4d7085b99756bf656d98ffcc4fecd36850eea6c"
             ],
             "markers": "python_full_version >= '3.6.2'",
             "version": "==3.0.20"
+=======
+                "sha256:bf00f22079f5fadc949f42ae8ff7f05702826a97059ffcc6281036ad40ac6f04",
+                "sha256:e1b4f11b9336a28fa11810bc623c357420f69dfdb6d2dac41ca2c21a55c033bc"
+            ],
+            "markers": "python_full_version >= '3.6.1'",
+            "version": "==3.0.18"
+>>>>>>> 9452924 (Update dependencies)
         },
         "ptyprocess": {
             "hashes": [
@@ -895,11 +972,19 @@
         },
         "pygments": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:b8e67fe6af78f492b3c4b3e2970c0624cbf08beb1e493b2c99b9fa1b67a20380",
                 "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"
             ],
             "markers": "python_version >= '3.5'",
             "version": "==2.10.0"
+=======
+                "sha256:a18f47b506a429f6f4b9df81bb02beab9ca21d0a5fee38ed15aef65f0545519f",
+                "sha256:d66e804411278594d764fc69ec36ec13d9ae9147193a1740cd34d272ca383b8e"
+            ],
+            "markers": "python_version >= '3.5'",
+            "version": "==2.9.0"
+>>>>>>> 9452924 (Update dependencies)
         },
         "pylint": {
             "hashes": [
@@ -1004,11 +1089,19 @@
         },
         "tox": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:5e274227a53dc9ef856767c21867377ba395992549f02ce55eb549f9fb9a8d10",
                 "sha256:c30b57fa2477f1fb7c36aa1d83292d5c2336cd0018119e1b1c17340e2c2708ca"
             ],
             "index": "pypi",
             "version": "==3.24.4"
+=======
+                "sha256:307a81ddb82bd463971a273f33e9533a24ed22185f27db8ce3386bff27d324e3",
+                "sha256:b0b5818049a1c1997599d42012a637a33f24c62ab8187223fdd318fa8522637b"
+            ],
+            "index": "pypi",
+            "version": "==3.23.1"
+>>>>>>> 9452924 (Update dependencies)
         },
         "traitlets": {
             "hashes": [
@@ -1061,7 +1154,11 @@
                 "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"
             ],
             "markers": "python_version < '3.8'",
+<<<<<<< HEAD
             "version": "==3.10.0.2"
+=======
+            "version": "==3.10.0.0"
+>>>>>>> 9452924 (Update dependencies)
         },
         "urllib3": {
             "hashes": [
@@ -1073,11 +1170,19 @@
         },
         "virtualenv": {
             "hashes": [
+<<<<<<< HEAD
                 "sha256:4da4ac43888e97de9cf4fdd870f48ed864bbfd133d2c46cbdec941fed4a25aef",
                 "sha256:a4b987ec31c3c9996cf1bc865332f967fe4a0512c41b39652d6224f696e69da5"
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==20.8.0"
+=======
+                "sha256:14fdf849f80dbb29a4eb6caa9875d476ee2a5cf76a5f5415fa2f1606010ab467",
+                "sha256:2b0126166ea7c9c3661f5b8e06773d28f83322de7a3ff7d06f0aed18c9de6a76"
+            ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==20.4.7"
+>>>>>>> 9452924 (Update dependencies)
         },
         "wcwidth": {
             "hashes": [
