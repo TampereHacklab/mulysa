@@ -1,5 +1,6 @@
 from oauth2_provider.oauth2_validators import OAuth2Validator
 
+
 class MulysaOAuth2Validator(OAuth2Validator):
     """
     For providing more data to keycloack
