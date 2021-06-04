@@ -2,10 +2,14 @@
     "_meta": {
         "hash": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "sha256": "091bb6a6b1219f96cc78a77ebaed6980abbf3d47f5f7b89a97799766b7453e57"
 =======
             "sha256": "f709a26bde6d530c989c2928103fa121cfd961d03baa484b809c0d4709791c74"
 >>>>>>> 9452924 (Update dependencies)
+=======
+            "sha256": "9baceced89084aa488c9cef00a264a525ffec44bc44af73dc2e57b1a4e4945e4"
+>>>>>>> 4ba3081 (use the released version, make flake8 happy)
         },
         "pipfile-spec": 6,
         "requires": {
@@ -242,17 +246,23 @@
         },
         "django-oauth-toolkit": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4ba3081 (use the released version, make flake8 happy)
             "hashes": [
                 "sha256:650e5ef2244d1d8db8f507137e0d1e8b8aad1f4086a4a610526e8851f9a38308",
                 "sha256:b2e346a7c1e222774bfb370f21b556b92b408395b4c23914e2d1b241b2e5376a"
             ],
             "index": "pypi",
             "version": "==1.5.0"
+<<<<<<< HEAD
 =======
             "editable": true,
             "git": "https://github.com/tevansuk/django-oauth-toolkit/",
             "ref": "ec061986806d8dd368263a5d49ac530bedd2cc44"
 >>>>>>> 9452924 (Update dependencies)
+=======
+>>>>>>> 4ba3081 (use the released version, make flake8 happy)
         },
         "django-rest-auth": {
             "hashes": [
@@ -275,8 +285,8 @@
                 "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2"
 =======
                 "sha256:0898182b4737a7b584a2c73735d89816343369f259fea932d90dc78e35d8ac33",
-                "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2",
                 "sha256:6d1d59f623a5ad0509fe0d6bfe93cbdfe17b8116ebc8eda86d45f6e16e819aaf",
+                "sha256:f747949a8ddac876e879190df194b925c177cdeb725a099db1460872f7c0a7f2",
                 "sha256:0209bafcb7b5010fdfec784034f059d512256424de2a0f084cb82b096d6dd6a7"
 >>>>>>> 9452924 (Update dependencies)
             ],
