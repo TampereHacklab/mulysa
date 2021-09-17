@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from drfx import settings as drfx_settings
 
@@ -55,7 +55,14 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_customuser(
-        self, email, first_name, last_name, phone, birthday, municipality, nick,
+        self,
+        email,
+        first_name,
+        last_name,
+        phone,
+        birthday,
+        municipality,
+        nick,
     ):
         if not email:
             raise ValueError(_("User must have an email address"))
@@ -110,7 +117,9 @@ class CustomUser(AbstractUser):
     )
 
     municipality = models.CharField(
-        blank=False, verbose_name=_("Municipality / City"), max_length=255,
+        blank=False,
+        verbose_name=_("Municipality / City"),
+        max_length=255,
     )
 
     nick = models.CharField(
@@ -131,7 +140,10 @@ class CustomUser(AbstractUser):
         validators=[validate_mxid],
     )
 
-    birthday = models.DateField(blank=False, verbose_name=_("Birthday"),)
+    birthday = models.DateField(
+        blank=False,
+        verbose_name=_("Birthday"),
+    )
 
     phone = models.CharField(
         blank=False,
@@ -142,7 +154,9 @@ class CustomUser(AbstractUser):
             "This number will also be the one that gets access to the"
             " hacklab premises. International format (+35840123567)."
         ),
-        error_messages={'unique': _("This phone number is already registered to a member"),},
+        error_messages={
+            "unique": _("This phone number is already registered to a member"),
+        },
         max_length=255,
         validators=[validate_phone],
     )
@@ -239,6 +253,10 @@ class CustomUser(AbstractUser):
 
         return False
 
+    def age_years(self):
+        today = datetime.datetime.today()
+        return int((today.date() - self.birthday).days / 365.25)
+
 
 def validate_agreement(value):
     if not value:
@@ -299,7 +317,8 @@ class MemberService(models.Model):
     )
 
     cost = models.IntegerField(
-        verbose_name="Normal cost of the service", validators=[MinValueValidator(0)],
+        verbose_name="Normal cost of the service",
+        validators=[MinValueValidator(0)],
     )
 
     """
@@ -375,7 +394,7 @@ class MemberService(models.Model):
         max_length=20,
         blank=True,
         null=True,
-        help_text=_("Phone number that can be used to use this memberservice")
+        help_text=_("Phone number that can be used to use this memberservice"),
     )
 
     # True if users are allowed to subscribe and unsubscribe themselves with this service
@@ -390,10 +409,7 @@ class MemberService(models.Model):
 
     # for accounting
     accounting_id = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-        help_text=_("For accounting export")
+        max_length=20, blank=True, null=True, help_text=_("For accounting export")
     )
 
     def __str__(self):
@@ -442,7 +458,8 @@ class BankTransaction(models.Model):
         max_length=32,
     )
     date = models.DateField(
-        verbose_name=_("Date"), help_text=_("Date of the transaction"),
+        verbose_name=_("Date"),
+        help_text=_("Date of the transaction"),
     )
     amount = models.DecimalField(
         verbose_name=_("Amount"),
@@ -659,7 +676,11 @@ class UsersLog(models.Model):
     date = models.DateTimeField(
         auto_now_add=True, verbose_name="Date of this log event"
     )
-    message = models.CharField(blank=False, verbose_name=_("Message"), max_length=1024,)
+    message = models.CharField(
+        blank=False,
+        verbose_name=_("Message"),
+        max_length=1024,
+    )
 
     def __str__(self):
         return f"{self.user} - {self.date}: {self.message}"

@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     "rest_framework_filters",
     # email queue
     "mailer",
+    # range filter for admin
+    "rangefilter",
     # ready made registration please
     # todo: we probably want to write our own
     "rest_auth.registration",
