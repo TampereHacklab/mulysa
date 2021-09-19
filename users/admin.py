@@ -1,23 +1,27 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
+from rangefilter.filters import DateRangeFilter
+
+from .filters import PredefAgeListFilter
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import (
     BankTransaction,
+    CustomInvoice,
     CustomUser,
     MemberService,
     MembershipApplication,
-    ServiceSubscription,
-    CustomInvoice,
-    UsersLog,
     NFCCard,
+    ServiceSubscription,
+    UsersLog,
 )
 
 
 class ServiceSubscriptionInline(admin.TabularInline):
     model = ServiceSubscription
-    exclude = ['paid_until', 'last_payment', 'reference_number', 'reminder_sent']
+    exclude = ["paid_until", "last_payment", "reference_number", "reminder_sent"]
     readonly_fields = ("last_payment", "reference_number")
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -35,23 +39,50 @@ class CustomUserAdmin(UserAdmin):
         "mxid",
         "language",
         "municipality",
+        "age_years",
         "is_active",
         "is_staff",
         "is_superuser",
     )
     search_fields = ("email", "first_name", "last_name", "phone", "mxid", "nick")
-    list_filter = ("is_active", "is_staff", "language", "municipality", "language")
-    readonly_fields = ("created", "last_modified", "last_login", "date_joined")
+    list_filter = (
+        "is_active",
+        "is_staff",
+        "language",
+        "municipality",
+        PredefAgeListFilter,
+        ("birthday", DateRangeFilter),
+    )
+    readonly_fields = (
+        "age_years",
+        "created",
+        "last_modified",
+        "last_login",
+        "date_joined",
+    )
     fieldsets = (
-        ("Data", {"fields": list_display + ("phone", "bank_account",)},),
         (
-            "Dates",
+            "Data",
             {
                 "fields": (
-                    "birthday",
-                    "marked_for_deletion_on",
-                ) + readonly_fields
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "nick",
+                    "mxid",
+                    "language",
+                    "municipality",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "phone",
+                    "bank_account",
+                )
             },
+        ),
+        (
+            "Dates",
+            {"fields": ("birthday",) + readonly_fields + ("marked_for_deletion_on",)},
         ),
     )
     inlines = [ServiceSubscriptionInline]
