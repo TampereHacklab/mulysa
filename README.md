@@ -206,6 +206,25 @@ Just do one first with either dummy data or good guess then do the other.
 * Client Authentication: client secret sent as post
 * Client ID: the client id from mulysa
 * Client Secret: the client secret from mulysa
+* save
+
+* go to [realm] -> identity providers -> [display name] -> Mappers
+* create
+* name: firstnamemapper
+* Sync Mode Override: force
+* Mapper Type: Attribute Importer
+* Claim: firstName
+* User Attribute Name: firstName
+* save
+
+* go to [realm] -> identity providers -> [display name] -> Mappers
+* create
+* name: lastnamemapper
+* Sync Mode Override: force
+* Mapper Type: Attribute Importer
+* Claim: lastName
+* User Attribute Name: lastName
+* save
 
 ## fingers crossed
 
