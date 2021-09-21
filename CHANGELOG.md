@@ -1,5 +1,6 @@
 # Changelog
 
+* oauth backend for keycloack. PR [#328](https://github.com/TampereHacklab/mulysa/pull/328) by [@tswfi](https://github.com/tswfi).
 * Add birthday filters to admin view. PR [#332](https://github.com/TampereHacklab/mulysa/pull/332) by [@tswfi](https://github.com/tswfi).
 * Update django to 3.2.6. PR [#329](https://github.com/TampereHacklab/mulysa/pull/329) by [@tswfi](https://github.com/tswfi).
 * Django 3.2 and update to all other packages also. PR [#324](https://github.com/TampereHacklab/mulysa/pull/324) by [@tswfi](https://github.com/tswfi).
