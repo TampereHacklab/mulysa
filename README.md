@@ -41,7 +41,7 @@ Make sure you have proper python installation on your machine
 Then run
 
 ```bash
-git clone git@github.com:TampereHacklab/mulysa.git
+git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
 pipenv sync --dev
 pipenv shell
