@@ -196,35 +196,35 @@ Just do one first with either dummy data or good guess then do the other.
 
 * go to [realm] -> identity providers -> add provider -> openid connect v1.0
 * create new (only changes to defaults listed here)
-* alias: mulysa
-* display name: mulysa (or what ever you want to call it)
-* trust email: yes
-* sync mode: force (this makes the data always update from mulysa)
-* Authorization URL: https://yourmulysadomain/o/authorize/
-* Token URL: https://yourmulysadomain/o/token/
-* User Info URL: https://yourmulysadomain/o/userinfo/
-* Client Authentication: client secret sent as post
-* Client ID: the client id from mulysa
-* Client Secret: the client secret from mulysa
-* save
+  * alias: mulysa
+  * display name: mulysa (or what ever you want to call it)
+  * trust email: yes
+  * sync mode: force (this makes the data always update from mulysa)
+  * Authorization URL: https://yourmulysadomain/o/authorize/
+  * Token URL: https://yourmulysadomain/o/token/
+  * User Info URL: https://yourmulysadomain/o/userinfo/
+  * Client Authentication: client secret sent as post
+  * Client ID: the client id from mulysa
+  * Client Secret: the client secret from mulysa
+  * save
 
 * go to [realm] -> identity providers -> [display name] -> Mappers
 * create
-* name: firstnamemapper
-* Sync Mode Override: force
-* Mapper Type: Attribute Importer
-* Claim: firstName
-* User Attribute Name: firstName
-* save
+  * name: firstnamemapper
+  * Sync Mode Override: force
+  * Mapper Type: Attribute Importer
+  * Claim: firstName
+  * User Attribute Name: firstName
+  * save
 
 * go to [realm] -> identity providers -> [display name] -> Mappers
 * create
-* name: lastnamemapper
-* Sync Mode Override: force
-* Mapper Type: Attribute Importer
-* Claim: lastName
-* User Attribute Name: lastName
-* save
+  * name: lastnamemapper
+  * Sync Mode Override: force
+  * Mapper Type: Attribute Importer
+  * Claim: lastName
+  * User Attribute Name: lastName
+  * save
 
 ## fingers crossed
 
