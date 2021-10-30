@@ -1,5 +1,6 @@
 # Changelog
 
+* Sanitize url redirect. PR [#340](https://github.com/TampereHacklab/mulysa/pull/340) by [@tswfi](https://github.com/tswfi).
 * Format OIDC-instructions more readable. PR [#338](https://github.com/TampereHacklab/mulysa/pull/338) by [@olmari](https://github.com/olmari).
 * up django to 3.2.8. PR [#336](https://github.com/TampereHacklab/mulysa/pull/336) by [@tswfi](https://github.com/tswfi).
 * Finish OIDC setup documentation. PR [#333](https://github.com/TampereHacklab/mulysa/pull/333) by [@olmari](https://github.com/olmari).
