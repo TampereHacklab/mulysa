@@ -189,6 +189,7 @@ Just do one first with either dummy data or good guess then do the other.
   * client type: confidential
   * authorization grant type: auth code
   * redirect uris: the url from keycloack
+  * Skip authorization: checked (wont ask for extra permission authorization step after logging in)
   * algorithm: HMAC with SHA-2 256 (or RSA but then you need to create the key etc)
 * take your clientid and client secret and endpoint and configure them in keycloak
 
