@@ -3,7 +3,6 @@ from datetime import timedelta
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -37,9 +36,7 @@ from www.forms import (
     RegistrationServicesFrom,
     RegistrationUserForm,
 )
-
-def staff_member_or_selfrequired(user):
-    pass
+from .decorators import self_or_staff_member_required
 
 
 def register(request):
@@ -213,10 +210,8 @@ def applications(request):
 
 
 @login_required
+@self_or_staff_member_required
 def userdetails(request, id):
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     userdetails = CustomUser.objects.get(id=id)
     userdetails.servicesubscriptions = ServiceSubscription.objects.filter(
         user=userdetails
@@ -242,10 +237,8 @@ def userdetails(request, id):
 
 
 @login_required
+@self_or_staff_member_required
 def usersettings(request, id):
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     # the base form for users basic information
     customuser = get_object_or_404(CustomUser, id=id)
     usereditform = EditUserForm(request.POST or None, instance=customuser)
@@ -294,13 +287,11 @@ def usersettings(request, id):
 
 
 @login_required
+@self_or_staff_member_required
 def usersettings_subscribe_service(request, id):
     """
     Subscribe user to new service
     """
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
@@ -327,13 +318,11 @@ def usersettings_subscribe_service(request, id):
 
 
 @login_required
+@self_or_staff_member_required
 def usersettings_unsubscribe_service(request, id):
     """
     Unsubscribe user from service
     """
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
@@ -356,13 +345,11 @@ def usersettings_unsubscribe_service(request, id):
 
 
 @login_required
+@self_or_staff_member_required
 def usersettings_claim_nfc(request, id):
     """
     claim nfc card for user
     """
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
@@ -388,13 +375,11 @@ def usersettings_claim_nfc(request, id):
 
 
 @login_required
+@self_or_staff_member_required
 def usersettings_delete_nfc(request, id):
     """
     delete nfc card
     """
-    if not request.user.is_staff and request.user.id != id:
-        return redirect_to_login(request.path)
-
     customuser = get_object_or_404(CustomUser, id=id)
 
     if request.method == "POST":
