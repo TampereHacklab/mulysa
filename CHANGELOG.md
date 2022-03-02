@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump ipython from 7.28.0 to 7.31.1. PR [#346](https://github.com/TampereHacklab/mulysa/pull/346) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 3.2.8 to 3.2.12. PR [#347](https://github.com/TampereHacklab/mulysa/pull/347) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * move application management to django admin views. PR [#343](https://github.com/TampereHacklab/mulysa/pull/343) by [@tswfi](https://github.com/tswfi).
 * Sanitize url redirect. PR [#340](https://github.com/TampereHacklab/mulysa/pull/340) by [@tswfi](https://github.com/tswfi).
