@@ -74,7 +74,7 @@ run:
 pipenv update
 pipenv lock
 pipenv sync
-tox
+tox4
 ```
 
 
