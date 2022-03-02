@@ -35,7 +35,7 @@ Most of this works around our "User" model which can do multiple things
 
 Make sure you have proper python installation on your machine
 
-* python 3.7
+* python 3.9
 * pipenv from here: https://github.com/pypa/pipenv
 
 Then run
