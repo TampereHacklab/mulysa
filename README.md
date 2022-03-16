@@ -35,7 +35,11 @@ Most of this works around our "User" model which can do multiple things
 
 Make sure you have proper python installation on your machine
 
-* python 3.7
+Debian 11.2:
+* sudo apt install git python3-dev pipenv default-libmysqlclient-dev
+
+Other:
+* python 3.9.2
 * pipenv from here: https://github.com/pypa/pipenv
 
 Then run
