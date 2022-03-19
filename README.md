@@ -36,11 +36,15 @@ Most of this works around our "User" model which can do multiple things
 Make sure you have proper python installation on your machine
 
 Debian 11.2:
-* sudo apt install git python3-dev pipenv default-libmysqlclient-dev
+* sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 
 Other:
+* git
 * python 3.9.2
+* gettext for translation editing and compiling
 * pipenv from here: https://github.com/pypa/pipenv
+* mysqlclient for pipenv
+* django for pipenv
 
 Then run
 
