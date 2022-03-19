@@ -4,11 +4,11 @@
 
 # Mulysa
 
-asylum[::-1] is a member management system for Tampere Hacklab.
+asylum[::-1] is a member management system for Jyväskylä Hacklab originating from Tampere Hacklab.
 
 # Idea
 
-Tampere Hacklab has been groving and member management has become pretty labor intensive.
+Jyväskylä Hacklab has been groving and member management has become pretty labor intensive.
 This project tries to automate the boring parts by automating the communication with members,
 managing the door access and managing the LDAP account creation (some of this is still on the TODO list).
 
@@ -25,7 +25,7 @@ Most of this works around our "User" model which can do multiple things
 * Treasurer can update "active" information of the member
   * when the member has paid their fees normally Treasurer will send a message to Mulysa to set the member active = true
   * when the member has not paid their fees Treasurer will set the member as active = false
-* Member can request to leave Tampere Hacklab
+* Member can request to leave Jyväskylä Hacklab
   * Member fills in their email address
   * Mulysa sends email with a confirmation link and information to the Member
   * If member uses the activation link within X days the member will be MarkedForDeletion and deleted after XX days
@@ -45,7 +45,7 @@ Other:
 Then run
 
 ```bash
-git clone https://github.com/TampereHacklab/mulysa.git
+git clone https://github.com/HacklabJKL/mulysa.git
 cd mulysa
 pipenv sync --dev
 pipenv shell
