@@ -1,6 +1,6 @@
-[![Depedency updates status](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
-[![Build status](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml)
-[![Coverage Status](https://coveralls.io/repos/github/TampereHacklab/mulysa/badge.svg?branch=master)](https://coveralls.io/github/TampereHacklab/mulysa?branch=master)
+[![Depedency updates status](https://pyup.io/repos/github/HacklabJKL/mulysa/shield.svg)](https://pyup.io/repos/github/HacklabJKL/mulysa/)
+[![Build status](https://github.com/HacklabJKL/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/HacklabJKL/mulysa/actions/workflows/tox.yml)
+[![Coverage Status](https://coveralls.io/repos/github/HacklabJKL/mulysa/badge.svg?branch=master)](https://coveralls.io/github/HacklabJKL/mulysa?branch=master)
 
 # Mulysa
 
@@ -51,7 +51,9 @@ pipenv sync --dev
 pipenv shell
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
-./manage.py runserver
+./manage.py runserver #12345
+# to specify port other than 8000 which the server runs on
+# remove the # before 12345 and change the number to desired port
 ```
 
 ## To update localizations
