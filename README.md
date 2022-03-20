@@ -40,7 +40,7 @@ Debian 11.2:
 
 Other:
 * git
-* python 3.9.2
+* python 3.9
 * gettext for translation editing and compiling
 * pipenv from here: https://github.com/pypa/pipenv
 * mysqlclient for pipenv
@@ -90,7 +90,7 @@ run:
 pipenv update
 pipenv lock
 pipenv sync
-tox
+tox4
 ```
 
 
