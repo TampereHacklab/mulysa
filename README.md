@@ -108,6 +108,13 @@ Before committing, run
 
 * black
 
+### Running all test cases
+
+```
+./manage.py test
+```
+
+
 ### Running just one test case
 
 To speed up writing your tests you can run only one test case with something like this
