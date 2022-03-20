@@ -46,6 +46,9 @@ Other:
 * mysqlclient for pipenv
 * django for pipenv
 
+Optional:
+* tox for local tox tests
+
 Then run
 
 ```bash
