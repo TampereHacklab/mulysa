@@ -19,8 +19,8 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install GNU gettext
-        run: sudo apt install gettext
+      - name: Install GNU gettext and tox
+        run: sudo apt install gettext tox
 
       - name: Install pipenv
         run: pip install pipenv
