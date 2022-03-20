@@ -27,7 +27,7 @@ jobs:
 
       - name: run tox
         run: |
-          pipenv sync --dev
+          pipenv sync --dev --python $(which python3.9)
           pipenv run tox
 
       # https://github.com/marketplace/actions/coveralls-python
