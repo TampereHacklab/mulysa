@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 18:23+0200\n"
+"POT-Creation-Date: 2022-03-20 00:08+0000\n"
 "PO-Revision-Date: 2020-09-26 14:09+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Show browser version"
 msgstr "Näytä selaimen versio"
 
-#: emails/admin.py:46 emails/templates/admin/send-email.html:15
+#: emails/admin.py:46 emails/templates/admin/send-email.html:13
 msgid "Send now"
 msgstr "Lähetä heti"
 
@@ -70,10 +70,11 @@ msgstr "Viestin lähetyksen päiväys"
 msgid "Body"
 msgstr "Sisältö"
 
-#: emails/templates/admin/send-email.html:19
+#: emails/templates/admin/send-email.html:17
 msgid "Cancel"
 msgstr "Peruuta"
 
+#: emails/templates/mail_content_and_post.html:5
 #: emails/templates/mail_content_and_post.txt:5
 #, python-format
 msgid ""

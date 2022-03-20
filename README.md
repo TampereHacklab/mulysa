@@ -55,6 +55,9 @@ pipenv sync --dev
 pipenv shell
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
+./manage.py makemessages -l fi
+./manage.py compilemessages
+./manage.py test # run all tests to ensure everything works
 ./manage.py runserver #12345
 # to specify port other than 8000 which the server runs on
 # remove the # before 12345 and change the number to desired port
