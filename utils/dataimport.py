@@ -253,7 +253,7 @@ class DataImport:
                 message = line["Message"].strip()
                 if message == "Viitemaksu":
                     message = None
-                amount = Decimal(line["Amount"])
+                amount = Decimal(str(line["Amount"]).strip(',').replace(',',"."))
                 peer = line["Counterparty"]
                 # holvi reference has leading zeroes, clean them up here also
                 reference = line["Reference"].strip().lstrip("0")
