@@ -1057,10 +1057,10 @@
         },
         "rope": {
             "hashes": [
-                "sha256:505a2f6b4ac7b18e0429be179f4d8712243a194da5c866b0731f9d91ce7590bb"
+                "sha256:edf2ed3c9b35a8814752ffd3ea55b293c791e5087e252461de898e953cf9c146",
+                "sha256:f87662c565086d660fc855cc07f37820267876634c3e9e51bddb32ff51547268"
             ],
-            "index": "pypi",
-            "version": "==0.20.1"
+            "version": "==0.23.0"
         },
         "setuptools": {
             "hashes": [
