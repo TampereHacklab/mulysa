@@ -389,11 +389,10 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:1d9862f19c0eed23f21b9f6246a67ce423875b9a14d05d79df70aab211bc8092",
-                "sha256:2d0f3db2944130f4a842f37a3b252f4a32cc0454a1a2e992c6480c7c17f1b121"
+                "sha256:1c440f6336cb49893ff1a8326c70b4df693802ae981f210f545cd4215ac48133",
+                "sha256:ae300d40c3e0b581372294a43b04359b24af94f631dd9451881561d5c702a78d"
             ],
-            "index": "pypi",
-            "version": "==8.12.34"
+            "version": "==8.12.46"
         },
         "pycparser": {
             "hashes": [
