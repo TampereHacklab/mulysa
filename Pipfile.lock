@@ -217,11 +217,10 @@
         },
         "django-mailer": {
             "hashes": [
-                "sha256:2013e723bcc7c34143c8ecceaaa1b58918856c3ad1d9a79e27b5dd2530ef4d86",
-                "sha256:a79914dbf87c431aca6888f4d453136e3ec2162aea56cd05972996f4fc36e5bc"
+                "sha256:74a6c536ffdc01cccb345a3ae3dfb0aa8562eaf2a8a01bf90113bf62f55534e7",
+                "sha256:8daf34c55d4dd336d85684738fed6f2757e429ecfe12846920628d2c3b2fa608"
             ],
-            "index": "pypi",
-            "version": "==2.1"
+            "version": "==2.2"
         },
         "django-oauth-toolkit": {
             "hashes": [
