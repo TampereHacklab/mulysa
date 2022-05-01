@@ -225,11 +225,10 @@
         },
         "django-oauth-toolkit": {
             "hashes": [
-                "sha256:650e5ef2244d1d8db8f507137e0d1e8b8aad1f4086a4a610526e8851f9a38308",
-                "sha256:b2e346a7c1e222774bfb370f21b556b92b408395b4c23914e2d1b241b2e5376a"
+                "sha256:755df741b9e1cce4d9b651453c54a4338b23919cefa55ad40d37c797e508e192",
+                "sha256:eb265de8c1faa6362325e7a677e007a83bb64a65e8732a6278161622fa4e0fad"
             ],
-            "index": "pypi",
-            "version": "==1.5.0"
+            "version": "==2.0.0"
         },
         "django-rest-auth": {
             "hashes": [
