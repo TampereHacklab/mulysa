@@ -707,11 +707,10 @@
         },
         "coveralls": {
             "hashes": [
-                "sha256:15a987d9df877fff44cd81948c5806ffb6eafb757b3443f737888358e96156ee",
-                "sha256:aedfcc5296b788ebaf8ace8029376e5f102f67c53d1373f2e821515c15b36527"
+                "sha256:b32a8bb5d2df585207c119d6c01567b81fba690c9c10a753bfe27a335bfc43ea",
+                "sha256:f42015f31d386b351d4226389b387ae173207058832fbf5c8ec4b40e27b16026"
             ],
-            "index": "pypi",
-            "version": "==3.2.0"
+            "version": "==3.3.1"
         },
         "decorator": {
             "hashes": [
