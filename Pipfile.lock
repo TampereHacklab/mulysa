@@ -211,11 +211,10 @@
         },
         "django-log-request-id": {
             "hashes": [
-                "sha256:0126f5da0cacc62cf834efb3cf66e4606031d911ccff048da2f88fe2c0bbcbc9",
-                "sha256:c3f7f53b1fc92f62269c247bee14d578daab000a2f7ae70b70ae288b603b5907"
+                "sha256:8efb8a850fb631b59924cf6fcc8aefe707b0a7dcad42de55284ce807c31b7bc1",
+                "sha256:bccdabcdf536345e7ae40562d4b0fcdc230e0ebe1a8b65ab4a1ed9d3083cf870"
             ],
-            "index": "pypi",
-            "version": "==1.6.0"
+            "version": "==2.0.0"
         },
         "django-mailer": {
             "hashes": [
