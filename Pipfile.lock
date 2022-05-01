@@ -765,11 +765,10 @@
         },
         "ipython": {
             "hashes": [
-                "sha256:55df3e0bd0f94e715abd968bedd89d4e8a7bce4bf498fb123fed4f5398fea874",
-                "sha256:b5548ec5329a4bcf054a5deed5099b0f9622eb9ea51aaa7104d215fece201d8c"
+                "sha256:341456643a764c28f670409bbd5d2518f9b82c013441084ff2c2fc999698f83b",
+                "sha256:807ae3cf43b84693c9272f70368440a9a7eaa2e7e6882dad943c32fbf7e51402"
             ],
-            "index": "pypi",
-            "version": "==7.31.1"
+            "version": "==8.3.0"
         },
         "isort": {
             "hashes": [
