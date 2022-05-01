@@ -390,11 +390,10 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:1d9862f19c0eed23f21b9f6246a67ce423875b9a14d05d79df70aab211bc8092",
-                "sha256:2d0f3db2944130f4a842f37a3b252f4a32cc0454a1a2e992c6480c7c17f1b121"
+                "sha256:065fc5930ceff3147f50beb4c6d253c25ab0a467ac461174c62696c119593f7e",
+                "sha256:56fd605d2f5460e1df2117085b653bb38322295ec658e6acaafc9c976867d522"
             ],
-            "index": "pypi",
-            "version": "==8.12.34"
+            "version": "==8.12.47"
         },
         "pycparser": {
             "hashes": [
