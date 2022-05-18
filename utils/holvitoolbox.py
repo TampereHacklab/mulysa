@@ -1,4 +1,5 @@
 from datetime import datetime
+from io import BytesIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
@@ -23,7 +24,7 @@ class HolviToolbox:
         Unused fields:
         "Execution date" after "Payment date"
         """
-        sheet = load_workbook(filename=uploaded_file.name).active
+        sheet = load_workbook(filename=BytesIO(uploaded_file.read())).active
 
         date_fields = ["Payment date", "Date"]
         headers = []
