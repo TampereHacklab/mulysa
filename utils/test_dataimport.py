@@ -254,7 +254,7 @@ class TestHolviImporter(TestCase):
 
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement-2022-05.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
