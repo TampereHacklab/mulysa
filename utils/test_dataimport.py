@@ -231,58 +231,39 @@ class TestTitoImporter(TestCase):
         self.assertEqual(models.BankTransaction.objects.first().amount, Decimal('123.45'), 'Check decimals')
 
 class TestHolviImporter(TestCase):
-    def test_holvi_import(self):
+    def test_holvi_import_2022_format(self):
         """
-        Test import with data format from 2020-06-10
+        Test import with data format from 2022-05-18
+
+        Uses same fields but XLSX file format.
         """
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
 
         # and again to test that it found the same rows
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 0, "exists": 3, "error": 0, "failedrows": []}
-        )
-
-    def test_holvi_import_2021_format(self):
-        """
-        Test import with data fromat from 2021-03-21
-
-        Contains "Payment date" and "Execution date" fields instead of single "Date" field
-        """
-        models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement-2021.xls", "rb")
-        name = xls.name
-        data = xls.read()
-        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
-        self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
-        )
-
-        # and again to test that it found the same rows
-        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
-        self.assertDictEqual(
-            res, {"imported": 0, "exists": 3, "error": 0, "failedrows": []}
+            res, {"imported": 0, "exists": 5, "error": 0, "failedrows": []}
         )
 
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
         # third row on the test file
-        transaction = models.BankTransaction.objects.get(archival_reference='aaa333bbbcccdddeeefffggghhhiiijj')
-        self.assertEqual(transaction.amount, Decimal('-18.84'), 'Check decimals')
+        transaction = models.BankTransaction.objects.get(archival_reference='0b914e1f528d902e6fe1ee7ff792ce5f')
+        self.assertEqual(transaction.amount, Decimal('-7.44'), 'Check decimals')
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()

@@ -233,7 +233,7 @@ class DataImport:
         return results
 
     # Holvi TITO import. TITO spec here: ???
-    # Note: this is the XSL-based TITO.
+    # Note: this is the XLSX-based TITO.
     @staticmethod
     def import_holvi(f):
         holvi = HolviToolbox.parse_account_statement(f)
@@ -251,7 +251,7 @@ class DataImport:
                     )
                 transaction_date = line["Date_parsed"]
                 message = line["Message"].strip()
-                if message == "Viitemaksu":
+                if message in ["Viitemaksu", "None"]:
                     message = None
                 amount = Decimal(line["Amount"])
                 peer = line["Counterparty"]

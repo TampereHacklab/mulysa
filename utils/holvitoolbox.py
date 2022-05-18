@@ -1,9 +1,9 @@
 from datetime import datetime
+from io import BytesIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-import xlrd
-
+from openpyxl import load_workbook
 
 class HolviToolbox:
     """
@@ -11,9 +11,11 @@ class HolviToolbox:
     """
 
     @staticmethod
-    def parse_account_statement(filename: InMemoryUploadedFile):
+    def parse_account_statement(uploaded_file: InMemoryUploadedFile):
         """
-        Parses Holvi account statement Excel in new or old header format
+        Parses Holvi account statement Excel in new or old header format. Holvi report system has
+        been updated in 05/2022 to use XLSX files instead of XLSX. Parsing Excel reading library has
+        been uodated to handle both file types.
 
         Expected fields:
         "Date"/"Payment date", "Amount", "Currency", "Counterparty", "Description", "Reference",
@@ -22,22 +24,22 @@ class HolviToolbox:
         Unused fields:
         "Execution date" after "Payment date"
         """
-        sheet = xlrd.open_workbook(file_contents=filename.read()).sheet_by_index(0)
+        sheet = load_workbook(filename=BytesIO(uploaded_file.read())).active
 
         date_fields = ["Payment date", "Date"]
         headers = []
         items = []
-        for row_index, row in enumerate(sheet.get_rows()):
+        for row_index, row in enumerate(sheet.values):
             # Skip summary rows
-            if headers == [] and row[0].value not in date_fields:
+            if headers == [] and row[0] not in date_fields:
                 continue
 
             if headers == []:
                 # Collect header row
-                headers = [field.value for field in row]
+                headers = list(row)
             else:
                 # Extract row data as dictionary with header row as keys
-                item = dict(zip(headers, [field.value for field in row]))
+                item = dict(zip(headers, list(row)))
 
                 # Parse payment date
                 try:
@@ -60,7 +62,7 @@ class HolviToolbox:
                 item["Message"] = str(item["Message"])
 
                 # Add meta fields
-                item["source_file"] = filename
+                item["source_file"] = uploaded_file.name
                 item["source_row"] = row_index + 1
 
                 items.append(item)
