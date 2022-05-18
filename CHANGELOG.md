@@ -1,5 +1,6 @@
 # Changelog
 
+* Change to Python 3.9 and tox4. PR [#352](https://github.com/TampereHacklab/mulysa/pull/352) by [@olmari](https://github.com/olmari).
 * Bump django from 3.2.12 to 3.2.13. PR [#350](https://github.com/TampereHacklab/mulysa/pull/350) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump ipython from 7.28.0 to 7.31.1. PR [#346](https://github.com/TampereHacklab/mulysa/pull/346) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 3.2.8 to 3.2.12. PR [#347](https://github.com/TampereHacklab/mulysa/pull/347) by [@dependabot[bot]](https://github.com/apps/dependabot).
