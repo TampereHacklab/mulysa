@@ -10,7 +10,7 @@ pylint = "*"
 ipython = "*"
 autopep8 = "*"
 coverage = "*"
-tox = "*"
+tox4 = "*"
 isort = "*"
 rope = "*"
 coveralls = "*"
@@ -41,7 +41,7 @@ django-admin-rangefilter = "*"
 django-oauth-toolkit = ">=1.5.0"
 
 [requires]
-python_version = "3.7"
+python_version = "3.9"
 
 [pipenv]
 #
