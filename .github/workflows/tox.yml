@@ -14,10 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python 3.7
+      - name: Set up Python 3.9
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: 3.9
 
       - name: Install GNU gettext
         run: sudo apt install gettext
@@ -28,7 +28,7 @@ jobs:
       - name: run tox
         run: |
           pipenv sync --dev
-          pipenv run tox
+          pipenv run tox4
 
       # https://github.com/marketplace/actions/coveralls-python
       - name: Coveralls
