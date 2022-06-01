@@ -409,11 +409,10 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:429273b98966475d0c18ee293096eaf81c6b5727d0d55c7ba5ce9c60ec8c59ef",
-                "sha256:af0681fbfe9fa0721376ad9b729e772e5d20bf2cf50d9dd8ca2f0bdd78e9f0ce"
+                "sha256:c691661615ebdc90beff458f8fbf7c0bfb78f21a0aa40a256cc2ba6da41e393b",
+                "sha256:d169ec284ace7a82ec087fcc0c3f40da86b89a50950f143fc53a47e5f77ff805"
             ],
-            "index": "pypi",
-            "version": "==8.12.48"
+            "version": "==8.12.49"
         },
         "pycparser": {
             "hashes": [
