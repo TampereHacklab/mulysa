@@ -997,11 +997,10 @@
         },
         "rope": {
             "hashes": [
-                "sha256:16f652d3002296778d463db329da6a05d914a4dbde30ea6da76362da06c0ebb7",
-                "sha256:67749b582d57954f288b0441fae93e8f4c166d7e93fc29c430bd4db28ec904d0"
+                "sha256:14e2e9b74ff345d038988fd62b7ef4226351e4a1181123596abb3a147fea9019",
+                "sha256:f762542c9cfe52124aa55d33822a269fc4b0da70fe3170c6086de2733ed52f22"
             ],
-            "index": "pypi",
-            "version": "==1.0.0"
+            "version": "==1.2.0"
         },
         "six": {
             "hashes": [
