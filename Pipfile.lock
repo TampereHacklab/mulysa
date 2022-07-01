@@ -327,9 +327,9 @@
         },
         "jwcrypto": {
             "hashes": [
-                "sha256:0d6461ba13f7c271d8bac5018ee60ddbcae5ff39403fafa42375f57d08e398bb"
+                "sha256:54b551b115ffb4d12b1f1ee93b8ba2a71bb8556ba3d85d62f707549613da877c"
             ],
-            "version": "==1.3"
+            "version": "==1.3.1"
         },
         "lockfile": {
             "hashes": [
