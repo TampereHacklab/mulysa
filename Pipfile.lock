@@ -282,12 +282,8 @@
             "version": "==3.2.0"
         },
         "openpyxl": {
-            "hashes": [
-                "sha256:40f568b9829bf9e446acfffce30250ac1fa39035124d55fc024025c41481c90f",
-                "sha256:8f3b11bd896a95468a4ab162fc4fcd260d46157155d1f8bfaabb99d88cfcf79f"
-            ],
-            "index": "pypi",
-            "version": "==3.0.9"
+            "hashes": [],
+            "version": "==3.0.10"
         },
         "phonenumbers": {
             "hashes": [
