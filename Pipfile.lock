@@ -211,10 +211,8 @@
             "version": "==3.1.2"
         },
         "jwcrypto": {
-            "hashes": [
-                "sha256:0d6461ba13f7c271d8bac5018ee60ddbcae5ff39403fafa42375f57d08e398bb"
-            ],
-            "version": "==1.3"
+            "hashes": [],
+            "version": "==1.3.1"
         },
         "lockfile": {
             "hashes": [
