@@ -779,11 +779,8 @@
             "version": "==0.0.0"
         },
         "traitlets": {
-            "hashes": [
-                "sha256:70815ecb20ec619d1af28910ade523383be13754283aef90528eb3d47b77c5db",
-                "sha256:f44b708d33d98b0addb40c29d148a761f44af740603a8fd0e2f8b5b27cf0f087"
-            ],
-            "version": "==5.2.1.post0"
+            "hashes": [],
+            "version": "==5.3.0"
         },
         "typing-extensions": {
             "hashes": [
