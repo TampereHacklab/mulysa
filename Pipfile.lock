@@ -128,12 +128,8 @@
             "version": "==2.2"
         },
         "django-oauth-toolkit": {
-            "hashes": [
-                "sha256:755df741b9e1cce4d9b651453c54a4338b23919cefa55ad40d37c797e508e192",
-                "sha256:eb265de8c1faa6362325e7a677e007a83bb64a65e8732a6278161622fa4e0fad"
-            ],
-            "index": "pypi",
-            "version": "==2.0.0"
+            "hashes": [],
+            "version": "==2.1.0"
         },
         "django-rest-auth": {
             "hashes": [
