@@ -80,12 +80,8 @@
             "version": "==4.0.6"
         },
         "django-admin-rangefilter": {
-            "hashes": [
-                "sha256:13c0db838db78f09d3ea717b9bc4a37c4601a9441cc70720f1a82f90e4b47b76",
-                "sha256:d2d5d99a0bc9aed456cd449755ac79908ed0b6524d76020430f71cde0ef12348"
-            ],
-            "index": "pypi",
-            "version": "==0.8.4"
+            "hashes": [],
+            "version": "==0.8.5"
         },
         "django-allauth": {
             "hashes": [
