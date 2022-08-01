@@ -318,11 +318,8 @@
             "version": "==2022.1"
         },
         "requests": {
-            "hashes": [
-                "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61",
-                "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"
-            ],
-            "version": "==2.27.1"
+            "hashes": [],
+            "version": "==2.28.1"
         },
         "requests-oauthlib": {
             "hashes": [
@@ -852,11 +849,8 @@
             "version": "==0.1.1"
         },
         "requests": {
-            "hashes": [
-                "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61",
-                "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"
-            ],
-            "version": "==2.27.1"
+            "hashes": [],
+            "version": "==2.28.1"
         },
         "rope": {
             "hashes": [
