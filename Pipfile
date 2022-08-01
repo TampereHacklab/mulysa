@@ -4,49 +4,44 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pep8 = "*"
-flake8 = "*"
-pylint = "*"
-ipython = "*"
 autopep8 = "*"
-coverage = "*"
-tox4 = "*"
-isort = "*"
-rope = "*"
-coveralls = "*"
 black = "*"
+coverage = "*"
+coveralls = "*"
+flake8 = "*"
+ipython = "*"
+isort = "*"
+pep8 = "*"
+pylint = "*"
+rope = "*"
+tox4 = "*"
 werkzeug = "*"
 
 [packages]
-django = "==3.2.*"
-djangorestframework = "*"
-django-rest-auth = "*"
-django-allauth = "*"
-django-extensions = "*"
 coreapi = "*"
-django-log-request-id = "*"
-django-filter = "*"
-djangorestframework-filters = "==1.0.0.dev2"
-django-user-language-middleware = "*"
-mysqlclient = "*"
-drf-api-tracking = "*"
-phonenumbers = "*"
-gunicorn = "*"
-django-bootstrap4 = "*"
-django-autoslug = "*"
-django-mailer = "*"
-openpyxl = "*"
-markdown = "*"
+django = "==4.0.6"
 django-admin-rangefilter = "*"
+django-allauth = "*"
+django-autoslug = "*"
+django-bootstrap4 = "*"
+django-extensions = "*"
+django-filter = "*"
+django-log-request-id = "*"
+django-mailer = "*"
 django-oauth-toolkit = ">=1.5.0"
+django-rest-auth = "*"
+django-user-language-middleware = "*"
+djangorestframework = "*"
+djangorestframework-filters = "==1.0.0.dev2"
+drf-api-tracking = "*"
+gunicorn = "*"
+markdown = "*"
+mysqlclient = "*"
+openpyxl = "*"
+phonenumbers = "*"
+
+[pipenv]
+allow_prereleases = true
 
 [requires]
 python_version = "3.9"
-
-[pipenv]
-#
-# prereleases are allowed because of black
-# this should be removed as soon as either black is released (https://github.com/psf/black/issues/517)
-# or pipenv starts supporting prereleases for one package (https://github.com/pypa/pipenv/pull/4607)
-#
-allow_prereleases = true
