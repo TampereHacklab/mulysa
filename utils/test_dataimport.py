@@ -69,8 +69,13 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
     def test_user_gets_more_time(self):
         paid_delta = -50
         # starts of as overdue
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.OVERDUE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
         # makes one payment two days ago, still overdue but the date has changed
         data = self._createTitodata(timezone.now().date() + timedelta(days=-2), 10)
@@ -83,8 +88,13 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.OVERDUE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
         # makes another payment yesterday, state PAID and date in future
         data = self._createTitodata(timezone.now().date() + timedelta(days=-1), 10)
@@ -97,14 +107,20 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.ACTIVE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.ACTIVE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
     def tearDown(self):
         self.user.delete()
         self.memberservice.delete()
         self.servicesubscription.delete()
         models.BankTransaction.objects.all().delete()
+
 
 class TestTitoImporter(TestCase):
     def _getbasetitodata(self):
@@ -150,7 +166,10 @@ class TestTitoImporter(TestCase):
         self.assertDictEqual(
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
-        self.assertEqual(models.BankTransaction.objects.first().reference_number, data['viite'].strip().strip("0"))
+        self.assertEqual(
+            models.BankTransaction.objects.first().reference_number,
+            data["viite"].strip().strip("0"),
+        )
 
     def test_tito_import_wrong_length(self):
         models.BankTransaction.objects.all().delete()
@@ -220,15 +239,23 @@ class TestTitoImporter(TestCase):
         models.BankTransaction.objects.all().delete()
         data = self._getbasetitodata()
         # with 45 cents
-        data['rahamaara'] = "12345".rjust(18, "0")
+        data["rahamaara"] = "12345".rjust(18, "0")
         dataline = "".join(data.values())
         lines = io.BytesIO(b"header\n" + dataline.encode())
         results = DataImport.import_tito(lines)
         self.assertDictEqual(
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
-        self.assertEqual(models.BankTransaction.objects.first().reference_number, data['viite'].strip().strip("0"))
-        self.assertEqual(models.BankTransaction.objects.first().amount, Decimal('123.45'), 'Check decimals')
+        self.assertEqual(
+            models.BankTransaction.objects.first().reference_number,
+            data["viite"].strip().strip("0"),
+        )
+        self.assertEqual(
+            models.BankTransaction.objects.first().amount,
+            Decimal("123.45"),
+            "Check decimals",
+        )
+
 
 class TestHolviImporter(TestCase):
     def test_holvi_import_2022_format(self):
@@ -262,8 +289,10 @@ class TestHolviImporter(TestCase):
             res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
         # third row on the test file
-        transaction = models.BankTransaction.objects.get(archival_reference='0b914e1f528d902e6fe1ee7ff792ce5f')
-        self.assertEqual(transaction.amount, Decimal('-7.44'), 'Check decimals')
+        transaction = models.BankTransaction.objects.get(
+            archival_reference="0b914e1f528d902e6fe1ee7ff792ce5f"
+        )
+        self.assertEqual(transaction.amount, Decimal("-7.44"), "Check decimals")
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()

@@ -10,7 +10,7 @@ pylint = "*"
 ipython = "*"
 autopep8 = "*"
 coverage = "*"
-tox4 = "*"
+tox = "*"
 isort = "*"
 rope = "*"
 coveralls = "*"
@@ -18,16 +18,19 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-django = "==3.2.*"
+django = "==4.1.*"
 djangorestframework = "*"
-django-rest-auth = "*"
+# django 4 support from a fork for now
+# see https://pypi.org/project/django-rest-auth-forked/
+# https://github.com/Tivix/django-rest-auth/pulls?q=is%3Apr+is%3Aopen+%27django+4.0%27+
+#django-rest-auth = "*"
+django-rest-auth-forked = "*"
 django-allauth = "*"
 django-extensions = "*"
 coreapi = "*"
 django-log-request-id = "*"
 django-filter = "*"
 djangorestframework-filters = "==1.0.0.dev2"
-django-user-language-middleware = "*"
 mysqlclient = "*"
 drf-api-tracking = "*"
 phonenumbers = "*"
@@ -39,14 +42,16 @@ openpyxl = "*"
 markdown = "*"
 django-admin-rangefilter = "*"
 django-oauth-toolkit = ">=1.5.0"
+black = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
 
 [pipenv]
 #
-# prereleases are allowed because of black
-# this should be removed as soon as either black is released (https://github.com/psf/black/issues/517)
+# prereleases are allowed because of django-rest-framework-filters
+# this should be removed as soon as:
+# 1.0.0 is released https://github.com/philipn/django-rest-framework-filters
 # or pipenv starts supporting prereleases for one package (https://github.com/pypa/pipenv/pull/4607)
 #
 allow_prereleases = true

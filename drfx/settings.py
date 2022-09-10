@@ -101,10 +101,9 @@ AUTH_USER_MODEL = "users.CustomUser"
 # and to get this section when needed
 BOOTSTRAP4 = {
     "css_url": "/static/www/bootstrap4/bootstrap.min.css",
-    "javascript_url": "/static/www/bootstrap4/bootstrap.min.js",
+    "javascript_url": "/static/www/bootstrap4/bootstrap.bundle.min.js",
     "jquery_slim_url": "/static/www/bootstrap4/jquery-3.5.1.slim.min.js",
     "jquery_url": "/static/www/bootstrap4/jquery-3.5.1.min.js",
-    "popper_url": "/static/www/bootstrap4/popper.min.js",
 }
 
 MIDDLEWARE = [
@@ -117,7 +116,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "user_language_middleware.UserLanguageMiddleware",
+    "users.middleware.language.UserLanguageMiddleware",
 ]
 
 ROOT_URLCONF = "drfx.urls"

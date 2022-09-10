@@ -4,12 +4,13 @@ from django.utils import timezone
 from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from autoslug import AutoSlugField
 from mailer import send_mail
 
 logger = logging.getLogger(__name__)
+
 
 class Email(models.Model):
     """
@@ -38,10 +39,14 @@ class Email(models.Model):
     )
 
     # some datetime bits
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_("Creation date"),)
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_("Creation date"),
+    )
 
     last_modified = models.DateTimeField(
-        auto_now=True, verbose_name=_("Last modified datetime"),
+        auto_now=True,
+        verbose_name=_("Last modified datetime"),
     )
 
     sent = models.DateTimeField(

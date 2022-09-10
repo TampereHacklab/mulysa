@@ -13,7 +13,7 @@ class Command(BaseCommand):
     help = "Fetch bootstrap files as local static files"
 
     localurlbase = "/static/www/bootstrap4/"
-    appbase = apps.get_app_config('www').path
+    appbase = apps.get_app_config("www").path
     localfolder = f"{appbase}{localurlbase}"
 
     def handle(self, *args, **options):
@@ -31,14 +31,14 @@ class Command(BaseCommand):
                 continue
 
             # some have url and some href, handle both cases
-            url = val.get('url')
-            if(url):
+            url = val.get("url")
+            if url:
                 filename = self._fetch_and_save(url)
                 # build the settings section for it
                 newsettings[key] = f"{self.localurlbase}{filename}"
 
-            href = val.get('href')
-            if(href):
+            href = val.get("href")
+            if href:
                 filename = self._fetch_and_save(href)
                 # build the settings section for it
                 newsettings[key] = f"{self.localurlbase}{filename}"
@@ -55,7 +55,7 @@ class Command(BaseCommand):
         parsed = urlparse(url)
         filename = os.path.basename(parsed.path)
         r = requests.get(url)
-        with open(f'{self.localfolder}{filename}', 'wb') as f:
+        with open(f"{self.localfolder}{filename}", "wb") as f:
             f.write(r.content)
 
         return filename

@@ -511,6 +511,7 @@ def createuser(request):
         form = CreateUserForm()
     return render(request, "www/createuser.html", {"userform": form})
 
+
 @login_required
 def changelog_view(request):
     """

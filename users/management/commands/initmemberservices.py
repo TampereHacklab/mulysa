@@ -11,6 +11,6 @@ class Command(BaseCommand):
 
         if MemberService.objects.count() == 0:
             print("Initializing initial memberservices")
-            call_command('loaddata', 'memberservices')
+            call_command("loaddata", "memberservices")
         else:
             print("Memberservices already initialized")
