@@ -5,7 +5,7 @@ pipenv run django-admin compilemessages
 echo "Applying database migrations"
 pipenv run python manage.py migrate
 
-echo "collecting static files"
+echo "Collecting static files"
 pipenv run python manage.py collectstatic --clear --no-input
 
 echo "Importing initial memberservices data if none exists"
