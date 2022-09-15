@@ -1,5 +1,6 @@
 # Changelog
 
+* Speed up Docker container builds. PR [#362](https://github.com/TampereHacklab/mulysa/pull/362) by [@janilahti](https://github.com/janilahti).
 * New .xlsx Holvi-importer, tox.ini fixes. PR [#353](https://github.com/TampereHacklab/mulysa/pull/353) by [@olmari](https://github.com/olmari).
 * Change to Python 3.9 and tox4. PR [#352](https://github.com/TampereHacklab/mulysa/pull/352) by [@olmari](https://github.com/olmari).
 * Bump django from 3.2.12 to 3.2.13. PR [#350](https://github.com/TampereHacklab/mulysa/pull/350) by [@dependabot[bot]](https://github.com/apps/dependabot).
