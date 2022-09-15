@@ -80,13 +80,17 @@ tox
 
 ## to update local bootstrap files
 
+This will download some js and css files from external sites to be hosted locally.
+
 run:
 
 ```bash
 ./manage.py update_local_bootstrap
 ```
 
-* paste update settings.py with the new values
+the command spits out the new filenames that need to be updated to the settings.py file.
+
+* update settings.py with the new values
 * commit all the files
 
 ## Style checks & tests
