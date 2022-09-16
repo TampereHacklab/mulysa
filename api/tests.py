@@ -4,6 +4,8 @@ from django.core import mail
 from django.urls import reverse
 from django.utils import timezone
 
+from django.http import HttpRequest
+
 from api.models import AccessDevice
 from drfx import settings
 from rest_framework import status
@@ -11,6 +13,35 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from rest_framework_tracking.models import APIRequestLog
 from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
+from api.mulysaoauthvalidator import MulysaOAuth2Validator
+
+
+class TestOAuthValidator(APITestCase):
+    def setUp(self):
+        # and test user
+        self.ok_user = CustomUser.objects.create(
+            email="test1@example.com",
+            birthday=timezone.now(),
+            phone="+35844055066",
+            mxid="@ok:exmaple.com",
+        )
+        self.ok_user.save()
+
+    def test_oauthvalidator(self):
+        req = HttpRequest()
+        req.user = self.ok_user
+        expected = {
+            "sub": self.ok_user.email,
+            "email": self.ok_user.email,
+            "firstName": self.ok_user.first_name,
+            "lastName": self.ok_user.last_name,
+        }
+        oauthvalidator = MulysaOAuth2Validator()
+        res = oauthvalidator.get_additional_claims(req)
+        self.assertDictEqual(expected, res)
+
+    def tearDown(self):
+        CustomUser.objects.all().delete()
 
 
 @patch("api.views.VerySlowThrottle.allow_request", return_value=True)
