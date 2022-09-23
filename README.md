@@ -8,7 +8,7 @@ asylum[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
-Tampere Hacklab has been groving and member management has become pretty labor intensive.
+Tampere Hacklab has been growing and member management has become pretty labour intensive.
 This project tries to automate the boring parts by automating the communication with members,
 managing the door access and managing the LDAP account creation (some of this is still on the TODO list).
 
