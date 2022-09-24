@@ -1,5 +1,6 @@
 # Changelog
 
+* More secure cookies, fixes #370. PR [#371](https://github.com/TampereHacklab/mulysa/pull/371) by [@tswfi](https://github.com/tswfi).
 * 2022 update everything, django to 4.1. PR [#361](https://github.com/TampereHacklab/mulysa/pull/361) by [@tswfi](https://github.com/tswfi).
 * add basic test for oauth2validator method. PR [#363](https://github.com/TampereHacklab/mulysa/pull/363) by [@tswfi](https://github.com/tswfi).
 * Speed up Docker container builds. PR [#362](https://github.com/TampereHacklab/mulysa/pull/362) by [@janilahti](https://github.com/janilahti).
