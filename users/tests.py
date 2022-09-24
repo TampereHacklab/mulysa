@@ -42,16 +42,13 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
 
         # this should be found
         self.memberservice = models.MemberService.objects.create(
-            name="TestService",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=2
+            name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this is found also another user
@@ -59,43 +56,41 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user2,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # and one more service
         self.memberservice3 = models.MemberService.objects.create(
-            name="TestService3",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=5
+            name="TestService3", cost=10, days_per_payment=30, days_before_warning=5
         )
         # this should also be found
-        self.servicesubscription_user2_another = models.ServiceSubscription.objects.create(
-            user=self.user2,
-            service=self.memberservice3,
-            state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=5)
+        self.servicesubscription_user2_another = (
+            models.ServiceSubscription.objects.create(
+                user=self.user2,
+                service=self.memberservice3,
+                state=models.ServiceSubscription.ACTIVE,
+                paid_until=timezone.now().date() + timedelta(days=5),
+            )
         )
         # but this should not be found
-        self.servicesubscription_user2_another2 = models.ServiceSubscription.objects.create(
-            user=self.user2,
-            service=self.memberservice3,
-            state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=3)
+        self.servicesubscription_user2_another2 = (
+            models.ServiceSubscription.objects.create(
+                user=self.user2,
+                service=self.memberservice3,
+                state=models.ServiceSubscription.ACTIVE,
+                paid_until=timezone.now().date() + timedelta(days=3),
+            )
         )
 
         # this service should never be found (no days_before_warning defined)
         self.memberservice2 = models.MemberService.objects.create(
-            name="TestService2",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=None
+            name="TestService2", cost=10, days_per_payment=30, days_before_warning=None
         )
         self.servicesubscription2 = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice2,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this should not be found (too far in the future)
@@ -105,7 +100,7 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=3)
+            paid_until=timezone.now().date() + timedelta(days=3),
         )
 
         # this should not be found (in the past already)
@@ -113,18 +108,26 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=1)
+            paid_until=timezone.now().date() + timedelta(days=1),
         )
 
     def test_find(self):
         about_to_expire = BusinessLogic.find_expiring_service_subscriptions()
         self.assertEqual(len(about_to_expire), 3)
-        self.assertEqual(list(about_to_expire), [self.servicesubscription, self.servicesubscription_user2, self.servicesubscription_user2_another])
+        self.assertEqual(
+            list(about_to_expire),
+            [
+                self.servicesubscription,
+                self.servicesubscription_user2,
+                self.servicesubscription_user2_another,
+            ],
+        )
 
     def tearDown(self):
         models.ServiceSubscription.objects.all().delete()
         models.MemberService.objects.all().delete()
         get_user_model().objects.all().delete()
+
 
 class TestExpiryNotificationEmail(TestCase):
     def setUp(self):
@@ -137,20 +140,17 @@ class TestExpiryNotificationEmail(TestCase):
             nick="user1",
             phone="+358123123",
         )
-        self.user.language = 'fi'
+        self.user.language = "fi"
         self.user.save()
         # this should be found
         self.memberservice = models.MemberService.objects.create(
-            name="TestService",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=2
+            name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
     def test_send_expiry_notification(self):
@@ -202,7 +202,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
             phone="+358123123",
         )
         # be specific about the language to use for the test user
-        self.user.language = 'fi'
+        self.user.language = "fi"
         self.user.save()
         self.ss = BusinessLogic.create_servicesubscription(
             self.user, self.memberservice, models.ServiceSubscription.SUSPENDED
@@ -213,10 +213,11 @@ class TestNewApplicationHappyPathEmails(TestCase):
 
         # create new application for our user
         self.application = models.MembershipApplication.objects.create(
-            user=self.user,
-            agreement=True
+            user=self.user, agreement=True
         )
-        self.assertEqual(len(mail.outbox), 2)  # because this sends one email to the member and one to admins
+        self.assertEqual(
+            len(mail.outbox), 2
+        )  # because this sends one email to the member and one to admins
         self.assertIn("Kiitos jäsenhakemuksestasi", mail.outbox[0].body, "Thanks")
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
@@ -228,11 +229,23 @@ class TestNewApplicationHappyPathEmails(TestCase):
         # empty mailbox for next test
         mail.outbox = []
         BusinessLogic.accept_application(self.application)
-        self.assertEqual(len(mail.outbox), 1)  # because this sends one email to the member and one to admins
-        self.assertIn(f"Tervetuloa jäseneksi {self.user.first_name}", mail.outbox[0].body, "Welcome")
+        self.assertEqual(
+            len(mail.outbox), 1
+        )  # because this sends one email to the member and one to admins
+        self.assertIn(
+            f"Tervetuloa jäseneksi {self.user.first_name}",
+            mail.outbox[0].body,
+            "Welcome",
+        )
         self.assertIn(self.memberservice.name, mail.outbox[0].body, "service found")
-        self.assertIn(str(self.ss.reference_number), mail.outbox[0].body, "reference number found")
-        self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
+        self.assertIn(
+            str(self.ss.reference_number), mail.outbox[0].body, "reference number found"
+        )
+        self.assertIn(
+            self.memberservice.access_phone_number,
+            mail.outbox[0].body,
+            "phone number found",
+        )
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "url")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
@@ -260,7 +273,7 @@ class ServiceSubscriptionTests(TestCase):
         ss = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE
+            state=models.ServiceSubscription.OVERDUE,
         )
         self.assertIsNotNone(ss.reference_number)
         self.assertIn(str(ss.id), str(ss.reference_number))
@@ -282,7 +295,7 @@ class ServiceSubscriptionTests(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.OVERDUE,
-            reference_number="999"
+            reference_number="999",
         )
         self.assertIsNotNone(ss.reference_number)
         self.assertEqual(ss.reference_number, "999")
@@ -408,7 +421,7 @@ class CustomInvoiceTests(TestCase):
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE
+            state=models.ServiceSubscription.OVERDUE,
         )
 
     def test_automagic_reference_number(self):

@@ -5,6 +5,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from openpyxl import load_workbook
 
+
 class HolviToolbox:
     """
     Contains various helper methods to handle Holvi data

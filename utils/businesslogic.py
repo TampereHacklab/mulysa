@@ -8,7 +8,13 @@ from django.utils.translation import gettext as _
 
 from drfx import settings
 from mailer import send_mail
-from users.models import BankTransaction, CustomInvoice, CustomUser, MemberService, ServiceSubscription
+from users.models import (
+    BankTransaction,
+    CustomInvoice,
+    CustomUser,
+    MemberService,
+    ServiceSubscription,
+)
 from users.signals import application_approved, application_denied
 
 from utils import referencenumber
@@ -36,13 +42,15 @@ class BusinessLogic:
         qs = ServiceSubscription.objects.none()
 
         # each service has different timeframe, check each one independently
-        for service in MemberService.objects.filter(days_before_warning__isnull=False).all():
+        for service in MemberService.objects.filter(
+            days_before_warning__isnull=False
+        ).all():
             days = service.days_before_warning
             checkdate = today + timedelta(days=days)
             qs = qs | ServiceSubscription.objects.filter(
                 service=service,
                 state=ServiceSubscription.ACTIVE,
-                paid_until=checkdate.date()
+                paid_until=checkdate.date(),
             )
 
         return qs
@@ -53,7 +61,9 @@ class BusinessLogic:
         Send notification for service subscriptions
         """
         for ss in qs:
-            subject = _("Your subscription %(service_name)s is about to expire") % {"service_name": ss.service.name}
+            subject = _("Your subscription %(service_name)s is about to expire") % {
+                "service_name": ss.service.name
+            }
             from_email = settings.NOREPLY_FROM_ADDRESS
             to = ss.user.email
             context = {
@@ -62,7 +72,9 @@ class BusinessLogic:
                 "subscription": ss,
             }
             # note, this template will be found from users app
-            plaintext_content = render_to_string("mail/service_subscription_about_to_expire.txt", context)
+            plaintext_content = render_to_string(
+                "mail/service_subscription_about_to_expire.txt", context
+            )
             send_mail(subject, plaintext_content, from_email, [to])
             ss.user.log(f"Expiry email notification sent. Subject: {subject} To: {to}")
 

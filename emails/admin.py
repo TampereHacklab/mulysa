@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .forms import EmailActionForm
 from .models import Email
@@ -43,7 +43,8 @@ class EmailAdmin(admin.ModelAdmin):
         if obj.id:
             return format_html(
                 '<a class="button" href="{url}">{text}</a>'.format(
-                    url=reverse("admin:email-send", args=[obj.pk]), text=_("Send now"),
+                    url=reverse("admin:email-send", args=[obj.pk]),
+                    text=_("Send now"),
                 )
             )
 
@@ -83,7 +84,11 @@ class EmailAdmin(admin.ModelAdmin):
         context["email"] = email
         context["title"] = _("Send email")
 
-        return TemplateResponse(request, "admin/send-email.html", context,)
+        return TemplateResponse(
+            request,
+            "admin/send-email.html",
+            context,
+        )
 
 
 admin.site.register(Email, EmailAdmin)
