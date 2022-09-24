@@ -45,7 +45,7 @@ django-oauth-toolkit = ">=1.5.0"
 black = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.9"
 
 [pipenv]
 #
