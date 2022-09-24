@@ -45,6 +45,18 @@ git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
 pipenv sync --dev
 pipenv shell
+```
+
+Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
+
+```
+# revert back to cookie names that work in dev
+SESSION_COOKIE_NAME = '__NotReallyHost-sessionid'
+LANGUAGE_COOKIE_NAME = '__NotReallyHost-language'
+CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
+```
+
+```bash
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
 ./manage.py runserver
