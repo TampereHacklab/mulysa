@@ -35,3 +35,18 @@ class UserActivationSerializer(serializers.HyperlinkedModelSerializer):
         model = models.CustomUser
         fields = ("is_active",)
         extra_kwargs = {"is_active": {"required": True}}
+
+
+class BankTransactionAggregateSerializer(serializers.Serializer):
+    """
+    Serializer for BankTransactionAggregate data
+    """
+    aggregatedate = serializers.DateField()
+    withdrawals = serializers.DecimalField(max_digits=10, decimal_places=2, coerce_to_string=True)
+    deposits = serializers.DecimalField(max_digits=10, decimal_places=2, coerce_to_string=True)
+    total = serializers.DecimalField(max_digits=10, decimal_places=2, coerce_to_string=True)
+
+    class Meta:
+        model = models.BankTransaction
+
+        fields = ('aggregatedate', 'withdrawals', 'total')

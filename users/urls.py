@@ -6,6 +6,7 @@ from . import views
 
 router = DefaultRouter()
 router.register(r"", views.UserViewSet)
+router.register(r"banktransaction", views.BankTransactionAggregateViewSet, basename='banktransaction')
 
 urlpatterns = [
     path("", include(router.urls)),

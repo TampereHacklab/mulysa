@@ -1,6 +1,11 @@
+from decimal import Decimal
+
+from django.db.models import Q, Sum
+from django.db.models.functions import TruncMonth, TruncWeek, Coalesce
+
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
 from . import filters, models, permissions, serializers
@@ -46,3 +51,40 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             serializers.UserSerializer(user, context={"request": request}).data
         )
+
+
+class BankTransactionAggregateViewSet(viewsets.ModelViewSet):
+    """
+    Get aggregate overview of bank transaction data
+
+    Response contains
+    timespan (in days)
+    withdravals summed by timespan
+    deposits summed by timespan
+
+    """
+
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ["get", "options", "trace"]
+
+    queryset = (
+        models.BankTransaction.objects.values(
+            aggregatedate=TruncWeek("date"),
+        )
+        .annotate(
+            withdrawals=Coalesce(Sum("amount", filter=Q(amount__lt=0)), Decimal(0)),
+            deposits=Coalesce(Sum("amount", filter=Q(amount__gt=0)), Decimal(0)),
+            total=Coalesce(Sum("amount"), Decimal(0)),
+        )
+        .order_by("date")
+    )
+
+    """
+     queryset = (
+        models.BankTransaction.objects.annotate(aggregatedate=TruncMonth("date"))
+        .values("aggregatedate")
+        .annotate(withdravals=Sum("amount"))
+    )
+    """
+
+    serializer_class = serializers.BankTransactionAggregateSerializer
