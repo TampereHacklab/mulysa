@@ -5,10 +5,10 @@ from oauth2_provider.urls import app_name, base_urlpatterns, oidc_urlpatterns
 
 from rest_framework.documentation import include_docs_urls
 
-favicon_view = RedirectView.as_view(url='/static/www/favicon.ico', permanent=True)
+favicon_view = RedirectView.as_view(url="/static/www/favicon.ico", permanent=True)
 
 urlpatterns = [
-    path('favicon.ico', favicon_view),
+    path("favicon.ico", favicon_view),
     path("admin/", admin.site.urls),
     path("", RedirectView.as_view(url="www")),
     path("api/v1/", include("api.urls")),
