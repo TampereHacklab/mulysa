@@ -1,5 +1,6 @@
 # Changelog
 
+* 2022 update everything, django to 4.1. PR [#361](https://github.com/TampereHacklab/mulysa/pull/361) by [@tswfi](https://github.com/tswfi).
 * add basic test for oauth2validator method. PR [#363](https://github.com/TampereHacklab/mulysa/pull/363) by [@tswfi](https://github.com/tswfi).
 * Speed up Docker container builds. PR [#362](https://github.com/TampereHacklab/mulysa/pull/362) by [@janilahti](https://github.com/janilahti).
 * New .xlsx Holvi-importer, tox.ini fixes. PR [#353](https://github.com/TampereHacklab/mulysa/pull/353) by [@olmari](https://github.com/olmari).
