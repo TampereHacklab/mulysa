@@ -229,10 +229,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
 }
 
-OAUTH2_PROVIDER = {
-    "SCOPES": {"read": "Read scope", "write": "Write scope", "me": "myself"}
-}
-
 # tell all auth to use email as username
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
@@ -305,6 +301,8 @@ LOGOUT_REDIRECT_URL = "/"
 OAUTH2_PROVIDER = {
     "OAUTH2_VALIDATOR_CLASS": "api.mulysaoauthvalidator.MulysaOAuth2Validator",
     "OIDC_ENABLED": True,
+    # keep pre2.0 behaviour see https://django-oauth-toolkit.readthedocs.io/en/latest/changelog.html#id7
+    "PKCE_REQUIRED": False,
     "SCOPES": {
         "openid": "OpenID Connect scope",
     },
