@@ -1,5 +1,6 @@
 # Changelog
 
+* Update README.md. PR [#367](https://github.com/TampereHacklab/mulysa/pull/367) by [@ashksmith](https://github.com/ashksmith).
 * Favicon. PR [#384](https://github.com/TampereHacklab/mulysa/pull/384) by [@tswfi](https://github.com/tswfi).
 * More secure cookies, fixes #370. PR [#371](https://github.com/TampereHacklab/mulysa/pull/371) by [@tswfi](https://github.com/tswfi).
 * 2022 update everything, django to 4.1. PR [#361](https://github.com/TampereHacklab/mulysa/pull/361) by [@tswfi](https://github.com/tswfi).
