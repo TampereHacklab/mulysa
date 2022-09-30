@@ -272,5 +272,4 @@ def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kw
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = [user.email]
     plaintext_content = render_to_string("mail/door_access_denied.txt", context)
-
-    send_mail(subject, plaintext_content, from_email, to)
+    send_mail(subject, plaintext_content, from_email, to, fail_silently=True)
