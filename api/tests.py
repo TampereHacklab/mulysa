@@ -3,6 +3,7 @@ from unittest.mock import patch
 from django.core import mail
 from django.urls import reverse
 from django.utils import timezone
+from django.test.utils import override_settings
 
 from django.http import HttpRequest
 
@@ -228,6 +229,33 @@ class TestAccess(APITestCase):
         )
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
+
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend",
+        EMAIL_HOST="example.com",
+        EMAIL_TIMEOUT=1  # just to be fast in tests
+    )
+    def test_access_phone_notok_signal_fail(self, mock):
+        """
+        Test that signal does not fail even with broken smtp settings
+
+        Django test cases normally run with memory backend for emails, but for
+        this test it has been switched to smtp backend and given invalid settings
+        so that it throws error
+        """
+        url = reverse("access-phone")
+        # empty mail queue
+        mail.outbox = []
+
+        response = self.client.post(
+            url, {"deviceid": self.device.deviceid, "payload": self.fail_user.phone}
+        )
+
+        # still getting a correct status (not 500)
+        self.assertEqual(response.status_code, 481)
+
+        # no email in outbox (just shows that we are not using the memory backend)
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_access_phone_empty(self, mock):
         url = reverse("access-phone")
