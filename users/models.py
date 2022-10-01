@@ -233,7 +233,7 @@ class CustomUser(AbstractUser):
             subscription = self.servicesubscription_set.get(
                 service=drfx_settings.DEFAULT_ACCOUNT_SERVICE
             )
-            if subscription.state == ServiceSubscription.ACTIVE:
+            if subscription.state == ServiceSubscription.ACTIVE or subscription.state == ServiceSubscription.OVERDUE:
                 return True
         except Exception:
             pass
