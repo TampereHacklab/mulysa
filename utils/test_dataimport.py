@@ -258,7 +258,7 @@ class TestTitoImporter(TestCase):
 
 
 class TestHolviImporter(TestCase):
-    def test_holvi_import_2022_format(self):
+    def test_holvi_import_2022_05_format(self):
         """
         Test import with data format from 2022-05-18
 
@@ -266,6 +266,27 @@ class TestHolviImporter(TestCase):
         """
         models.BankTransaction.objects.all().delete()
         xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
+        name = xls.name
+        data = xls.read()
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
+        )
+
+        # and again to test that it found the same rows
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 0, "exists": 5, "error": 0, "failedrows": []}
+        )
+
+    def test_holvi_import_2022_10_format(self):
+        """
+        Test import with data format from 2022-10-01
+
+        Uses same fields but XLSX file format.
+        """
+        models.BankTransaction.objects.all().delete()
+        xls = open("utils/holvi-account-test-statement-2022-10.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
