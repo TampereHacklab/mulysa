@@ -355,12 +355,8 @@
             "version": "==3.4"
         },
         "importlib-metadata": {
-            "hashes": [
-                "sha256:637245b8bab2b6502fcbc752cc4b7a6f6243bb02b31c5c26156ad103d3d45670",
-                "sha256:7401a975809ea1fdc658c3aa4f78cc2195a0e019c5cbc4c06122884e9ae80c23"
-            ],
-            "markers": "python_version < '3.10'",
-            "version": "==4.12.0"
+            "hashes": [],
+            "version": "==4.13.0"
         },
         "itypes": {
             "hashes": [
