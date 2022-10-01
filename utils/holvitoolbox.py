@@ -1,9 +1,9 @@
-from datetime import datetime
 from io import BytesIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from openpyxl import load_workbook
+import dateparser
 
 
 class HolviToolbox:
@@ -43,20 +43,7 @@ class HolviToolbox:
                 item = dict(zip(headers, list(row)))
 
                 # Parse payment date
-                try:
-                    # Try new field name first, present since around 2021-03-21
-                    date_parsed = datetime.strptime(
-                        item["Payment date"], "%d %b %Y"  # "9 Mar 2021"
-                    )
-
-                    # Set time to noon as new format has no payment time
-                    item["Date_parsed"] = date_parsed.replace(hour=12, minute=00)
-                except KeyError:
-                    # Fallback: try old field name, preset in 2020-06-10
-                    # If we get second KeyError, file header format is invalid and we let import crash out
-                    item["Date_parsed"] = datetime.strptime(
-                        item["Date"], "%d %b %Y, %H:%M:%S"  # "8 Jan 2020, 09:35:43"
-                    )
+                item["Date_parsed"] = dateparser.parse(item["Payment date"])
 
                 # Force reference field to be strings
                 item["Reference"] = str(item["Reference"])
@@ -64,7 +51,7 @@ class HolviToolbox:
 
                 # Add meta fields
                 item["source_file"] = uploaded_file.name
-                item["source_row"] = row_index + 1
+                item["source_row"] = str(row_index + 1)
 
                 items.append(item)
 

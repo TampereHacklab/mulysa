@@ -1,5 +1,5 @@
 import io
-from datetime import timedelta
+from datetime import date, timedelta
 from decimal import Decimal
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -258,7 +258,7 @@ class TestTitoImporter(TestCase):
 
 
 class TestHolviImporter(TestCase):
-    def test_holvi_import_2022_format(self):
+    def test_holvi_import_2022_05_format(self):
         """
         Test import with data format from 2022-05-18
 
@@ -278,6 +278,51 @@ class TestHolviImporter(TestCase):
         self.assertDictEqual(
             res, {"imported": 0, "exists": 5, "error": 0, "failedrows": []}
         )
+
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2022-05.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal('-135.9'))
+        self.assertEqual(firstimported.reference_number, '1122002246684')
+        self.assertEqual(firstimported.archival_reference, '285ef4ccf4957ea2ba807b961360bf26')
+
+    def test_holvi_import_2022_10_format(self):
+        """
+        Test import with data format from 2022-10-01
+
+        Uses same fields but XLSX file format.
+        """
+        models.BankTransaction.objects.all().delete()
+        xls = open("utils/holvi-account-test-statement-2022-10.xlsx", "rb")
+        name = xls.name
+        data = xls.read()
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 8, "exists": 0, "error": 0, "failedrows": []}
+        )
+
+        # and again to test that it found the same rows
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 0, "exists": 8, "error": 0, "failedrows": []}
+        )
+
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2022-10.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal('-135.9'))
+        self.assertEqual(firstimported.reference_number, '1122002246684')
+        self.assertEqual(firstimported.archival_reference, '285ef4ccf4957ea2ba807b961360bf26')
+
+        # and the last as it has 'Sept' in the dateformat
+        lastimported = models.BankTransaction.objects.last()
+        self.assertEqual(lastimported.date, date(2022, 9, 1))
+        self.assertEqual(lastimported.amount, Decimal('30'))
+        # note, BankTransaction does not keep leading zeroes
+        self.assertEqual(lastimported.reference_number, '200046')
+        self.assertEqual(lastimported.archival_reference, '1924ceba5a3b1c5ffea892fb4850e00a')
 
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
