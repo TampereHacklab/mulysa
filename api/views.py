@@ -16,6 +16,8 @@ from utils.phonenumber import normalize_number
 from .models import AccessDevice, DeviceAccessLogEntry
 from users.signals import door_access_denied
 
+from django.db.models import Q
+
 logger = logging.getLogger(__name__)
 
 
