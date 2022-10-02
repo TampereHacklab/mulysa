@@ -109,22 +109,13 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # collect list of all users that have door access
         users_with_door_access = []
 
-        # Members with active door access
+        # Members with active or overdue door access
         for ss in (
             ServiceSubscription.objects.select_related("user")
             .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
-            .filter(state=ServiceSubscription.ACTIVE)
+            .filter(Q(state=ServiceSubscription.ACTIVE) | Q(state=ServiceSubscription.OVERDUE))
         ):
             users_with_door_access.append(ss.user)
-
-        # Members with overdue door access
-        for ss in (
-            ServiceSubscription.objects.select_related("user")
-            .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
-            .filter(state=ServiceSubscription.OVERDUE)
-        ):
-            users_with_door_access.append(ss.user)
-
         # and output it
         outserializer = UserAccessSerializer(users_with_door_access, many=True)
         return Response(outserializer.data)
