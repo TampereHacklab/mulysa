@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from django.db.models import Q, Sum
-from django.db.models.functions import TruncMonth, TruncWeek, Coalesce
+from django.db.models.functions import TruncDay, Coalesce
 
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -58,33 +58,26 @@ class BankTransactionAggregateViewSet(viewsets.ModelViewSet):
     Get aggregate overview of bank transaction data
 
     Response contains
-    timespan (in days)
-    withdravals summed by timespan
-    deposits summed by timespan
+    aggregatedate (day for aggregation)
+    withdravals summed by aggregatedate
+    deposits summed by aggregatedate
 
+    filter with `?date__gte=2022-01-01&date__lte=2022-12-31`
     """
 
+    serializer_class = serializers.BankTransactionAggregateSerializer
     permission_classes = (IsAuthenticated,)
     http_method_names = ["get", "options", "trace"]
+    pagination_class = None
+    filterset_fields = {"date": ["gte", "lte"]}
 
     queryset = (
         models.BankTransaction.objects.values(
-            aggregatedate=TruncWeek("date"),
+            aggregatedate=TruncDay("date"),
         )
         .annotate(
             withdrawals=Coalesce(Sum("amount", filter=Q(amount__lt=0)), Decimal(0)),
             deposits=Coalesce(Sum("amount", filter=Q(amount__gt=0)), Decimal(0)),
-            total=Coalesce(Sum("amount"), Decimal(0)),
         )
         .order_by("date")
     )
-
-    """
-     queryset = (
-        models.BankTransaction.objects.annotate(aggregatedate=TruncMonth("date"))
-        .values("aggregatedate")
-        .annotate(withdravals=Sum("amount"))
-    )
-    """
-
-    serializer_class = serializers.BankTransactionAggregateSerializer
