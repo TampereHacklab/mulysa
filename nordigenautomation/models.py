@@ -157,6 +157,7 @@ class Requisition(models.Model):
     When new requisition is completed it will deprecate all the old requisitions
     for this configuration
     """
+
     objects = models.Manager()
     active = OnlyActiveRequisitionsManager()
 

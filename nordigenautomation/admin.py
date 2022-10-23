@@ -46,17 +46,19 @@ class ConfigAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
     def config_actions(self, obj):
-        return format_html(
-            '<a class="button" href="{url}" title="{title}">{text}</a>'.format(
-                url=reverse(
-                    "admin:nordigenautomation-do-new-requisition", args=[obj.pk]
-                ),
-                text=_("Do requisition"),
-                title=_(
-                    "Initialize requisition, first time will just create a new requisition and successive clicks will create a new requisition and deprecate all the old ones"
-                ),
+        if obj.id and obj.api_id and obj.api_key and obj.country and obj.institution:
+            return format_html(
+                '<a class="button" href="{url}" title="{title}">{text}</a>'.format(
+                    url=reverse(
+                        "admin:nordigenautomation-do-new-requisition", args=[obj.pk]
+                    ),
+                    text=_("Do requisition"),
+                    title=_(
+                        "Initialize requisition, first time will just create a new requisition and successive clicks will create a new requisition and deprecate all the old ones"
+                    ),
+                )
             )
-        )
+        return format_html(_("complete settings to get actions"))
 
     def do_new_requisition(self, request, *args, **kwargs):
         """

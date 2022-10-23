@@ -274,6 +274,5 @@ class NordigenAutomationTests(TestCase):
         # and check that req is not in active manager
         self.assertNotIn(req, Requisition.active.all())
 
-
     def tearDown(self):
         self.config.delete()
