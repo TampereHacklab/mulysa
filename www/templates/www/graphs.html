@@ -1,0 +1,21 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h1>{% trans 'Statistics' %}</h1>
+
+  <h2>{% trans 'Transactions' %}</h2>
+  <canvas
+    id="transactions"
+    style="display: block; box-sizing: border-box; height: 400px; width: 800px"
+    width="800"
+    height="400"
+  ></canvas>
+</div>
+
+<script src="{% static 'www/chartjs/chart.js' %}"></script>
+<script src="{% static 'www/graphs.js' %}"></script>
+{% endblock %}

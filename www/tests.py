@@ -55,6 +55,8 @@ class TestBasicSmoke(TestCase):
             reverse("custominvoice_action", args=("test", 1)),
             reverse("application_operation", args=(1, "test")),
             reverse("banktransaction-view", args=(1,)),
+            reverse("banktransactionaggregate-list", args=()),
+            reverse("banktransactionaggregate-detail", args=(1,)),
         ]
         self.client.logout()
         for url in urls:

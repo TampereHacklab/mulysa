@@ -12,6 +12,7 @@
     {% bootstrap_javascript jquery='full' %}
     <link rel="shortcut icon" type="image/png" href="{% static 'www/favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'www/mulysa.css' %}" />
+    <script src="{% url 'javascript-catalog' %}"></script>
   </head>
   <body>
 
@@ -28,6 +29,7 @@
               <li class="nav-item"><a class="nav-link" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
               {% if user.membershipapplication_set.count == 0%}
               <li class="nav-item"><a class="nav-link" href="{% url 'usersettings' user.id %}">{% trans 'Change my settings' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'graphs' %}">{% trans 'Graphs' %}</a></li>
               {% endif %}
               {% if user.is_staff %}
               <li class="nav-item"><a class="nav-link" href="{% url 'users' %}">{% trans 'Users' %}</a></li>

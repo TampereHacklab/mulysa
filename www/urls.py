@@ -1,5 +1,6 @@
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.views.i18n import JavaScriptCatalog
 
 from . import views
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
+    path("graphs", TemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
     path(
         "usersettings/<int:id>/subscribe_service",
         views.usersettings_subscribe_service,
@@ -56,4 +58,5 @@ urlpatterns = [
     ),
     path("changelog", views.changelog_view, name="changelog-view"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path('jsi18n/', JavaScriptCatalog.as_view(packages=['www']), name='javascript-catalog'),
 ]
