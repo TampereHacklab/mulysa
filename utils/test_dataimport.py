@@ -357,13 +357,16 @@ class TestNordigenmporter(TestCase):
         """
         models.BankTransaction.objects.all().delete()
 
+        self.maxDiff = None
+
         with open("utils/nordigen_transactions.json") as json_file:
             data = json.load(json_file)
             res = DataImport.import_nordigen(data)
+
             self.assertDictEqual(
                 res,
                 {
-                    "imported": 3,
+                    "imported": 4,
                     "exists": 1,
                     "error": 1,
                     "failedrows": [
@@ -372,7 +375,7 @@ class TestNordigenmporter(TestCase):
                         "'transactionAmount': {'amount': '80.00', 'currency': 'SEK'}, "
                         "'debtorName': 'TESTER 4', 'debtorAccount': {'iban': "
                         "'FI11111111'}, 'remittanceInformationUnstructured': "
-                        "'Viitemaksu', 'additionalInformation': 'Viitemaksu'} (Cannot "
+                        "'Viitemaksu invalid currency', 'additionalInformation': 'Viitemaksu'} (Cannot "
                         "handle different currencies)"
                     ],
                 },

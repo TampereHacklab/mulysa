@@ -78,8 +78,22 @@
                 "debtorAccount": {
                     "iban": "FI11111111"
                 },
-                "remittanceInformationUnstructured": "Viitemaksu",
+                "remittanceInformationUnstructured": "Viitemaksu invalid currency",
                 "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST4",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "missing some data",
+                "additionalInformation": "Pano"
             }
         ],
         "pending": [

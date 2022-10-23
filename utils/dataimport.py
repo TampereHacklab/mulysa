@@ -316,10 +316,10 @@ class DataImport:
                 if one["transactionAmount"]["currency"] != "EUR":
                     raise Exception("Cannot handle different currencies")
                 amount = one["transactionAmount"]["amount"]
-                reference = one["entryReference"] or ""
+                reference = one.get("entryReference") or ""
                 reference = reference.lstrip("0")
-                sender = one["debtorName"]
-                message = one["additionalInformation"]
+                sender = one.get("debtorName", "")
+                message = one.get("additionalInformation", "")
 
                 try:
                     BankTransaction.objects.get(archival_reference=archival_reference)
