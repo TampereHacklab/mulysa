@@ -1,5 +1,6 @@
 # Changelog
 
+* BankTransaction aggregatedata for graphs. PR [#395](https://github.com/TampereHacklab/mulysa/pull/395) by [@tswfi](https://github.com/tswfi).
 * Improve holvi importer. PR [#389](https://github.com/TampereHacklab/mulysa/pull/389) by [@tswfi](https://github.com/tswfi).
 * Door api smtp error. PR [#387](https://github.com/TampereHacklab/mulysa/pull/387) by [@tswfi](https://github.com/tswfi).
 * Update README.md. PR [#367](https://github.com/TampereHacklab/mulysa/pull/367) by [@ashksmith](https://github.com/ashksmith).
