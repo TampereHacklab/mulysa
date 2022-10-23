@@ -93,6 +93,8 @@ INSTALLED_APPS = [
     "bootstrap4",
     # oauth provider for keycloack integration
     "oauth2_provider",
+    # nordigen banking data automation
+    "nordigenautomation",
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
@@ -289,6 +291,13 @@ logging.config.dictConfig(
             },
             "utils": {
                 "level": LOGLEVEL,
+                "handlers": [
+                    "console",
+                ],
+                "propagate": False,
+            },
+            "nordigenautomation": {
+                "level": DEBUG,
                 "handlers": [
                     "console",
                 ],
