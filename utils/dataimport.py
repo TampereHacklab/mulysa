@@ -291,7 +291,6 @@ class DataImport:
 
         return results
 
-
     @staticmethod
     def import_nordigen(data):
         """
@@ -299,7 +298,7 @@ class DataImport:
 
         Takes the whole nordigen response but parses only the "booked" section from it (pending transactions do not count)
         """
-        booked = data['transactions']['booked']
+        booked = data["transactions"]["booked"]
         imported = exists = error = 0
 
         failedrows = []
@@ -310,15 +309,17 @@ class DataImport:
                 # map nordigen fields to our fields
                 # NOTE: it seems that some banks give different fields
                 # see: https://nordigen.com/en/docs/account-information/output/transactions/
-                archival_reference = one['transactionId']
-                transaction_date = datetime.datetime.strptime(one['bookingDate'], "%Y-%m-%d").date()
-                if one['transactionAmount']['currency'] != "EUR":
+                archival_reference = one["transactionId"]
+                transaction_date = datetime.datetime.strptime(
+                    one["bookingDate"], "%Y-%m-%d"
+                ).date()
+                if one["transactionAmount"]["currency"] != "EUR":
                     raise Exception("Cannot handle different currencies")
-                amount = one['transactionAmount']['amount']
-                reference = one['entryReference'] or ''
+                amount = one["transactionAmount"]["amount"]
+                reference = one["entryReference"] or ""
                 reference = reference.lstrip("0")
-                sender = one['debtorName']
-                message = one['additionalInformation']
+                sender = one["debtorName"]
+                message = one["additionalInformation"]
 
                 try:
                     BankTransaction.objects.get(archival_reference=archival_reference)
@@ -332,7 +333,6 @@ class DataImport:
                         reference_number=reference,
                         sender=sender,
                         message=message,
-
                     )
                     BusinessLogic.new_transaction(transaction)
                     imported = imported + 1
