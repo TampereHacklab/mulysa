@@ -23,6 +23,7 @@ class Config(models.Model):
     # Extend this as needed, for now only Finland is supported
     NORDIGEN_COUNTRY_CHOICES = [
         ("FI", "FI"),
+        ("XX", "XX"),
     ]
 
     # Extend this as needed, for now only few of the finnish instituions
@@ -50,6 +51,7 @@ class Config(models.Model):
         ("Säästöpankki", "Säästöpankki"),
         ("Wise", "Wise"),
         ("Ålandsbanken", "Ålandsbanken"),
+        ("Sandbox Finance", "Sandbox Finance"),
     ]
 
     api_id = models.CharField(
