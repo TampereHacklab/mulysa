@@ -1,0 +1,118 @@
+{
+    "transactions": {
+        "booked": [
+            {
+                "transactionId": "TEST1",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 1",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST1",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 1",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST2",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "-80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 2",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST3",
+                "entryReference": null,
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "-80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 3",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST4",
+                "entryReference": null,
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "SEK"
+                },
+                "debtorName": "TESTER 4",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu invalid currency",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "transactionId": "TEST4",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "missing some data",
+                "additionalInformation": "Pano"
+            }
+        ],
+        "pending": [
+            {
+                "transactionId": "TESTNOTIMPORTED",
+                "entryReference": "00123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "-80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER NOT IMPORTED",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            }
+        ]
+    }
+}

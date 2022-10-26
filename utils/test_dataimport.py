@@ -1,4 +1,5 @@
 import io
+import json
 from datetime import date, timedelta
 from decimal import Decimal
 
@@ -283,9 +284,11 @@ class TestHolviImporter(TestCase):
         # holvi-account-test-statement-2022-05.xlsx
         firstimported = models.BankTransaction.objects.first()
         self.assertEqual(firstimported.date, date(2022, 3, 30))
-        self.assertEqual(firstimported.amount, Decimal('-135.9'))
-        self.assertEqual(firstimported.reference_number, '1122002246684')
-        self.assertEqual(firstimported.archival_reference, '285ef4ccf4957ea2ba807b961360bf26')
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
 
     def test_holvi_import_2022_10_format(self):
         """
@@ -312,17 +315,21 @@ class TestHolviImporter(TestCase):
         # holvi-account-test-statement-2022-10.xlsx
         firstimported = models.BankTransaction.objects.first()
         self.assertEqual(firstimported.date, date(2022, 3, 30))
-        self.assertEqual(firstimported.amount, Decimal('-135.9'))
-        self.assertEqual(firstimported.reference_number, '1122002246684')
-        self.assertEqual(firstimported.archival_reference, '285ef4ccf4957ea2ba807b961360bf26')
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
 
         # and the last as it has 'Sept' in the dateformat
         lastimported = models.BankTransaction.objects.last()
         self.assertEqual(lastimported.date, date(2022, 9, 1))
-        self.assertEqual(lastimported.amount, Decimal('30'))
+        self.assertEqual(lastimported.amount, Decimal("30"))
         # note, BankTransaction does not keep leading zeroes
-        self.assertEqual(lastimported.reference_number, '200046')
-        self.assertEqual(lastimported.archival_reference, '1924ceba5a3b1c5ffea892fb4850e00a')
+        self.assertEqual(lastimported.reference_number, "200046")
+        self.assertEqual(
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00a"
+        )
 
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
@@ -338,6 +345,41 @@ class TestHolviImporter(TestCase):
             archival_reference="0b914e1f528d902e6fe1ee7ff792ce5f"
         )
         self.assertEqual(transaction.amount, Decimal("-7.44"), "Check decimals")
+
+    def tearDown(self):
+        models.BankTransaction.objects.all().delete()
+
+
+class TestNordigenmporter(TestCase):
+    def test_nordigen(self):
+        """
+        Test importing nordigen transactions
+        """
+        models.BankTransaction.objects.all().delete()
+
+        self.maxDiff = None
+
+        with open("utils/nordigen_transactions.json") as json_file:
+            data = json.load(json_file)
+            res = DataImport.import_nordigen(data)
+
+            self.assertDictEqual(
+                res,
+                {
+                    "imported": 4,
+                    "exists": 1,
+                    "error": 1,
+                    "failedrows": [
+                        "{'transactionId': 'TEST4', 'entryReference': None, "
+                        "'bookingDate': '2022-10-24', 'valueDate': '2022-10-23', "
+                        "'transactionAmount': {'amount': '80.00', 'currency': 'SEK'}, "
+                        "'debtorName': 'TESTER 4', 'debtorAccount': {'iban': "
+                        "'FI11111111'}, 'remittanceInformationUnstructured': "
+                        "'Viitemaksu invalid currency', 'additionalInformation': 'Viitemaksu'} (Cannot "
+                        "handle different currencies)"
+                    ],
+                },
+            )
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()

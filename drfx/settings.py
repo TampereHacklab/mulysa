@@ -93,6 +93,8 @@ INSTALLED_APPS = [
     "bootstrap4",
     # oauth provider for keycloack integration
     "oauth2_provider",
+    # nordigen banking data automation
+    "nordigenautomation",
 ]
 
 AUTH_USER_MODEL = "users.CustomUser"
@@ -100,16 +102,16 @@ AUTH_USER_MODEL = "users.CustomUser"
 # more secure cookies
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_NAME = '__Host-sessionid'
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_NAME = "__Host-sessionid"
 LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SECURE = True
-LANGUAGE_COOKIE_SAMESITE = 'Strict'
-LANGUAGE_COOKIE_NAME = '__Host-language'
+LANGUAGE_COOKIE_SAMESITE = "Strict"
+LANGUAGE_COOKIE_NAME = "__Host-language"
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'Strict'
-CSRF_COOKIE_NAME = '__Host-csrf'
+CSRF_COOKIE_SAMESITE = "Strict"
+CSRF_COOKIE_NAME = "__Host-csrf"
 
 # use the management command update_local_bootstrap to fetch the files
 # and to get this section when needed
@@ -289,6 +291,13 @@ logging.config.dictConfig(
             },
             "utils": {
                 "level": LOGLEVEL,
+                "handlers": [
+                    "console",
+                ],
+                "propagate": False,
+            },
+            "nordigenautomation": {
+                "level": DEBUG,
                 "handlers": [
                     "console",
                 ],

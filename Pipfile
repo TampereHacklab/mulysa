@@ -44,6 +44,7 @@ django-admin-rangefilter = "*"
 django-oauth-toolkit = ">=1.5.0"
 black = "*"
 dateparser = "*"
+nordigen = "*"
 
 [requires]
 python_version = "3.9"
