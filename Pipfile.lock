@@ -1112,12 +1112,8 @@
             "version": "==3.0.9"
         },
         "pyproject-api": {
-            "hashes": [
-                "sha256:a760229e56ecb776728f1c2ff0e204d3582efc9582d3c20f9d492be75cc19aa8",
-                "sha256:d4e088384e993a0824cc0e207b14182c17ff59ab416419656422155243f59e05"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==1.1.1"
+            "hashes": [],
+            "version": "==1.1.2"
         },
         "pytoolconfig": {
             "hashes": [
