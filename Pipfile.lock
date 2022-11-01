@@ -587,12 +587,8 @@
             "version": "==4.4.0"
         },
         "tzdata": {
-            "hashes": [
-                "sha256:323161b22b7802fdc78f20ca5f6073639c64f1a7227c40cd3e19fd1d0ce6650a",
-                "sha256:e15b2b3005e2546108af42a0eb4ccab4d9e225e2dfbf4f77aad50c70a4b1f3ab"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==2022.5"
+            "hashes": [],
+            "version": "==2022.6"
         },
         "tzlocal": {
             "hashes": [
