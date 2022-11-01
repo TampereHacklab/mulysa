@@ -1148,11 +1148,8 @@
             "version": "==1.16.0"
         },
         "stack-data": {
-            "hashes": [
-                "sha256:5120731a18ba4c82cefcf84a945f6f3e62319ef413bfc210e32aca3a69310ba2",
-                "sha256:95eb784942e861a3d80efd549ff9af6cf847d88343a12eb681d7157cfcb6e32b"
-            ],
-            "version": "==0.5.1"
+            "hashes": [],
+            "version": "==0.6.0"
         },
         "toml": {
             "hashes": [
