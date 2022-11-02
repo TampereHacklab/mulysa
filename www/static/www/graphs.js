@@ -16,7 +16,7 @@ async function renderTransactionsGraph() {
         deposits.push(data[i].deposits);
         withdrawals.push(data[i].withdrawals);
     }
-    new Chart(document.getElementById("transactions"), {
+    chart = new Chart(document.getElementById("transactions"), {
         type: "bar",
         data: {
             labels: labels,
@@ -37,6 +37,11 @@ async function renderTransactionsGraph() {
             legend: { display: true },
             scales: {
                 x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        round: 'month'
+                    },
                     stacked: true,
                 },
             },
@@ -44,3 +49,16 @@ async function renderTransactionsGraph() {
     });
 }
 renderTransactionsGraph();
+
+/**
+ * Change transaction graph grouping
+ *
+ * @param {string} value - Change grouping. Accepted values 'day', 'week', 'month', 'year'. Defaults to day.
+ */
+function changeTransactionGraphGrouping(value = 'day') {
+    const chart = Chart.getChart("transactions");
+    chart.options.scales.x.time.unit = value;
+    chart.options.scales.x.time.round = value;
+    chart.update();
+    return true;
+}
