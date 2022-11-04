@@ -42,7 +42,6 @@ openpyxl = "*"
 markdown = "*"
 django-admin-rangefilter = "*"
 django-oauth-toolkit = ">=1.5.0"
-black = "*"
 dateparser = "*"
 nordigen = "*"
 
