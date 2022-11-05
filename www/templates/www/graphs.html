@@ -8,14 +8,12 @@
   <h1>{% trans 'Statistics' %}</h1>
 
   <h2>{% trans 'Transactions' %}</h2>
-  <canvas
-    id="transactions"
-    style="display: block; box-sizing: border-box; height: 400px; width: 800px"
-    width="800"
-    height="400"
-  ></canvas>
+  <div id="transactionsGraphContainer">
+    <canvas id="transactionsGraph"></canvas>
+  </div>
 </div>
 
 <script src="{% static 'www/chartjs/chart.js' %}"></script>
+<script src="{% static 'www/chartjs/chartjs-adapter-date-fns.bundle.min.js' %}"></script>
 <script src="{% static 'www/graphs.js' %}"></script>
 {% endblock %}

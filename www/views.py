@@ -2,12 +2,15 @@ from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 import markdown
 from django.utils.safestring import mark_safe
 
@@ -37,6 +40,10 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
+
+
+class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
+    pass
 
 
 def register(request):
@@ -99,7 +106,7 @@ def register(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def dataimport(request):
     report = None
     if request.method == "POST":
@@ -118,7 +125,7 @@ def dataimport(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def dataexport(request):
     if "data" in request.GET:
         if request.GET["data"] == "memberstsv":
@@ -135,7 +142,7 @@ def dataexport(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def users(request):
     users = CustomUser.objects.all()
     services = MemberService.objects.filter(hidden=False)
@@ -147,7 +154,7 @@ def users(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def ledger(request):
     filter = request.GET.get("filter")
     transactions = []
@@ -166,7 +173,7 @@ def ledger(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def custominvoices(request):
     filter = request.GET.get("filter")  # For future expansion
     custominvoices = []
@@ -179,7 +186,7 @@ def custominvoices(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def application_operation(request, application_id, operation):
     application = get_object_or_404(MembershipApplication, id=application_id)
     name = str(application.user)
@@ -198,7 +205,7 @@ def application_operation(request, application_id, operation):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def applications(request):
     applications = MembershipApplication.objects.all()
     for application in applications:
@@ -474,11 +481,18 @@ def banktransaction_view(request, banktransactionid):
     Allow user to view a "receipt" of a bank transaction
     """
     if request.user.is_staff:
-        banktransaction = BankTransaction.objects.get(id=banktransactionid)
+        try:
+            banktransaction = BankTransaction.objects.get(id=banktransactionid)
+        except BankTransaction.DoesNotExist:
+            return HttpResponseNotFound()
     else:
-        banktransaction = BankTransaction.objects.get(
-            user=request.user, id=banktransactionid
-        )
+        try:
+            banktransaction = BankTransaction.objects.get(
+                user=request.user, id=banktransactionid
+            )
+        except BankTransaction.DoesNotExist:
+            return redirect_to_login(request.path)
+
     return render(
         request,
         "www/banktransaction.html",
@@ -490,7 +504,7 @@ def banktransaction_view(request, banktransactionid):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def updateuser(request):
     if request.method == "POST":
         user = get_object_or_404(CustomUser, id=request.POST["userid"])
@@ -500,7 +514,7 @@ def updateuser(request):
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url='/www/login/')
 def createuser(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
