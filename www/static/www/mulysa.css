@@ -34,3 +34,10 @@ body > main {
 @media print {
   footer { display: none; }
 }
+
+#transactionsGraph {
+  display: block;
+  box-sizing: border-box;
+  height: 400px;
+  width: 100%;
+}

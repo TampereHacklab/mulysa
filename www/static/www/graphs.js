@@ -1,5 +1,45 @@
 async function renderTransactionsGraph() {
-    // for now default to fetching 1 year back
+
+    const container = document.getElementById('transactionsGraphContainer');
+    const graphcanvas = container.querySelector("#transactionsGraph");
+
+    const Groupings = {
+        'day': gettext('daily'),
+        'week': gettext('weekly'),
+        'month': gettext('monthly'),
+        'year': gettext('yearly')
+    }
+    var buttonContainer = document.createElement("div");
+    buttonContainer.className = "transactionGraphGroupingContainer";
+    buttonContainer.onclick = function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var buttons = buttonContainer.querySelectorAll('a.btn');
+        buttons.forEach(function(button) {
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-secondary');
+        });
+        grouping = event.target.dataset.grouping;
+        chart.options.scales.x.time.unit = event.target.dataset.grouping;
+        chart.options.scales.x.time.round = event.target.dataset.grouping;
+        chart.update();
+        event.target.classList.remove('btn-secondary');
+        event.target.classList.add('btn-primary');
+    };
+    container.prepend(buttonContainer);
+    Object.entries(Groupings).forEach(([key, value]) => {
+        var btn = document.createElement("a");
+        btn.className = "btn btn-secondary mr-2 transactionGroupingButton";
+        btn.id = "transactionGraphGrouping_" + key;
+        btn.dataset.grouping = key;
+        btn.innerText = value;
+        buttonContainer.append(btn);
+    });
+    // default to month
+    container.querySelector('#transactionGraphGrouping_month').classList.remove('btn-secondary');
+    container.querySelector('#transactionGraphGrouping_month').classList.add('btn-primary');
+
+    // for now default to fetching data 1 year back from now
     let startDate = new Date();
     startDate.setFullYear(startDate.getFullYear() - 1);
     const queryParams = {
@@ -16,7 +56,9 @@ async function renderTransactionsGraph() {
         deposits.push(data[i].deposits);
         withdrawals.push(data[i].withdrawals);
     }
-    chart = new Chart(document.getElementById("transactions"), {
+
+    // render the chart
+    chart = new Chart(graphcanvas, {
         type: "bar",
         data: {
             labels: labels,
@@ -47,18 +89,6 @@ async function renderTransactionsGraph() {
             },
         },
     });
+
 }
 renderTransactionsGraph();
-
-/**
- * Change transaction graph grouping
- *
- * @param {string} value - Change grouping. Accepted values 'day', 'week', 'month', 'year'. Defaults to day.
- */
-function changeTransactionGraphGrouping(value = 'day') {
-    const chart = Chart.getChart("transactions");
-    chart.options.scales.x.time.unit = value;
-    chart.options.scales.x.time.round = value;
-    chart.update();
-    return true;
-}
