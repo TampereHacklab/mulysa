@@ -1,5 +1,6 @@
 # Changelog
 
+* default to monthly grouping in transactions graph. PR [#401](https://github.com/TampereHacklab/mulysa/pull/401) by [@tswfi](https://github.com/tswfi).
 * Update django 4.1.3. PR [#400](https://github.com/TampereHacklab/mulysa/pull/400) by [@tswfi](https://github.com/tswfi).
 * nordigen. PR [#397](https://github.com/TampereHacklab/mulysa/pull/397) by [@tswfi](https://github.com/tswfi).
 * Pipenv update for 2022/11, updates django to 4.1.2. PR [#396](https://github.com/TampereHacklab/mulysa/pull/396) by [@tswfi](https://github.com/tswfi).
