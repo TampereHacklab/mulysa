@@ -1,5 +1,6 @@
 # Changelog
 
+* add fetching .map files locally to update_local_bootsrap. Fixes #402. PR [#403](https://github.com/TampereHacklab/mulysa/pull/403) by [@tswfi](https://github.com/tswfi).
 * default to monthly grouping in transactions graph. PR [#401](https://github.com/TampereHacklab/mulysa/pull/401) by [@tswfi](https://github.com/tswfi).
 * Update django 4.1.3. PR [#400](https://github.com/TampereHacklab/mulysa/pull/400) by [@tswfi](https://github.com/tswfi).
 * nordigen. PR [#397](https://github.com/TampereHacklab/mulysa/pull/397) by [@tswfi](https://github.com/tswfi).
