@@ -36,12 +36,15 @@ class Command(BaseCommand):
                 filename = self._fetch_and_save(url)
                 # build the settings section for it
                 newsettings[key] = f"{self.localurlbase}{filename}"
+                # check if there is a map file and get that too
+                self._fetch_and_save(f"{url}.map")
 
             href = val.get("href")
             if href:
                 filename = self._fetch_and_save(href)
                 # build the settings section for it
                 newsettings[key] = f"{self.localurlbase}{filename}"
+                self._fetch_and_save(f"{href}.map")
 
         print("Done, now you can update your settings_local to use these files:")
         print("BOOTSTRAP4 = ")
