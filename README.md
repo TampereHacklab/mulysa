@@ -35,13 +35,14 @@ Most of this works around our "User" model which can do multiple things
 
 In order to run your local development environment of mulysa, there are some prerequisites you first need to install.
 
-**Installing prerequisites on Debian 11.2**:
+## Installing prerequisites on Debian 11.2
 
 ```sh
 sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 ```
 
-**Installing prerequisites on Mac OS**
+## Installing prerequisites on Mac OS
+
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
@@ -207,8 +208,8 @@ API will return these HTTP status code responses on certain error conditions:
 
 There are two example implementations for esp32 based access readers that can be found here:
 
-https://github.com/TampereHacklab/mulysa_callerid
-https://github.com/TampereHacklab/mulysa_nfc_reader
+<https://github.com/TampereHacklab/mulysa_callerid>
+<https://github.com/TampereHacklab/mulysa_nfc_reader>
 
 # Door access api listings
 
@@ -227,7 +228,7 @@ and you need the id and secret to create the keycloack end to get the redirect u
 
 Just do one first with either dummy data or good guess then do the other.
 
-## as a logged in admin user in mulysa:
+## as a logged in admin user in mulysa
 
 - go to: `https://yourmulysadomain/admin/oauth2_provider/application/`
 - click on `add application`
@@ -251,9 +252,9 @@ Just do one first with either dummy data or good guess then do the other.
   - display name: mulysa (or what ever you want to call it)
   - trust email: yes
   - sync mode: force (this makes the data always update from mulysa)
-  - Authorization URL: https://yourmulysadomain/o/authorize/
-  - Token URL: https://yourmulysadomain/o/token/
-  - User Info URL: https://yourmulysadomain/o/userinfo/
+  - Authorization URL: <https://yourmulysadomain/o/authorize/>
+  - Token URL: <https://yourmulysadomain/o/token/>
+  - User Info URL: <https://yourmulysadomain/o/userinfo/>
   - Client Authentication: client secret sent as post
   - Client ID: the client id from mulysa
   - Client Secret: the client secret from mulysa
