@@ -63,7 +63,8 @@ brew install mysql
 brew install gettext
 ```
 
-**Installing prerequisites on other platforms**:
+## Installing prerequisites on other platforms
+
 Find a way to install the software on this list (click the links to find installer downloads):
 
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
