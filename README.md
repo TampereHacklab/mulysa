@@ -52,7 +52,7 @@ brew install git
 brew install pipenv
 ```
 
-Homebrew will automatically install python for you since it is a prerequisite of pipenv.
+_Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
 ```sh
 brew install mysql
