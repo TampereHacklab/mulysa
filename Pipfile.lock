@@ -608,11 +608,8 @@
             "version": "==2.12.13"
         },
         "asttokens": {
-            "hashes": [
-                "sha256:1b28ed85e254b724439afc783d4bee767f780b936c3fe8b3275332f42cf5f561",
-                "sha256:4aa76401a151c8cc572d906aad7aea2a841780834a19d780f4321c0fe1b54635"
-            ],
-            "version": "==2.1.0"
+            "hashes": [],
+            "version": "==2.2.0"
         },
         "autopep8": {
             "hashes": [
