@@ -133,12 +133,8 @@
             "version": "==38.0.4"
         },
         "dateparser": {
-            "hashes": [
-                "sha256:3821bf191f95b2658c4abd91571c09821ce7a2bc179bf6cefd8b4515c3ccf9ef",
-                "sha256:d31659dc806a7d88e2b510b2c74f68b525ae531f145c62a57a99bd616b7f90cf"
-            ],
-            "index": "pypi",
-            "version": "==1.1.2"
+            "hashes": [],
+            "version": "==1.1.4"
         },
         "defusedxml": {
             "hashes": [
