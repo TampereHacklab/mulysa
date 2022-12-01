@@ -408,12 +408,8 @@
             "version": "==3.0.10"
         },
         "phonenumbers": {
-            "hashes": [
-                "sha256:057d1966962fb86b3dc447bfac2c8e25ceed774509e49b180926a13a99910318",
-                "sha256:0b234c4a9519fac18d00b3c542f5b429513ea69372d4f95fbd0f716f5e2a89b5"
-            ],
-            "index": "pypi",
-            "version": "==8.12.57"
+            "hashes": [],
+            "version": "==8.13.1"
         },
         "pycparser": {
             "hashes": [
