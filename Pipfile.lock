@@ -184,12 +184,8 @@
             "version": "==1.9.8"
         },
         "django-bootstrap4": {
-            "hashes": [
-                "sha256:57bcbce53530ffd57a1c8bda74c8f3b56c859e085fb1f52a0e3e3a4f982f0960",
-                "sha256:ad00ff90e6bd002155516b32047c40df15f533fac49da66d8882995adcb13552"
-            ],
-            "index": "pypi",
-            "version": "==22.2"
+            "hashes": [],
+            "version": "==22.3"
         },
         "django-extensions": {
             "hashes": [
