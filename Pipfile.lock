@@ -1006,12 +1006,8 @@
             "version": "==2.10.0"
         },
         "pyflakes": {
-            "hashes": [
-                "sha256:4579f67d887f804e67edb544428f264b7b24f435b263c4614f384135cea553d2",
-                "sha256:491feb020dca48ccc562a8c0cbe8df07ee13078df59813b83959cbdada312ea3"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==2.5.0"
+            "hashes": [],
+            "version": "==3.0.1"
         },
         "pygments": {
             "hashes": [
