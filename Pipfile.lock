@@ -1110,12 +1110,8 @@
             "version": "==1.26.13"
         },
         "virtualenv": {
-            "hashes": [
-                "sha256:186ca84254abcbde98180fd17092f9628c5fe742273c02724972a1d8a2035108",
-                "sha256:530b850b523c6449406dfba859d6345e48ef19b8439606c5d74d7d3c9e14d76e"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==20.16.6"
+            "hashes": [],
+            "version": "==20.17.0"
         },
         "wcwidth": {
             "hashes": [
