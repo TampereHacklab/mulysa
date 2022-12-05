@@ -1,5 +1,6 @@
 # Changelog
 
+* Django4.1.3. PR [#407](https://github.com/TampereHacklab/mulysa/pull/407) by [@tswfi](https://github.com/tswfi).
 * add few fields to banktransaction view for easier checking. PR [#404](https://github.com/TampereHacklab/mulysa/pull/404) by [@tswfi](https://github.com/tswfi).
 * add fetching .map files locally to update_local_bootsrap. Fixes #402. PR [#403](https://github.com/TampereHacklab/mulysa/pull/403) by [@tswfi](https://github.com/tswfi).
 * default to monthly grouping in transactions graph. PR [#401](https://github.com/TampereHacklab/mulysa/pull/401) by [@tswfi](https://github.com/tswfi).
