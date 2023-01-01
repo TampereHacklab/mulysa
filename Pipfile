@@ -4,55 +4,45 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pep8 = "*"
-flake8 = "*"
-pylint = "*"
-ipython = "*"
 autopep8 = "*"
-coverage = "*"
-tox = "*"
-isort = "*"
-rope = "*"
-coveralls = "*"
 black = "*"
+coverage = "*"
+coveralls = "*"
+flake8 = "*"
+ipython = "*"
+isort = "*"
+pep8 = "*"
+pylint = "*"
+rope = "*"
+tox = "*"
 werkzeug = "*"
 
 [packages]
-django = "==4.1.*"
-djangorestframework = "*"
-# django 4 support from a fork for now
-# see https://pypi.org/project/django-rest-auth-forked/
-# https://github.com/Tivix/django-rest-auth/pulls?q=is%3Apr+is%3Aopen+%27django+4.0%27+
-#django-rest-auth = "*"
-django-rest-auth-forked = "*"
-django-allauth = "*"
-django-extensions = "*"
 coreapi = "*"
-django-log-request-id = "*"
-django-filter = "*"
-djangorestframework-filters = "==1.0.0.dev2"
-mysqlclient = "*"
-drf-api-tracking = "*"
-phonenumbers = "*"
-gunicorn = "*"
-django-bootstrap4 = "*"
-django-autoslug = "*"
-django-mailer = "*"
-openpyxl = "*"
-markdown = "*"
-django-admin-rangefilter = "*"
-django-oauth-toolkit = ">=1.5.0"
 dateparser = "*"
+django = "==4.1.4"
+django-admin-rangefilter = "*"
+django-allauth = "*"
+django-autoslug = "*"
+django-bootstrap4 = "*"
+django-extensions = "*"
+django-filter = "*"
+django-log-request-id = "*"
+django-mailer = "*"
+django-oauth-toolkit = ">=1.5.0"
+django-rest-auth-forked = "*"
+djangorestframework = "*"
+djangorestframework-filters = "==1.0.0.dev2"
+drf-api-tracking = "*"
+gunicorn = "*"
+markdown = "*"
+mysqlclient = "*"
 nordigen = "*"
+openpyxl = "*"
+phonenumbers = "*"
+
+[pipenv]
+allow_prereleases = true
 
 [requires]
 python_version = "3.9"
-
-[pipenv]
-#
-# prereleases are allowed because of django-rest-framework-filters
-# this should be removed as soon as:
-# 1.0.0 is released https://github.com/philipn/django-rest-framework-filters
-# or pipenv starts supporting prereleases for one package (https://github.com/pypa/pipenv/pull/4607)
-#
-allow_prereleases = true
