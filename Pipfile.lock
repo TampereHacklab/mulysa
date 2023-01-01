@@ -189,11 +189,8 @@
             "version": "==0.9.0"
         },
         "django-allauth": {
-            "hashes": [
-                "sha256:ca1622733b6faa591580ccd3984042f12d8c79ade93438212de249b7ffb6f91f"
-            ],
-            "index": "pypi",
-            "version": "==0.51.0"
+            "hashes": [],
+            "version": "==0.52.0"
         },
         "django-autoslug": {
             "hashes": [
