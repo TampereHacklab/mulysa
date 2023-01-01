@@ -885,12 +885,8 @@
             "version": "==8.7.0"
         },
         "isort": {
-            "hashes": [
-                "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7",
-                "sha256:e8443a5e7a020e9d7f97f1d7d9cd17c88bcb3bc7e218bf9cf5095fe550be2951"
-            ],
-            "index": "pypi",
-            "version": "==5.10.1"
+            "hashes": [],
+            "version": "==5.11.4"
         },
         "jedi": {
             "hashes": [
