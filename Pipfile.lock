@@ -429,12 +429,8 @@
             "version": "==3.0.10"
         },
         "phonenumbers": {
-            "hashes": [
-                "sha256:07a95c2f178687fd1c3f722cf792b3d33e3a225ae71577e500c99b28544cd6d0",
-                "sha256:7cadfe900e833857500b7bafa3e5a7eddc3263eb66b66a767870b33e44665f92"
-            ],
-            "index": "pypi",
-            "version": "==8.13.1"
+            "hashes": [],
+            "version": "==8.13.3"
         },
         "pycparser": {
             "hashes": [
