@@ -1116,12 +1116,8 @@
             "version": "==2.28.1"
         },
         "rope": {
-            "hashes": [
-                "sha256:9761758c222df9466f08232bc046d182960ffa881c1c53bca9fafff210e8da7c",
-                "sha256:d0514b3cddb1a9e103a040756fb53674828d73df70282b7d7d783a220b0354d8"
-            ],
-            "index": "pypi",
-            "version": "==1.5.1"
+            "hashes": [],
+            "version": "==1.6.0"
         },
         "setuptools": {
             "hashes": [
