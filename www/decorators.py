@@ -1,5 +1,6 @@
 from django.contrib.auth.views import redirect_to_login
 
+
 def self_or_staff_member_required(function):
     def wrapper(request, id, *args, **kwargs):
 

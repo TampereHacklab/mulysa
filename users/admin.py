@@ -114,15 +114,17 @@ class MemberServiceAdmin(admin.ModelAdmin):
 
 class BankTransactionAdmin(admin.ModelAdmin):
     list_display = [
+        "id",
         "user",
         "amount",
         "reference_number",
+        "archival_reference",
         "date",
         "sender",
         "has_been_used",
     ]
-    list_filter = ("has_been_used",)
-    ordering = ("date",)
+    list_filter = ("has_been_used", "date")
+    ordering = ("-date",)
     search_fields = (
         "user__email",
         "user__first_name",
@@ -131,6 +133,7 @@ class BankTransactionAdmin(admin.ModelAdmin):
         "user__mxid",
         "user__nick",
         "reference_number",
+        "archival_reference",
     )
 
 

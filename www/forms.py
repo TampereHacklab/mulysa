@@ -136,6 +136,7 @@ class CustomInvoiceForm(forms.Form):
                 params={"cost": service.cost},
             )
 
+
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = models.CustomUser

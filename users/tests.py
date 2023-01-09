@@ -1,5 +1,5 @@
 import datetime
-from datetime import timedelta
+from datetime import date, timedelta
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.http import urlencode
 
 from mailer.models import Message
 from rest_framework import status
@@ -42,16 +43,13 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
 
         # this should be found
         self.memberservice = models.MemberService.objects.create(
-            name="TestService",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=2
+            name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this is found also another user
@@ -59,43 +57,41 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user2,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # and one more service
         self.memberservice3 = models.MemberService.objects.create(
-            name="TestService3",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=5
+            name="TestService3", cost=10, days_per_payment=30, days_before_warning=5
         )
         # this should also be found
-        self.servicesubscription_user2_another = models.ServiceSubscription.objects.create(
-            user=self.user2,
-            service=self.memberservice3,
-            state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=5)
+        self.servicesubscription_user2_another = (
+            models.ServiceSubscription.objects.create(
+                user=self.user2,
+                service=self.memberservice3,
+                state=models.ServiceSubscription.ACTIVE,
+                paid_until=timezone.now().date() + timedelta(days=5),
+            )
         )
         # but this should not be found
-        self.servicesubscription_user2_another2 = models.ServiceSubscription.objects.create(
-            user=self.user2,
-            service=self.memberservice3,
-            state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=3)
+        self.servicesubscription_user2_another2 = (
+            models.ServiceSubscription.objects.create(
+                user=self.user2,
+                service=self.memberservice3,
+                state=models.ServiceSubscription.ACTIVE,
+                paid_until=timezone.now().date() + timedelta(days=3),
+            )
         )
 
         # this service should never be found (no days_before_warning defined)
         self.memberservice2 = models.MemberService.objects.create(
-            name="TestService2",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=None
+            name="TestService2", cost=10, days_per_payment=30, days_before_warning=None
         )
         self.servicesubscription2 = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice2,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this should not be found (too far in the future)
@@ -105,7 +101,7 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=3)
+            paid_until=timezone.now().date() + timedelta(days=3),
         )
 
         # this should not be found (in the past already)
@@ -113,18 +109,26 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=1)
+            paid_until=timezone.now().date() + timedelta(days=1),
         )
 
     def test_find(self):
         about_to_expire = BusinessLogic.find_expiring_service_subscriptions()
         self.assertEqual(len(about_to_expire), 3)
-        self.assertEqual(list(about_to_expire), [self.servicesubscription, self.servicesubscription_user2, self.servicesubscription_user2_another])
+        self.assertEqual(
+            list(about_to_expire),
+            [
+                self.servicesubscription,
+                self.servicesubscription_user2,
+                self.servicesubscription_user2_another,
+            ],
+        )
 
     def tearDown(self):
         models.ServiceSubscription.objects.all().delete()
         models.MemberService.objects.all().delete()
         get_user_model().objects.all().delete()
+
 
 class TestExpiryNotificationEmail(TestCase):
     def setUp(self):
@@ -137,20 +141,17 @@ class TestExpiryNotificationEmail(TestCase):
             nick="user1",
             phone="+358123123",
         )
-        self.user.language = 'fi'
+        self.user.language = "fi"
         self.user.save()
         # this should be found
         self.memberservice = models.MemberService.objects.create(
-            name="TestService",
-            cost=10,
-            days_per_payment=30,
-            days_before_warning=2
+            name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.ACTIVE,
-            paid_until=timezone.now().date() + timedelta(days=2)
+            paid_until=timezone.now().date() + timedelta(days=2),
         )
 
     def test_send_expiry_notification(self):
@@ -202,7 +203,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
             phone="+358123123",
         )
         # be specific about the language to use for the test user
-        self.user.language = 'fi'
+        self.user.language = "fi"
         self.user.save()
         self.ss = BusinessLogic.create_servicesubscription(
             self.user, self.memberservice, models.ServiceSubscription.SUSPENDED
@@ -213,10 +214,11 @@ class TestNewApplicationHappyPathEmails(TestCase):
 
         # create new application for our user
         self.application = models.MembershipApplication.objects.create(
-            user=self.user,
-            agreement=True
+            user=self.user, agreement=True
         )
-        self.assertEqual(len(mail.outbox), 2)  # because this sends one email to the member and one to admins
+        self.assertEqual(
+            len(mail.outbox), 2
+        )  # because this sends one email to the member and one to admins
         self.assertIn("Kiitos jäsenhakemuksestasi", mail.outbox[0].body, "Thanks")
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
@@ -228,11 +230,23 @@ class TestNewApplicationHappyPathEmails(TestCase):
         # empty mailbox for next test
         mail.outbox = []
         BusinessLogic.accept_application(self.application)
-        self.assertEqual(len(mail.outbox), 1)  # because this sends one email to the member and one to admins
-        self.assertIn(f"Tervetuloa jäseneksi {self.user.first_name}", mail.outbox[0].body, "Welcome")
+        self.assertEqual(
+            len(mail.outbox), 1
+        )  # because this sends one email to the member and one to admins
+        self.assertIn(
+            f"Tervetuloa jäseneksi {self.user.first_name}",
+            mail.outbox[0].body,
+            "Welcome",
+        )
         self.assertIn(self.memberservice.name, mail.outbox[0].body, "service found")
-        self.assertIn(str(self.ss.reference_number), mail.outbox[0].body, "reference number found")
-        self.assertIn(self.memberservice.access_phone_number, mail.outbox[0].body, "phone number found")
+        self.assertIn(
+            str(self.ss.reference_number), mail.outbox[0].body, "reference number found"
+        )
+        self.assertIn(
+            self.memberservice.access_phone_number,
+            mail.outbox[0].body,
+            "phone number found",
+        )
         self.assertIn(settings.SITE_URL, mail.outbox[0].body, "url")
         self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
@@ -260,7 +274,7 @@ class ServiceSubscriptionTests(TestCase):
         ss = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE
+            state=models.ServiceSubscription.OVERDUE,
         )
         self.assertIsNotNone(ss.reference_number)
         self.assertIn(str(ss.id), str(ss.reference_number))
@@ -282,7 +296,7 @@ class ServiceSubscriptionTests(TestCase):
             user=self.user,
             service=self.memberservice,
             state=models.ServiceSubscription.OVERDUE,
-            reference_number="999"
+            reference_number="999",
         )
         self.assertIsNotNone(ss.reference_number)
         self.assertEqual(ss.reference_number, "999")
@@ -381,11 +395,12 @@ class UsersTests(APITestCase):
 class UsersAPITests(APITestCase):
     def test_get_users(self):
         """
-        get users api call
+        get users api call. unauthenticated users don't get anything
         """
         url = reverse("customuser-list")
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["count"], 0)
 
 
 class CustomInvoiceTests(TestCase):
@@ -408,7 +423,7 @@ class CustomInvoiceTests(TestCase):
         self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE
+            state=models.ServiceSubscription.OVERDUE,
         )
 
     def test_automagic_reference_number(self):
@@ -453,3 +468,81 @@ class CustomInvoiceTests(TestCase):
         models.CustomUser.objects.all().delete()
         models.MemberService.objects.all().delete()
         models.ServiceSubscription.objects.all().delete()
+
+
+class BankAggreagetApiTests(APITestCase):
+    def setUp(self):
+        """
+        Generate few banktransactions for testing
+        """
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        # for these dates, generate 10 deposits and withdravals for each day
+        start_date = date(2022, 1, 1)
+        end_date = date(2022, 1, 11)
+        for single_date in self.daterange(start_date, end_date):
+            for amount in range(1, 11):
+                models.BankTransaction.objects.create(
+                    archival_reference=f"{single_date}_deposit_{amount}",
+                    date=single_date,
+                    amount=amount,
+                )
+                models.BankTransaction.objects.create(
+                    archival_reference=f"{single_date}_withdraval_{amount}",
+                    date=single_date,
+                    amount=amount * -1,
+                )
+
+    def daterange(self, start_date, end_date):
+        for n in range(int((end_date - start_date).days)):
+            yield start_date + timedelta(n)
+
+    def test_get_banktransactionaggregatedata_not_loggedin(self):
+        """
+        only logged in users can get the data
+        """
+        url = reverse("banktransactionaggregate-list")
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_banktransactionaggregatedata(self):
+        """
+        aggregated data
+        """
+        self.client.force_login(user=self.user)
+        url = reverse("banktransactionaggregate-list")
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 10)
+        firstDay = response.data[0]
+        self.assertEqual(firstDay["withdrawals"], -55)
+        self.assertEqual(firstDay["deposits"] + firstDay["withdrawals"], 0)
+        self.assertEqual(firstDay["aggregatedate"], "2022-01-01")
+
+    def test_get_banktransactionaggregatedata_filtered(self):
+        """
+        aggregated data
+        """
+        self.client.force_login(user=self.user)
+        urlbase = reverse("banktransactionaggregate-list")
+        qparams = urlencode({"date__gte": "2022-01-01", "date__lte": "2022-01-01"})
+        url = f"{urlbase}?{qparams}"
+        response = self.client.get(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # only one day result
+        self.assertEqual(len(response.data), 1)
+        firstDay = response.data[0]
+        self.assertEqual(firstDay["withdrawals"], -55)
+        self.assertEqual(firstDay["deposits"] + firstDay["withdrawals"], 0)
+        self.assertEqual(firstDay["aggregatedate"], "2022-01-01")
+
+    def tearDown(self):
+        models.CustomUser.objects.all().delete()
+        models.BankTransaction.objects.all().delete()

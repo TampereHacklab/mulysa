@@ -1,5 +1,6 @@
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.views.i18n import JavaScriptCatalog
 
 from . import views
 
@@ -16,10 +17,28 @@ urlpatterns = [
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
-    path("usersettings/<int:id>/subscribe_service", views.usersettings_subscribe_service, name="usersettings_subscribe_service"),
-    path("usersettings/<int:id>/unsubscribe_service", views.usersettings_unsubscribe_service, name="usersettings_unsubscribe_service"),
-    path("usersettings/<int:id>/claim_nfc", views.usersettings_claim_nfc, name="usersettings_claim_nfc"),
-    path("usersettings/<int:id>/delete_nfc", views.usersettings_delete_nfc, name="usersettings_delete_nfc"),
+    path("graphs", views.AuthenticatedTemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
+    path("graphs", TemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
+    path(
+        "usersettings/<int:id>/subscribe_service",
+        views.usersettings_subscribe_service,
+        name="usersettings_subscribe_service",
+    ),
+    path(
+        "usersettings/<int:id>/unsubscribe_service",
+        views.usersettings_unsubscribe_service,
+        name="usersettings_unsubscribe_service",
+    ),
+    path(
+        "usersettings/<int:id>/claim_nfc",
+        views.usersettings_claim_nfc,
+        name="usersettings_claim_nfc",
+    ),
+    path(
+        "usersettings/<int:id>/delete_nfc",
+        views.usersettings_delete_nfc,
+        name="usersettings_delete_nfc",
+    ),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",
@@ -33,7 +52,12 @@ urlpatterns = [
         views.application_operation,
         name="application_operation",
     ),
-    path("banktransaction/<int:banktransactionid>/", views.banktransaction_view, name="banktransaction-view"),
+    path(
+        "banktransaction/<int:banktransactionid>/",
+        views.banktransaction_view,
+        name="banktransaction-view",
+    ),
     path("changelog", views.changelog_view, name="changelog-view"),
     path("i18n/", include("django.conf.urls.i18n")),
+    path('jsi18n/', JavaScriptCatalog.as_view(packages=['www']), name='javascript-catalog'),
 ]

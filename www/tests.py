@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from api.models import AccessDevice, DeviceAccessLogEntry
-from users.models import CustomUser, MemberService, ServiceSubscription
+from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
 
 
 class TestBasicSmoke(TestCase):
@@ -17,6 +17,10 @@ class TestBasicSmoke(TestCase):
             municipality="City",
             nick="user1",
             phone="+358123123",
+        )
+        self.banktransaction = BankTransaction.objects.create(
+            date=timezone.now(),
+            amount=10
         )
 
     def test_index_anon(self):
@@ -54,12 +58,21 @@ class TestBasicSmoke(TestCase):
             reverse("custominvoice"),
             reverse("custominvoice_action", args=("test", 1)),
             reverse("application_operation", args=(1, "test")),
-            reverse("banktransaction-view", args=(1,)),
+            reverse("banktransaction-view", args=(self.banktransaction.pk,)),
+            reverse("graphs"),
         ]
         self.client.logout()
         for url in urls:
             response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
-            self.assertNotEqual(response.status_code, 200)
+            self.assertRedirects(response, f"/www/login/?next={url}", msg_prefix=f"{url}")
+
+        api_urls = [
+            reverse("banktransactionaggregate-list", args=()),
+            reverse("banktransactionaggregate-detail", args=(1,)),
+        ]
+        for url in api_urls:
+            response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
+            self.assertEqual(response.status_code, 401, f"{url}")
 
         # and some urls we should not see as basic logged in user
         self.client.force_login(self.user)
@@ -71,10 +84,11 @@ class TestBasicSmoke(TestCase):
             reverse("ledger"),
             reverse("custominvoices"),
             reverse("application_operation", args=(1, "test")),
+            reverse("banktransaction-view", args=(self.banktransaction.pk,)),
         ]
         for url in ownurls:
             response = self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
-            self.assertNotEqual(response.status_code, 200)
+            self.assertRedirects(response, f"/www/login/?next={url}", msg_prefix=f"{url}")
 
     def test_index_logged(self):
         self.client.force_login(self.user)

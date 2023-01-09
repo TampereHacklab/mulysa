@@ -233,7 +233,7 @@ class DataImport:
         return results
 
     # Holvi TITO import. TITO spec here: ???
-    # Note: this is the XSL-based TITO.
+    # Note: this is the XLSX-based TITO.
     @staticmethod
     def import_holvi(f):
         holvi = HolviToolbox.parse_account_statement(f)
@@ -251,7 +251,7 @@ class DataImport:
                     )
                 transaction_date = line["Date_parsed"]
                 message = line["Message"].strip()
-                if message == "Viitemaksu":
+                if message in ["Viitemaksu", "None"]:
                     message = None
                 amount = Decimal(str(line["Amount"]).strip(',').replace(',',"."))
                 peer = line["Counterparty"]
@@ -287,6 +287,69 @@ class DataImport:
         }
         logger.info(f"Data imported: {results} - now updating all users..")
 
+        BusinessLogic.update_all_users()
+
+        return results
+
+    @staticmethod
+    def import_nordigen(data):
+        """
+        Importer for nordigen api response https://ob.nordigen.com/api/docs#/accounts/accounts_transactions_retrieve
+
+        Takes the whole nordigen response but parses only the "booked" section from it (pending transactions do not count)
+        """
+        booked = data["transactions"]["booked"]
+        imported = exists = error = 0
+
+        failedrows = []
+        for one in booked:
+            logger.debug(f"import_nordigen - Processing entry: {one}")
+
+            try:
+                # map nordigen fields to our fields
+                # NOTE: it seems that some banks give different fields
+                # see: https://nordigen.com/en/docs/account-information/output/transactions/
+                archival_reference = one["transactionId"]
+                transaction_date = datetime.datetime.strptime(
+                    one["bookingDate"], "%Y-%m-%d"
+                ).date()
+                if one["transactionAmount"]["currency"] != "EUR":
+                    raise Exception("Cannot handle different currencies")
+                amount = one["transactionAmount"]["amount"]
+                reference = one.get("entryReference") or ""
+                reference = reference.lstrip("0")
+                sender = one.get("debtorName", "")
+                message = one.get("additionalInformation", "")
+
+                try:
+                    BankTransaction.objects.get(archival_reference=archival_reference)
+                    exists = exists + 1
+                except BankTransaction.DoesNotExist:
+                    transaction = BankTransaction.objects.create(
+                        archival_reference=archival_reference,
+                        transaction_id=archival_reference,
+                        date=transaction_date,
+                        amount=amount,
+                        reference_number=reference,
+                        sender=sender,
+                        message=message,
+                    )
+                    BusinessLogic.new_transaction(transaction)
+                    imported = imported + 1
+
+            except Exception as e:
+                logger.error(f"Error: {e}")
+                error = error + 1
+                failedrows.append(str(one) + " (" + str(e) + ")")
+
+        results = {
+            "imported": imported,
+            "exists": exists,
+            "error": error,
+            "failedrows": failedrows,
+        }
+
+        logger.info(f"Data imported: {results} - now updating all users..")
         BusinessLogic.update_all_users()
 
         return results

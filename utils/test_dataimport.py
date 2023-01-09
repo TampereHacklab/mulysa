@@ -1,5 +1,6 @@
 import io
-from datetime import timedelta
+import json
+from datetime import date, timedelta
 from decimal import Decimal
 
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -69,8 +70,13 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
     def test_user_gets_more_time(self):
         paid_delta = -50
         # starts of as overdue
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.OVERDUE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
         # makes one payment two days ago, still overdue but the date has changed
         data = self._createTitodata(timezone.now().date() + timedelta(days=-2), 10)
@@ -83,8 +89,13 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.OVERDUE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
         # makes another payment yesterday, state PAID and date in future
         data = self._createTitodata(timezone.now().date() + timedelta(days=-1), 10)
@@ -97,14 +108,20 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, models.ServiceSubscription.ACTIVE)
-        self.assertEqual(self.servicesubscription.paid_until, timezone.now().date() + timedelta(days=paid_delta))
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.ACTIVE
+        )
+        self.assertEqual(
+            self.servicesubscription.paid_until,
+            timezone.now().date() + timedelta(days=paid_delta),
+        )
 
     def tearDown(self):
         self.user.delete()
         self.memberservice.delete()
         self.servicesubscription.delete()
         models.BankTransaction.objects.all().delete()
+
 
 class TestTitoImporter(TestCase):
     def _getbasetitodata(self):
@@ -150,7 +167,10 @@ class TestTitoImporter(TestCase):
         self.assertDictEqual(
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
-        self.assertEqual(models.BankTransaction.objects.first().reference_number, data['viite'].strip().strip("0"))
+        self.assertEqual(
+            models.BankTransaction.objects.first().reference_number,
+            data["viite"].strip().strip("0"),
+        )
 
     def test_tito_import_wrong_length(self):
         models.BankTransaction.objects.all().delete()
@@ -220,69 +240,146 @@ class TestTitoImporter(TestCase):
         models.BankTransaction.objects.all().delete()
         data = self._getbasetitodata()
         # with 45 cents
-        data['rahamaara'] = "12345".rjust(18, "0")
+        data["rahamaara"] = "12345".rjust(18, "0")
         dataline = "".join(data.values())
         lines = io.BytesIO(b"header\n" + dataline.encode())
         results = DataImport.import_tito(lines)
         self.assertDictEqual(
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
-        self.assertEqual(models.BankTransaction.objects.first().reference_number, data['viite'].strip().strip("0"))
-        self.assertEqual(models.BankTransaction.objects.first().amount, Decimal('123.45'), 'Check decimals')
+        self.assertEqual(
+            models.BankTransaction.objects.first().reference_number,
+            data["viite"].strip().strip("0"),
+        )
+        self.assertEqual(
+            models.BankTransaction.objects.first().amount,
+            Decimal("123.45"),
+            "Check decimals",
+        )
+
 
 class TestHolviImporter(TestCase):
-    def test_holvi_import(self):
+    def test_holvi_import_2022_05_format(self):
         """
-        Test import with data format from 2020-06-10
+        Test import with data format from 2022-05-18
+
+        Uses same fields but XLSX file format.
         """
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
 
         # and again to test that it found the same rows
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 0, "exists": 3, "error": 0, "failedrows": []}
+            res, {"imported": 0, "exists": 5, "error": 0, "failedrows": []}
         )
 
-    def test_holvi_import_2021_format(self):
-        """
-        Test import with data fromat from 2021-03-21
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2022-05.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
 
-        Contains "Payment date" and "Execution date" fields instead of single "Date" field
+    def test_holvi_import_2022_10_format(self):
+        """
+        Test import with data format from 2022-10-01
+
+        Uses same fields but XLSX file format.
         """
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement-2021.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-10.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 8, "exists": 0, "error": 0, "failedrows": []}
         )
 
         # and again to test that it found the same rows
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 0, "exists": 3, "error": 0, "failedrows": []}
+            res, {"imported": 0, "exists": 8, "error": 0, "failedrows": []}
+        )
+
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2022-10.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
+
+        # and the last as it has 'Sept' in the dateformat
+        lastimported = models.BankTransaction.objects.last()
+        self.assertEqual(lastimported.date, date(2022, 9, 1))
+        self.assertEqual(lastimported.amount, Decimal("30"))
+        # note, BankTransaction does not keep leading zeroes
+        self.assertEqual(lastimported.reference_number, "200046")
+        self.assertEqual(
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00a"
         )
 
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
-        xls = open("utils/holvi-account-test-statement.xls", "rb")
+        xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 3, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
         # third row on the test file
-        transaction = models.BankTransaction.objects.get(archival_reference='aaa333bbbcccdddeeefffggghhhiiijj')
-        self.assertEqual(transaction.amount, Decimal('-18.84'), 'Check decimals')
+        transaction = models.BankTransaction.objects.get(
+            archival_reference="0b914e1f528d902e6fe1ee7ff792ce5f"
+        )
+        self.assertEqual(transaction.amount, Decimal("-7.44"), "Check decimals")
+
+    def tearDown(self):
+        models.BankTransaction.objects.all().delete()
+
+
+class TestNordigenmporter(TestCase):
+    def test_nordigen(self):
+        """
+        Test importing nordigen transactions
+        """
+        models.BankTransaction.objects.all().delete()
+
+        self.maxDiff = None
+
+        with open("utils/nordigen_transactions.json") as json_file:
+            data = json.load(json_file)
+            res = DataImport.import_nordigen(data)
+
+            self.assertDictEqual(
+                res,
+                {
+                    "imported": 4,
+                    "exists": 1,
+                    "error": 1,
+                    "failedrows": [
+                        "{'transactionId': 'TEST4', 'entryReference': None, "
+                        "'bookingDate': '2022-10-24', 'valueDate': '2022-10-23', "
+                        "'transactionAmount': {'amount': '80.00', 'currency': 'SEK'}, "
+                        "'debtorName': 'TESTER 4', 'debtorAccount': {'iban': "
+                        "'FI11111111'}, 'remittanceInformationUnstructured': "
+                        "'Viitemaksu invalid currency', 'additionalInformation': 'Viitemaksu'} (Cannot "
+                        "handle different currencies)"
+                    ],
+                },
+            )
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()

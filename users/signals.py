@@ -7,7 +7,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils import translation
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from utils import referencenumber
 
@@ -18,23 +18,23 @@ logger = logging.getLogger(__name__)
 #
 # Signal for other modules to activate user
 #
-activate_user = Signal(providing_args=["instance", "args", "kwargs"])
+activate_user = Signal()
 #
 # Signal for other modules to deactivate user
 #
-deactivate_user = Signal(providing_args=["instance", "args", "kwargs"])
+deactivate_user = Signal()
 #
 # Signal for other modules to handle new users
 #
-create_user = Signal(providing_args=["instance", "args", "kwargs"])
+create_user = Signal()
 #
 # Signal for other modules to handle new membership applications
 #
-create_application = Signal(providing_args=["instance", "args", "kwargs"])
+create_application = Signal()
 # and application approvals
-application_approved = Signal(providing_args=["instance", "args", "kwargs"])
+application_approved = Signal()
 # and application denials
-application_denied = Signal(providing_args=["instance", "args", "kwargs"])
+application_denied = Signal()
 
 
 @receiver(post_save, sender=models.CustomUser)
@@ -55,16 +55,22 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
 
 
 @receiver(post_save, sender=models.ServiceSubscription)
-def service_subscription_create(sender, instance: models.ServiceSubscription, created, raw, **kwargs):
+def service_subscription_create(
+    sender, instance: models.ServiceSubscription, created, raw, **kwargs
+):
     if raw:
         return
 
     if created:
         if instance.reference_number is None:
-            refnum = referencenumber.generate(settings.SERVICE_INVOICE_REFERENCE_BASE + instance.id)
+            refnum = referencenumber.generate(
+                settings.SERVICE_INVOICE_REFERENCE_BASE + instance.id
+            )
             instance.reference_number = refnum
             instance.save()
-            logger.info(f"ServiceSubscription {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it")
+            logger.info(
+                f"ServiceSubscription {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it"
+            )
 
 
 @receiver(create_user)
@@ -114,10 +120,15 @@ def custominvoice_create(
 
     if created:
         if instance.reference_number is None:
-            refnum = referencenumber.generate(settings.CUSTOM_INVOICE_REFERENCE_BASE + instance.id)
+            refnum = referencenumber.generate(
+                settings.CUSTOM_INVOICE_REFERENCE_BASE + instance.id
+            )
             instance.reference_number = refnum
             instance.save()
-            logger.info(f"CustomInvoice {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it")
+            logger.info(
+                f"CustomInvoice {instance} created for user {instance.user} without reference number. Generated reference number {refnum} for it"
+            )
+
 
 @receiver(create_application, sender=models.MembershipApplication)
 def send_application_received_email(
@@ -170,7 +181,11 @@ def send_new_application_waiting_processing_email(
 def send_application_approved_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
-    logger.info("Application approved, sending welcome email {}, language {}".format(instance, instance.user.language))
+    logger.info(
+        "Application approved, sending welcome email {}, language {}".format(
+            instance, instance.user.language
+        )
+    )
     context = {
         "user": instance.user,
         "settings": settings,
@@ -242,7 +257,7 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
 # instance is the user object (this signal will only trigger if the user was
 # succesfully identified)
 # method is the method that was tried (phone, nfc etc)
-door_access_denied = Signal(providing_args=["user", "method", "reason", "args", "kwargs"])
+door_access_denied = Signal()
 
 
 @receiver(door_access_denied)
@@ -257,5 +272,4 @@ def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kw
     from_email = settings.NOREPLY_FROM_ADDRESS
     to = [user.email]
     plaintext_content = render_to_string("mail/door_access_denied.txt", context)
-
-    send_mail(subject, plaintext_content, from_email, to)
+    send_mail(subject, plaintext_content, from_email, to, fail_silently=True)

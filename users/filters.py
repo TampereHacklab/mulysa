@@ -37,7 +37,9 @@ class PredefAgeListFilter(admin.SimpleListFilter):
         if self.value() == "under30":
             return queryset.filter(birthday__gte=self._add_years(today, -30))
         if self.value() == "20to50":
-            return queryset.filter(birthday__lte=self._add_years(today, -20)).filter(birthday__gte=self._add_years(today, -60))
+            return queryset.filter(birthday__lte=self._add_years(today, -20)).filter(
+                birthday__gte=self._add_years(today, -60)
+            )
         if self.value() == "over63":
             return queryset.filter(birthday__lte=self._add_years(today, -63))
 
