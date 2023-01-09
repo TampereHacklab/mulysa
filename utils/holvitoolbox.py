@@ -5,12 +5,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from openpyxl import load_workbook
 import dateparser
 
-class ParseError(Exception):
-    """Raised when the data has invalid value"""
 
-    pass
-
-logger = logging.getLogger(__name__)
 class HolviToolbox:
     """
     Contains various helper methods to handle Holvi data
@@ -33,12 +28,6 @@ class HolviToolbox:
         sheet = load_workbook(filename=BytesIO(uploaded_file.read())).active
 
         date_fields = ["Payment date", "Date"]
-        date_fields_finnish = ["Maksupvm"]
-
-        fields_keys_english = ["Payment date", "Execution date", "Amount", "Currency", "Counterparty", "Description", "Reference", "Message","Filing ID"]
-
-        fields_keys_finnish = ["Maksupvm", "Kirjauspäivä", "Summa", "Valuutta", "Vastapuoli", "Kuvaus", "Viite", "Viesti", "Arkistointitunnus"]
-
         headers = []
         items = []
         for row_index, row in enumerate(sheet.values):
