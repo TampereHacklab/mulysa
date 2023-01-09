@@ -177,6 +177,7 @@
         "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69",
         "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"
       ],
+      "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
       "version": "==0.7.1"
     },
     "deprecated": {
@@ -184,6 +185,7 @@
         "sha256:43ac5335da90c31c24ba028af536a91d41d53f9e6901ddb021bcc572ce44e38d",
         "sha256:64756e3e14c8c5eea9795d93c524551432a0be75629f8f29e67ab8caf076c76d"
       ],
+      "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
       "version": "==1.2.13"
     },
     "django": {
@@ -465,6 +467,7 @@
       "version": "==2.21"
     },
     "pyjwt": {
+      "extras": ["crypto"],
       "hashes": [
         "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd",
         "sha256:d83c3d892a77bbb74d3e1a2cfa90afaadb60945205d1095d9221f04466f64c14"
@@ -609,6 +612,7 @@
         "sha256:2577c501a2fb8d05a304c09d090d6e47c306fef15809d102b327cf8364bddab5",
         "sha256:75beac4a47881eeb94d5ea5d6ad31ef88856affe2332b9aafb52c6452ccf0d7a"
       ],
+      "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
       "version": "==1.3.1"
     },
     "setuptools": {
@@ -624,6 +628,7 @@
         "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
         "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
       ],
+      "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
       "version": "==1.16.0"
     },
     "soupsieve": {
@@ -663,6 +668,7 @@
         "sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0",
         "sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e"
       ],
+      "markers": "python_version >= '3.6'",
       "version": "==4.1.1"
     },
     "urllib3": {
@@ -841,13 +847,6 @@
       "markers": "python_version >= '3.7'",
       "version": "==5.1.0"
     },
-    "chardet": {
-      "hashes": [
-        "sha256:0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa",
-        "sha256:f864054d66fd9118f2e67044ac8981a54775ec5b67aed0441892edb553d21da5"
-      ],
-      "version": "==4.0.0"
-    },
     "charset-normalizer": {
       "hashes": [
         "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845",
@@ -871,13 +870,6 @@
       ],
       "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6'",
       "version": "==0.4.6"
-    },
-    "colorama": {
-      "hashes": [
-        "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
-        "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
-      ],
-      "version": "==0.4.4"
     },
     "coverage": {
       "hashes": [
@@ -949,6 +941,7 @@
         "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330",
         "sha256:b8c3f85900b9dc423225913c5aace94729fe1fa9763b38939a95226f02d37186"
       ],
+      "markers": "python_version >= '3.5'",
       "version": "==5.1.1"
     },
     "dill": {
@@ -1134,6 +1127,7 @@
         "sha256:8c07be290bb59f03588915921e29e8a50002acaf2cdc5fa0e0114f91709fafa0",
         "sha256:c001d4636cd3aecdaf33cbb40aebb59b094be2a74c556778ef5576c175e19e75"
       ],
+      "markers": "python_version >= '3.6'",
       "version": "==0.8.3"
     },
     "pathspec": {
@@ -1180,6 +1174,7 @@
         "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159",
         "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"
       ],
+      "markers": "python_version >= '3.6'",
       "version": "==1.0.0"
     },
     "prompt-toolkit": {
@@ -1282,6 +1277,7 @@
         "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
         "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
       ],
+      "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
       "version": "==1.16.0"
     },
     "stack-data": {
