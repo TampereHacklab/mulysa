@@ -99,13 +99,7 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ```bash
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
-./manage.py makemessages -l fi
-./manage.py compilemessages
-./manage.py test
-# run all tests to ensure everything works
-./manage.py runserver #12345
-# to specify port other than 8000 which the server runs on
-# remove the # before 12345 and change the number to desired port
+./manage.py runserver
 ```
 
 ## To update localizations
@@ -132,7 +126,7 @@ run:
 pipenv update
 pipenv lock
 pipenv sync
-tox4
+tox
 ```
 
 ## to update local bootstrap files
@@ -270,9 +264,9 @@ Just do one first with either dummy data or good guess then do the other.
   - display name: mulysa (or what ever you want to call it)
   - trust email: yes
   - sync mode: force (this makes the data always update from mulysa)
-  - Authorization URL: <https://yourmulysadomain/o/authorize/>
-  - Token URL: <https://yourmulysadomain/o/token/>
-  - User Info URL: <https://yourmulysadomain/o/userinfo/>
+  - Authorization URL: https://yourmulysadomain/o/authorize/
+  - Token URL: https://yourmulysadomain/o/token/
+  - User Info URL: https://yourmulysadomain/o/userinfo/
   - Client Authentication: client secret sent as post
   - Client ID: the client id from mulysa
   - Client Secret: the client secret from mulysa
