@@ -1,14 +1,14 @@
-[![Depedency updates status](https://pyup.io/repos/github/HacklabJKL/mulysa/shield.svg)](https://pyup.io/repos/github/HacklabJKL/mulysa/)
-[![Build status](https://github.com/HacklabJKL/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/HacklabJKL/mulysa/actions/workflows/tox.yml)
-[![Coverage Status](https://coveralls.io/repos/github/HacklabJKL/mulysa/badge.svg?branch=master)](https://coveralls.io/github/HacklabJKL/mulysa?branch=master)
+[![Depedency updates status](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
+[![Build status](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml)
+[![Coverage Status](https://coveralls.io/repos/github/TampereHacklab/mulysa/badge.svg?branch=master)](https://coveralls.io/github/TampereHacklab/mulysa?branch=master)
 
 # Mulysa
 
-asylum[::-1] is a member management system for Jyväskylä Hacklab originating from Tampere Hacklab.
+asylum[::-1] is a member management system for Tampere Hacklab.
 
 # Idea
 
-Tampere Hacklab has been groving and member management has become pretty labor intensive.
+Tampere Hacklab has been growing and member management has become pretty labour intensive.
 This project tries to automate the boring parts by automating the communication with members,
 managing the door access and managing the LDAP account creation (some of this is still on the TODO list).
 
@@ -25,7 +25,7 @@ Most of this works around our "User" model which can do multiple things
 - Treasurer can update "active" information of the member
   - when the member has paid their fees normally Treasurer will send a message to Mulysa to set the member active = true
   - when the member has not paid their fees Treasurer will set the member as active = false
-- Member can request to leave Jyväskylä Hacklab
+- Member can request to leave Tampere Hacklab
   - Member fills in their email address
   - Mulysa sends email with a confirmation link and information to the Member
   - If member uses the activation link within X days the member will be MarkedForDeletion and deleted after XX days
@@ -81,7 +81,7 @@ Optional:
 When you have the prerequisites installed, run these commands:
 
 ```bash
-git clone https://github.com/HacklabJKL/mulysa.git
+git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
 pipenv sync --dev
 pipenv shell
