@@ -6,7 +6,6 @@ class Command(BaseCommand):
     help = "Create initial admin user if no users exists"
 
     def handle(self, *args, **options):
-
         User = get_user_model()
         if User.objects.count() == 0:
             User.objects.create_superuser(
