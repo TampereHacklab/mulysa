@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
 ]
 
 # https://docs.djangoproject.com/en/4.1/ref/settings/
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Sitename
 SITENAME = "Mulysa"
