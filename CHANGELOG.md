@@ -1,5 +1,6 @@
 # Changelog
 
+* Downgrade SESSION_COOKIE_SAMESITE to Lax. PR [#418](https://github.com/TampereHacklab/mulysa/pull/418) by [@tswfi](https://github.com/tswfi).
 * nginx forwarded-proto: pass the forwarded-proto header that traefik set. PR [#417](https://github.com/TampereHacklab/mulysa/pull/417) by [@tswfi](https://github.com/tswfi).
 * fix missing semicolon. PR [#416](https://github.com/TampereHacklab/mulysa/pull/416) by [@tswfi](https://github.com/tswfi).
 * Default to configuration where X-Forwarded-Proto. PR [#414](https://github.com/TampereHacklab/mulysa/pull/414) by [@tswfi](https://github.com/tswfi).
