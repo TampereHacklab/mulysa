@@ -1,5 +1,6 @@
 # Changelog
 
+* Default to configuration where X-Forwarded-Proto. PR [#414](https://github.com/TampereHacklab/mulysa/pull/414) by [@tswfi](https://github.com/tswfi).
 * Bump certifi from 2022.9.24 to 2022.12.7. PR [#408](https://github.com/TampereHacklab/mulysa/pull/408) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Django4.1.3. PR [#407](https://github.com/TampereHacklab/mulysa/pull/407) by [@tswfi](https://github.com/tswfi).
 * add few fields to banktransaction view for easier checking. PR [#404](https://github.com/TampereHacklab/mulysa/pull/404) by [@tswfi](https://github.com/tswfi).
