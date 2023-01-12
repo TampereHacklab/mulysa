@@ -1,5 +1,6 @@
 # Changelog
 
+* nginx forwarded-proto: pass the forwarded-proto header that traefik set. PR [#417](https://github.com/TampereHacklab/mulysa/pull/417) by [@tswfi](https://github.com/tswfi).
 * fix missing semicolon. PR [#416](https://github.com/TampereHacklab/mulysa/pull/416) by [@tswfi](https://github.com/tswfi).
 * Default to configuration where X-Forwarded-Proto. PR [#414](https://github.com/TampereHacklab/mulysa/pull/414) by [@tswfi](https://github.com/tswfi).
 * Bump certifi from 2022.9.24 to 2022.12.7. PR [#408](https://github.com/TampereHacklab/mulysa/pull/408) by [@dependabot[bot]](https://github.com/apps/dependabot).
