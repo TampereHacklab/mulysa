@@ -73,11 +73,6 @@ Find a way to install the software on this list (click the links to find install
 * [MySQL C API (libmysqlclient)](https://dev.mysql.com/downloads/c-api/)
 * [pipenv](https://github.com/pypa/pipenv)
 
-Optional:
-
-* python 3.7
-* pipenv from here: https://github.com/pypa/pipenv
-
 When you have the prerequisites installed, run these commands:
 
 ```bash
