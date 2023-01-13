@@ -33,12 +33,52 @@ Most of this works around our "User" model which can do multiple things
 
 # Start developing
 
-Make sure you have proper python installation on your machine
+In order to run your local development environment of mulysa, there are some prerequisites you first need to install.
 
-* python 3.9
+## Installing prerequisites on Debian 11.2
+
+```sh
+sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
+```
+
+## Installing prerequisites on Mac OS
+
+Make sure you have [Homebrew](https://brew.sh/) installed, then run:
+
+```sh
+brew install git
+```
+
+```sh
+brew install pipenv
+```
+
+_Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
+
+```sh
+brew install mysql
+```
+
+```sh
+brew install gettext
+```
+
+## Installing prerequisites on other platforms
+
+Find a way to install the software on this list (click the links to find installer downloads):
+
+* [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+* [python](https://www.python.org/downloads/) 3.9
+* [gettext](https://www.gnu.org/software/gettext/) for translation editing and compiling
+* [MySQL C API (libmysqlclient)](https://dev.mysql.com/downloads/c-api/)
+* [pipenv](https://github.com/pypa/pipenv)
+
+Optional:
+
+* python 3.7
 * pipenv from here: https://github.com/pypa/pipenv
 
-Then run
+When you have the prerequisites installed, run these commands:
 
 ```bash
 git clone https://github.com/TampereHacklab/mulysa.git
@@ -89,7 +129,6 @@ pipenv sync
 tox
 ```
 
-
 ## to update local bootstrap files
 
 This will download some js and css files from external sites to be hosted locally.
@@ -111,6 +150,12 @@ Before committing, run
 
 * black
 
+### Running all test cases
+
+```bash
+./manage.py test
+```
+
 ### Running just one test case
 
 To speed up writing your tests you can run only one test case with something like this
@@ -118,7 +163,6 @@ To speed up writing your tests you can run only one test case with something lik
 ```
 ./manage.py test api.tests.TestAccess.test_access_phone_list_unauthenticated
 ```
-
 
 # Future improvements
 
@@ -167,16 +211,17 @@ curl -X POST \
 HTTP `200` responses can be considered valid access, all other are invalid. `200` responses will also contain some basic user data for example for showing in a door access welcome message.
 
 API will return these HTTP status code responses on certain error conditions:
- - `400` when query has invalid content
- - `404` when deviceid isn't found
- - `480` when phone number/NFC id/mxid is not found at all
- - `481` when phone number/NFC id/mxid is found within member but has no access rights, response will also contain basic user data for example executing proper procedures and admin logs
- - `429` if rate throttling kicks in
+
+* `400` when query has invalid content
+* `404` when deviceid isn't found
+* `480` when phone number/NFC id/mxid is not found at all
+* `481` when phone number/NFC id/mxid is found within member but has no access rights, response will also contain basic user data for example executing proper procedures and admin logs
+* `429` if rate throttling kicks in
 
 There are two example implementations for esp32 based access readers that can be found here:
 
-https://github.com/TampereHacklab/mulysa_callerid
-https://github.com/TampereHacklab/mulysa_nfc_reader
+<https://github.com/TampereHacklab/mulysa_callerid>
+<https://github.com/TampereHacklab/mulysa_nfc_reader>
 
 # Door access api listings
 
@@ -195,7 +240,7 @@ and you need the id and secret to create the keycloack end to get the redirect u
 
 Just do one first with either dummy data or good guess then do the other.
 
-## as a logged in admin user in mulysa:
+## as a logged in admin user in mulysa
 
 * go to: `https://yourmulysadomain/admin/oauth2_provider/application/`
 * click on `add application`
@@ -214,6 +259,7 @@ Just do one first with either dummy data or good guess then do the other.
 
 * go to [realm] -> identity providers -> add provider -> openid connect v1.0
 * create new (only changes to defaults listed here)
+
   * alias: mulysa
   * display name: mulysa (or what ever you want to call it)
   * trust email: yes
@@ -228,6 +274,7 @@ Just do one first with either dummy data or good guess then do the other.
 
 * go to [realm] -> identity providers -> [display name] -> Mappers
 * create
+
   * name: firstnamemapper
   * Sync Mode Override: force
   * Mapper Type: Attribute Importer
