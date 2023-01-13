@@ -152,7 +152,7 @@ Before committing, run
 
 ### Running all test cases
 
-```
+```bash
 ./manage.py test
 ```
 
