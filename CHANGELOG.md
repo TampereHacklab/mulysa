@@ -1,5 +1,6 @@
 # Changelog
 
+* chore: bump codeQL workflows. PR [#420](https://github.com/TampereHacklab/mulysa/pull/420) by [@braaar](https://github.com/braaar).
 * docs: remove old prerequisite list. PR [#419](https://github.com/TampereHacklab/mulysa/pull/419) by [@braaar](https://github.com/braaar).
 * docs: improve prerequisites installation guide. PR [#413](https://github.com/TampereHacklab/mulysa/pull/413) by [@braaar](https://github.com/braaar).
 * Downgrade SESSION_COOKIE_SAMESITE to Lax. PR [#418](https://github.com/TampereHacklab/mulysa/pull/418) by [@tswfi](https://github.com/tswfi).
