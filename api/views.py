@@ -119,7 +119,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         for ss in (
             ServiceSubscription.objects.select_related("user")
             .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
-            .filter(state=service_subscription_create.ACTIVE)
+            .filter(state=ServiceSubscription.ACTIVE)
         ):
             users_with_door_access.append(ss.user)
 
