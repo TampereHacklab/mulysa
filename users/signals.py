@@ -8,14 +8,10 @@ from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
-from users.models.bank_transaction import BankTransaction
 from users.models.custom_invoice import CustomInvoice
 from users.models.custom_user import CustomUser
 from users.models.membership_application import MembershipApplication
-from users.models.nfc_card import NFCCard
 from users.models.service_subscription import ServiceSubscription
-from users.models.member_service import MemberService
-from users.models.users_log import UsersLog
 from utils import referencenumber
 
 logger = logging.getLogger(__name__)

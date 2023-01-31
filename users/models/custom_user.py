@@ -6,7 +6,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from users.custom_user_manager import CustomUserManager
 from users.models.service_subscription import ServiceSubscription
-from users.models.service_subscription import ServiceSubscription
 from users.models.users_log import UsersLog
 
 from users.validators import validate_mxid, validate_phone

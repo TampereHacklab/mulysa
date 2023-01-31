@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import datetime
 from users.models.bank_transaction import BankTransaction
-from users.models.bank_transaction import BankTransaction
 
 
 class ServiceSubscription(models.Model):

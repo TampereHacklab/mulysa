@@ -8,15 +8,8 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from users import filters, permissions, serializers
-
 from users.models.bank_transaction import BankTransaction
-from users.models.custom_invoice import CustomInvoice
 from users.models.custom_user import CustomUser
-from users.models.membership_application import MembershipApplication
-from users.models.nfc_card import NFCCard
-from users.models.service_subscription import ServiceSubscription
-from users.models.member_service import MemberService
-from users.models.users_log import UsersLog
 
 
 class UserViewSet(viewsets.ModelViewSet):

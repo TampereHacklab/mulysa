@@ -1,6 +1,6 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import BaseUserManager
 import datetime
-
+from django.utils.translation import gettext_lazy as _
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, first_name, last_name, phone, password):
