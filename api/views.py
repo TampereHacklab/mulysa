@@ -16,7 +16,7 @@ from users.models.service_subscription import ServiceSubscription
 from utils.phonenumber import normalize_number
 
 from .models import AccessDevice, DeviceAccessLogEntry
-from users.signals import door_access_denied, service_subscription_create
+from users.signals import door_access_denied
 
 logger = logging.getLogger(__name__)
 
