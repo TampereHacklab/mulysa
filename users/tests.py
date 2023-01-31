@@ -14,10 +14,16 @@ from mailer.models import Message
 from rest_framework import status
 from rest_framework.test import APITestCase
 from drfx import settings
+from users.models.bank_transaction import BankTransaction
+from users.models.custom_invoice import CustomInvoice
+from users.models.custom_user import CustomUser
+from users.models.member_service import MemberService
+from users.models.membership_application import MembershipApplication
+from users.models.service_subscription import ServiceSubscription
 
 from utils.businesslogic import BusinessLogic
 
-from . import models, signals
+from . import signals
 
 
 class TestBusinessLogicSubscriptionExpiries(TestCase):
@@ -42,73 +48,73 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
         )
 
         # this should be found
-        self.memberservice = models.MemberService.objects.create(
+        self.memberservice = MemberService.objects.create(
             name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
-        self.servicesubscription = models.ServiceSubscription.objects.create(
+        self.servicesubscription = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this is found also another user
-        self.servicesubscription_user2 = models.ServiceSubscription.objects.create(
+        self.servicesubscription_user2 = ServiceSubscription.objects.create(
             user=self.user2,
             service=self.memberservice,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # and one more service
-        self.memberservice3 = models.MemberService.objects.create(
+        self.memberservice3 = MemberService.objects.create(
             name="TestService3", cost=10, days_per_payment=30, days_before_warning=5
         )
         # this should also be found
         self.servicesubscription_user2_another = (
-            models.ServiceSubscription.objects.create(
+            ServiceSubscription.objects.create(
                 user=self.user2,
                 service=self.memberservice3,
-                state=models.ServiceSubscription.ACTIVE,
+                state=ServiceSubscription.ACTIVE,
                 paid_until=timezone.now().date() + timedelta(days=5),
             )
         )
         # but this should not be found
         self.servicesubscription_user2_another2 = (
-            models.ServiceSubscription.objects.create(
+            ServiceSubscription.objects.create(
                 user=self.user2,
                 service=self.memberservice3,
-                state=models.ServiceSubscription.ACTIVE,
+                state=ServiceSubscription.ACTIVE,
                 paid_until=timezone.now().date() + timedelta(days=3),
             )
         )
 
         # this service should never be found (no days_before_warning defined)
-        self.memberservice2 = models.MemberService.objects.create(
+        self.memberservice2 = MemberService.objects.create(
             name="TestService2", cost=10, days_per_payment=30, days_before_warning=None
         )
-        self.servicesubscription2 = models.ServiceSubscription.objects.create(
+        self.servicesubscription2 = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice2,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=2),
         )
 
         # this should not be found (too far in the future)
         # note if we ever constraint having only one subscription per user / memberservice
         # these test will fail and need to be rewritten
-        self.servicesubscription3 = models.ServiceSubscription.objects.create(
+        self.servicesubscription3 = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=3),
         )
 
         # this should not be found (in the past already)
-        self.servicesubscription4 = models.ServiceSubscription.objects.create(
+        self.servicesubscription4 = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=1),
         )
 
@@ -125,8 +131,8 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
         )
 
     def tearDown(self):
-        models.ServiceSubscription.objects.all().delete()
-        models.MemberService.objects.all().delete()
+        ServiceSubscription.objects.all().delete()
+        MemberService.objects.all().delete()
         get_user_model().objects.all().delete()
 
 
@@ -144,13 +150,13 @@ class TestExpiryNotificationEmail(TestCase):
         self.user.language = "fi"
         self.user.save()
         # this should be found
-        self.memberservice = models.MemberService.objects.create(
+        self.memberservice = MemberService.objects.create(
             name="TestService", cost=10, days_per_payment=30, days_before_warning=2
         )
-        self.servicesubscription = models.ServiceSubscription.objects.create(
+        self.servicesubscription = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.ACTIVE,
+            state=ServiceSubscription.ACTIVE,
             paid_until=timezone.now().date() + timedelta(days=2),
         )
 
@@ -173,8 +179,8 @@ class TestExpiryNotificationEmail(TestCase):
         self.assertIn(str(self.servicesubscription.paid_until.year), message.email.body)
 
     def tearDown(self):
-        models.MemberService.objects.all().delete()
-        models.ServiceSubscription.objects.all().delete()
+        MemberService.objects.all().delete()
+        ServiceSubscription.objects.all().delete()
         get_user_model().objects.all().delete()
 
 
@@ -187,7 +193,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
 
     def setUp(self):
         # test objects
-        self.memberservice = models.MemberService.objects.create(
+        self.memberservice = MemberService.objects.create(
             name="TestService",
             access_phone_number="+358123",
             cost=321,
@@ -206,14 +212,14 @@ class TestNewApplicationHappyPathEmails(TestCase):
         self.user.language = "fi"
         self.user.save()
         self.ss = BusinessLogic.create_servicesubscription(
-            self.user, self.memberservice, models.ServiceSubscription.SUSPENDED
+            self.user, self.memberservice, ServiceSubscription.SUSPENDED
         )
 
     def test_emails(self):
         mail.outbox = []
 
         # create new application for our user
-        self.application = models.MembershipApplication.objects.create(
+        self.application = MembershipApplication.objects.create(
             user=self.user, agreement=True
         )
         self.assertEqual(
@@ -263,7 +269,7 @@ class ServiceSubscriptionTests(TestCase):
             nick="user1",
             phone="+358123123",
         )
-        self.memberservice = models.MemberService.objects.create(
+        self.memberservice = MemberService.objects.create(
             name="TestService",
             cost=10,
             days_per_payment=30,
@@ -271,10 +277,10 @@ class ServiceSubscriptionTests(TestCase):
 
     def test_automagic_reference_number(self):
         # create will generate reference number for us
-        ss = models.ServiceSubscription.objects.create(
+        ss = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE,
+            state=ServiceSubscription.OVERDUE,
         )
         self.assertIsNotNone(ss.reference_number)
         self.assertIn(str(ss.id), str(ss.reference_number))
@@ -292,10 +298,10 @@ class ServiceSubscriptionTests(TestCase):
         self.assertEqual(ss.reference_number, "123")
 
         # and if we create one with a specific number it wont be overwritten
-        ss = models.ServiceSubscription.objects.create(
+        ss = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE,
+            state=ServiceSubscription.OVERDUE,
             reference_number="999",
         )
         self.assertIsNotNone(ss.reference_number)
@@ -304,7 +310,7 @@ class ServiceSubscriptionTests(TestCase):
 
 class UserManagerTests(APITestCase):
     def test_create_superuser(self):
-        models.CustomUser.objects.create_superuser(
+        CustomUser.objects.create_superuser(
             email="testsuper@example.com",
             first_name="test",
             last_name="super",
@@ -312,7 +318,7 @@ class UserManagerTests(APITestCase):
             password="abc123",
         )
         self.assertIsNotNone(
-            models.CustomUser.objects.get(email="testsuper@example.com")
+            CustomUser.objects.get(email="testsuper@example.com")
         )
 
 
@@ -320,7 +326,7 @@ class UsersTests(APITestCase):
     def test_create_user_invalid(self):
         # note, if your test generates exceptions it will brake the transaction
         # https://stackoverflow.com/questions/21458387/transactionmanagementerror-you-cant-execute-queries-until-the-end-of-the-atom
-        u = models.CustomUser()
+        u = CustomUser()
         # cannot save without data
         with self.assertRaises(IntegrityError):
             u.save()
@@ -329,7 +335,7 @@ class UsersTests(APITestCase):
         """
         Basic model testing
         """
-        u = models.CustomUser()
+        u = CustomUser()
         u.email = "test@example.com"
         u.birthday = datetime.datetime.now()
         u.first_name = "FirstName"
@@ -347,7 +353,7 @@ class UsersTests(APITestCase):
         self.assertEqual(u.email, u.natural_key())
 
     def test_signals(self):
-        u = models.CustomUser()
+        u = CustomUser()
         u.email = "signaltest@example.com"
         u.birthday = datetime.datetime.now()
         u.save()
@@ -361,13 +367,13 @@ class UsersTests(APITestCase):
         self.assertTrue(u.is_active, "user is active")
 
         # dummy listeners
-        @receiver(signals.deactivate_user, sender=models.CustomUser)
-        def dummy_activate_listener(sender, instance: models.CustomUser, **kwargs):
+        @receiver(signals.deactivate_user, sender=CustomUser)
+        def dummy_activate_listener(sender, instance: CustomUser, **kwargs):
             self.activate_instance_id = instance.id
             self.activate_call_counter += 1
 
-        @receiver(signals.deactivate_user, sender=models.CustomUser)
-        def dummy_deactivate_listener(sender, instance: models.CustomUser, **kwargs):
+        @receiver(signals.deactivate_user, sender=CustomUser)
+        def dummy_deactivate_listener(sender, instance: CustomUser, **kwargs):
             self.deactivate_instance_id = instance.id
             self.deactivate_call_counter += 1
 
@@ -415,22 +421,22 @@ class CustomInvoiceTests(TestCase):
             nick="user1",
             phone="+358123123",
         )
-        self.memberservice = models.MemberService.objects.create(
+        self.memberservice = MemberService.objects.create(
             name="TestService",
             cost=10,
             days_per_payment=30,
         )
-        self.servicesubscription = models.ServiceSubscription.objects.create(
+        self.servicesubscription = ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=models.ServiceSubscription.OVERDUE,
+            state=ServiceSubscription.OVERDUE,
         )
 
     def test_automagic_reference_number(self):
         # add new custominvoice, it should get a referencenumber automagically
         days = 10
         amount = self.servicesubscription.service.cost * days
-        invoice = models.CustomInvoice.objects.create(
+        invoice = CustomInvoice.objects.create(
             user=self.user,
             subscription=self.servicesubscription,
             amount=amount,
@@ -453,7 +459,7 @@ class CustomInvoiceTests(TestCase):
         self.assertEqual(invoice.reference_number, "123")
 
         # and if we create one with a specific number it wont be overwritten
-        invoice2 = models.CustomInvoice.objects.create(
+        invoice2 = CustomInvoice.objects.create(
             user=self.user,
             subscription=self.servicesubscription,
             amount=amount,
@@ -464,10 +470,10 @@ class CustomInvoiceTests(TestCase):
         self.assertEqual(invoice2.reference_number, "999")
 
     def tearDown(self):
-        models.CustomInvoice.objects.all().delete()
-        models.CustomUser.objects.all().delete()
-        models.MemberService.objects.all().delete()
-        models.ServiceSubscription.objects.all().delete()
+        CustomInvoice.objects.all().delete()
+        CustomUser.objects.all().delete()
+        MemberService.objects.all().delete()
+        ServiceSubscription.objects.all().delete()
 
 
 class BankAggreagetApiTests(APITestCase):
@@ -489,12 +495,12 @@ class BankAggreagetApiTests(APITestCase):
         end_date = date(2022, 1, 11)
         for single_date in self.daterange(start_date, end_date):
             for amount in range(1, 11):
-                models.BankTransaction.objects.create(
+                BankTransaction.objects.create(
                     archival_reference=f"{single_date}_deposit_{amount}",
                     date=single_date,
                     amount=amount,
                 )
-                models.BankTransaction.objects.create(
+                BankTransaction.objects.create(
                     archival_reference=f"{single_date}_withdraval_{amount}",
                     date=single_date,
                     amount=amount * -1,
@@ -544,5 +550,5 @@ class BankAggreagetApiTests(APITestCase):
         self.assertEqual(firstDay["aggregatedate"], "2022-01-01")
 
     def tearDown(self):
-        models.CustomUser.objects.all().delete()
-        models.BankTransaction.objects.all().delete()
+        CustomUser.objects.all().delete()
+        BankTransaction.objects.all().delete()
