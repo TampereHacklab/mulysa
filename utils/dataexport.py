@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from users.models import CustomInvoice, CustomUser, MemberService, ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.custom_user import CustomUser
+from users.models.custom_invoice import CustomInvoice
+from users.models.service_subscription import ServiceSubscription
 import csv
 import io
 

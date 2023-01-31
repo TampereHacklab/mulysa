@@ -3,6 +3,7 @@
 import django.core.validators
 from django.db import migrations, models
 import users.models
+from users.validators import validate_mxid
 
 
 class Migration(migrations.Migration):
@@ -43,7 +44,7 @@ class Migration(migrations.Migration):
                 max_length=255,
                 null=True,
                 unique=True,
-                validators=[users.models.validate_mxid],
+                validators=[validate_mxid],
                 verbose_name="Matrix ID",
             ),
         ),

@@ -8,10 +8,15 @@ from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
-
+from users.models.bank_transaction import BankTransaction
+from users.models.custom_invoice import CustomInvoice
+from users.models.custom_user import CustomUser
+from users.models.membership_application import MembershipApplication
+from users.models.nfc_card import NFCCard
+from users.models.service_subscription import ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.users_log import UsersLog
 from utils import referencenumber
-
-from . import models
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +42,8 @@ application_approved = Signal()
 application_denied = Signal()
 
 
-@receiver(post_save, sender=models.CustomUser)
-def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
+@receiver(post_save, sender=CustomUser)
+def user_creation(sender, instance: CustomUser, created, raw, **kwargs):
     """
     After user creation generate required extra information like reference number from the user id
 
@@ -54,9 +59,9 @@ def user_creation(sender, instance: models.CustomUser, created, raw, **kwargs):
         logger.info("User creation done: {}".format(instance))
 
 
-@receiver(post_save, sender=models.ServiceSubscription)
+@receiver(post_save, sender=ServiceSubscription)
 def service_subscription_create(
-    sender, instance: models.ServiceSubscription, created, raw, **kwargs
+    sender, instance: ServiceSubscription, created, raw, **kwargs
 ):
     if raw:
         return
@@ -74,7 +79,7 @@ def service_subscription_create(
 
 
 @receiver(create_user)
-def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
+def send_reset_password_email(sender, instance: CustomUser, **kwargs):
     """
     When user is created send the reset password email
     """
@@ -85,9 +90,9 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     form.save(from_email=from_email, email_template_name=template)
 
 
-@receiver(post_save, sender=models.MembershipApplication)
+@receiver(post_save, sender=MembershipApplication)
 def application_creation(
-    sender, instance: models.MembershipApplication, created, raw, **kwargs
+    sender, instance: MembershipApplication, created, raw, **kwargs
 ):
     """
     This is for the models internal use, others should listen to create_application signal which is triggered after
@@ -108,9 +113,9 @@ def application_creation(
         logger.info("Membership application creation done {}".format(instance))
 
 
-@receiver(post_save, sender=models.CustomInvoice)
+@receiver(post_save, sender=CustomInvoice)
 def custominvoice_create(
-    sender, instance: models.CustomInvoice, created, raw, **kwargs
+    sender, instance: CustomInvoice, created, raw, **kwargs
 ):
     """
     When custominvoice is created, generate reference number automatically if it is not defined
@@ -130,9 +135,9 @@ def custominvoice_create(
             )
 
 
-@receiver(create_application, sender=models.MembershipApplication)
+@receiver(create_application, sender=MembershipApplication)
 def send_application_received_email(
-    sender, instance: models.MembershipApplication, **kwargs
+    sender, instance: MembershipApplication, **kwargs
 ):
     """
     Send email to the user with information about how to proceed next
@@ -155,9 +160,9 @@ def send_application_received_email(
     send_mail(subject, plaintext_content, from_email, [to])
 
 
-@receiver(create_application, sender=models.MembershipApplication)
+@receiver(create_application, sender=MembershipApplication)
 def send_new_application_waiting_processing_email(
-    sender, instance: models.MembershipApplication, **kwargs
+    sender, instance: MembershipApplication, **kwargs
 ):
     """
     send email to admin user so that they notice that there is a new membership application
@@ -177,9 +182,9 @@ def send_new_application_waiting_processing_email(
     send_mail(subject, plaintext_content, from_email, [to])
 
 
-@receiver(application_approved, sender=models.MembershipApplication)
+@receiver(application_approved, sender=MembershipApplication)
 def send_application_approved_email(
-    sender, instance: models.MembershipApplication, **kwargs
+    sender, instance: MembershipApplication, **kwargs
 ):
     logger.info(
         "Application approved, sending welcome email {}, language {}".format(
@@ -200,9 +205,9 @@ def send_application_approved_email(
     send_mail(subject, plaintext_content, from_email, to)
 
 
-@receiver(application_denied, sender=models.MembershipApplication)
+@receiver(application_denied, sender=MembershipApplication)
 def send_application_denied_email(
-    sender, instance: models.MembershipApplication, **kwargs
+    sender, instance: MembershipApplication, **kwargs
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
     context = {
@@ -219,8 +224,8 @@ def send_application_denied_email(
     send_mail(subject, plaintext_content, from_email, to)
 
 
-@receiver(pre_save, sender=models.CustomUser)
-def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
+@receiver(pre_save, sender=CustomUser)
+def send_user_activated(sender, instance: CustomUser, raw, **kwargs):
     """
     Before saving the user information check if our is_active changed
     If it did send our activate_user or deactivate_user signals for others
@@ -231,8 +236,8 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
 
     # if is active didn't change don't do anything
     try:
-        previous = models.CustomUser.objects.get(id=instance.id)
-    except models.CustomUser.DoesNotExist:
+        previous = CustomUser.objects.get(id=instance.id)
+    except CustomUser.DoesNotExist:
         # new user, it wont be activated or deactived yet
         return
 
@@ -261,7 +266,7 @@ door_access_denied = Signal()
 
 
 @receiver(door_access_denied)
-def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kwargs):
+def notify_user_door_access_denied(sender, user: CustomUser, method, **kwargs):
     context = {
         "user": user,
         "settings": settings,

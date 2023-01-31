@@ -8,13 +8,11 @@ from django.utils.translation import gettext as _
 
 from drfx import settings
 from mailer import send_mail
-from users.models import (
-    BankTransaction,
-    CustomInvoice,
-    CustomUser,
-    MemberService,
-    ServiceSubscription,
-)
+from users.models.bank_transaction import BankTransaction
+from users.models.member_service import MemberService
+from users.models.custom_user import CustomUser
+from users.models.custom_invoice import CustomInvoice
+from users.models.service_subscription import ServiceSubscription
 from users.signals import application_approved, application_denied
 
 from utils import referencenumber

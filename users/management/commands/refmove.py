@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
-
-from users.models import ServiceSubscription
+from users.models.service_subscription import ServiceSubscription
 
 # Caution: This does some destructive operations. Run only if you are sure.
 

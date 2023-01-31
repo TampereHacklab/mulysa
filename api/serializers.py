@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from users.models import CustomUser
-
+from users.models.custom_user import CustomUser
 
 class AccessDataSerializer(serializers.Serializer):
     """

@@ -13,7 +13,10 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from rest_framework_tracking.models import APIRequestLog
-from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.nfc_card import NFCCard
+from users.models.custom_user import CustomUser
+from users.models.service_subscription import ServiceSubscription
 from api.mulysaoauthvalidator import MulysaOAuth2Validator
 
 

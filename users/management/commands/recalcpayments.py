@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from users.models import BankTransaction
+from users.models.bank_transaction import BankTransaction
 
 from utils.businesslogic import BusinessLogic
 

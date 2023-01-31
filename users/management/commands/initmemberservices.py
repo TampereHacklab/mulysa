@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
-
-from users.models import MemberService
+from users.models.member_service import MemberService
 
 
 class Command(BaseCommand):

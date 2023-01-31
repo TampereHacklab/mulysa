@@ -9,12 +9,20 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models import CustomUser, NFCCard, ServiceSubscription
+
+from users.models.bank_transaction import BankTransaction
+from users.models.member_service import MemberService
+from users.models.membership_application import MembershipApplication
+from users.models.nfc_card import NFCCard
+from users.models.users_log import UsersLog
+from users.models.custom_user import CustomUser
+from users.models.custom_invoice import CustomInvoice
+from users.models.service_subscription import ServiceSubscription
 
 from utils.phonenumber import normalize_number
 
 from .models import AccessDevice, DeviceAccessLogEntry
-from users.signals import door_access_denied
+from users.signals import door_access_denied, service_subscription_create
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +119,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         for ss in (
             ServiceSubscription.objects.select_related("user")
             .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
-            .filter(state=ServiceSubscription.ACTIVE)
+            .filter(state=service_subscription_create.ACTIVE)
         ):
             users_with_door_access.append(ss.user)
 

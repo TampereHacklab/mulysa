@@ -7,8 +7,16 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from users import filters, permissions, serializers
 
-from . import filters, models, permissions, serializers
+from users.models.bank_transaction import BankTransaction
+from users.models.custom_invoice import CustomInvoice
+from users.models.custom_user import CustomUser
+from users.models.membership_application import MembershipApplication
+from users.models.nfc_card import NFCCard
+from users.models.service_subscription import ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.users_log import UsersLog
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,8 +24,8 @@ class UserViewSet(viewsets.ModelViewSet):
     User CRUD
     """
 
-    model = models.CustomUser
-    queryset = models.CustomUser.objects.all()
+    model = CustomUser
+    queryset = CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
     permission_classes = (permissions.IsStaffOrSelf,)
     filter_class = filters.UserFilter
@@ -72,7 +80,7 @@ class BankTransactionAggregateViewSet(viewsets.ModelViewSet):
     filterset_fields = {"date": ["gte", "lte"]}
 
     queryset = (
-        models.BankTransaction.objects.values(
+        BankTransaction.objects.values(
             aggregatedate=TruncDay("date"),
         )
         .annotate(

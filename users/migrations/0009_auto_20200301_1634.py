@@ -2,7 +2,7 @@
 
 import django.core.validators
 from django.db import migrations, models
-import users.models
+from users.validators import validate_mxid, validate_phone
 
 
 class Migration(migrations.Migration):
@@ -50,7 +50,7 @@ class Migration(migrations.Migration):
                 max_length=255,
                 null=True,
                 unique=True,
-                validators=[users.models.validate_mxid],
+                validators=[validate_mxid],
                 verbose_name="Matrix ID",
             ),
         ),
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 help_text="This number will also be the one that gets access to the hacklab premises. International format (+35840123567).",
                 max_length=255,
                 null=True,
-                validators=[users.models.validate_phone],
+                validators=[validate_phone],
                 verbose_name="Mobile phone number",
             ),
         ),

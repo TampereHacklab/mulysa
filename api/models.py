@@ -3,8 +3,7 @@ import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-
-from users.models import NFCCard
+from users.models.nfc_card import NFCCard
 
 logger = logging.getLogger(__name__)
 

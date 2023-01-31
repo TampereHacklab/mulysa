@@ -2,15 +2,17 @@ from datetime import datetime
 
 from django import forms
 from django.utils.translation import gettext as _
+from users.models.custom_user import CustomUser
 
-from users import models
-from users.models import MemberService, ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.membership_application import MembershipApplication
+from users.models.service_subscription import ServiceSubscription
 from django.db.utils import OperationalError
 
 
 class RegistrationUserForm(forms.ModelForm):
     class Meta:
-        model = models.CustomUser
+        model = CustomUser
         fields = [
             "first_name",
             "last_name",
@@ -37,7 +39,7 @@ class RegistrationUserForm(forms.ModelForm):
 
 class RegistrationApplicationForm(forms.ModelForm):
     class Meta:
-        model = models.MembershipApplication
+        model = MembershipApplication
         fields = ["message", "agreement"]
 
 
@@ -139,7 +141,7 @@ class CustomInvoiceForm(forms.Form):
 
 class EditUserForm(forms.ModelForm):
     class Meta:
-        model = models.CustomUser
+        model = CustomUser
         fields = [
             "first_name",
             "last_name",
@@ -152,7 +154,7 @@ class EditUserForm(forms.ModelForm):
 
 class CreateUserForm(forms.ModelForm):
     class Meta:
-        model = models.CustomUser
+        model = CustomUser
         fields = [
             "first_name",
             "last_name",

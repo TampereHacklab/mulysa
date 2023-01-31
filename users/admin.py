@@ -2,19 +2,16 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from rangefilter.filters import DateRangeFilter
-
+from users.models.bank_transaction import BankTransaction
+from users.models.custom_invoice import CustomInvoice
+from users.models.custom_user import CustomUser
+from users.models.membership_application import MembershipApplication
+from users.models.nfc_card import NFCCard
+from users.models.service_subscription import ServiceSubscription
+from users.models.member_service import MemberService
+from users.models.users_log import UsersLog
 from .filters import PredefAgeListFilter
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import (
-    BankTransaction,
-    CustomInvoice,
-    CustomUser,
-    MemberService,
-    MembershipApplication,
-    NFCCard,
-    ServiceSubscription,
-    UsersLog,
-)
 
 
 class ServiceSubscriptionInline(admin.TabularInline):
