@@ -114,9 +114,7 @@ def application_creation(
 
 
 @receiver(post_save, sender=CustomInvoice)
-def custominvoice_create(
-    sender, instance: CustomInvoice, created, raw, **kwargs
-):
+def custominvoice_create(sender, instance: CustomInvoice, created, raw, **kwargs):
     """
     When custominvoice is created, generate reference number automatically if it is not defined
     """
@@ -136,9 +134,7 @@ def custominvoice_create(
 
 
 @receiver(create_application, sender=MembershipApplication)
-def send_application_received_email(
-    sender, instance: MembershipApplication, **kwargs
-):
+def send_application_received_email(sender, instance: MembershipApplication, **kwargs):
     """
     Send email to the user with information about how to proceed next
 
@@ -183,9 +179,7 @@ def send_new_application_waiting_processing_email(
 
 
 @receiver(application_approved, sender=MembershipApplication)
-def send_application_approved_email(
-    sender, instance: MembershipApplication, **kwargs
-):
+def send_application_approved_email(sender, instance: MembershipApplication, **kwargs):
     logger.info(
         "Application approved, sending welcome email {}, language {}".format(
             instance, instance.user.language
@@ -206,9 +200,7 @@ def send_application_approved_email(
 
 
 @receiver(application_denied, sender=MembershipApplication)
-def send_application_denied_email(
-    sender, instance: MembershipApplication, **kwargs
-):
+def send_application_denied_email(sender, instance: MembershipApplication, **kwargs):
     logger.info("Application denied, sending bye bye email {}".format(instance))
     context = {
         "user": instance.user,

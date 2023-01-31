@@ -15,6 +15,7 @@ from drfx import settings as drfx_settings
 
 logger = logging.getLogger(__name__)
 
+
 class CustomUser(AbstractUser):
     class Meta:
         ordering = (

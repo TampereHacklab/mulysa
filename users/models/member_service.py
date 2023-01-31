@@ -8,6 +8,8 @@ Class that represents a service for members. For example:
  - Yearly membership
  - Access rights
 """
+
+
 class MemberService(models.Model):
     name = models.CharField(
         verbose_name=_("Service name"),

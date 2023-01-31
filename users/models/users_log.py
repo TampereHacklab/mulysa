@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class UsersLog(models.Model):
     """
     A text log message for user activities (status changes, payments, etc)

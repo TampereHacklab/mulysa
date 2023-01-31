@@ -73,9 +73,7 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
     def test_user_gets_more_time(self):
         paid_delta = -50
         # starts of as overdue
-        self.assertEqual(
-            self.servicesubscription.state, ServiceSubscription.OVERDUE
-        )
+        self.assertEqual(self.servicesubscription.state, ServiceSubscription.OVERDUE)
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),
@@ -92,9 +90,7 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(
-            self.servicesubscription.state, ServiceSubscription.OVERDUE
-        )
+        self.assertEqual(self.servicesubscription.state, ServiceSubscription.OVERDUE)
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),
@@ -111,9 +107,7 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(
-            self.servicesubscription.state, ServiceSubscription.ACTIVE
-        )
+        self.assertEqual(self.servicesubscription.state, ServiceSubscription.ACTIVE)
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),

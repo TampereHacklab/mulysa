@@ -71,22 +71,18 @@ class TestBusinessLogicSubscriptionExpiries(TestCase):
             name="TestService3", cost=10, days_per_payment=30, days_before_warning=5
         )
         # this should also be found
-        self.servicesubscription_user2_another = (
-            ServiceSubscription.objects.create(
-                user=self.user2,
-                service=self.memberservice3,
-                state=ServiceSubscription.ACTIVE,
-                paid_until=timezone.now().date() + timedelta(days=5),
-            )
+        self.servicesubscription_user2_another = ServiceSubscription.objects.create(
+            user=self.user2,
+            service=self.memberservice3,
+            state=ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=5),
         )
         # but this should not be found
-        self.servicesubscription_user2_another2 = (
-            ServiceSubscription.objects.create(
-                user=self.user2,
-                service=self.memberservice3,
-                state=ServiceSubscription.ACTIVE,
-                paid_until=timezone.now().date() + timedelta(days=3),
-            )
+        self.servicesubscription_user2_another2 = ServiceSubscription.objects.create(
+            user=self.user2,
+            service=self.memberservice3,
+            state=ServiceSubscription.ACTIVE,
+            paid_until=timezone.now().date() + timedelta(days=3),
         )
 
         # this service should never be found (no days_before_warning defined)
@@ -317,9 +313,7 @@ class UserManagerTests(APITestCase):
             phone="123123",
             password="abc123",
         )
-        self.assertIsNotNone(
-            CustomUser.objects.get(email="testsuper@example.com")
-        )
+        self.assertIsNotNone(CustomUser.objects.get(email="testsuper@example.com"))
 
 
 class UsersTests(APITestCase):

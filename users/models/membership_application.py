@@ -9,6 +9,7 @@ from users.validators import validate_agreement
 Extra fields for applying membership
 """
 
+
 class MembershipApplication(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     message = models.CharField(

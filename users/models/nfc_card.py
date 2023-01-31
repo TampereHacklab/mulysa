@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from users.models.custom_user import CustomUser
 
+
 class NFCCard(models.Model):
     """
     NFC Card for user

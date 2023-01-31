@@ -8,6 +8,7 @@ from users.models.bank_transaction import BankTransaction
 from users.models.custom_user import CustomUser
 from users.models.service_subscription import ServiceSubscription
 
+
 class CustomInvoice(models.Model):
     """
     Single invoice that can be used to pay for N units of service

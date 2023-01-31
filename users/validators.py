@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 
+
 def validate_mxid(value):
     # Empty is ok
     if len(value) == 0:
@@ -22,6 +23,7 @@ def validate_phone(value):
             ),
             params={"value": value},
         )
+
 
 def validate_agreement(value):
     if not value:

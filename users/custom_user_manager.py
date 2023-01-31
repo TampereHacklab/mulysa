@@ -1,6 +1,6 @@
-
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import datetime
+
 
 class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, first_name, last_name, phone, password):
