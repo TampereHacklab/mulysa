@@ -1,12 +1,11 @@
 from rest_framework import serializers
 
-from users.models.bank_transaction import BankTransaction
-from users.models.custom_user import CustomUser
+from . import models
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = CustomUser
+        model = models.CustomUser
         fields = (
             "url",
             "email",
@@ -33,7 +32,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class UserActivationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = CustomUser
+        model = models.CustomUser
         fields = ("is_active",)
         extra_kwargs = {"is_active": {"required": True}}
 
@@ -52,5 +51,5 @@ class BankTransactionAggregateSerializer(serializers.Serializer):
     )
 
     class Meta:
-        model = BankTransaction
+        model = models.BankTransaction
         fields = ("aggregatedate", "withdrawals", "deposits")

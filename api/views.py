@@ -9,9 +9,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models.nfc_card import NFCCard
-from users.models.custom_user import CustomUser
-from users.models.service_subscription import ServiceSubscription
+from users.models import CustomUser, NFCCard, ServiceSubscription
 
 from utils.phonenumber import normalize_number
 

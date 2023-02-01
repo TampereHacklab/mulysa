@@ -6,10 +6,7 @@ from decimal import Decimal
 
 from django.db.utils import IntegrityError
 
-from users.models.bank_transaction import BankTransaction
-from users.models.member_service import MemberService
-from users.models.custom_user import CustomUser
-from users.models.service_subscription import ServiceSubscription
+from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
 
 from utils.businesslogic import BusinessLogic
 from utils.holvitoolbox import HolviToolbox

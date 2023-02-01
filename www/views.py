@@ -16,14 +16,16 @@ from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
 from drfx import settings
-from users.models.bank_transaction import BankTransaction
-from users.models.member_service import MemberService
-from users.models.membership_application import MembershipApplication
-from users.models.nfc_card import NFCCard
-from users.models.users_log import UsersLog
-from users.models.custom_user import CustomUser
-from users.models.custom_invoice import CustomInvoice
-from users.models.service_subscription import ServiceSubscription
+from users.models import (
+    BankTransaction,
+    CustomInvoice,
+    CustomUser,
+    MemberService,
+    MembershipApplication,
+    NFCCard,
+    ServiceSubscription,
+    UsersLog,
+)
 from utils import referencenumber
 from utils.businesslogic import BusinessLogic
 from utils.dataexport import DataExport

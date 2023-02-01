@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 import rest_framework_filters as filters
 
-from users.models.custom_user import CustomUser
+from . import models
 
 
 class PredefAgeListFilter(admin.SimpleListFilter):
@@ -53,7 +53,7 @@ class PredefAgeListFilter(admin.SimpleListFilter):
 
 class UserFilter(filters.FilterSet):
     class Meta:
-        model = CustomUser
+        model = models.CustomUser
         fields = {
             "email": [
                 "exact",

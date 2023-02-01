@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
 
-from users.models.bank_transaction import BankTransaction
-from users.models.users_log import UsersLog
-from users.models.custom_user import CustomUser
-from users.models.custom_invoice import CustomInvoice
-from users.models.service_subscription import ServiceSubscription
+from users.models import (
+    BankTransaction,
+    CustomUser,
+    ServiceSubscription,
+    UsersLog,
+    CustomInvoice,
+)
 
 # Caution: This does some destructive operations. Run only if you are sure.
 
