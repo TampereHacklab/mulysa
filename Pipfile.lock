@@ -193,12 +193,8 @@
             "version": "==22.1"
         },
         "django-log-request-id": {
-            "hashes": [
-                "sha256:8efb8a850fb631b59924cf6fcc8aefe707b0a7dcad42de55284ce807c31b7bc1",
-                "sha256:bccdabcdf536345e7ae40562d4b0fcdc230e0ebe1a8b65ab4a1ed9d3083cf870"
-            ],
-            "index": "pypi",
-            "version": "==2.0.0"
+            "hashes": [],
+            "version": "==2.1.0"
         },
         "django-mailer": {
             "hashes": [
