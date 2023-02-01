@@ -923,12 +923,8 @@
             "version": "==3.0.0a5"
         },
         "pyproject-api": {
-            "hashes": [
-                "sha256:093c047d192ceadcab7afd6b501276bf2ce44adf41cb9c313234518cddd20818",
-                "sha256:155d5623453173b7b4e9379a3146ccef2d52335234eb2d03d6ba730e7dad179c"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==1.2.1"
+            "hashes": [],
+            "version": "==1.5.0"
         },
         "pytoolconfig": {
             "extras": [
