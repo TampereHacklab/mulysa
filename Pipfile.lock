@@ -822,12 +822,8 @@
             "version": "==0.4.3"
         },
         "packaging": {
-            "hashes": [
-                "sha256:2198ec20bd4c017b8f9717e00f0c8714076fc2fd93816750ab48e2c41de2cfd3",
-                "sha256:957e2148ba0e1a3b282772e791ef1d8083648bc131c8ab0c1feba110ce1146c3"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==22.0"
+            "hashes": [],
+            "version": "==23.0"
         },
         "parso": {
             "hashes": [
