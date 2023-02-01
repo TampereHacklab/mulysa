@@ -1002,11 +1002,8 @@
             "version": "==20.17.1"
         },
         "wcwidth": {
-            "hashes": [
-                "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784",
-                "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"
-            ],
-            "version": "==0.2.5"
+            "hashes": [],
+            "version": "==0.2.6"
         },
         "werkzeug": {
             "hashes": [
