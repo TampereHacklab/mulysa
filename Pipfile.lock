@@ -652,12 +652,8 @@
             "version": "==2.2.1"
         },
         "autopep8": {
-            "hashes": [
-                "sha256:8b1659c7f003e693199f52caffdc06585bb0716900bbc6a7442fd931d658c077",
-                "sha256:ad924b42c2e27a1ac58e432166cc4588f5b80747de02d0d35b1ecbd3e7d57207"
-            ],
-            "index": "pypi",
-            "version": "==2.0.0"
+            "hashes": [],
+            "version": "==2.0.1"
         },
         "backcall": {
             "hashes": [
