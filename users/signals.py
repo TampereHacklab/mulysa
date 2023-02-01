@@ -8,6 +8,7 @@ from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
+
 from utils import referencenumber
 
 from . import models
