@@ -667,12 +667,8 @@
             "version": "==23.1.0"
         },
         "cachetools": {
-            "hashes": [
-                "sha256:6a94c6402995a99c3970cc7e4884bb60b4a8639938157eeed436098bf9831757",
-                "sha256:f9f17d2aec496a9aa6b76f53e3b614c965223c061982d434d160f930c698a9db"
-            ],
-            "markers": "python_version ~= '3.7'",
-            "version": "==5.2.0"
+            "hashes": [],
+            "version": "==5.3.0"
         },
         "certifi": {
             "hashes": [
