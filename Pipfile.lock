@@ -927,15 +927,8 @@
             "version": "==1.5.0"
         },
         "pytoolconfig": {
-            "extras": [
-                "global"
-            ],
-            "hashes": [
-                "sha256:2512a1f261a40e73cef2e58e786184261b60c802ae7ed01249342b1949ec3aa2",
-                "sha256:825d97b052e58b609c2684b04efeb543075588d33a4916a6dc2ae39676458c7d"
-            ],
-            "markers": "python_version >= '3.7'",
-            "version": "==1.2.2"
+            "hashes": [],
+            "version": "==1.2.5"
         },
         "requests": {
             "hashes": [],
