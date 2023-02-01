@@ -8,12 +8,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.utils import timezone
-from users.models.bank_transaction import BankTransaction
-
-from users.models.member_service import MemberService
-from users.models.service_subscription import ServiceSubscription
 
 from .dataimport import DataImport
+from users import models
 
 
 class TestServiceSubscriptionContinuationWithImport(TestCase):
@@ -28,15 +25,15 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
             nick="user1",
             phone="+358123123",
         )
-        self.memberservice = MemberService.objects.create(
+        self.memberservice = models.MemberService.objects.create(
             name="TestService",
             cost=10,
             days_per_payment=30,
         )
-        self.servicesubscription = ServiceSubscription.objects.create(
+        self.servicesubscription = models.ServiceSubscription.objects.create(
             user=self.user,
             service=self.memberservice,
-            state=ServiceSubscription.OVERDUE,
+            state=models.ServiceSubscription.OVERDUE,
             # payment is over two "days_per_payment"
             paid_until=timezone.now().date() + timedelta(days=-50),
             reference_number="11112",
@@ -73,7 +70,9 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
     def test_user_gets_more_time(self):
         paid_delta = -50
         # starts of as overdue
-        self.assertEqual(self.servicesubscription.state, ServiceSubscription.OVERDUE)
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),
@@ -90,7 +89,9 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, ServiceSubscription.OVERDUE)
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.OVERDUE
+        )
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),
@@ -107,7 +108,9 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         paid_delta += 30
 
         self.servicesubscription.refresh_from_db()
-        self.assertEqual(self.servicesubscription.state, ServiceSubscription.ACTIVE)
+        self.assertEqual(
+            self.servicesubscription.state, models.ServiceSubscription.ACTIVE
+        )
         self.assertEqual(
             self.servicesubscription.paid_until,
             timezone.now().date() + timedelta(days=paid_delta),
@@ -117,7 +120,7 @@ class TestServiceSubscriptionContinuationWithImport(TestCase):
         self.user.delete()
         self.memberservice.delete()
         self.servicesubscription.delete()
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
 
 
 class TestTitoImporter(TestCase):
@@ -156,7 +159,7 @@ class TestTitoImporter(TestCase):
         """
         Test that the generated data above works
         """
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         data = self._getbasetitodata()
         dataline = "".join(data.values())
         lines = io.BytesIO(b"header\n" + dataline.encode())
@@ -165,12 +168,12 @@ class TestTitoImporter(TestCase):
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
         self.assertEqual(
-            BankTransaction.objects.first().reference_number,
+            models.BankTransaction.objects.first().reference_number,
             data["viite"].strip().strip("0"),
         )
 
     def test_tito_import_wrong_length(self):
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         data = self._getbasetitodata()
         # remove one character from the end
         dataline = "".join(data.values())[:-1]
@@ -209,7 +212,7 @@ class TestTitoImporter(TestCase):
         this data is almost direct from real world data, some values have just
         been changed so that the persons identiy is not compromised
         """
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         data = io.BytesIO(
             b"header\nT101880000011111111111111111112009252009252009251"
             b"710Viitemaksu                         +000000000000012300  "
@@ -234,7 +237,7 @@ class TestTitoImporter(TestCase):
         )
 
     def test_tito_cents(self):
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         data = self._getbasetitodata()
         # with 45 cents
         data["rahamaara"] = "12345".rjust(18, "0")
@@ -245,11 +248,11 @@ class TestTitoImporter(TestCase):
             results, {"imported": 1, "exists": 0, "error": 0, "failedrows": []}
         )
         self.assertEqual(
-            BankTransaction.objects.first().reference_number,
+            models.BankTransaction.objects.first().reference_number,
             data["viite"].strip().strip("0"),
         )
         self.assertEqual(
-            BankTransaction.objects.first().amount,
+            models.BankTransaction.objects.first().amount,
             Decimal("123.45"),
             "Check decimals",
         )
@@ -262,7 +265,7 @@ class TestHolviImporter(TestCase):
 
         Uses same fields but XLSX file format.
         """
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
@@ -279,7 +282,7 @@ class TestHolviImporter(TestCase):
 
         # quick check for the first imported item data, check the first line of
         # holvi-account-test-statement-2022-05.xlsx
-        firstimported = BankTransaction.objects.first()
+        firstimported = models.BankTransaction.objects.first()
         self.assertEqual(firstimported.date, date(2022, 3, 30))
         self.assertEqual(firstimported.amount, Decimal("-135.9"))
         self.assertEqual(firstimported.reference_number, "1122002246684")
@@ -293,7 +296,7 @@ class TestHolviImporter(TestCase):
 
         Uses same fields but XLSX file format.
         """
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         xls = open("utils/holvi-account-test-statement-2022-10.xlsx", "rb")
         name = xls.name
         data = xls.read()
@@ -310,7 +313,7 @@ class TestHolviImporter(TestCase):
 
         # quick check for the first imported item data, check the first line of
         # holvi-account-test-statement-2022-10.xlsx
-        firstimported = BankTransaction.objects.first()
+        firstimported = models.BankTransaction.objects.first()
         self.assertEqual(firstimported.date, date(2022, 3, 30))
         self.assertEqual(firstimported.amount, Decimal("-135.9"))
         self.assertEqual(firstimported.reference_number, "1122002246684")
@@ -319,7 +322,7 @@ class TestHolviImporter(TestCase):
         )
 
         # and the last as it has 'Sept' in the dateformat
-        lastimported = BankTransaction.objects.last()
+        lastimported = models.BankTransaction.objects.last()
         self.assertEqual(lastimported.date, date(2022, 9, 1))
         self.assertEqual(lastimported.amount, Decimal("30"))
         # note, BankTransaction does not keep leading zeroes
@@ -329,7 +332,7 @@ class TestHolviImporter(TestCase):
         )
 
     def test_holvi_cents(self):
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
         xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")
         name = xls.name
         data = xls.read()
@@ -338,13 +341,13 @@ class TestHolviImporter(TestCase):
             res, {"imported": 5, "exists": 0, "error": 0, "failedrows": []}
         )
         # third row on the test file
-        transaction = BankTransaction.objects.get(
+        transaction = models.BankTransaction.objects.get(
             archival_reference="0b914e1f528d902e6fe1ee7ff792ce5f"
         )
         self.assertEqual(transaction.amount, Decimal("-7.44"), "Check decimals")
 
     def tearDown(self):
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
 
 
 class TestNordigenmporter(TestCase):
@@ -352,7 +355,7 @@ class TestNordigenmporter(TestCase):
         """
         Test importing nordigen transactions
         """
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
 
         self.maxDiff = None
 
@@ -379,4 +382,4 @@ class TestNordigenmporter(TestCase):
             )
 
     def tearDown(self):
-        BankTransaction.objects.all().delete()
+        models.BankTransaction.objects.all().delete()
