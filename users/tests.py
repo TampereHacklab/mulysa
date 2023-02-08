@@ -521,10 +521,20 @@ class BankAggreagetApiTests(APITestCase):
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 10)
+
+        # check first day data
         firstDay = response.data[0]
         self.assertEqual(firstDay["withdrawals"], -55)
+        self.assertEqual(firstDay["deposits"], 55)
         self.assertEqual(firstDay["deposits"] + firstDay["withdrawals"], 0)
         self.assertEqual(firstDay["aggregatedate"], "2022-01-01")
+
+        # last day data is similar
+        lastDay = response.data[-1]
+        self.assertEqual(lastDay["withdrawals"], -55)
+        self.assertEqual(lastDay["deposits"], 55)
+        self.assertEqual(lastDay["deposits"] + lastDay["withdrawals"], 0)
+        self.assertEqual(lastDay["aggregatedate"], "2022-01-10")
 
     def test_get_banktransactionaggregatedata_filtered(self):
         """
@@ -540,6 +550,7 @@ class BankAggreagetApiTests(APITestCase):
         self.assertEqual(len(response.data), 1)
         firstDay = response.data[0]
         self.assertEqual(firstDay["withdrawals"], -55)
+        self.assertEqual(firstDay["deposits"], 55)
         self.assertEqual(firstDay["deposits"] + firstDay["withdrawals"], 0)
         self.assertEqual(firstDay["aggregatedate"], "2022-01-01")
 
