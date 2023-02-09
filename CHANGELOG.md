@@ -1,5 +1,6 @@
 # Changelog
 
+* Update all dependencies, updates django to 4.1.6. PR [#415](https://github.com/TampereHacklab/mulysa/pull/415) by [@tswfi](https://github.com/tswfi).
 * chore: bump codeQL workflows. PR [#420](https://github.com/TampereHacklab/mulysa/pull/420) by [@braaar](https://github.com/braaar).
 * docs: remove old prerequisite list. PR [#419](https://github.com/TampereHacklab/mulysa/pull/419) by [@braaar](https://github.com/braaar).
 * docs: improve prerequisites installation guide. PR [#413](https://github.com/TampereHacklab/mulysa/pull/413) by [@braaar](https://github.com/braaar).
