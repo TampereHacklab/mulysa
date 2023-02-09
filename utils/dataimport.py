@@ -41,7 +41,6 @@ are displayed in the import UI.
 
 
 class DataImport:
-
     # Import cvs member list. Only for reference.
     @staticmethod
     def importmembers(f):

@@ -8,7 +8,6 @@ class Command(BaseCommand):
     help = "Create initial memberservices if no memberservices exist"
 
     def handle(self, *args, **options):
-
         if MemberService.objects.count() == 0:
             print("Initializing initial memberservices")
             call_command("loaddata", "memberservices")
