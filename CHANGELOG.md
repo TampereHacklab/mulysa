@@ -1,5 +1,6 @@
 # Changelog
 
+* Revert taking out mysqlclient. PR [#429](https://github.com/TampereHacklab/mulysa/pull/429) by [@tswfi](https://github.com/tswfi).
 * refactor: split `users/models.py` into individual files. PR [#421](https://github.com/TampereHacklab/mulysa/pull/421) by [@braaar](https://github.com/braaar).
 * Fix transaction graph grouping by summing the data. PR [#428](https://github.com/TampereHacklab/mulysa/pull/428) by [@tswfi](https://github.com/tswfi).
 * Update all dependencies, updates django to 4.1.6. PR [#415](https://github.com/TampereHacklab/mulysa/pull/415) by [@tswfi](https://github.com/tswfi).
