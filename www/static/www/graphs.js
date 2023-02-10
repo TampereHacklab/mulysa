@@ -3,6 +3,8 @@ async function renderTransactionsGraph() {
   // this fetches the data aggregated per day
   let startDate = new Date();
   startDate.setFullYear(startDate.getFullYear() - 1);
+  // and from the first day of the month
+  startDate.setDate(1);
   const queryParams = {
     date__gte: startDate.toISOString().slice(0, 10),
   };
