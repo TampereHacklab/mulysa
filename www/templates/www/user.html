@@ -74,7 +74,7 @@
             {% else %}
               {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service can be paid with reference number {{ ref }}
                 to bank account {{bank_iban}}. Service price is {{ cost }}.{% endblocktrans %}<br/>
-              {% blocktrans %}To pay this service multiple times, you can create a custom invoice.{% endblocktrans %}
+              {% blocktrans %}To pay this service multiple times using a single transaction (e.g. paying multiple months of service in one payment), you can create a custom invoice.{% endblocktrans %}
               <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
             {% endif %}
           {% endif %}
