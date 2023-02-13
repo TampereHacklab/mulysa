@@ -68,6 +68,7 @@ class Email(models.Model):
             context = {
                 "user": user,
                 "settings": settings,
+                "config": config,
                 "email": self,
                 "SITENAME": config.SITENAME,
                 "SITE_URL": config.SITE_URL,

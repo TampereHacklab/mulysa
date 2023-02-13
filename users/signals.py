@@ -170,6 +170,7 @@ def send_new_application_waiting_processing_email(
     context = {
         "user": instance.user,
         "settings": settings,
+        "config": config,
     }
     subject = _("New membership application received")
     from_email = settings.NOREPLY_FROM_ADDRESS
@@ -191,6 +192,7 @@ def send_application_approved_email(
     context = {
         "user": instance.user,
         "settings": settings,
+        "config": config
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
@@ -210,6 +212,7 @@ def send_application_denied_email(
     context = {
         "user": instance.user,
         "settings": settings,
+        "config": config
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
@@ -268,6 +271,7 @@ def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kw
         "user": user,
         "settings": settings,
         "method": method,
+        "config": config,
     }
     translation.activate(user.language)
     subject = _("Door access denied")
