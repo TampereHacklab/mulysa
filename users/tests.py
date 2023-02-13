@@ -20,6 +20,7 @@ from utils.businesslogic import BusinessLogic
 from . import models, signals
 from constance import config
 
+
 class TestBusinessLogicSubscriptionExpiries(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_customuser(

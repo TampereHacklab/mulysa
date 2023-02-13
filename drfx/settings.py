@@ -334,18 +334,34 @@ except ImportError:
 
 # Constance config - configure settings for the app that are editable in django admin
 CONSTANCE_CONFIG = {
-    'ASSOCIATION_RULES_URL': ("https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/", "Link to the rules of the association", str),
-    "MEMBERS_GUIDE_URL": ("https://wiki.tampere.hacklab.fi/member_s_guide", "Link to the guide for new members", str),
-    "SITENAME": ("Hacklab Mulysa", 'Name of the hacklab', str),
+    "ASSOCIATION_RULES_URL": (
+        "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/",
+        "Link to the rules of the association",
+        str,
+    ),
+    "MEMBERS_GUIDE_URL": (
+        "https://wiki.tampere.hacklab.fi/member_s_guide",
+        "Link to the guide for new members",
+        str,
+    ),
+    "SITENAME": ("Hacklab Mulysa", "Name of the hacklab", str),
     "SITE_URL": ("https://mulysa.tld", "URL of this site", str),
-    "PRIVACY_POLICY_URL": ("https://example.com/privacy_policy.html", "Link to privacy policy", str),
+    "PRIVACY_POLICY_URL": (
+        "https://example.com/privacy_policy.html",
+        "Link to privacy policy",
+        str,
+    ),
     # Receipt functionality configuration
     "RECEIPT_NAME": ("Mulysa ry", "Name of the association to show on receipts", str),
     "RECEIPT_REGID": ("1234567-8", "ID of the association to show on receipts", str),
-    "RECEIPT_ADDRESS": ("Street 12, Somewhere Finland", "Address to show on receipts", str)
+    "RECEIPT_ADDRESS": (
+        "Street 12, Somewhere Finland",
+        "Address to show on receipts",
+        str,
+    ),
 }
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
-SESSION_COOKIE_NAME = '__NotReallyHost-sessionid'
-LANGUAGE_COOKIE_NAME = '__NotReallyHost-language'
-CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
+SESSION_COOKIE_NAME = "__NotReallyHost-sessionid"
+LANGUAGE_COOKIE_NAME = "__NotReallyHost-language"
+CSRF_COOKIE_NAME = "__NotReallyHost-csrf"

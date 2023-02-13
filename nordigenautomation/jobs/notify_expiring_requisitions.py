@@ -8,6 +8,7 @@ from drfx import settings
 from ..models import Requisition
 from constance import config
 
+
 class Job(DailyJob):
     help = "Send notifications if there are requisitions that are about to expire"
 
