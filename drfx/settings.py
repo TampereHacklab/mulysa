@@ -344,8 +344,6 @@ CONSTANCE_CONFIG = {
         "Link to the guide for new members",
         str,
     ),
-    "SITENAME": ("Hacklab Mulysa", "Name of the hacklab", str),
-    "SITE_URL": ("https://mulysa.tld", "URL of this site", str),
     "PRIVACY_POLICY_URL": (
         "https://example.com/privacy_policy.html",
         "Link to privacy policy",

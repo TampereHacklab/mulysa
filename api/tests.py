@@ -15,7 +15,7 @@ from rest_framework.test import APITestCase
 from rest_framework_tracking.models import APIRequestLog
 from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
 from api.mulysaoauthvalidator import MulysaOAuth2Validator
-from constance import config
+from django.contrib.sites.models import Site
 
 class TestOAuthValidator(APITestCase):
     def setUp(self):
@@ -227,7 +227,7 @@ class TestAccess(APITestCase):
             mail.outbox[0].body,
             "first ss state",
         )
-        self.assertIn(config.SITE_URL, mail.outbox[0].body, "siteurl")
+        self.assertIn(Site.objects.get_current().domain, mail.outbox[0].body, "siteurl")
         self.assertEqual(response.status_code, 481)
 
     @override_settings(

@@ -14,6 +14,8 @@ from constance import config
 
 from . import models
 
+from django.contrib.sites.models import Site
+
 logger = logging.getLogger(__name__)
 
 #
@@ -142,11 +144,7 @@ def send_application_received_email(
     happens next.
     """
     logger.info("Sending thanks for applying membership email to {}".format(instance))
-    context = {
-        "user": instance.user,
-        "settings": settings,
-        "config": config,
-    }
+    context = {"config": config, "site": Site.objects.get_current()}
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Thank you for applying membership and next steps")
@@ -170,7 +168,7 @@ def send_new_application_waiting_processing_email(
     context = {
         "user": instance.user,
         "settings": settings,
-        "config": config,
+        "site": Site.objects.get_current(),
     }
     subject = _("New membership application received")
     from_email = settings.NOREPLY_FROM_ADDRESS
@@ -189,7 +187,12 @@ def send_application_approved_email(
             instance, instance.user.language
         )
     )
-    context = {"user": instance.user, "settings": settings, "config": config}
+    context = {
+        "user": instance.user,
+        "settings": settings,
+        "config": config,
+        "site": Site.objects.get_current(),
+    }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
@@ -205,7 +208,7 @@ def send_application_denied_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
-    context = {"user": instance.user, "settings": settings, "config": config}
+    context = {"user": instance.user, "settings": settings}
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
@@ -261,9 +264,9 @@ door_access_denied = Signal()
 def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kwargs):
     context = {
         "user": user,
-        "settings": settings,
         "method": method,
         "config": config,
+        "site": Site.objects.get_current(),
     }
     translation.activate(user.language)
     subject = _("Door access denied")
