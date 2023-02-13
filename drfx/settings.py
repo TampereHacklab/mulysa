@@ -361,7 +361,3 @@ CONSTANCE_CONFIG = {
     ),
 }
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
-
-SESSION_COOKIE_NAME = "__NotReallyHost-sessionid"
-LANGUAGE_COOKIE_NAME = "__NotReallyHost-language"
-CSRF_COOKIE_NAME = "__NotReallyHost-csrf"
