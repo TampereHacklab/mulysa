@@ -35,23 +35,8 @@ ALLOWED_HOSTS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Sitename
-SITENAME = "Mulysa"
-SITE_URL = "https://mulysa.tld"
-PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
-
-
-# these are for the receipt functionality
-RECEIPTNAME = "Mulysa ry"
-RECEIPTREGID = "1234567-8"
-RECEIPTSTREET = "Street 12, Somewhere Finland"
-
 
 # External urls, like links to members guide and rules
-ASSOCIATION_RULES_URL = (
-    "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
-)
-MEMBERS_GUIDE_URL = "https://wiki.tampere.hacklab.fi/member_s_guide"
 GITHUB_URL = "https://github.com/TampereHacklab/mulysa"
 
 # Application definition
@@ -85,6 +70,9 @@ INSTALLED_APPS = [
     "rangefilter",
     # ready made registration please
     # todo: we probably want to write our own
+    # constance settings manager
+    "constance.backends.database",
+    "constance",
     "rest_auth.registration",
     # our api and other apps
     "api",
@@ -343,3 +331,21 @@ try:
     from .settings_local import *  # noqa
 except ImportError:
     pass
+
+# Constance config - configure settings for the app that are editable in django admin
+CONSTANCE_CONFIG = {
+    'ASSOCIATION_RULES_URL': ("https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/", "Link to the rules of the association", str),
+    "MEMBERS_GUIDE_URL": ("https://wiki.tampere.hacklab.fi/member_s_guide", "Link to the guide for new members", str),
+    "SITENAME": ("Hacklab Mulysa", 'Name of the hacklab', str),
+    "SITE_URL": ("https://mulysa.tld", "URL of this site", str),
+    "PRIVACY_POLICY_URL": ("https://example.com/privacy_policy.html", "Link to privacy policy", str),
+    # Receipt functionality configuration
+    "RECEIPT_NAME": ("Mulysa ry", "Name of the association to show on receipts", str),
+    "RECEIPT_REGID": ("1234567-8", "ID of the association to show on receipts", str),
+    "RECEIPT_ADDRESS": ("Street 12, Somewhere Finland", "Address to show on receipts", str)
+}
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+
+SESSION_COOKIE_NAME = '__NotReallyHost-sessionid'
+LANGUAGE_COOKIE_NAME = '__NotReallyHost-language'
+CSRF_COOKIE_NAME = '__NotReallyHost-csrf'

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "34445016f7af6899df54892f8cb13ed94bc654a02fa2753963cd4b83c3939bbc"
+            "sha256": "58792feb940f48963090423e6f95a5322a7c905d60eb2aded8d5fad6cda897df"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -29,7 +29,7 @@
                 "sha256:0e79446b10b3ecb499c1556f7e228a53e64a2bfcebd455f370d8927cb5b59e39",
                 "sha256:bc4bdda6717de5a2987436fb8d72f45dc90dd856bdfd512a1314ce90349a0106"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==4.11.2"
         },
         "certifi": {
@@ -309,6 +309,17 @@
             "index": "pypi",
             "version": "==22.3"
         },
+        "django-constance": {
+            "extras": [
+                "database"
+            ],
+            "hashes": [
+                "sha256:4c6a96a5f2cbce1bc3fa41aa20566b6ee26fbd896c9f91f996518a3a0904f6c8",
+                "sha256:bf0b392efa18a1f3f464eddb7eb36ac5c02598354a5e31d0d4ce4fc8b535694b"
+            ],
+            "index": "pypi",
+            "version": "==2.9.1"
+        },
         "django-extensions": {
             "hashes": [
                 "sha256:2a4f4d757be2563cd1ff7cfdf2e57468f5f931cc88b23cf82ca75717aae504a4",
@@ -348,6 +359,13 @@
             ],
             "index": "pypi",
             "version": "==2.2.0"
+        },
+        "django-picklefield": {
+            "hashes": [
+                "sha256:c786cbeda78d6def2b43bff4840d19787809c8909f7ad683961703060398d356",
+                "sha256:d77c504df7311e8ec14e8b779f10ca6fec74de6c7f8e2c136e1ef60cf955125d"
+            ],
+            "version": "==3.1"
         },
         "django-rest-auth-forked": {
             "hashes": [
@@ -537,19 +555,19 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:24d7d361025d186ba91eff58135d50855cf035a84371b891e58fb6eb5125660f",
-                "sha256:eccedbe1cdd8b2494057e73959b496821141038dbb7eb9266ea59e3f34208231"
+                "sha256:a0266e033e65f33ee697254b66116a5793c15fc92daf64711080000df4cfe0a8",
+                "sha256:f06d44e2c973781068bce5ecf860a09bcdb1c7f5ce1facd5e9aa82c92c93ae72"
             ],
             "index": "pypi",
-            "version": "==3.1.0"
+            "version": "==3.1.1"
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:2e3fd1f3fde226b289489275517c76edf223eafd9f43a2c2c36498a44b73d4b0",
-                "sha256:6eb2faf29c19f946baf10f1c977a1f856cab90819fe7735b8e141d5407420c4a"
+                "sha256:1531b42c8c49a1f06b08598441bf1f11fe2618f707c6fc96b581b44aa4f2b0e3",
+                "sha256:f8bd92975ba7463b7828ae2f95e1037b7e0ab8f023e9e8ffb7c560fd7f5d66d7"
             ],
             "index": "pypi",
-            "version": "==8.13.5"
+            "version": "==8.13.6"
         },
         "pycparser": {
             "hashes": [
@@ -864,6 +882,14 @@
         }
     },
     "develop": {
+        "appnope": {
+            "hashes": [
+                "sha256:02bd91c4de869fbb1e1c50aafc4098827a7a54ab2f39d9dcba6c9547ed920e24",
+                "sha256:265a455292d0bd8a72453494fa24df5a11eb18373a60c7c0430889f22548605e"
+            ],
+            "markers": "sys_platform == 'darwin'",
+            "version": "==0.1.3"
+        },
         "astroid": {
             "hashes": [
                 "sha256:86b0a340a512c65abf4368b80252754cda17c02cdbbd3f587dddf98112233e7b",

@@ -40,7 +40,7 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
-
+from constance import config
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -499,6 +499,7 @@ def banktransaction_view(request, banktransactionid):
         {
             "banktransaction": banktransaction,
             "settings": settings,
+            "config": config,
         },
     )
 

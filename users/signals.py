@@ -10,6 +10,7 @@ from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 
 from utils import referencenumber
+from constance import config
 
 from . import models
 
@@ -144,6 +145,7 @@ def send_application_received_email(
     context = {
         "user": instance.user,
         "settings": settings,
+        "config": config,
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?

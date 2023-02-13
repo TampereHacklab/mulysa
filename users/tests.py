@@ -18,7 +18,7 @@ from drfx import settings
 from utils.businesslogic import BusinessLogic
 
 from . import models, signals
-
+from constance import config
 
 class TestBusinessLogicSubscriptionExpiries(TestCase):
     def setUp(self):
@@ -220,12 +220,12 @@ class TestNewApplicationHappyPathEmails(TestCase):
             len(mail.outbox), 2
         )  # because this sends one email to the member and one to admins
         self.assertIn("Kiitos jäsenhakemuksestasi", mail.outbox[0].body, "Thanks")
-        self.assertIn(settings.SITE_URL, mail.outbox[0].body, "siteurl")
-        self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
+        self.assertIn(config.SITE_URL, mail.outbox[0].body, "siteurl")
+        self.assertIn(config.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
         # for completenes sake, check the admin email also
         self.assertIn("FirstName LastName", mail.outbox[1].body, "Admin notification")
-        self.assertIn(settings.SITE_URL, mail.outbox[1].body, "admin url")
+        self.assertIn(config.SITE_URL, mail.outbox[1].body, "admin url")
 
         # empty mailbox for next test
         mail.outbox = []
@@ -247,8 +247,8 @@ class TestNewApplicationHappyPathEmails(TestCase):
             mail.outbox[0].body,
             "phone number found",
         )
-        self.assertIn(settings.SITE_URL, mail.outbox[0].body, "url")
-        self.assertIn(settings.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
+        self.assertIn(config.SITE_URL, mail.outbox[0].body, "url")
+        self.assertIn(config.MEMBERS_GUIDE_URL, mail.outbox[0].body, "wikiurl")
 
 
 class ServiceSubscriptionTests(TestCase):
