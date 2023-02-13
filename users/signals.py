@@ -189,11 +189,7 @@ def send_application_approved_email(
             instance, instance.user.language
         )
     )
-    context = {
-        "user": instance.user,
-        "settings": settings,
-        "config": config
-    }
+    context = {"user": instance.user, "settings": settings, "config": config}
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
@@ -209,11 +205,7 @@ def send_application_denied_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
-    context = {
-        "user": instance.user,
-        "settings": settings,
-        "config": config
-    }
+    context = {"user": instance.user, "settings": settings, "config": config}
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
