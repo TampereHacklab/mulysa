@@ -1,5 +1,6 @@
 # Changelog
 
+* Small changes to custominvoice texts suggested on tampere channels. PR [#438](https://github.com/TampereHacklab/mulysa/pull/438) by [@tswfi](https://github.com/tswfi).
 * Bump werkzeug from 2.2.2 to 2.2.3. PR [#437](https://github.com/TampereHacklab/mulysa/pull/437) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 4.1.6 to 4.1.7. PR [#436](https://github.com/TampereHacklab/mulysa/pull/436) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Clarify English wording of custom invoices on user.html.. PR [#432](https://github.com/TampereHacklab/mulysa/pull/432) by [@brndd](https://github.com/brndd).
