@@ -5,7 +5,11 @@
 {% trans 'Custom invoices'%}
 </h1>
 <p>
-{% trans 'Note: You can always delete invoice if you choose not to pay it'%}
+  {% blocktrans %}
+  <strong>NOTE:</strong> Custominvoices are meant for special situations where you are paying for 
+  multiple months using one transaction. We suggest using monthly recurring 
+  payments for all regular situations.
+  {% endblocktrans %}
 </p>
 <form action="{% url 'custominvoice' %}" method="post" enctype=multipart/form-data>
     {% csrf_token %}
