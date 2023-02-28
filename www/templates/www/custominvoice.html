@@ -40,7 +40,7 @@
     <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
     <td>{{ custominvoice.amount }}</td>
     <td>{{ custominvoice.reference_number }}</td>
-    <td><a onclick="return confirm('{% blocktrans %}Are you sure? Please note, if you have already paid the invoice but the payment is not registered yet deleting the custom invoice will never be targeted{% endblocktrans %}')" href="{% url 'custominvoice_action' action='delete' invoiceid=custominvoice.id %}">{% trans 'delete' %}</a></td>
+    <td><a onclick="return confirm('{% blocktrans %}Are you sure? Please note: if payment is on its way but not registered yet, deleting the custom invoice will make that payment to be a donation.{% endblocktrans %}')" href="{% url 'custominvoice_action' action='delete' invoiceid=custominvoice.id %}">{% trans 'delete' %}</a></td>
   </tr>
   {% endfor %}
 </table>
