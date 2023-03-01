@@ -1452,12 +1452,8 @@
             "version": "==0.11.6"
         },
         "tox": {
-            "hashes": [
-                "sha256:1081864f1a1393ffa11ebe9beaa280349020579310d217a594a4e7b6124c5425",
-                "sha256:f9bc83c5da8666baa2a4d4e884bbbda124fe646e4b1c0e412949cecc2b6e8f90"
-            ],
-            "index": "pypi",
-            "version": "==4.4.5"
+            "hashes": [],
+            "version": "==4.4.6"
         },
         "traitlets": {
             "hashes": [
