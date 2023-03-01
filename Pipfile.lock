@@ -1119,12 +1119,8 @@
             "version": "==3.4"
         },
         "ipython": {
-            "hashes": [
-                "sha256:b13a1d6c1f5818bd388db53b7107d17454129a70de2b87481d555daede5eb49e",
-                "sha256:b38c31e8fc7eff642fc7c597061fff462537cf2314e3225a19c906b7b0d8a345"
-            ],
-            "index": "pypi",
-            "version": "==8.10.0"
+            "hashes": [],
+            "version": "==8.11.0"
         },
         "isort": {
             "hashes": [
