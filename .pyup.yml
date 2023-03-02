@@ -1,8 +1,0 @@
-#
-# see https://pyup.io/docs/bot/confi/
-#
-update: all
-schedule: "every month"
-requirements:
-  - Pipfile
-  - Pipfile.lock
