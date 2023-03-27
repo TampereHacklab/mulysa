@@ -13,15 +13,11 @@
     {% trans 'Business ID' %}: {{config.RECEIPT_REGID}}<br />
   </p>
   <p>
-    {% get_verbose_field_name banktransaction "date" %}: 
-    {{ banktransaction.date }}<br />
+    {% get_verbose_field_name banktransaction "date" %}: {{ banktransaction.date }}<br /> 
     {% trans 'Transaction id' %}: {{ banktransaction.id }}<br />
-    {% get_verbose_field_name banktransaction "reference_number" %}: 
-    {{ banktransaction.reference_number }}<br />
-    {% get_verbose_field_name banktransaction "archival_reference" %}: 
-    {{ banktransaction.archival_reference }}<br />
-    {% get_verbose_field_name banktransaction "sender" %}: 
-    {{ banktransaction.sender }}<br />
+    {% get_verbose_field_name banktransaction "reference_number" %}: {{ banktransaction.reference_number }}<br />
+    {% get_verbose_field_name banktransaction "archival_reference" %}: {{ banktransaction.archival_reference }}<br />
+    {% get_verbose_field_name banktransaction "sender" %}: {{ banktransaction.sender }}<br />
     {% trans 'User' %}: {{ banktransaction.user }}
   </p>
 
