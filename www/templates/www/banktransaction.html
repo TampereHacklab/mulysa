@@ -22,26 +22,34 @@
   </p>
 
   <ul>
-    {% for servicesubscription in banktransaction.servicesubscription_set.all %}
-    <li>{{servicesubscription.service.name}}</li>
+    {% for servicesubscription in 
+banktransaction.servicesubscription_set.all %}
+      <li>{{servicesubscription.service.name}}</li>
     {% endfor %} 
     {% for custominvoice in banktransaction.custominvoice_set.all %}
-    <li>{{custominvoice.subscription.service.name}}</li>
+      <li>{{custominvoice.subscription.service.name}}</li>
     {% endfor %}
   </ul>
-  <p>{% trans 'Grand total' %}: {{ banktransaction.amount }}€</p>
+  <p>
+    {% trans 'Grand total' %}: {{ banktransaction.amount }}€
+  </p>
 </div>
 
 <div id="vatinfo">
-  {# This might require tweaking... for now it seems to be #} {# enough that it
-  is mentioned that everything is VAT 0% #}
-  <p>{% blocktrans %} Seller not VAT-liable {% endblocktrans %}</p>
+  {# This might require tweaking... for now it seems to be #} 
+  {# enough that it is mentioned that everything is VAT 0% #}
+  <p>
+    {% blocktrans %}
+      Seller not VAT-liable 
+    {% endblocktrans %}
+  </p>
 </div>
 
 <div id="promoinfo">
   <p>
-    {% blocktrans with name=config.SITENAME %} Thank you and please tell your
-    friends about {{ name }} :) {% endblocktrans %}
+    {% blocktrans with name=config.SITENAME %} 
+     Thank you and please tell your friends about {{ name }} :) 
+    {% endblocktrans %}
   </p>
 </div>
 
