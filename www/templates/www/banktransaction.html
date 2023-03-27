@@ -1,5 +1,8 @@
-{% extends "www/base.html" %} {% load i18n %} {% load bootstrap4 %} {% block
-content %} {% load verbose_names %}
+{% extends "www/base.html" %} 
+{% load i18n %} 
+{% load bootstrap4 %} 
+{% blockcontent %} 
+{% load verbose_names %}
 
 <h2>{% trans 'Bank Transaction' %}</h2>
 
@@ -10,23 +13,23 @@ content %} {% load verbose_names %}
     {% trans 'Business ID' %}: {{config.RECEIPT_REGID}}<br />
   </p>
   <p>
-    {% get_verbose_field_name banktransaction "date" %}: {{ banktransaction.date
-    }}<br />
+    {% get_verbose_field_name banktransaction "date" %}: 
+    {{ banktransaction.date }}<br />
     {% trans 'Transaction id' %}: {{ banktransaction.id }}<br />
-    {% get_verbose_field_name banktransaction "reference_number" %}: {{
-    banktransaction.reference_number }}<br />
-    {% get_verbose_field_name banktransaction "archival_reference" %}: {{
-    banktransaction.archival_reference }}<br />
-    {% get_verbose_field_name banktransaction "sender" %}: {{
-    banktransaction.sender }}<br />
+    {% get_verbose_field_name banktransaction "reference_number" %}: 
+    {{ banktransaction.reference_number }}<br />
+    {% get_verbose_field_name banktransaction "archival_reference" %}: 
+    {{ banktransaction.archival_reference }}<br />
+    {% get_verbose_field_name banktransaction "sender" %}: 
+    {{ banktransaction.sender }}<br />
     {% trans 'User' %}: {{ banktransaction.user }}
   </p>
 
   <ul>
     {% for servicesubscription in banktransaction.servicesubscription_set.all %}
     <li>{{servicesubscription.service.name}}</li>
-    {% endfor %} {% for custominvoice in banktransaction.custominvoice_set.all
-    %}
+    {% endfor %} 
+    {% for custominvoice in banktransaction.custominvoice_set.all %}
     <li>{{custominvoice.subscription.service.name}}</li>
     {% endfor %}
   </ul>
