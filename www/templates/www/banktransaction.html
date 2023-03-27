@@ -22,8 +22,7 @@
   </p>
 
   <ul>
-    {% for servicesubscription in 
-banktransaction.servicesubscription_set.all %}
+    {% for servicesubscription in banktransaction.servicesubscription_set.all %}
       <li>{{servicesubscription.service.name}}</li>
     {% endfor %}
     {% for custominvoice in banktransaction.custominvoice_set.all %}
