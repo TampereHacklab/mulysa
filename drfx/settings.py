@@ -356,6 +356,6 @@ CONSTANCE_CONFIG = {
         "Address to show on receipts",
         str,
     ),
-    "ACCOUNT_IBAN":("FI12 3456 789", "IBAN of the association's bank account"),
+    "ACCOUNT_IBAN": ("FI12 3456 789", "IBAN of the association's bank account"),
 }
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
