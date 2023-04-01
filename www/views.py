@@ -237,7 +237,7 @@ def userdetails(request, id):
         "www/user.html",
         {
             "userdetails": userdetails,
-            "bank_iban": settings.ACCOUNT_IBAN,
+            "bank_iban": config.ACCOUNT_IBAN,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
@@ -457,7 +457,7 @@ def custominvoice(request):
             "days": days,
             "amount": amount,
             "servicename": servicename,
-            "settings": settings,
+            "config": config,
         },
     )
 
