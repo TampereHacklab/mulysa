@@ -1,4 +1,3 @@
-[![Depedency updates status](https://pyup.io/repos/github/TampereHacklab/mulysa/shield.svg)](https://pyup.io/repos/github/TampereHacklab/mulysa/)
 [![Build status](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml/badge.svg?branch=master)](https://github.com/TampereHacklab/mulysa/actions/workflows/tox.yml)
 [![Coverage Status](https://coveralls.io/repos/github/TampereHacklab/mulysa/badge.svg?branch=master)](https://coveralls.io/github/TampereHacklab/mulysa?branch=master)
 
