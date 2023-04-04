@@ -6,7 +6,7 @@ async function renderTransactionsGraph() {
   // one year back
   startDate.setFullYear(startDate.getFullYear() - 1);
   // january
-  startDate.setMonth(1);
+  startDate.setMonth(0);
   // and from the first day of the month
   startDate.setDate(1);
 
