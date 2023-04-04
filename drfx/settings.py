@@ -119,10 +119,10 @@ CSRF_COOKIE_NAME = "__Host-csrf"
 # use the management command update_local_bootstrap to fetch the files
 # and to get this section when needed
 BOOTSTRAP4 = {
-    "css_url": "/static/www/bootstrap4/bootstrap.min.css",
-    "javascript_url": "/static/www/bootstrap4/bootstrap.bundle.min.js",
-    "jquery_slim_url": "/static/www/bootstrap4/jquery-3.5.1.slim.min.js",
-    "jquery_url": "/static/www/bootstrap4/jquery-3.5.1.min.js",
+    'css_url': '/static/www/bootstrap4/bootstrap.min.css',
+    'javascript_url': '/static/www/bootstrap4/bootstrap.bundle.min.js',
+    'jquery_slim_url': '/static/www/bootstrap4/jquery-3.5.1.slim.min.js',
+    'jquery_url': '/static/www/bootstrap4/jquery-3.5.1.min.js',
 }
 
 MIDDLEWARE = [
