@@ -1,5 +1,6 @@
 # Changelog
 
+* remove pyup from readme. PR [#442](https://github.com/TampereHacklab/mulysa/pull/442) by [@tswfi](https://github.com/tswfi).
 * remove pyup, using dependabot now. PR [#440](https://github.com/TampereHacklab/mulysa/pull/440) by [@tswfi](https://github.com/tswfi).
 * Small changes to custominvoice texts suggested on tampere channels. PR [#438](https://github.com/TampereHacklab/mulysa/pull/438) by [@tswfi](https://github.com/tswfi).
 * Bump werkzeug from 2.2.2 to 2.2.3. PR [#437](https://github.com/TampereHacklab/mulysa/pull/437) by [@dependabot[bot]](https://github.com/apps/dependabot).
