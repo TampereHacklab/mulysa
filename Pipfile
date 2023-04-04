@@ -18,7 +18,7 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-django = "==4.1.*"
+django = "==4.2.*"
 djangorestframework = "*"
 # django 4 support from a fork for now
 # see https://pypi.org/project/django-rest-auth-forked/
