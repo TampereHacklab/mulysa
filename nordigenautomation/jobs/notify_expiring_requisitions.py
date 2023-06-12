@@ -19,7 +19,7 @@ class Job(DailyJob):
             send_mail(
                 f"[{config.SITENAME}] Requisition about to expire",
                 f"Please update the requisition for config: {r.config.id}. It is valid until: {r.valid_until}",
-                settings.NOREPLY_FROM_ADDRESS,
-                [settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS],
+                config.NOREPLY_FROM_ADDRESS,
+                [config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS],
                 fail_silently=False,
             )

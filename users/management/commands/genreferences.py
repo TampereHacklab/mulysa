@@ -17,6 +17,6 @@ class Command(BaseCommand):
             if not subscription.reference_number:
                 print(f"Generating ref for service subscription {subscription}")
                 subscription.reference_number = referencenumber.generate(
-                    settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+                    config.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
                 )
                 subscription.save()

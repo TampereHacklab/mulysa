@@ -438,7 +438,7 @@ def custominvoice(request):
                 )
                 invoice.save()
                 invoice.reference_number = referencenumber.generate(
-                    settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
+                    config.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
                 )
                 invoice.save()
     else:
@@ -498,7 +498,6 @@ def banktransaction_view(request, banktransactionid):
         "www/banktransaction.html",
         {
             "banktransaction": banktransaction,
-            "settings": settings,
             "config": config,
         },
     )
