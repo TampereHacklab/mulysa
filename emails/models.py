@@ -1,14 +1,11 @@
 import logging
 from django.utils import timezone
-
-from django.conf import settings
+from drfx import config
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
-
 from autoslug import AutoSlugField
 from mailer import send_mail
-from constance import config
 from django.contrib.sites.models import Site
 
 logger = logging.getLogger(__name__)
@@ -69,14 +66,13 @@ class Email(models.Model):
             site = Site.objects.get_current()
             context = {
                 "user": user,
-                "settings": settings,
                 "config": config,
                 "email": self,
                 "SITENAME": site.name,
                 "SITE_URL": site.domain,
             }
             subject = self.subject
-            from_email = settings.NOREPLY_FROM_ADDRESS
+            from_email = config.NOREPLY_FROM_ADDRESS
             to = user.email
             plaintext_content = render_to_string("mail/email.txt", context)
             send_mail(subject, plaintext_content, from_email, [to])

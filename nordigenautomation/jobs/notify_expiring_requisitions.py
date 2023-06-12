@@ -4,7 +4,7 @@ from django_extensions.management.jobs import DailyJob
 from django.utils import timezone
 from django.core.mail import send_mail
 
-from drfx import settings
+from drfx import config
 from ..models import Requisition
 from django.contrib.sites.models import Site
 
@@ -20,7 +20,7 @@ class Job(DailyJob):
             send_mail(
                 f"[{Site.objects.get_current().name}] Requisition about to expire",
                 f"Please update the requisition for config: {r.config.id}. It is valid until: {r.valid_until}",
-                settings.NOREPLY_FROM_ADDRESS,
-                [settings.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS],
+                config.NOREPLY_FROM_ADDRESS,
+                [config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS],
                 fail_silently=False,
             )

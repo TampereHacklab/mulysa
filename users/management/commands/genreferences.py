@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from drfx import settings
+from drfx import config
 from users.models import ServiceSubscription
 
 from utils import referencenumber
@@ -17,6 +17,6 @@ class Command(BaseCommand):
             if not subscription.reference_number:
                 print(f"Generating ref for service subscription {subscription}")
                 subscription.reference_number = referencenumber.generate(
-                    settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+                    config.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
                 )
                 subscription.save()

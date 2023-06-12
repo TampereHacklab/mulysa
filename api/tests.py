@@ -8,7 +8,7 @@ from django.test.utils import override_settings
 from django.http import HttpRequest
 
 from api.models import AccessDevice
-from drfx import settings
+from drfx import config
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
@@ -107,7 +107,7 @@ class TestAccess(APITestCase):
         # add subscription for the user
         self.ok_subscription = ServiceSubscription.objects.create(
             user=self.ok_user,
-            service=MemberService.objects.get(pk=settings.DEFAULT_ACCOUNT_SERVICE),
+            service=MemberService.objects.get(pk=config.DEFAULT_ACCOUNT_SERVICE),
             state=ServiceSubscription.ACTIVE,
         )
         self.ok_subscription.save()
@@ -135,7 +135,7 @@ class TestAccess(APITestCase):
         # with suspended service
         self.fail_subscription = ServiceSubscription.objects.create(
             user=self.fail_user,
-            service=MemberService.objects.get(pk=settings.DEFAULT_ACCOUNT_SERVICE),
+            service=MemberService.objects.get(pk=config.DEFAULT_ACCOUNT_SERVICE),
             state=ServiceSubscription.SUSPENDED,
         )
         # and a test card for fail case
