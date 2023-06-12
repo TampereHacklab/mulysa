@@ -188,21 +188,20 @@ def send_application_approved_email(
         )
     )
 
+    context = {
+        "user": instance.user,
+        "config": config,
+        "site": Site.objects.get_current(),
+    }
 
-context = {
-    "user": instance.user,
-    "config": config,
-    "site": Site.objects.get_current(),
-}
+    translation.activate(instance.user.language)
+    # TODO: maybe move this subject to settings?
+    subject = _("Your application has been approved")
+    from_email = config.NOREPLY_FROM_ADDRESS
+    to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+    plaintext_content = render_to_string("mail/welcome_and_next_steps.txt", context)
 
-translation.activate(instance.user.language)
-# TODO: maybe move this subject to settings?
-subject = _("Your application has been approved")
-from_email = config.NOREPLY_FROM_ADDRESS
-to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
-plaintext_content = render_to_string("mail/welcome_and_next_steps.txt", context)
-
-send_mail(subject, plaintext_content, from_email, to)
+    send_mail(subject, plaintext_content, from_email, to)
 
 
 @receiver(application_denied, sender=models.MembershipApplication)
@@ -211,17 +210,16 @@ def send_application_denied_email(
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
 
+    context = {"user": instance.user, "config": config}
 
-context = {"user": instance.user, "config": config}
+    translation.activate(instance.user.language)
+    # TODO: maybe move this subject to settings?
+    subject = _("Your application has been rejected")
+    from_email = config.NOREPLY_FROM_ADDRESS
+    to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+    plaintext_content = render_to_string("mail/application_rejected.txt", context)
 
-translation.activate(instance.user.language)
-# TODO: maybe move this subject to settings?
-subject = _("Your application has been rejected")
-from_email = config.NOREPLY_FROM_ADDRESS
-to = [instance.user.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
-plaintext_content = render_to_string("mail/application_rejected.txt", context)
-
-send_mail(subject, plaintext_content, from_email, to)
+    send_mail(subject, plaintext_content, from_email, to)
 
 
 @receiver(pre_save, sender=models.CustomUser)
