@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from autoslug import AutoSlugField
 from mailer import send_mail
-from constance import config
+from drfx import config
 
 logger = logging.getLogger(__name__)
 

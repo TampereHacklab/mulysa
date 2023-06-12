@@ -7,10 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from users.custom_user_manager import CustomUserManager
 from users.models.service_subscription import ServiceSubscription
 from users.models.users_log import UsersLog
-
 from users.validators import validate_mxid, validate_phone
-
-from drfx import settings as drfx_settings
+from drfx import config
 
 logger = logging.getLogger(__name__)
 
@@ -107,8 +105,8 @@ class CustomUser(AbstractUser):
         max_length=10,
         verbose_name=_("Language"),
         help_text=_("Language preferred by user"),
-        choices=drfx_settings.LANGUAGES,
-        default=drfx_settings.LANGUAGE_CODE,
+        choices=config.LANGUAGES,
+        default=config.LANGUAGE_CODE,
     )
 
     # some datetime bits
@@ -165,7 +163,7 @@ class CustomUser(AbstractUser):
             return False
         try:
             subscription = self.servicesubscription_set.get(
-                service=drfx_settings.DEFAULT_ACCOUNT_SERVICE
+                service=config.DEFAULT_ACCOUNT_SERVICE
             )
             if subscription.state == ServiceSubscription.ACTIVE:
                 return True

@@ -3,7 +3,7 @@ import logging
 from django.shortcuts import get_object_or_404
 
 from api.serializers import AccessDataSerializer, UserAccessSerializer
-from drfx import settings as drfx_settings
+from drfx import config as config
 from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -110,7 +110,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         users_with_door_access = []
         for ss in (
             ServiceSubscription.objects.select_related("user")
-            .filter(service=drfx_settings.DEFAULT_ACCOUNT_SERVICE)
+            .filter(service=config.DEFAULT_ACCOUNT_SERVICE)
             .filter(state=ServiceSubscription.ACTIVE)
         ):
             users_with_door_access.append(ss.user)

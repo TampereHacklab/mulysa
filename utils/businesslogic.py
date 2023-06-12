@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
-from drfx import settings
+from drfx import config
 from mailer import send_mail
 from users.models import (
     BankTransaction,

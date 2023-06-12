@@ -323,6 +323,9 @@ OAUTH2_PROVIDER = {
 # from utils import businesslogic
 
 
+# Uncomment this if you wish to set the IBAN through the settings file instead of Constance
+# ACCOUNT_IBAN = "FI12 3456 789"
+
 # Load non-default settings from settings_local.py if it exists
 try:
     from .settings_local import *  # noqa

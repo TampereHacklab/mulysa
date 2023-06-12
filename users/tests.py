@@ -17,7 +17,7 @@ from rest_framework.test import APITestCase
 from utils.businesslogic import BusinessLogic
 
 from . import models, signals
-from constance import config
+from drfx import config
 
 
 class TestBusinessLogicSubscriptionExpiries(TestCase):

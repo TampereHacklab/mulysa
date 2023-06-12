@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from drfx import settings
+from drfx import config
 from users.models import ServiceSubscription
 
 from utils import referencenumber

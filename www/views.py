@@ -15,7 +15,7 @@ import markdown
 from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
-from drfx import settings
+from drfx import config
 from users.models import (
     BankTransaction,
     CustomInvoice,
@@ -40,7 +40,6 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
-from constance import config
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -457,6 +456,7 @@ def custominvoice(request):
             "days": days,
             "amount": amount,
             "servicename": servicename,
+            "account_iban": config.ACCOUNT_IBAN,
             "config": config,
         },
     )

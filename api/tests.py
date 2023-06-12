@@ -8,14 +8,13 @@ from django.test.utils import override_settings
 from django.http import HttpRequest
 
 from api.models import AccessDevice
-from drfx import settings
+from drfx import config
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 from rest_framework_tracking.models import APIRequestLog
 from users.models import CustomUser, MemberService, NFCCard, ServiceSubscription
 from api.mulysaoauthvalidator import MulysaOAuth2Validator
-from constance import config
 
 class TestOAuthValidator(APITestCase):
     def setUp(self):

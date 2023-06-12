@@ -4,9 +4,8 @@ from django_extensions.management.jobs import DailyJob
 from django.utils import timezone
 from django.core.mail import send_mail
 
-from drfx import settings
+from drfx import config
 from ..models import Requisition
-from constance import config
 
 
 class Job(DailyJob):
