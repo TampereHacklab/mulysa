@@ -143,7 +143,7 @@ def send_application_received_email(
     context = {
         "user": instance.user,
         "config": config,
-        "site": Site.objects.get_current()
+        "site": Site.objects.get_current(),
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
