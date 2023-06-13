@@ -379,7 +379,6 @@ CONSTANCE_CONFIG = {
         str,
     ),
     "GITHUB_URL": (GITHUB_URL, "Link to the github repository", str),
-
     # Uncomment this if you would like to be able to edit the bank account details in the admin panel
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
