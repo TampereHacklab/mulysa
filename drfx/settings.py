@@ -347,12 +347,14 @@ CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 # See https://django-constance.readthedocs.io/en/latest/index.html#configuration
 
 CONSTANCE_CONFIG = {
-    "THE_ANSWER": (42, "Answer to the Ultimate Question of Life, "
-                       "The Universe, and Everything"),
+    "THE_ANSWER": (
+        42,
+        "Answer to the Ultimate Question of Life, " "The Universe, and Everything",
+    ),
 }
 
 # Example Constance config
-'''
+"""
 CONSTANCE_CONFIG = {
     "ASSOCIATION_RULES_URL": (
         "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/",
@@ -379,9 +381,9 @@ CONSTANCE_CONFIG = {
         "Address to show on receipts",
         str,
     ),
-    "ACCOUNT_IBAN": ("FI12 3456 789", "IBAN of the association's bank account"), 
+    "ACCOUNT_IBAN": ("FI12 3456 789", "IBAN of the association's bank account"),
 }
-'''
+"""
 
 # Load non-default settings from settings_local.py if it exists
 try:
