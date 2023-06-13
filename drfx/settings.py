@@ -13,6 +13,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "qv*o1&&x%#jtsn)5((g+yw#%3_a$ykfof6b-)j^i$1a8se*7c8"
+ACCOUNT_BIC = "BICCODE"
+ACCOUNT_IBAN = "FI12 3456 789"
+ACCOUNT_NAME = "Account name"
 
 # The service ID that opens hacklab door. Avoid using in code.
 DEFAULT_ACCOUNT_SERVICE = 2
@@ -32,8 +35,22 @@ ALLOWED_HOSTS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# Sitename
+SITENAME = "Mulysa"
+SITE_URL = "https://mulysa.tld"
+PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
+
+
+# these are for the receipt functionality
+RECEIPTNAME = "Mulysa ry"
+RECEIPTREGID = "1234567-8"
+RECEIPTSTREET = "Street 12, Somewhere Finland"
 
 # External urls, like links to members guide and rules
+ASSOCIATION_RULES_URL = (
+    "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
+)
+MEMBERS_GUIDE_URL = "https://wiki.tampere.hacklab.fi/member_s_guide"
 GITHUB_URL = "https://github.com/TampereHacklab/mulysa"
 
 # Application definition
@@ -323,16 +340,21 @@ OAUTH2_PROVIDER = {
 # from utils import businesslogic
 
 
-# Uncomment this if you wish to set the IBAN through the settings file instead of Constance
-# ACCOUNT_IBAN = "FI12 3456 789"
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
-# Load non-default settings from settings_local.py if it exists
-try:
-    from .settings_local import *  # noqa
-except ImportError:
-    pass
+# Constance config - settings for the app that are editable in django admin
+# Edit as desired to start using constance config!
+# See https://django-constance.readthedocs.io/en/latest/index.html#configuration
 
-# Constance config - configure settings for the app that are editable in django admin
+CONSTANCE_CONFIG = {
+    "THE_ANSWER": (
+        42,
+        "Answer to the Ultimate Question of Life, " "The Universe, and Everything",
+    ),
+}
+
+# Example Constance config
+"""
 CONSTANCE_CONFIG = {
     "ASSOCIATION_RULES_URL": (
         "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/",
@@ -359,4 +381,10 @@ CONSTANCE_CONFIG = {
     ),
     "ACCOUNT_IBAN": ("FI12 3456 789", "IBAN of the association's bank account"),
 }
-CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+"""
+
+# Load non-default settings from settings_local.py if it exists
+try:
+    from .settings_local import *  # noqa
+except ImportError:
+    pass
