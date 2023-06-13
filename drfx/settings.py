@@ -342,7 +342,7 @@ OAUTH2_PROVIDER = {
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
-# Constance config - configure settings for the app that are editable in django admin
+# Constance config - settings for the app that are editable in django admin
 # Edit as desired to start using constance config!
 # See https://django-constance.readthedocs.io/en/latest/index.html#configuration
 
