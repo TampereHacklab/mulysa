@@ -46,6 +46,7 @@ RECEIPTNAME = "Mulysa ry"
 RECEIPTREGID = "1234567-8"
 RECEIPTSTREET = "Street 12, Somewhere Finland"
 
+
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = (
     "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/"
