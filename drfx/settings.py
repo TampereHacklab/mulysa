@@ -340,52 +340,45 @@ OAUTH2_PROVIDER = {
 # Import just to get in the translation context
 # from utils import businesslogic
 
-
-CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
-
-# Constance config - settings for the app that are editable in django admin
-# Edit as desired to start using constance config!
-# See https://django-constance.readthedocs.io/en/latest/index.html#configuration
-
-CONSTANCE_CONFIG = {
-    "THE_ANSWER": (
-        42,
-        "Answer to the Ultimate Question of Life, " "The Universe, and Everything",
-    ),
-}
-
-# Example Constance config
-"""
-CONSTANCE_CONFIG = {
-    "ASSOCIATION_RULES_URL": (
-        "https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/",
-        "Link to the rules of the association",
-        str,
-    ),
-    "MEMBERS_GUIDE_URL": (
-        "https://wiki.tampere.hacklab.fi/member_s_guide",
-        "Link to the guide for new members",
-        str,
-    ),
-    "PRIVACY_POLICY_URL": (
-        "https://example.com/privacy_policy.html",
-        "Link to privacy policy",
-        str,
-    ),
-    # Receipt functionality configuration
-    "RECEIPT_NAME": ("Mulysa ry", "Name of the association to show on receipts", str),
-    "RECEIPT_REGID": ("1234567-8", "ID of the association to show on receipts", str),
-    "RECEIPT_ADDRESS": (
-        "Street 12, Somewhere Finland",
-        "Address to show on receipts",
-        str,
-    ),
-    "ACCOUNT_IBAN": ("FI12 3456 789", "IBAN of the association's bank account"),
-}
-"""
-
 # Load non-default settings from settings_local.py if it exists
 try:
     from .settings_local import *  # noqa
 except ImportError:
     pass
+
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+
+# Constance config - settings for the app that are editable in django admin
+# Edit as desired to change what can be configured in the GUI
+# See https://django-constance.readthedocs.io/en/latest/index.html#configuration
+
+CONSTANCE_CONFIG = {
+    "ASSOCIATION_RULES_URL": (
+        ASSOCIATION_RULES_URL,
+        "Link to the rules of the association",
+        str,
+    ),
+    "MEMBERS_GUIDE_URL": (
+        MEMBERS_GUIDE_URL,
+        "Link to the guide for new members",
+        str,
+    ),
+    "PRIVACY_POLICY_URL": (
+        PRIVACY_POLICY_URL,
+        "Link to privacy policy",
+        str,
+    ),
+    # Receipt functionality configuration
+    "RECEIPT_NAME": (RECEIPTNAME, "Name of the association to show on receipts", str),
+    "RECEIPT_REGID": (RECEIPTREGID, "ID of the association to show on receipts", str),
+    "RECEIPT_ADDRESS": (
+        RECEIPTSTREET,
+        "Address to show on receipts",
+        str,
+    ),
+    "GITHUB_URL": (GITHUB_URL, "Link to the github repository", str),
+    # Uncomment this if you would like to be able to edit the bank account details in the admin panel
+    # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
+    # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
+    # "ACCOUNT_NAME": (ACCOUNT_NAME, "Name of the association's bank account"),
+}
