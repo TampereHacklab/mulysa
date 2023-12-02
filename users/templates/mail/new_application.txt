@@ -6,7 +6,7 @@
 {{user.first_name}} {{user.last_name}}
 
   {# TODO: the url should go to the correct application (Or maybe even to accept reject directly ? #}
-{{settings.SITE_URL}}{%url 'applications' %}
+{{config.SITE_URL}}{%url 'applications' %}
 
 {# TODO: show rest of the application information here #}
 {% endblock %}

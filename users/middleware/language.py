@@ -1,4 +1,4 @@
-from django.conf import settings
+from drfx import config
 from django.utils import translation
 
 
@@ -37,6 +37,6 @@ class UserLanguageMiddleware(object):
             return response
 
         translation.activate(user_language)
-        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_language)
+        response.set_cookie(config.LANGUAGE_COOKIE_NAME, user_language)
 
         return response

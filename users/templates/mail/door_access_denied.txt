@@ -1,7 +1,7 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans with first_name=user.first_name method=method siteurl=settings.SITE_URL wikiurl=settings.MEMBERS_GUIDE_URL %}
+{% blocktrans with first_name=user.first_name method=method siteurl=config.SITE_URL wikiurl=config.MEMBERS_GUIDE_URL %}
 Hi {{first_name}}!
 
 We noticed that you tried to access the door by using {{method}} to open it.

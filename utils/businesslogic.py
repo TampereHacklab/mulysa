@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
-from drfx import settings
+from drfx import config
 from mailer import send_mail
 from users.models import (
     BankTransaction,
@@ -64,11 +64,11 @@ class BusinessLogic:
             subject = _("Your subscription %(service_name)s is about to expire") % {
                 "service_name": ss.service.name
             }
-            from_email = settings.NOREPLY_FROM_ADDRESS
+            from_email = config.NOREPLY_FROM_ADDRESS
             to = ss.user.email
             context = {
                 "user": ss.user,
-                "settings": settings,
+                "config": config,
                 "subscription": ss,
             }
             # note, this template will be found from users app
@@ -206,7 +206,7 @@ class BusinessLogic:
         subscription = ServiceSubscription(user=user, service=service, state=state)
         subscription.save()
         subscription.reference_number = referencenumber.generate(
-            settings.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
+            config.SERVICE_INVOICE_REFERENCE_BASE + subscription.id
         )
         subscription.save()
         return subscription

@@ -45,7 +45,7 @@
   {% endfor %}
 </table>
 
-<p>{% blocktrans with bank_iban=settings.ACCOUNT_IBAN %} Custominvoices are paid with the custominvoice specific amount and reference number to bank account: <b>{{bank_iban}}</b>. If the amount or reference number does not match the payment wont be registered. {% endblocktrans %}</p>
+<p>{% blocktrans with bank_iban=account_iban %} Custominvoices are paid with the custominvoice specific amount and reference number to bank account: <b>{{bank_iban}}</b>. If the amount or reference number does not match the payment wont be registered. {% endblocktrans %}</p>
 
 <h2>{% trans 'Paid invoices'%}</h2>
 

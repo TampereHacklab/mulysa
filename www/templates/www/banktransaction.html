@@ -8,9 +8,9 @@
 
 <div id="receiptinfo">
   <p>
-    {{ settings.RECEIPTNAME }}<br />
-    {{ settings.RECEIPTSTREET}}<br />
-    {% trans 'Business ID' %}: {{ settings.RECEIPTREGID}}<br />
+    {{config.RECEIPT_NAME }}<br />
+    {{config.RECEIPT_ADDRESS}}<br />
+    {% trans 'Business ID' %}: {{config.RECEIPT_REGID}}<br />
   </p>
   <p>
     {% get_verbose_field_name banktransaction "date" %}: {{ banktransaction.date }}<br />
@@ -46,7 +46,7 @@
 
 <div id="promoinfo">
   <p>
-    {% blocktrans with name=settings.SITENAME %}
+    {% blocktrans with name=config.SITENAME %}
      Thank you and please tell your friends about {{ name }} :)
     {% endblocktrans %}
   </p>

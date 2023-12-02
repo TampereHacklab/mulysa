@@ -15,7 +15,7 @@ import markdown
 from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
-from drfx import settings
+from drfx import config
 from users.models import (
     BankTransaction,
     CustomInvoice,
@@ -40,7 +40,6 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
-
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -237,7 +236,7 @@ def userdetails(request, id):
         "www/user.html",
         {
             "userdetails": userdetails,
-            "bank_iban": settings.ACCOUNT_IBAN,
+            "bank_iban": config.ACCOUNT_IBAN,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
@@ -439,7 +438,7 @@ def custominvoice(request):
                 )
                 invoice.save()
                 invoice.reference_number = referencenumber.generate(
-                    settings.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
+                    config.CUSTOM_INVOICE_REFERENCE_BASE + invoice.id
                 )
                 invoice.save()
     else:
@@ -457,7 +456,8 @@ def custominvoice(request):
             "days": days,
             "amount": amount,
             "servicename": servicename,
-            "settings": settings,
+            "account_iban": config.ACCOUNT_IBAN,
+            "config": config,
         },
     )
 
@@ -498,7 +498,7 @@ def banktransaction_view(request, banktransactionid):
         "www/banktransaction.html",
         {
             "banktransaction": banktransaction,
-            "settings": settings,
+            "config": config,
         },
     )
 
