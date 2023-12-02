@@ -1,10 +1,15 @@
 async function renderTransactionsGraph() {
-  // for now default to fetching data 1 year back from now
-  // this fetches the data aggregated per day
+  // for now default to fetching all of last years data and this year untill today
+
+  // today
   let startDate = new Date();
+  // one year back
   startDate.setFullYear(startDate.getFullYear() - 1);
+  // january
+  startDate.setMonth(0);
   // and from the first day of the month
   startDate.setDate(1);
+
   const queryParams = {
     date__gte: startDate.toISOString().slice(0, 10),
   };
