@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump pygments from 2.14.0 to 2.15.0. PR [#451](https://github.com/TampereHacklab/mulysa/pull/451) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * feat: add in-app settings panel using django-constance. PR [#433](https://github.com/TampereHacklab/mulysa/pull/433) by [@braaar](https://github.com/braaar).
 * remove pyup from readme. PR [#442](https://github.com/TampereHacklab/mulysa/pull/442) by [@tswfi](https://github.com/tswfi).
 * remove pyup, using dependabot now. PR [#440](https://github.com/TampereHacklab/mulysa/pull/440) by [@tswfi](https://github.com/tswfi).
