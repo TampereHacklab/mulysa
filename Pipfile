@@ -18,13 +18,9 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-django = "==4.1.*"
+django = "==4.2.*"
 djangorestframework = "*"
-# django 4 support from a fork for now
-# see https://pypi.org/project/django-rest-auth-forked/
-# https://github.com/Tivix/django-rest-auth/pulls?q=is%3Apr+is%3Aopen+%27django+4.0%27+
-#django-rest-auth = "*"
-django-rest-auth-forked = "*"
+dj-rest-auth = "*"
 django-allauth = "*"
 django-extensions = "*"
 coreapi = "*"
