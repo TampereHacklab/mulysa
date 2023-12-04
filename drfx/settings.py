@@ -363,8 +363,6 @@ CONSTANCE_CONFIG = {
         "Link to the guide for new members",
         str,
     ),
-    "SITENAME": (SITENAME, "Name of the hacklab", str),
-    "SITE_URL": (SITE_URL, "URL of this site", str),
     "PRIVACY_POLICY_URL": (
         PRIVACY_POLICY_URL,
         "Link to privacy policy",

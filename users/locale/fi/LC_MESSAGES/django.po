@@ -602,14 +602,14 @@ msgstr ""
 #~ msgid "BIC"
 #~ msgstr "BIC"
 
-#~ msgid "Best regards %(config.SITENAME)s hackers!"
-#~ msgstr "Terveisin %(config.SITENAME)s!"
+#~ msgid "Best regards %(site.name)s hackers!"
+#~ msgstr "Terveisin %(site.name)s!"
 
-#~ msgid "Your application to %(config.SITENAME)s has been rejected."
-#~ msgstr "Hakemuksesi %(config.SITENAME)s:n on hylätty"
+#~ msgid "Your application to %(site.name)s has been rejected."
+#~ msgstr "Hakemuksesi %(site.name)s:n on hylätty"
 
-#~ msgid "New membership application in %(config.SITENAME)s"
-#~ msgstr "Uusi jäsenhakemus vastaanotettu %(config.SITENAME)s:n"
+#~ msgid "New membership application in %(site.name)s"
+#~ msgstr "Uusi jäsenhakemus vastaanotettu %(site.name)s:n"
 
 #~ msgid "Format: DD.MM.YYYY"
 #~ msgstr "Muoto: PP.KK.VVVV"

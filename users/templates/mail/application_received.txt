@@ -1,7 +1,7 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans with siteurl=config.SITE_URL wikiurl=config.MEMBERS_GUIDE_URL %}
+{% blocktrans with siteurl=site.domain wikiurl=config.MEMBERS_GUIDE_URL %}
 Thank you for applying for membership!
 
 We will check your application and get back to you after your application has

@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 
 from drfx import config
 from ..models import Requisition
+from django.contrib.sites.models import Site
 
 
 class Job(DailyJob):
@@ -17,7 +18,7 @@ class Job(DailyJob):
         for r in Requisition.active.filter(valid_until__lte=in_fourteen_days):
             print("sending alert")
             send_mail(
-                f"[{config.SITENAME}] Requisition about to expire",
+                f"[{Site.objects.get_current().name}] Requisition about to expire",
                 f"Please update the requisition for config: {r.config.id}. It is valid until: {r.valid_until}",
                 config.NOREPLY_FROM_ADDRESS,
                 [config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS],

@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 from autoslug import AutoSlugField
 from mailer import send_mail
+from django.contrib.sites.models import Site
 
 logger = logging.getLogger(__name__)
 
@@ -62,12 +63,13 @@ class Email(models.Model):
                 )
             )
 
+            site = Site.objects.get_current()
             context = {
                 "user": user,
                 "config": config,
                 "email": self,
-                "SITENAME": config.SITENAME,
-                "SITE_URL": config.SITE_URL,
+                "SITENAME": site.name,
+                "SITE_URL": site.domain,
             }
             subject = self.subject
             from_email = config.NOREPLY_FROM_ADDRESS

@@ -10,6 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from utils import referencenumber
 from . import models
 
+from django.contrib.sites.models import Site
+
 logger = logging.getLogger(__name__)
 
 #
@@ -141,6 +143,7 @@ def send_application_received_email(
     context = {
         "user": instance.user,
         "config": config,
+        "site": Site.objects.get_current(),
     }
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
@@ -164,6 +167,7 @@ def send_new_application_waiting_processing_email(
     )
     context = {
         "user": instance.user,
+        "site": Site.objects.get_current(),
         "config": config,
     }
     subject = _("New membership application received")
@@ -183,7 +187,13 @@ def send_application_approved_email(
             instance, instance.user.language
         )
     )
-    context = {"user": instance.user, "config": config}
+
+    context = {
+        "user": instance.user,
+        "config": config,
+        "site": Site.objects.get_current(),
+    }
+
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been approved")
@@ -199,7 +209,9 @@ def send_application_denied_email(
     sender, instance: models.MembershipApplication, **kwargs
 ):
     logger.info("Application denied, sending bye bye email {}".format(instance))
+
     context = {"user": instance.user, "config": config}
+
     translation.activate(instance.user.language)
     # TODO: maybe move this subject to settings?
     subject = _("Your application has been rejected")
@@ -257,6 +269,7 @@ def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kw
         "user": user,
         "method": method,
         "config": config,
+        "site": Site.objects.get_current(),
     }
     translation.activate(user.language)
     subject = _("Door access denied")
