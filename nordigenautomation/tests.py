@@ -14,7 +14,7 @@ def mocked_requests_get(*args, **kwargs):
     request_url = kwargs.get("url", None)
     # print(f"mocking get request to: {request_url}")
     # institutions, bit truncated
-    if request_url == "https://ob.nordigen.com/api/v2/institutions/?country=FI":
+    if request_url.endswith("/api/v2/institutions/?country=FI"):
         response_content = json.dumps(
             [
                 {
@@ -44,9 +44,8 @@ def mocked_requests_get(*args, **kwargs):
                 },
             ]
         )
-    elif (
-        request_url
-        == "https://ob.nordigen.com/api/v2/requisitions/3fa85f64-5717-4562-b3fc-2c963f66afa6/"
+    elif request_url.endswith(
+        "/api/v2/requisitions/3fa85f64-5717-4562-b3fc-2c963f66afa6/"
     ):
         response_content = json.dumps(
             {
@@ -69,9 +68,8 @@ def mocked_requests_get(*args, **kwargs):
                 "redirect_immediate": False,
             }
         )
-    elif (
-        request_url
-        == "https://ob.nordigen.com/api/v2/accounts/3fa85f64-5717-4562-b3fc-2c963f66afa6/transactions/"
+    elif request_url.endswith(
+        "/api/v2/accounts/3fa85f64-5717-4562-b3fc-2c963f66afa6/transactions/"
     ):
         response_content = json.dumps(
             {
@@ -115,7 +113,7 @@ def mocked_requests_get(*args, **kwargs):
                 }
             }
         )
-    elif request_url == "https://ob.nordigen.com/api/v2/institutions/?country=FI":
+    elif request_url.endswith("/api/v2/institutions/?country=FI"):
         response_content = json.dumps(
             [
                 {
@@ -156,7 +154,7 @@ def mocked_requests_post(*args, **kwargs):
     request_url = kwargs.get("url", None)
     # print(f"mocking post request to: {request_url}")
     # always return a valid token
-    if request_url == "https://ob.nordigen.com/api/v2/token/new/":
+    if request_url.endswith("/api/v2/token/new/"):
         response_content = json.dumps(
             {
                 "access": "string",
@@ -166,10 +164,10 @@ def mocked_requests_post(*args, **kwargs):
             }
         )
     # and refreshtoken too
-    elif request_url == "https://ob.nordigen.com/api/v2/token/refresh/":
+    elif request_url.endswith("/api/v2/token/refresh/"):
         response_content = json.dumps({"access": "string", "access_expires": 86400})
 
-    elif request_url == "https://ob.nordigen.com/api/v2/agreements/enduser/":
+    elif request_url.endswith("/api/v2/agreements/enduser/"):
         response_content = json.dumps(
             {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -181,7 +179,7 @@ def mocked_requests_post(*args, **kwargs):
                 "institution_id": "string",
             }
         )
-    elif request_url == "https://ob.nordigen.com/api/v2/requisitions/":
+    elif request_url.endswith("/api/v2/requisitions/"):
         response_content = json.dumps(
             {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",

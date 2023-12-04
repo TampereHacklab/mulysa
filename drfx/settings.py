@@ -69,11 +69,11 @@ INSTALLED_APPS = [
     # drf and its authentication friends
     "rest_framework",
     "rest_framework.authtoken",
-    "rest_auth",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "dj_rest_auth",
     # for logging some sensitive endpoints like access
     "rest_framework_tracking",
     # filters
@@ -88,7 +88,6 @@ INSTALLED_APPS = [
     # constance settings manager
     "constance.backends.database",
     "constance",
-    "rest_auth.registration",
     # our api and other apps
     "api",
     "users",
@@ -139,6 +138,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "users.middleware.language.UserLanguageMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "drfx.urls"
