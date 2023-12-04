@@ -1,5 +1,10 @@
 # Changelog
 
+* remove pyup from readme. PR [#442](https://github.com/TampereHacklab/mulysa/pull/442) by [@tswfi](https://github.com/tswfi).
+* remove pyup, using dependabot now. PR [#440](https://github.com/TampereHacklab/mulysa/pull/440) by [@tswfi](https://github.com/tswfi).
+* Small changes to custominvoice texts suggested on tampere channels. PR [#438](https://github.com/TampereHacklab/mulysa/pull/438) by [@tswfi](https://github.com/tswfi).
+* Bump werkzeug from 2.2.2 to 2.2.3. PR [#437](https://github.com/TampereHacklab/mulysa/pull/437) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 4.1.6 to 4.1.7. PR [#436](https://github.com/TampereHacklab/mulysa/pull/436) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Clarify English wording of custom invoices on user.html.. PR [#432](https://github.com/TampereHacklab/mulysa/pull/432) by [@brndd](https://github.com/brndd).
 * Bump ipython from 8.9.0 to 8.10.0. PR [#431](https://github.com/TampereHacklab/mulysa/pull/431) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Start graph always from first day of the month. PR [#430](https://github.com/TampereHacklab/mulysa/pull/430) by [@tswfi](https://github.com/tswfi).
