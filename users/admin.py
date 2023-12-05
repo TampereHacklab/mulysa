@@ -14,6 +14,7 @@ from .models import (
     NFCCard,
     ServiceSubscription,
     UsersLog,
+    Statistics
 )
 
 
@@ -147,6 +148,22 @@ class CustomInvoiceAdmin(admin.ModelAdmin):
     ]
 
 
+class StatisticsAdmin(admin.ModelAdmin):
+    """
+    Allow only viewing statistics in admin
+    """
+    list_display = [field.name for field in Statistics._meta.fields if field.name != "id"]
+
+    date_hierarchy = 'date'
+    list_display_links = None
+    actions = None
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
 admin.site.register(MemberService, MemberServiceAdmin)
@@ -155,3 +172,4 @@ admin.site.register(BankTransaction, BankTransactionAdmin)
 admin.site.register(CustomInvoice, CustomInvoiceAdmin)
 admin.site.register(UsersLog)
 admin.site.register(NFCCard, NFCCardAdmin)
+admin.site.register(Statistics, StatisticsAdmin)
