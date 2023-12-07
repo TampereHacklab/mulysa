@@ -7,4 +7,4 @@ class Command(BaseCommand):
     help = "Collect daily statistics data"
 
     def handle(self, *args, **options):
-        Statistics.stats.take_daily_stats()
+        Statistics.objects.collect_daily_stats()

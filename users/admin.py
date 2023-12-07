@@ -14,7 +14,7 @@ from .models import (
     NFCCard,
     ServiceSubscription,
     UsersLog,
-    Statistics
+    Statistics,
 )
 
 
@@ -152,9 +152,12 @@ class StatisticsAdmin(admin.ModelAdmin):
     """
     Allow only viewing statistics in admin
     """
-    list_display = [field.name for field in Statistics._meta.fields if field.name != "id"]
 
-    date_hierarchy = 'date'
+    list_display = [
+        field.name for field in Statistics._meta.fields if field.name != "id"
+    ]
+
+    date_hierarchy = "date"
     list_display_links = None
     actions = None
 
@@ -163,6 +166,7 @@ class StatisticsAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MembershipApplication)
