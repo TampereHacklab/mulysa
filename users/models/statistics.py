@@ -59,7 +59,7 @@ class StatisticsManager(models.Manager):
                 ).count(),
                 "custom_invoices_open_sum": CustomInvoice.objects.filter(
                     payment_transaction=None
-                ).aggregate(total=Sum("amount"))["total"],
+                ).aggregate(total=Sum("amount", default=0))["total"],
                 "service_subscriptions": list(subscriptions),
             },
         )
@@ -76,28 +76,32 @@ class Statistics(models.Model):
         auto_now_add=True,
         unique=True,
         primary_key=True,
-        verbose_name="Date of this statistics event",
+        verbose_name=_("Date of this statistics event"),
     )
-    users_total = models.IntegerField(default=0, verbose_name="Total number of users")
-    users_active = models.IntegerField(default=0, verbose_name="Active users")
+    users_total = models.IntegerField(
+        default=0, verbose_name=_("Total number of users")
+    )
+    users_active = models.IntegerField(default=0, verbose_name=_("Active users"))
     users_marked_for_deletion = models.IntegerField(
-        default=0, verbose_name="Users pending deletion"
+        default=0, verbose_name=_("Users pending deletion")
     )
 
     open_membership_applications = models.IntegerField(
-        default=0, verbose_name="Number of open membership applications"
+        default=0, verbose_name=_("Number of open membership applications")
     )
 
     custom_invoices_open = models.IntegerField(
-        default=0, verbose_name="Number of open custom invoices"
+        default=0, verbose_name=_("Number of open custom invoices")
     )
     custom_invoices_open_sum = models.FloatField(
-        default=0, verbose_name="Total amount of open custom invoices"
+        default=0, verbose_name=_("Total amount of open custom invoices")
     )
 
     service_subscriptions = models.JSONField(
         default=list,
-        verbose_name="Statistics for service subscriptions. Each service will be its own key with counts for Active, Overdue and Suspended states",
+        verbose_name=_(
+            "Statistics for service subscriptions. Each service will be its own key with counts for Active, Overdue and Suspended states"
+        ),
     )
 
     def __str__(self):
