@@ -271,7 +271,8 @@ def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwarg
         # new user, it wont be activated or deactived yet
         return
 
-    if previous.marked_for_deletion_on == instance.marked_for_deletion_on:
+    # already set, no need to do again
+    if previous.marked_for_deletion_on:
         return
 
     if instance.marked_for_deletion_on:
