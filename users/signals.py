@@ -84,7 +84,6 @@ def send_reset_password_email(sender, instance: models.CustomUser, **kwargs):
     form.save(from_email=from_email, email_template_name=template)
 
 
-
 @receiver(post_save, sender=models.MembershipApplication)
 def application_creation(
     sender, instance: models.MembershipApplication, created, raw, **kwargs
@@ -277,7 +276,11 @@ def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwarg
 
     if instance.marked_for_deletion_on:
         # so the field was changed, mark the user is_active=False and send and email too
-        logger.info("User marked for deletion, also changing active to false and informing the user {}".format(instance))
+        logger.info(
+            "User marked for deletion, also changing active to false and informing the user {}".format(
+                instance
+            )
+        )
         instance.is_active = False
 
         # and send the email
@@ -288,9 +291,12 @@ def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwarg
         subject = _("Your account has been deactivated and marked for deletion")
         from_email = config.NOREPLY_FROM_ADDRESS
         to = [instance.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
-        plaintext_content = render_to_string("mail/account_deactivated_and_marked_for_deletion.txt", context)
+        plaintext_content = render_to_string(
+            "mail/account_deactivated_and_marked_for_deletion.txt", context
+        )
 
         send_mail(subject, plaintext_content, from_email, to)
+
 
 #
 # Signal door access denied

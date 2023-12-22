@@ -8,6 +8,7 @@ from drfx import config
 
 logger = logging.getLogger(__name__)
 
+
 class Command(BaseCommand):
     help = "Delete all users that have been marked for deletion for more than the cutoff setting"
 
@@ -15,13 +16,16 @@ class Command(BaseCommand):
         # some safety margin
         dt = timezone.now() - timezone.timedelta(days=config.USER_DELETION_DAYS)
 
-        logger.info(f" Search for users that have been marked for deletion for over {config.USER_DELETION_DAYS} days")
+        logger.info(
+            f" Search for users that have been marked for deletion for over {config.USER_DELETION_DAYS} days"
+        )
 
         users = CustomUser.objects.filter(
-            marked_for_deletion_on__isnull=False,
-            marked_for_deletion_on__lt=dt
+            marked_for_deletion_on__isnull=False, marked_for_deletion_on__lt=dt
         )
 
         for user in users:
-            logger.info(f" Deleting User {user} as it has been marked for deletion over {config.USER_DELETION_DAYS} days")
+            logger.info(
+                f" Deleting User {user} as it has been marked for deletion over {config.USER_DELETION_DAYS} days"
+            )
             user.delete()

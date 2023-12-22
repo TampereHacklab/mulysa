@@ -32,7 +32,7 @@ class TestUserDeletion(TestCase):
         self.assertEqual(self.user.is_active, True)
         self.assertIsNone(self.user.marked_for_deletion_on)
 
-        self.user.marked_for_deletion_on=timezone.now()
+        self.user.marked_for_deletion_on = timezone.now()
         self.user.save()
 
         # user was marked is inactive
@@ -50,7 +50,7 @@ class TestUserDeletion(TestCase):
         mail.outbox = []
 
         # mark again
-        self.user.marked_for_deletion_on=timezone.now()
+        self.user.marked_for_deletion_on = timezone.now()
         self.user.save()
 
         # no emails sent
@@ -60,7 +60,7 @@ class TestUserDeletion(TestCase):
         mail.outbox = []
 
         # remove mark
-        self.user.marked_for_deletion_on=None
+        self.user.marked_for_deletion_on = None
         self.user.save()
 
         # user still marked as inactive
@@ -82,16 +82,10 @@ class TestUserDeletion(TestCase):
         )
 
         # log entry for the user
-        models.UsersLog.objects.create(
-            user=self.user,
-            message="test"
-        )
+        models.UsersLog.objects.create(user=self.user, message="test")
 
         # nfc card
-        models.NFCCard.objects.create(
-            user=self.user,
-            cardid="123"
-        )
+        models.NFCCard.objects.create(user=self.user, cardid="123")
 
         # custom invoice
         models.CustomInvoice.objects.create(
@@ -103,9 +97,7 @@ class TestUserDeletion(TestCase):
 
         # bank transaction that points to the user
         self.transaction = models.BankTransaction.objects.create(
-            user=self.user,
-            date=timezone.now().date(),
-            amount=10
+            user=self.user, date=timezone.now().date(), amount=10
         )
 
         # delete the user
@@ -131,7 +123,6 @@ class TestUserDeletion(TestCase):
         # but the user assignment is cleared
         self.transaction.refresh_from_db()
         self.assertEqual(self.transaction.user, None)
-
 
     def tearDown(self):
         mail.outbox = []
