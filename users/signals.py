@@ -253,6 +253,51 @@ def send_user_activated(sender, instance: models.CustomUser, raw, **kwargs):
         logger.info("User deactivation done {}".format(instance))
 
 
+@receiver(pre_save, sender=models.CustomUser)
+def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwargs):
+    """
+    Send email to user that their account has now been marked for deletion and
+    deactivated and will be completely removed after a while
+    """
+    # do nothing for raw or created signals
+    if raw:
+        return
+
+    # if our value didn't change then nothign to be done
+    try:
+        previous = models.CustomUser.objects.get(id=instance.id)
+    except models.CustomUser.DoesNotExist:
+        # new user, it wont be activated or deactived yet
+        return
+
+    # already set, no need to do again
+    if previous.marked_for_deletion_on:
+        return
+
+    if instance.marked_for_deletion_on:
+        # so the field was changed, mark the user is_active=False and send and email too
+        logger.info(
+            "User marked for deletion, also changing active to false and informing the user {}".format(
+                instance
+            )
+        )
+        instance.is_active = False
+
+        # and send the email
+        context = {"user": instance, "config": config}
+
+        translation.activate(instance.language)
+        # TODO: maybe move this subject to settings?
+        subject = _("Your account has been deactivated and marked for deletion")
+        from_email = config.NOREPLY_FROM_ADDRESS
+        to = [instance.email, config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS]
+        plaintext_content = render_to_string(
+            "mail/account_deactivated_and_marked_for_deletion.txt", context
+        )
+
+        send_mail(subject, plaintext_content, from_email, to)
+
+
 #
 # Signal door access denied
 #

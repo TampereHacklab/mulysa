@@ -1,0 +1,10 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+
+{% blocktrans %}Your account has been deactivated and marked for deletion{% endblocktrans %}
+
+{{user.first_name}} {{user.last_name}}
+
+{# TODO: tell what this means and how to recover if you want to #}
+{% endblock %}

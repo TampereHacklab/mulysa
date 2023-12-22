@@ -32,6 +32,11 @@ ALLOWED_HOSTS = [
     "*",
 ]
 
+
+# After user has been marked for deletion, how many days to wait until
+# really deleting the user and their associated data
+USER_DELETION_DAYS = 90
+
 # https://docs.djangoproject.com/en/4.1/ref/settings/
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

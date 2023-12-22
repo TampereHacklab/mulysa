@@ -51,6 +51,29 @@ class PredefAgeListFilter(admin.SimpleListFilter):
         return dt
 
 
+class MarkedForDeletionFilter(admin.SimpleListFilter):
+    title = _("Marked for deletion")
+    parameter_name = "marked_for_deletion_on__isnull"
+
+    def lookups(self, request, model_admin):
+        """
+        Few predefined filters
+        """
+        return (
+            ("false", _("Marked for deletion")),
+            ("true", _("NOT Marked for deletion")),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "true":
+            return queryset.filter(marked_for_deletion_on__isnull=True)
+        elif value == "false":
+            return queryset.filter(marked_for_deletion_on__isnull=False)
+
+        return queryset
+
+
 class UserFilter(filters.FilterSet):
     class Meta:
         model = models.CustomUser
