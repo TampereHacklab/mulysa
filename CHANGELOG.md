@@ -1,5 +1,6 @@
 # Changelog
 
+* User cleanup. PR [#459](https://github.com/TampereHacklab/mulysa/pull/459) by [@tswfi](https://github.com/tswfi).
 * Collect daily statistics. PR [#458](https://github.com/TampereHacklab/mulysa/pull/458) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.8. PR [#457](https://github.com/TampereHacklab/mulysa/pull/457) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.7 and other updates. PR [#456](https://github.com/TampereHacklab/mulysa/pull/456) by [@tswfi](https://github.com/tswfi).
