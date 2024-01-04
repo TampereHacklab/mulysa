@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump jwcrypto from 1.5.0 to 1.5.1. PR [#462](https://github.com/TampereHacklab/mulysa/pull/462) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * User cleanup. PR [#459](https://github.com/TampereHacklab/mulysa/pull/459) by [@tswfi](https://github.com/tswfi).
 * Collect daily statistics. PR [#458](https://github.com/TampereHacklab/mulysa/pull/458) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.8. PR [#457](https://github.com/TampereHacklab/mulysa/pull/457) by [@tswfi](https://github.com/tswfi).
