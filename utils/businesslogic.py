@@ -143,6 +143,7 @@ class BusinessLogic:
         Updates the user's status based on the data in database. Can be called from outside.
         """
         # Check for custom invoices..
+        logger.debug("Examining custom invoices")
         invoices = CustomInvoice.objects.filter(
             user=user, payment_transaction__isnull=True
         )
@@ -297,39 +298,12 @@ class BusinessLogic:
 
         for invoice in invoices:
             if transaction.amount >= invoice.amount:
-                try:
-                    logger.debug(f"Transaction {transaction} pays invoice {invoice}")
-                    subscription = ServiceSubscription.objects.get(
-                        user=invoice.user, id=invoice.subscription.id
-                    )
-                    if not subscription.paid_until:
-                        subscription.paid_until = transaction.date
-                    subscription.paid_until = subscription.paid_until + timedelta(
-                        days=invoice.days
-                    )
-                    subscription.last_payment = transaction
-                    invoice.payment_transaction = transaction
-                    transaction.has_been_used = True
-                    transaction.user = invoice.user
-                    transaction.save()
-                    invoice.save()
-                    subscription.save()
-                    transaction.user.log(
-                        _(
-                            "Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s"
-                            % {
-                                "days": invoice.days,
-                                "name": subscription.service.name,
-                                "until": subscription.paid_until,
-                                "transaction": transaction,
-                            }
-                        )
-                    )
-                    BusinessLogic._check_servicesubscription_state(subscription)
-                except ServiceSubscription.DoesNotExist:
-                    logger.debug(
-                        "Transaction would pay for invoice but user has no servicesubscription??"
-                    )
+                subscription = ServiceSubscription.objects.get(
+                    user=invoice.user, id=invoice.subscription.id
+                )
+                BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)
+                invoice.payment_transaction = transaction
+                invoice.save()       
             else:
                 transaction.comment = f"Insufficient amount for invoice {invoice}"
                 transaction.save()
@@ -377,7 +351,7 @@ class BusinessLogic:
                 logger.debug(
                     f"Transaction is new and pays for service {subscription.service}"
                 )
-                BusinessLogic._service_paid_by_transaction(subscription, transaction)
+                BusinessLogic._service_paid_by_transaction(subscription, transaction, subscription.service.days_per_payment)
             else:
                 transaction.user = subscription.user
                 transaction.comment = (
@@ -408,15 +382,16 @@ class BusinessLogic:
         return False
 
     @staticmethod
-    def _service_paid_by_transaction(servicesubscription, transaction):
+    def _service_paid_by_transaction(servicesubscription, transaction, add_days):
         """
         Called if transaction actually pays for extra time on given service subscription
         """
         translation.activate(servicesubscription.user.language)
 
         # How many days to add to subscription's paid until
-        days_to_add = timedelta(days=servicesubscription.service.days_per_payment)
-
+        days_to_add = timedelta(
+            days = add_days
+        )
         # First payment - initialize with payment date and add first time bonus days
         if not servicesubscription.paid_until:
             bonus_days = timedelta(
