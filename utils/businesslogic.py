@@ -430,7 +430,9 @@ class BusinessLogic:
                     logger.debug("Service is suspended - no action")
                 else:
                     extra_days = timedelta(
-                        days=paid_servicesubscription.service.days_per_payment
+                        #Calculate child subscription payment to happen same time that latest parrent subsciption,
+                        #useful with custominvoices that pays subsription multiple times
+                        days = add_days - servicesubscription.service.days_per_payment + paid_servicesubscription.service.days_per_payment
                     )
                     paid_servicesubscription.paid_until = transaction.date + extra_days
                     paid_servicesubscription.last_payment = transaction
