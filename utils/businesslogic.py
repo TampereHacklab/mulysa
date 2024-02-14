@@ -289,7 +289,9 @@ class BusinessLogic:
         )
 
         for invoice in invoices:
-            if transaction.amount >= invoice.amount:
+            #if transaction.amount >= invoice.amount:
+            invoice_cost_min = invoice.cost_min()
+            if config.CUSTOM_INVOICE_DYNAMIC_PRICING and transaction.amount >= invoice_cost_min or transaction.amount >= invoice.amount:
                 subscription = ServiceSubscription.objects.get(
                     user=invoice.user, id=invoice.subscription.id
                 )
@@ -431,7 +433,7 @@ class BusinessLogic:
                 else:
                     extra_days = timedelta(
                         #Calculate child subscription payment to happen same time that latest parrent subsciption,
-                        #useful with custominvoices that pays subsription multiple times
+                        #useful with custominvoices that pays Parent subscription multiple times
                         days = add_days - servicesubscription.service.days_per_payment + paid_servicesubscription.service.days_per_payment
                     )
                     paid_servicesubscription.paid_until = transaction.date + extra_days

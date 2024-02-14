@@ -21,6 +21,7 @@ ACCOUNT_NAME = "Account name"
 DEFAULT_ACCOUNT_SERVICE = 2
 
 CUSTOM_INVOICE_REFERENCE_BASE = 10000
+CUSTOM_INVOICE_DYNAMIC_PRICING = True
 SERVICE_INVOICE_REFERENCE_BASE = 20000
 
 MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS = "example@example.com"
@@ -386,4 +387,5 @@ CONSTANCE_CONFIG = {
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
     # "ACCOUNT_NAME": (ACCOUNT_NAME, "Name of the association's bank account"),
+    "CUSTOM_INVOICE_DYNAMIC_PRICING": (CUSTOM_INVOICE_DYNAMIC_PRICING, "Allow dynamic pricing when paying with custom invoice", bool)
 }
