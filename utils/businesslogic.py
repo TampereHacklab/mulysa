@@ -371,17 +371,11 @@ class BusinessLogic:
                 transaction,
                 subscription.service
                 ):
-<<<<<<< HEAD
+
                 logger.debug(
                     f"Transaction is new and pays for service {subscription.service}"
                 )
-<<<<<<< HEAD
-                BusinessLogic._service_paid_by_transaction(
-                    subscription, transaction, subscription.service.days_per_payment
-                )
-=======
-=======
->>>>>>> Rearrange debug loggin events
+
                 inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
                     subscription,
                     transaction,
@@ -401,7 +395,6 @@ class BusinessLogic:
                         f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used"
                     )
                     transaction.save()
->>>>>>> Buisness logic debug log comments updated
             else:
                 transaction.user = subscription.user
                 transaction.comment += (
