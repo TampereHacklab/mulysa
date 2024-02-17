@@ -363,21 +363,44 @@ class BusinessLogic:
 
         for transaction in transactions:
             if BusinessLogic._transaction_pays_service(
-                transaction, subscription.service
-            ):
+                transaction,
+                subscription.service
+                ):
                 logger.debug(
-                    f"Transaction is new and pays for service {subscription.service}"
+                    f"Transaction is new and enough for service {subscription.service}"
                 )
+<<<<<<< HEAD
                 BusinessLogic._service_paid_by_transaction(
                     subscription, transaction, subscription.service.days_per_payment
                 )
+=======
+                inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
+                    subscription,
+                    transaction,
+                    subscription.service.days_per_payment,
+                    )
+                if  inlimit == True:
+                    BusinessLogic._service_paid_by_transaction(
+                        subscription,
+                        transaction,
+                        subscription.service.days_per_payment)
+                else:
+                    subscription.user.log(
+                        f"Payment would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
+                    )
+                    transaction.user = subscription.user
+                    transaction.comment = (
+                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used"
+                    )
+                    transaction.save()
+>>>>>>> Buisness logic debug log comments updated
             else:
                 transaction.user = subscription.user
                 transaction.comment += (
                     f"Amount insufficient to pay service {subscription.service}\n"
                 )
                 transaction.save()
-                logger.debug(f"Transaction does not pay service {subscription.service}")
+
 
     @staticmethod
     def _transaction_pays_service(transaction, service):
