@@ -375,11 +375,6 @@ class BusinessLogic:
                 logger.debug(
                     f"Transaction is new and enough for service {subscription.service}"
                 )
-
-                logger.debug(
-                    f"Transaction is new and enough for service {subscription.service}"
-                )
-
                 inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
                     subscription,
                     transaction,
@@ -405,7 +400,7 @@ class BusinessLogic:
                     f"Amount insufficient to pay service {subscription.service}\n"
                 )
                 transaction.save()
-
+                logger.debug(f"Transaction does not pay service {subscription.service}")
 
     @staticmethod
     def _transaction_pays_service(transaction, service):
