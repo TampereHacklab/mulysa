@@ -366,14 +366,17 @@ class BusinessLogic:
                 transaction,
                 subscription.service
                 ):
+<<<<<<< HEAD
                 logger.debug(
-                    f"Transaction is new and enough for service {subscription.service}"
+                    f"Transaction is new and pays for service {subscription.service}"
                 )
 <<<<<<< HEAD
                 BusinessLogic._service_paid_by_transaction(
                     subscription, transaction, subscription.service.days_per_payment
                 )
 =======
+=======
+>>>>>>> Rearrange debug loggin events
                 inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
                     subscription,
                     transaction,
@@ -400,7 +403,7 @@ class BusinessLogic:
                     f"Amount insufficient to pay service {subscription.service}\n"
                 )
                 transaction.save()
-
+                logger.debug(f"Transaction does not pay service {subscription.service}")                logger.debug(f"Transaction does not pay service {subscription.service}")
 
     @staticmethod
     def _transaction_pays_service(transaction, service):
@@ -408,11 +411,12 @@ class BusinessLogic:
         Checks if given transaction pays the service. Returns boolean.
         """
         if service.cost_min and transaction.amount < service.cost_min:
-            logger.debug(f" Transaction amount is insuficent to pay {service} with lowered price")
+            logger.debug(f"{transaction} amount is insuficent to pay {service} with lowered price")
             return False
         if not service.cost_min and transaction.amount < service.cost:
-            logger.debug(f"{service} has no .cost_min and transaction amount is insuficent to pay nominal price")
+            logger.debug(f"{service} has no .cost_min and {transaction} amount is insuficent to pay nominal price")
             return False
+        logger.debug(f"{transaction} is new and enough for service {service}")
         return True
 
     @staticmethod
