@@ -380,6 +380,8 @@ class BusinessLogic:
         """
         translation.activate(servicesubscription.user.language)
 
+        logger.debug(f"Paying {servicesubscription} and gained {add_days} days more")
+
         # How many days to add to subscription's paid until
         days_to_add = timedelta(
             days = add_days
@@ -392,7 +394,11 @@ class BusinessLogic:
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
-            transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            if transaction.comment:
+                transaction.comment = transaction.comment + f"\r\nFirst payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            else:
+                transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
 
@@ -431,25 +437,18 @@ class BusinessLogic:
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
                     logger.debug("Service is suspended - no action")
                 else:
-                    extra_days = timedelta(
-                        #Calculate child subscription payment to happen same time that latest parrent subsciption,
-                        #useful with custominvoices that pays Parent subscription multiple times
-                        days = add_days - servicesubscription.service.days_per_payment + paid_servicesubscription.service.days_per_payment
-                    )
-                    paid_servicesubscription.paid_until = transaction.date + extra_days
-                    paid_servicesubscription.last_payment = transaction
-                    paid_servicesubscription.save()
-                    servicesubscription.user.log(
-                        _(
-                            "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s was paid"
-                        )
-                        % {
-                            "servicename": str(paid_servicesubscription),
-                            "until": str(paid_servicesubscription.paid_until),
-                            "anotherservicename": str(servicesubscription.service),
-                        }
-                    )
-
+                    added_days = servicesubscription.paid_until - transaction.date
+                    child_days = 0
+                    if paid_servicesubscription.paid_until:
+                        if paid_servicesubscription.paid_until > transaction.date:
+                            child_date = paid_servicesubscription.paid_until - transaction.date
+                            child_days = child_date.days
+                    extra_days = added_days.days - servicesubscription.service.days_per_payment + paid_servicesubscription.service.days_per_payment - child_days
+                    logger.debug(f"Child prosess add days calculted by {added_days.days} - {servicesubscription.service.days_per_payment} + {paid_servicesubscription.service.days_per_payment} - {child_days} and gained {extra_days} days more")        
+                    #Calculate child subscription payment to happen at same time that latest parrent subsciption,
+                    #useful with custominvoices that pays Parent subscription multiple times
+                    BusinessLogic._service_paid_by_transaction(paid_servicesubscription, transaction, extra_days)
+                    
                     BusinessLogic._check_servicesubscription_state(
                         paid_servicesubscription
                     )
