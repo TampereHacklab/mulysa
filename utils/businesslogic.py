@@ -308,6 +308,7 @@ class BusinessLogic:
                 subscription = ServiceSubscription.objects.get(
                     user=invoice.user, id=invoice.subscription.id
                 )
+                transaction.user = subscription.user
                 inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
                     subscription,
                     transaction,
@@ -320,7 +321,11 @@ class BusinessLogic:
                 else: 
                     subscription.user.log(
                         f"Payment of {invoice} would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
-                    )                          
+                    )
+                    transaction.comment = (
+                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used"
+                    )
+                    transaction.save()                     
             else:
                 transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
@@ -389,7 +394,7 @@ class BusinessLogic:
                         subscription.service.days_per_payment)
                 else:
                     subscription.user.log(
-                        f"Payment would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
+                        f"Payment would extend {subscription.service} paid to date over maximum by {inlimit} days. {transaction} is not used"
                     )
                     transaction.user = subscription.user
                     transaction.comment = (
@@ -414,7 +419,7 @@ class BusinessLogic:
             logger.debug(f"{transaction} amount is insuficent to pay {service} with lowered price")
             return False
         if not service.cost_min and transaction.amount < service.cost:
-            logger.debug(f"{service} has no .cost_min and {transaction} amount is insuficent to pay nominal price")
+            logger.debug(f"{service} has no .cost_min defined and {transaction} amount is insuficent to pay nominal price")
             return False
         logger.debug(f"{transaction} is new and enough for service {service}")
         return True
@@ -432,7 +437,7 @@ class BusinessLogic:
             paid_until = servicesubscription.paid_until
         else:
             paid_until = transaction.date
-            logger.debug(f"Service has never been paid, using transaction as base date")
+            logger.debug(f"Service has never been paid, using transaction date as last payment date")
         date_after_payment = paid_until + timedelta(days=add_days)
         if servicesubscription.service.days_maximum and 0 < servicesubscription.service.days_maximum:
             date_max = transaction.date + timedelta(days=servicesubscription.service.days_maximum)
