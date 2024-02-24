@@ -292,13 +292,12 @@ class BusinessLogic:
         )
 
         for invoice in invoices:
-            #if transaction.amount >= invoice.amount:
             invoice_cost_min = invoice.cost_min()
             if config.CUSTOM_INVOICE_DYNAMIC_PRICING and transaction.amount >= invoice_cost_min or transaction.amount >= invoice.amount:
                 subscription = ServiceSubscription.objects.get(
                     user=invoice.user, id=invoice.subscription.id
                 )
-                BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)        
+                BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)
             else:
                 transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
@@ -386,19 +385,15 @@ class BusinessLogic:
         logger.debug(f"Paying {servicesubscription} and gained {add_days} days more")
 
         # How many days to add to subscription's paid until
-        days_to_add = timedelta(
-            days = add_days
-        )
+        days_to_add = timedelta(days=add_days)
         # First payment - initialize with payment date and add first time bonus days
         if not servicesubscription.paid_until:
-            bonus_days = timedelta(
-                days=servicesubscription.service.days_bonus_for_first
-            )
+            bonus_days = timedelta(days=servicesubscription.service.days_bonus_for_first)
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
             transaction.comment += f"First payment of {servicesubscription} - added {bonus_days.days} bonus days.\n"
-            
+
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
 
@@ -444,12 +439,26 @@ class BusinessLogic:
                         if paid_servicesubscription.paid_until > transaction.date:
                             child_date = paid_servicesubscription.paid_until - transaction.date
                             child_days = child_date.days
-                    extra_days = added_days.days - servicesubscription.service.days_per_payment + paid_servicesubscription.service.days_per_payment - child_days
-                    logger.debug(f"Child prosess add days calculted by {added_days.days} - {servicesubscription.service.days_per_payment} + {paid_servicesubscription.service.days_per_payment} - {child_days} and gained {extra_days} days more")        
-                    #Calculate child subscription payment to happen at same time that latest parrent subsciption,
-                    #useful with custominvoices that pays Parent subscription multiple times
+
+                    extra_days = (
+                        added_days.days
+                        - servicesubscription.service.days_per_payment
+                        + paid_servicesubscription.service.days_per_payment
+                        - child_days
+                    )
+
+                    logger.debug(
+                        f"""Child prosess add days calculted by
+                              {added_days.days}
+                            - {servicesubscription.service.days_per_payment}
+                            + {paid_servicesubscription.service.days_per_payment}
+                            - {child_days}
+                            = gained {extra_days} days more"""
+                    )
+                    # Calculate child subscription payment to happen at same time that latest parrent subsciption,
+                    # useful with custominvoices that pays Parent subscription multiple times
                     BusinessLogic._service_paid_by_transaction(paid_servicesubscription, transaction, extra_days)
-                    
+
                     BusinessLogic._check_servicesubscription_state(
                         paid_servicesubscription
                     )

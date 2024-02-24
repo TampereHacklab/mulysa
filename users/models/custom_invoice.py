@@ -68,5 +68,5 @@ class CustomInvoice(models.Model):
 
     # cost is used if not set
     def cost_min(self):
-       cm = self.days / self.subscription.service.days_per_payment * self.subscription.service.cost_min
-       return cm
+        cm = self.days / self.subscription.service.days_per_payment * self.subscription.service.cost_min
+        return cm
