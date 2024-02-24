@@ -101,6 +101,7 @@ class BusinessLogic:
 
             for subscription in subscriptions:
                 transaction_user = subscription.user
+                transaction_comment = f"New transaction for {subscription}"
 
             # Search custom invoices for reference..
             if not transaction_user:
@@ -115,9 +116,11 @@ class BusinessLogic:
 
                 for custominvoice in custominvoices:
                     transaction_user = custominvoice.user
+                    transaction_comment = f"New transaction for {custominvoice}"
 
             if transaction_user:
                 transaction.user = transaction_user
+                transaction.comment = transaction_comment + "\n"
                 transaction.save()
 
         if transaction.user:
@@ -297,7 +300,7 @@ class BusinessLogic:
                 )
                 BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)        
             else:
-                transaction.comment = f"Insufficient amount for invoice {invoice}"
+                transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
                 logger.debug(
                     f"Transaction {transaction} insufficient for invoice {invoice}"
@@ -346,8 +349,8 @@ class BusinessLogic:
                 BusinessLogic._service_paid_by_transaction(subscription, transaction, subscription.service.days_per_payment)
             else:
                 transaction.user = subscription.user
-                transaction.comment = (
-                    f"Amount insufficient to pay service {subscription.service}"
+                transaction.comment += (
+                    f"Amount insufficient to pay service {subscription.service}\n"
                 )
                 transaction.save()
                 logger.debug(f"Transaction does not pay service {subscription.service}")
@@ -394,10 +397,7 @@ class BusinessLogic:
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
-            if transaction.comment:
-                transaction.comment = transaction.comment + f"\r\nFirst payment of {servicesubscription} - added {bonus_days.days} bonus days."
-            else:
-                transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            transaction.comment += f"First payment of {servicesubscription} - added {bonus_days.days} bonus days.\n"
             
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
@@ -412,6 +412,7 @@ class BusinessLogic:
         # Mark transaction as used
         transaction.user = servicesubscription.user
         transaction.has_been_used = True
+        transaction.comment += f"Successful payment of {servicesubscription}\n"
         transaction.save()
 
         servicesubscription.user.log(
