@@ -316,14 +316,12 @@ class BusinessLogic:
                     )
                 if inlimit == True:
                     BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)
-                    transaction.comment = transaction.comment + f" by {invoice}"
-                    transaction.save()
                 else: 
                     subscription.user.log(
                         f"Payment of {invoice} would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
                     )
-                    transaction.comment = (
-                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used"
+                    transaction.comment += (
+                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used\n"
                     )
                     transaction.save()                     
             else:
@@ -390,8 +388,8 @@ class BusinessLogic:
                         f"Payment would extend {subscription.service} paid to date over maximum by {inlimit} days. {transaction} is not used"
                     )
                     transaction.user = subscription.user
-                    transaction.comment = (
-                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used"
+                    transaction.comment += (
+                        f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used\n"
                     )
                     transaction.save()
             else:
