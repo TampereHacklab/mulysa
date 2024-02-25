@@ -106,23 +106,18 @@ class CustomUserAdmin(UserAdmin):
                     "is_superuser",
                     "phone",
                     "bank_account",
-                    'password1',
-                    'password2',
+                    "password1",
+                    "password2",
                 ),
             },
         ),
-
         (
             "Dates",
             {
                 "classes": ("wide",),
-                "fields": (
-                    "birthday",
-                ),
-
+                "fields": ("birthday",),
             },
         ),
-
     )
 
     inlines = [ServiceSubscriptionInline]
