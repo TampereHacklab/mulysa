@@ -388,7 +388,14 @@ CONSTANCE_CONFIG = {
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
     # "ACCOUNT_NAME": (ACCOUNT_NAME, "Name of the association's bank account"),
-    "CUSTOM_INVOICE_DYNAMIC_PRICING": (CUSTOM_INVOICE_DYNAMIC_PRICING, "Allow dynamic pricing when paying with custom invoice", bool),
-    "CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS": (CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS, "Allow custom invoice to be used again", bool)
-    
+    "CUSTOM_INVOICE_DYNAMIC_PRICING": (
+        CUSTOM_INVOICE_DYNAMIC_PRICING,
+        "Allow dynamic pricing when paying with custom invoice",
+        bool,
+    ),
+    "CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS": (
+        CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS,
+        "Allow custom invoice to be used again",
+        bool,
+    ),
 }
