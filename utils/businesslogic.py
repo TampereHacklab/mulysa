@@ -145,8 +145,9 @@ class BusinessLogic:
         Updates the user's status based on the data in database. Can be called from outside.
         """
         # Check for custom invoices..
+        logger.debug("Examining custom invoices")
         invoices = CustomInvoice.objects.filter(
-            user=user, payment_transaction__isnull=True
+            user=user,
         )
         for invoice in invoices:
             transactions = BankTransaction.objects.filter(
@@ -288,16 +289,25 @@ class BusinessLogic:
         """
         invoices = CustomInvoice.objects.filter(
             reference_number=transaction.reference_number,
-            payment_transaction__isnull=True,
         )
 
         for invoice in invoices:
             invoice_cost_min = invoice.cost_min()
-            if config.CUSTOM_INVOICE_DYNAMIC_PRICING and transaction.amount >= invoice_cost_min or transaction.amount >= invoice.amount:
+            if invoice.payment_transaction and config.CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS is False:
+                transaction.comment += "Custom invoice is already paid and multiple payment is not allowed\n"
+                transaction.save()
+                break
+            if (
+                config.CUSTOM_INVOICE_DYNAMIC_PRICING
+                and transaction.amount >= invoice_cost_min
+                or transaction.amount >= invoice.amount
+            ):
                 subscription = ServiceSubscription.objects.get(
                     user=invoice.user, id=invoice.subscription.id
                 )
                 BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)
+                invoice.payment_transaction = transaction
+                invoice.save()
             else:
                 transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
