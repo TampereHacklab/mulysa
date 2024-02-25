@@ -308,11 +308,19 @@ class BusinessLogic:
                 subscription = ServiceSubscription.objects.get(
                     user=invoice.user, id=invoice.subscription.id
                 )
-                BusinessLogic._service_paid_by_transaction(
-                    subscription, transaction, invoice.days
-                )
-                invoice.payment_transaction = transaction
-                invoice.save()
+                inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
+                    subscription,
+                    transaction,
+                    subscription.service.days_per_payment,
+                    )
+                if inlimit == True:
+                    BusinessLogic._service_paid_by_transaction(subscription, transaction, invoice.days)
+                    transaction.comment = transaction.comment + f" by {invoice}"
+                    transaction.save()
+                else: 
+                    subscription.user.log(
+                        f"Payment of {invoice} would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
+                    )                          
             else:
                 transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
@@ -377,10 +385,39 @@ class BusinessLogic:
         Checks if given transaction pays the service. Returns boolean.
         """
         if service.cost_min and transaction.amount < service.cost_min:
+            logger.debug(f" Transaction amount is insuficent to pay {service} with lowered price")
             return False
         if not service.cost_min and transaction.amount < service.cost:
+            logger.debug(f"{service} has no .cost_min and transaction amount is insuficent to pay nominal price")
             return False
         return True
+
+    @staticmethod
+    def _service_maxdays_after_payment_inlimit(
+        servicesubscription,
+        transaction,
+        add_days,
+        ):
+        """
+        Checks if payment of service would reach and pass .paid_until maximum limit. Returs true if in limit and days of limit exeede
+        """
+        if servicesubscription.paid_until:
+            paid_until = servicesubscription.paid_until
+        else:
+            paid_until = transaction.date
+            logger.debug(f"Service has never been paid, using transaction as base date")
+        date_after_payment = paid_until + timedelta(days=add_days)
+        if servicesubscription.service.days_maximum and 0 < servicesubscription.service.days_maximum:
+            date_max = transaction.date + timedelta(days=servicesubscription.service.days_maximum)
+            delta_date = date_after_payment - date_max
+        else:
+            logger.debug(f"Service.days_maximum of {servicesubscription.service} is not defined or is zero, unlimited days?")
+            return True
+        if  date_after_payment <= date_max:
+            logger.debug(f"Date after payment is inlimit with {servicesubscription.service} service.days_maximum ")
+            return True
+        logger.debug(f"Payment would extend {servicesubscription.service} paid to date over maximum {servicesubscription.service.days_maximum} days by {delta_date.days} days.")
+        return delta_date.days
 
     @staticmethod
     def _user_is_subscribed_to(servicesubscriptions, service):
