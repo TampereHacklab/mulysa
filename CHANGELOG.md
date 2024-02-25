@@ -1,5 +1,6 @@
 # Changelog
 
+* Make it possible to create new user from django admin panel. PR [#469](https://github.com/TampereHacklab/mulysa/pull/469) by [@sbeach92](https://github.com/sbeach92).
 * Bump django from 4.2.8 to 4.2.10. PR [#467](https://github.com/TampereHacklab/mulysa/pull/467) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump cryptography from 41.0.7 to 42.0.0. PR [#466](https://github.com/TampereHacklab/mulysa/pull/466) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump jinja2 from 3.1.2 to 3.1.3. PR [#463](https://github.com/TampereHacklab/mulysa/pull/463) by [@dependabot[bot]](https://github.com/apps/dependabot).
