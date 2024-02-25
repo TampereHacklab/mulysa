@@ -87,6 +87,39 @@ class CustomUserAdmin(UserAdmin):
             {"fields": ("birthday",) + readonly_fields + ("marked_for_deletion_on",)},
         ),
     )
+
+    add_fieldsets = (
+        (
+            "Data",
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "nick",
+                    "mxid",
+                    "language",
+                    "municipality",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "phone",
+                    "bank_account",
+                    "password1",
+                    "password2",
+                ),
+            },
+        ),
+        (
+            "Dates",
+            {
+                "classes": ("wide",),
+                "fields": ("birthday",),
+            },
+        ),
+    )
+
     inlines = [ServiceSubscriptionInline]
 
     actions = ["mark_for_deletion_on", "mark_for_deletion_off"]
