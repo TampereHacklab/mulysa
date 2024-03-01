@@ -5,13 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class BankTransaction(models.Model):
     """
     Represents a incoming money transaction on the club's account.
-
-    Mapped to user instance if possible.
     """
-
-    # User this transaction was made by, or null if unknown
-    user = models.ForeignKey("CustomUser", on_delete=models.SET_NULL, null=True)
-
     # Unique archival reference number that all transactions have
     archival_reference = models.CharField(
         blank=False,
@@ -68,14 +62,6 @@ class BankTransaction(models.Model):
         verbose_name=_("Code"),
         help_text=_("Code"),
         max_length=512,
-    )
-    has_been_used = models.BooleanField(
-        blank=False,
-        null=False,
-        default=False,
-        help_text=_(
-            "True, if this transaction has already been used to pay for service."
-        ),
     )
 
     comment = models.TextField(

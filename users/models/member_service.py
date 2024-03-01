@@ -22,62 +22,8 @@ class MemberService(models.Model):
         validators=[MinValueValidator(0)],
     )
 
-    """
-    Defines another service that this this service pays for. If this service is paid, the referenced
-    service is also marked as paid for days_per_payment after the payment date.
-
-    Can be used to make service chains so that if a more expensive
-    service is paid, the user can automatically receive cheaper ones.
-    """
-    pays_also_service = models.ForeignKey(
-        "self", on_delete=models.SET_NULL, blank=True, null=True
-    )
-
-    # cost is used if not set
-    cost_min = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name="Minimum payment",
-        validators=[MinValueValidator(0)],
-    )
-
-    # Can be left out if no maximum needed
-    cost_max = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name="Maximum payment",
-        validators=[MinValueValidator(0)],
-    )
-
     days_per_payment = models.IntegerField(
         verbose_name="How many days of service member gets for a valid payment",
-        validators=[MinValueValidator(0)],
-    )
-
-    days_bonus_for_first = models.IntegerField(
-        default=0,
-        verbose_name="How many extra days of service member gets when paying for first time",
-        validators=[MinValueValidator(0)],
-    )
-
-    days_before_warning = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name="How many days before payment expiration a warning message shall be sent",
-        validators=[MinValueValidator(0)],
-    )
-
-    days_maximum = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name="How many days of service member can pay at maximum",
-        validators=[MinValueValidator(0)],
-    )
-
-    days_until_suspending = models.IntegerField(
-        blank=True,
-        null=True,
-        verbose_name="How many days service can be in payment pending state until it is moved to suspended state",
         validators=[MinValueValidator(0)],
     )
 
@@ -89,13 +35,6 @@ class MemberService(models.Model):
         help_text=_(
             "True, if this service should not be shown for user member application form etc."
         ),
-    )
-
-    access_phone_number = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-        help_text=_("Phone number that can be used to use this memberservice"),
     )
 
     # True if users are allowed to subscribe and unsubscribe themselves with this service
@@ -134,7 +73,3 @@ class MemberService(models.Model):
         if self.days_per_payment == 365:
             return _("year")
         return str(self.days_per_payment) + " " + str(_("days"))
-
-    # Returns a list of services that pay for this service
-    def paid_by_services(self):
-        return MemberService.objects.filter(pays_also_service=self)
