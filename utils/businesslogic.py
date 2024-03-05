@@ -454,6 +454,7 @@ class BusinessLogic:
                 else:
                     added_days = servicesubscription.paid_until - transaction.date
                     child_days = 0
+                    # check if and howmuch forehand child servce is paid
                     if paid_servicesubscription.paid_until:
                         if paid_servicesubscription.paid_until > transaction.date:
                             child_date = (
@@ -476,6 +477,13 @@ class BusinessLogic:
                             - {child_days}
                             = gained {extra_days} days more"""
                     )
+
+                    if extra_days < 0:
+                        logger.debug(
+                            "Gained days are negative, using previous paid to date"
+                        )
+                        extra_days = 0
+
                     # Calculate child subscription payment to happen at same time that latest parrent subsciption,
                     # useful with custominvoices that pays Parent subscription multiple times
                     BusinessLogic._service_paid_by_transaction(
