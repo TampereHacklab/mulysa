@@ -328,11 +328,6 @@ class BusinessLogic:
         logger.debug(f"Updating {subscription} for {user}")
         translation.activate(user.language)
 
-        # Suspended subscriptions need manual action so can be skipped
-        if subscription.state == ServiceSubscription.SUSPENDED:
-            logger.debug("Service is suspended - no action")
-            return
-
         if not subscription.reference_number:
             logger.debug("Service has no reference number - no action")
             return
@@ -341,19 +336,38 @@ class BusinessLogic:
         services_that_pay_this = MemberService.objects.filter(
             pays_also_service=subscription.service
         )
-        for service in services_that_pay_this:
-            if BusinessLogic._user_is_subscribed_to(servicesubscriptions, service):
-                logger.debug(
-                    f"Service is paid by {service} which user is subscribed so skipping this service."
-                )
-                return
 
         # Check generic transactions that could pay for this service
         transactions = BankTransaction.objects.filter(
             reference_number=subscription.reference_number, has_been_used=False
-        ).order_by("date")
+        ).order_by("-date")
 
         for transaction in transactions:
+            skip_transaction = False
+            for service in services_that_pay_this:
+                if BusinessLogic._user_is_subscribed_to(servicesubscriptions, service):
+                    if config.SERVICE_INVOICE_ALLOW_SEPARATE_CHILD_PAYMENT is True:
+                        logger.debug("Child service separate payment is allowed")
+                        transaction.comment += f"{subscription} would be paid with {service}, you most likely want to pay only that\n"
+                        transaction.save()
+
+                    else:
+                        logger.debug("Child service separate payment is not allowed")
+                        transaction.comment += f"{subscription} is paid with {service}, separate payment is not allowed\n"
+                        transaction.save()
+                        skip_transaction = True
+
+            # Suspended subscriptions need manual action so can be skipped
+            if subscription.state == ServiceSubscription.SUSPENDED:
+                transaction.comment += f"""{subscription} is suspended, contact community board to re-enable
+                    Transaction is not used
+                    """
+                transaction.save()
+                skip_transaction = True
+
+            if skip_transaction is True:
+                continue
+
             if BusinessLogic._transaction_pays_service(
                 transaction, subscription.service
             ):

@@ -237,10 +237,23 @@ class PaymentServices(TestCase):
         self.assertEqual(gc_results, e_gc_results)
 
     def test_child_payment_parent_active(self):
+        config.SERVICE_INVOICE_ALLOW_SEPARATE_CHILD_PAYMENT = False
         amounts = [5, 10, 10, 10, 5]
         # [Active parent subscription prevent payment]
         e_results = [0, 0, 0, 0, 0]
         refs = [self.child_ref]
+        results = self.payment(amounts, refs, self.user)
+        self.assertEqual(results, e_results)
+
+        # Delete child transactions to retest easily
+        ChildTransactions = BankTransaction.objects.filter(
+            reference_number=self.child_ref
+        )
+        for ChildTransaction in ChildTransactions:
+            ChildTransaction.delete()
+
+        config.SERVICE_INVOICE_ALLOW_SEPARATE_CHILD_PAYMENT = True
+        e_results = [0, 80, 140, 200, 200]
         results = self.payment(amounts, refs, self.user)
         self.assertEqual(results, e_results)
 
