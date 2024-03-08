@@ -334,54 +334,9 @@ class PaymentServices(TestCase):
         else:
             return transposed_results
 
-    # def child_payment(self):
-    #     amounts = [5, 15, 15, 15, 5]
-    #     e_results = [0, 70, 130, 190, 190]
-    #     results = []
-    #     transactions =[]
-    #     n = 0
-
-    #     for amount in amounts:
-    #         n += 1
-    #         deltad = timedelta(days=-10+n)
-    #         transaction=models.BankTransaction.objects.create(
-    #             reference_number=self.child_ref,
-    #             archival_reference=self.child_ref + n,
-    #             date=date.today()+deltad,
-    #             amount=amount,
-    #             sender=self.user.first_name,
-    #             has_been_used=False
-    #         )
-    #         BusinessLogic.new_transaction(transaction)
-    #         BusinessLogic.update_all_users()
-    #         transactions.append(transaction.archival_reference)
-    #         results.append(self.child_subscription.reference_number)
-
-    #     self.assertEqual(results,transactions)
-
     def tearDown(self):
         CustomInvoice.objects.all().delete()
         CustomUser.objects.all().delete()
         MemberService.objects.all().delete()
         ServiceSubscription.objects.all().delete()
         BankTransaction.objects.all().delete()
-
-
-# class paymentlimitedservices
-#         self.parent_service_limit = MemberService.objects.create(
-#              cost=30,
-#              cost_min=10,
-#              days_per_payment=30,
-#              days_bonus_for_first=10,
-#              days_maximum=70,
-#              pays_also_service = self.child_service_limit,
-#         )
-
-#         self.child_service_limit = MemberService.objects.create(
-#              cost=10,
-#              cost_min=5
-#              days_per_payment=60,
-#              days_bonus_for_first=10,
-#              days_maximum=130
-#              pays_also_service = self.child_service_nolimit
-#        )
