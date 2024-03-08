@@ -236,6 +236,16 @@ class PaymentServices(TestCase):
         self.assertEqual(c_results, e_c_results)
         self.assertEqual(gc_results, e_gc_results)
 
+    def parent_payment_parent_suspended(self):
+        self.parent_subscription.state = ServiceSubscription.SUSPENDED
+        self.parent_subscription.save()
+        amounts = [15, 30, 30, 30, 15]
+        # [Active parent subscription prevent payment]
+        e_results = [0, 0, 0, 0, 0]
+        refs = [self.parent_ref]
+        results = self.payment(amounts, refs, self.user)
+        self.assertEqual(results, e_results)
+
     def test_child_payment_parent_active(self):
         config.SERVICE_INVOICE_ALLOW_SEPARATE_CHILD_PAYMENT = False
         amounts = [5, 10, 10, 10, 5]
