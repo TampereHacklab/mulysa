@@ -144,6 +144,16 @@ class BusinessLogic:
         """
         Updates the user's status based on the data in database. Can be called from outside.
         """
+
+        # Remove old user transaction comments:
+        usertransactions = BankTransaction.objects.filter(
+            user=user, has_been_used=False
+        )
+        for usertransaction in usertransactions:
+            logger.debug(f"Deleting comment of {usertransaction}")
+            usertransaction.comment = usertransaction.comment.partition("\n")[0] + "\n"
+            usertransaction.save()
+
         # Check for custom invoices..
         logger.debug("Examining custom invoices")
         invoices = CustomInvoice.objects.filter(
