@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump django from 4.2.10 to 4.2.11. PR [#478](https://github.com/TampereHacklab/mulysa/pull/478) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump black from 23.11.0 to 24.3.0. PR [#479](https://github.com/TampereHacklab/mulysa/pull/479) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump cryptography from 42.0.0 to 42.0.4. PR [#474](https://github.com/TampereHacklab/mulysa/pull/474) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Make it possible to create new user from django admin panel. PR [#469](https://github.com/TampereHacklab/mulysa/pull/469) by [@sbeach92](https://github.com/sbeach92).
