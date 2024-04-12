@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump idna from 3.6 to 3.7. PR [#482](https://github.com/TampereHacklab/mulysa/pull/482) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump jwcrypto from 1.5.1 to 1.5.6. PR [#481](https://github.com/TampereHacklab/mulysa/pull/481) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 4.2.10 to 4.2.11. PR [#478](https://github.com/TampereHacklab/mulysa/pull/478) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump black from 23.11.0 to 24.3.0. PR [#479](https://github.com/TampereHacklab/mulysa/pull/479) by [@dependabot[bot]](https://github.com/apps/dependabot).
