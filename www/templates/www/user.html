@@ -139,11 +139,11 @@
         <th>{% trans 'Paid' %}</th>
       </tr>
       {% for custominvoice in userdetails.custominvoices %}
-      <tr>
+      <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
         <td>{{ custominvoice.created }}</td>
         <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
-        <td {% if custominvoice.payment_transaction %} style="text-decoration: line-through" {% endif %}>{{ custominvoice.amount }}</td>
-        <td {% if custominvoice.payment_transaction %} style="text-decoration: line-through" {% endif %}>{{ custominvoice.reference_number }}</td>
+        <td>{{ custominvoice.amount }}</td>
+        <td>{{ custominvoice.reference_number }}</td>
         <td>
           {% if custominvoice.payment_transaction %}
             <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>

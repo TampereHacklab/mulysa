@@ -58,7 +58,7 @@
     <th>{% trans 'Paid' %}</th>
   </tr>
   {% for custominvoice in paid_invoices %}
-  <tr>
+  <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
     <td>{{ custominvoice.created }}</td>
     <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
     <td>{{ custominvoice.amount }}</td>
