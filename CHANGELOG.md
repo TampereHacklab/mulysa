@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump gunicorn from 21.2.0 to 22.0.0. PR [#484](https://github.com/TampereHacklab/mulysa/pull/484) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump sqlparse from 0.4.4 to 0.5.0. PR [#483](https://github.com/TampereHacklab/mulysa/pull/483) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump idna from 3.6 to 3.7. PR [#482](https://github.com/TampereHacklab/mulysa/pull/482) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump jwcrypto from 1.5.1 to 1.5.6. PR [#481](https://github.com/TampereHacklab/mulysa/pull/481) by [@dependabot[bot]](https://github.com/apps/dependabot).
