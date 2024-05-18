@@ -1,5 +1,6 @@
 # Changelog
 
+* Do a bit of hiding for custom invoices. PR [#480](https://github.com/TampereHacklab/mulysa/pull/480) by [@tswfi](https://github.com/tswfi).
 * Update dependecies and bootstrap. PR [#487](https://github.com/TampereHacklab/mulysa/pull/487) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.3 to 3.1.4. PR [#486](https://github.com/TampereHacklab/mulysa/pull/486) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump werkzeug from 3.0.1 to 3.0.3. PR [#485](https://github.com/TampereHacklab/mulysa/pull/485) by [@dependabot[bot]](https://github.com/apps/dependabot).
