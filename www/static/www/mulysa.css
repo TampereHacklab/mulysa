@@ -41,3 +41,14 @@ body > main {
   height: 400px;
   width: 100%;
 }
+
+.strikeout {
+  background: repeating-linear-gradient(
+    180deg,
+    black 0%,
+    black 100%
+  );
+  background-size: 100% 2px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
