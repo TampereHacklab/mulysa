@@ -288,8 +288,19 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
+            "has_matrix": customuser.mxid is not None
         },
     )
+
+@login_required
+@self_or_staff_member_required
+def usersettings_matrixinvite(request, id):
+    # the base form for users basic information
+    customuser = get_object_or_404(CustomUser, id=id)
+    mxid = customuser.mxid
+    print('Invite', mxid)
+    messages.success(request, _("You have been invited"))
+    return userdetails(request, id)
 
 
 @login_required

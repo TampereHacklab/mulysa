@@ -41,9 +41,10 @@ django-oauth-toolkit = ">=1.5.0"
 dateparser = "*"
 nordigen = "*"
 django-constance = {extras = ["database"], version = "*"}
+typing-extensions = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"
 
 [pipenv]
 #

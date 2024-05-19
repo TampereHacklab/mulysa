@@ -382,6 +382,9 @@ CONSTANCE_CONFIG = {
         str,
     ),
     "GITHUB_URL": (GITHUB_URL, "Link to the github repository", str),
+    "MATRIX_ACCESS_TOKEN": (MATRIX_ACCESS_TOKEN, "Matrix user access token", str),
+    "MATRIX_SERVER": (MATRIX_SERVER, "Matrix server", str),
+    "MATRIX_MEMBER_ROOM_ID": (MATRIX_ROOM_ID, "Matrix room id for members", str),
     # Uncomment this if you would like to be able to edit the bank account details in the admin panel
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
