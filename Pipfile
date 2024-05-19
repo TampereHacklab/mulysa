@@ -44,7 +44,10 @@ django-constance = {extras = ["database"], version = "*"}
 typing-extensions = "*"
 
 [requires]
-python_version = "3.11"
+# Debian stable
+python_version = "3.9"
+# Ubuntu 24.04
+# python_version = "3.11"
 
 [pipenv]
 #

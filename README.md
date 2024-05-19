@@ -81,6 +81,8 @@ pipenv sync --dev
 pipenv shell
 ```
 
+If pipenv sync fails due to wrong Python version, change it in Pipfile, delete Pipfile.lock and try again.
+
 Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
 
 ```
@@ -94,6 +96,12 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
 ./manage.py runserver
+```
+
+## To create a initial superuser account
+
+```bash
+./manage.py createsuperuser
 ```
 
 ## To update localizations

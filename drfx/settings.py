@@ -51,6 +51,14 @@ RECEIPTNAME = "Mulysa ry"
 RECEIPTREGID = "1234567-8"
 RECEIPTSTREET = "Street 12, Somewhere Finland"
 
+# Matrix integration
+
+# Access token for user you want to use. Leave empty for no Matrix integration.
+MATRIX_ACCESS_TOKEN = ""
+# Matrix homeserver URL
+MATRIX_SERVER = "https://matrix.hacklab.fi/"
+# Room ID to invite new users. Default points to Hacklab.fi Matrix space.
+MATRIX_ROOM_ID = "!yNczWCtqHFeWuTbmhB:hacklab.fi"
 
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = (
