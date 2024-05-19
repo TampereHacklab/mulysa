@@ -279,7 +279,6 @@ def usersettings(request, id):
         .exclude(payload__isnull=True)
         .order_by("-date")
     )
-    print('ACCESS TOKENI', config.MATRIX_ACCESS_TOKEN, 'mxid', customuser.mxid, 'server', config.MATRIX_SERVER, 'roomid', config.MATRIX_ROOM_ID)
     return render(
         request,
         "www/usersettings.html",
