@@ -24,7 +24,17 @@
     />
     {% endbuttons %}
   </form>
-
+  {% if has_matrix %}
+  <hr />
+  <h1>{% trans 'Matrix Community' %}</h1>
+    <form action="{% url 'usersettings_matrixinvite' userdetails.id %}" method="post">{% csrf_token %}
+    <input
+      type="submit"
+      class="btn btn-primary"
+      value="{% trans 'Invite me to member\'s Matrix space' %}"
+    />
+  </form>
+  {% endif %}
 
   <hr />
   <h1>{% trans 'Extra Services' %}</h1>
