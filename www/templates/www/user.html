@@ -116,7 +116,7 @@
         <td>{{ transaction.reference_number }}</td>
         <td>{{ transaction.sender|default_if_none:"" }}</td>
         <td>{{ transaction.message }}</td>
-        <td>{{ transaction.comment|default_if_none:"" }}</td>
+        <td>{{ transaction.comment|default_if_none:""|linebreaks}}</td>
       </tr>
       {% endfor %}
     </table>
