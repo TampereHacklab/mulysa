@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump urllib3 from 2.2.1 to 2.2.2. PR [#490](https://github.com/TampereHacklab/mulysa/pull/490) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump requests from 2.31.0 to 2.32.0. PR [#489](https://github.com/TampereHacklab/mulysa/pull/489) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Do a bit of hiding for custom invoices. PR [#480](https://github.com/TampereHacklab/mulysa/pull/480) by [@tswfi](https://github.com/tswfi).
 * Update dependecies and bootstrap. PR [#487](https://github.com/TampereHacklab/mulysa/pull/487) by [@tswfi](https://github.com/tswfi).
