@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump django from 4.2.13 to 4.2.14. PR [#494](https://github.com/TampereHacklab/mulysa/pull/494) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump zipp from 3.18.2 to 3.19.1. PR [#493](https://github.com/TampereHacklab/mulysa/pull/493) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump djangorestframework from 3.15.1 to 3.15.2. PR [#491](https://github.com/TampereHacklab/mulysa/pull/491) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump certifi from 2024.2.2 to 2024.7.4. PR [#492](https://github.com/TampereHacklab/mulysa/pull/492) by [@dependabot[bot]](https://github.com/apps/dependabot).
