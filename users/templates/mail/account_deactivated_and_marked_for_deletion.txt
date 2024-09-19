@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 
-{% blocktrans %}Your account has been deactivated and marked for deletion{% endblocktrans %}
+{% blocktrans %}Your account has been deactivated and marked for deletion. All your services linked to this account will also cease to function.{% endblocktrans %}
 
 {{user.first_name}} {{user.last_name}}
 
