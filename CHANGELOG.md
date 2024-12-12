@@ -1,5 +1,6 @@
 # Changelog
 
+* if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.17 and other depencies update. PR [#506](https://github.com/TampereHacklab/mulysa/pull/506) by [@tswfi](https://github.com/tswfi).
 * Bump cryptography from 42.0.7 to 43.0.1. PR [#499](https://github.com/TampereHacklab/mulysa/pull/499) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump setuptools from 67.4.0 to 70.0.0. PR [#495](https://github.com/TampereHacklab/mulysa/pull/495) by [@dependabot[bot]](https://github.com/apps/dependabot).
