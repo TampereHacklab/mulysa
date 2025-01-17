@@ -113,7 +113,7 @@ class CustomUser(AbstractUser):
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_("User creation date"),
-        help_text=_("Automatically set to now when user is create"),
+        help_text=_("Automatically set to now when user is created"),
     )
 
     last_modified = models.DateTimeField(
