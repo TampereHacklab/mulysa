@@ -4,13 +4,13 @@
 <h1>
 {% trans 'Custom invoices'%}
 </h1>
-<p>
+<div class="alert alert-danger">
   {% blocktrans %}
   <strong>NOTE:</strong> Custominvoices are meant for special situations where you are paying for 
   multiple months using one transaction. We suggest using monthly recurring 
   payments for all regular situations.
   {% endblocktrans %}
-</p>
+</div>
 <form action="{% url 'custominvoice' %}" method="post" enctype=multipart/form-data>
     {% csrf_token %}
     <table border="0">
@@ -58,7 +58,7 @@
     <th>{% trans 'Paid' %}</th>
   </tr>
   {% for custominvoice in paid_invoices %}
-  <tr>
+  <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
     <td>{{ custominvoice.created }}</td>
     <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
     <td>{{ custominvoice.amount }}</td>

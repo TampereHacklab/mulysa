@@ -1,5 +1,18 @@
 # Changelog
 
+* Bump jinja2 from 3.1.4 to 3.1.5. PR [#514](https://github.com/TampereHacklab/mulysa/pull/514) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
+* Django 4.2.17 and other depencies update. PR [#506](https://github.com/TampereHacklab/mulysa/pull/506) by [@tswfi](https://github.com/tswfi).
+* Bump cryptography from 42.0.7 to 43.0.1. PR [#499](https://github.com/TampereHacklab/mulysa/pull/499) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump setuptools from 67.4.0 to 70.0.0. PR [#495](https://github.com/TampereHacklab/mulysa/pull/495) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 4.2.14 to 4.2.15. PR [#496](https://github.com/TampereHacklab/mulysa/pull/496) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 4.2.13 to 4.2.14. PR [#494](https://github.com/TampereHacklab/mulysa/pull/494) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump zipp from 3.18.2 to 3.19.1. PR [#493](https://github.com/TampereHacklab/mulysa/pull/493) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump djangorestframework from 3.15.1 to 3.15.2. PR [#491](https://github.com/TampereHacklab/mulysa/pull/491) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump certifi from 2024.2.2 to 2024.7.4. PR [#492](https://github.com/TampereHacklab/mulysa/pull/492) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump urllib3 from 2.2.1 to 2.2.2. PR [#490](https://github.com/TampereHacklab/mulysa/pull/490) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump requests from 2.31.0 to 2.32.0. PR [#489](https://github.com/TampereHacklab/mulysa/pull/489) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Do a bit of hiding for custom invoices. PR [#480](https://github.com/TampereHacklab/mulysa/pull/480) by [@tswfi](https://github.com/tswfi).
 * Update dependecies and bootstrap. PR [#487](https://github.com/TampereHacklab/mulysa/pull/487) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.3 to 3.1.4. PR [#486](https://github.com/TampereHacklab/mulysa/pull/486) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump werkzeug from 3.0.1 to 3.0.3. PR [#485](https://github.com/TampereHacklab/mulysa/pull/485) by [@dependabot[bot]](https://github.com/apps/dependabot).

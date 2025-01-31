@@ -76,43 +76,13 @@
               {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service is paid with reference number <strong>{{ ref }}</strong>
                 to bank account <strong>{{bank_iban}}</strong> (recurring monthly payments). <br />Service price is <strong>{{ cost }}</strong>.{% endblocktrans %}<br/>
             </p>
-            <p>{% blocktrans %}To pay for multiple months at once, you can create a custom invoice. {% endblocktrans %}
-              <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-            </p>
             {% endif %}
           {% endif %}
         </td>
       </tr>
     </table>
     {% endfor %}
-    <h2>{% trans 'Custom invoices' %}</h2>
-    <table class="table table-responsive-sm">
-      <tr>
-        <th>{% trans 'Date' %}</th>
-        <th>{% trans 'Service' %}</th>
-        <th>{% trans 'Amount' %}</th>
-        <th>{% trans 'Reference number' %}</th>
-        <th>{% trans 'Paid' %}</th>
-      </tr>
-      {% for custominvoice in userdetails.custominvoices %}
-      <tr>
-        <td>{{ custominvoice.created }}</td>
-        <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
-        <td>{{ custominvoice.amount }}</td>
-        <td>{{ custominvoice.reference_number }}</td>
-        <td>
-          {% if custominvoice.payment_transaction %}
-            <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
-          {% else %}
-            {% trans 'Not paid yet' %}
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-    <p>
-      <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-    </p>
+
     <h2>{% trans 'Activity log' %}</h2>
     <table class="table table-sm table-responsive-sm">
       <tr>
@@ -150,6 +120,44 @@
       </tr>
       {% endfor %}
     </table>
+
+
+    <h2>{% trans 'Custom invoices' %}</h2>
+    <div class="alert alert-danger">
+      {% blocktrans %}
+      <strong>NOTE:</strong> Custominvoices are meant for special situations where you are paying for 
+      multiple months using one transaction. We suggest using monthly recurring 
+      payments for all regular situations.
+    {% endblocktrans %}
+    </div>
+    <table class="table table-responsive-sm">
+      <tr>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Service' %}</th>
+        <th>{% trans 'Amount' %}</th>
+        <th>{% trans 'Reference number' %}</th>
+        <th>{% trans 'Paid' %}</th>
+      </tr>
+      {% for custominvoice in userdetails.custominvoices %}
+      <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
+        <td>{{ custominvoice.created }}</td>
+        <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
+        <td>{{ custominvoice.amount }}</td>
+        <td>{{ custominvoice.reference_number }}</td>
+        <td>
+          {% if custominvoice.payment_transaction %}
+            <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
+          {% else %}
+            {% trans 'Not paid yet' %}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <p>
+      <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+    </p>
+
   {% endif %}
 </div>
 {% endblock %}
