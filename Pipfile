@@ -18,8 +18,7 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-# django = "==4.2.*"
-django = "*"
+django = "==5.2a"
 djangorestframework = "*"
 dj-rest-auth = "*"
 django-allauth = "*"
@@ -47,10 +46,7 @@ setuptools = "*"
 matrix-nio = "*"
 
 [requires]
-# Debian stable
-# python_version = "3.9"
-# Ubuntu 24.04
-python_version = "3.12.3"
+python_version = ">=3.11"
 
 [pipenv]
 #
