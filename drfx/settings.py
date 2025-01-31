@@ -56,7 +56,7 @@ RECEIPTSTREET = "Street 12, Somewhere Finland"
 # Access token for user you want to use. Leave empty for no Matrix integration.
 MATRIX_ACCESS_TOKEN = ""
 # Matrix homeserver URL
-MATRIX_SERVER = "https://matrix.hacklab.fi/"
+MATRIX_SERVER = "https://matrix.hacklab.fi"
 # Room ID to invite new users. Default points to Hacklab.fi Matrix space.
 MATRIX_ROOM_ID = "!yNczWCtqHFeWuTbmhB:hacklab.fi"
 
