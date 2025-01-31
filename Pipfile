@@ -18,7 +18,8 @@ black = "*"
 werkzeug = "*"
 
 [packages]
-django = "==4.2.*"
+# django = "==4.2.*"
+django = "*"
 djangorestframework = "*"
 dj-rest-auth = "*"
 django-allauth = "*"
@@ -42,12 +43,16 @@ dateparser = "*"
 nordigen = "*"
 django-constance = {extras = ["database"], version = "*"}
 typing-extensions = "*"
+# hackhackhack
+#drf-yasg = "== 1.21.4"
+#jinja2 = "==3.1.4"
+#markupsafe = "==2.1.5"
 
 [requires]
 # Debian stable
-python_version = "3.9"
+# python_version = "3.9"
 # Ubuntu 24.04
-# python_version = "3.11"
+python_version = "3.12.3"
 
 [pipenv]
 #
@@ -57,3 +62,4 @@ python_version = "3.9"
 # or pipenv starts supporting prereleases for one package (https://github.com/pypa/pipenv/pull/4607)
 #
 allow_prereleases = true
+

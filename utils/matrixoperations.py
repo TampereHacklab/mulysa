@@ -28,6 +28,7 @@ class MatrixOperations:
 	def invite_user(self, user_id, room_id, reason):
 		api_url=f'{self.matrix_server}_matrix/client/v3/rooms/{room_id}/invite'
 		payload={ "reason": reason, "user_id": user_id }
+		print(f"{api_url}  {payload}  {self.headers}")
 		r = requests.post(api_url, headers=self.headers, json = payload)
 		if r.status_code == 200:
 			logger.debug(f"Invited Matrix user {user_id} to room {room_id} because of {reason}")
