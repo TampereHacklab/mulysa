@@ -51,6 +51,18 @@ RECEIPTNAME = "Mulysa ry"
 RECEIPTREGID = "1234567-8"
 RECEIPTSTREET = "Street 12, Somewhere Finland"
 
+# Matrix integration
+
+# Access token for user you want to use. Leave empty for no Matrix integration.
+MATRIX_ACCESS_TOKEN = ""
+# Matrix homeserver URL
+MATRIX_SERVER = "https://matrix.hacklab.fi"
+# Room ID to invite new users. Default points to Hacklab.fi Matrix space.
+MATRIX_ROOM_ID = "!yNczWCtqHFeWuTbmhB:hacklab.fi"
+# URL to register to Matrix, if no account provided
+MATRIX_ACCOUNT_CRETION_URL = "https://chat.hacklab.fi/#/login"
+# Site specific help text for registration
+MATRIX_ACCOUNT_CRETION_HELP = "Choose Continue with Hacklab Finland Keycloack"
 
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = (
@@ -383,6 +395,8 @@ CONSTANCE_CONFIG = {
     ),
     "GITHUB_URL": (GITHUB_URL, "Link to the github repository", str),
     "HIDE_CUSTOM_INVOICE": (False, "Hide the custom invoice feature for end users", bool),
+    "MATRIX_SERVER": (MATRIX_SERVER, "Matrix server", str),
+    "MATRIX_MEMBER_ROOM_ID": (MATRIX_ROOM_ID, "Matrix room id for members", str),
     # Uncomment this if you would like to be able to edit the bank account details in the admin panel
     # "ACCOUNT_IBAN": (ACCOUNT_IBAN, "IBAN of the association's bank account"),
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),

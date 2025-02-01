@@ -39,6 +39,11 @@ urlpatterns = [
         views.usersettings_delete_nfc,
         name="usersettings_delete_nfc",
     ),
+    path(
+        "usersettings/<int:id>/matrixinvite",
+        views.usersettings_matrixinvite,
+        name="usersettings_matrixinvite",
+    ),
     path("custominvoice", views.custominvoice, name="custominvoice"),
     path(
         "custominvoice/<str:action>/<int:invoiceid>/",
