@@ -21,8 +21,8 @@ class MatrixOperations:
 
     def send_message(self, room_id, message):
         api_url = f'{self.matrix_server}_matrix/client/v3/rooms/{room_id}/send/m.room.message'
-        payload = { "msgtype": "m.text", "body": message }
-        r = requests.post(api_url, headers=self.headers, json = payload)
+        payload = {"msgtype": "m.text", "body": message}
+        r = requests.post(api_url, headers=self.headers, json=payload)
         if r.status_code == 200:
             logger.debug(f"Sent Matrix message {message} to room {room_id}")
         else:
@@ -39,7 +39,7 @@ class MatrixOperations:
     def kick_user(self, user_id, room_id, reason):
         api_url = f'{self.matrix_server}_matrix/client/v3/rooms/{room_id}/kick'
         payload = {"reason": reason, "user_id": user_id}
-        r = requests.post(api_url, headers=self.headers, json = payload)
+        r = requests.post(api_url, headers=self.headers, json=payload)
         if r.status_code == 200:
             logger.debug(f"Kicked Matrix user {user_id} from room {room_id} because of {reason}")
         else:
