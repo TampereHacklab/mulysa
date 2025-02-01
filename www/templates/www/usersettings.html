@@ -24,8 +24,22 @@
     />
     {% endbuttons %}
   </form>
-
-
+  <hr />
+  <h1>{% trans 'Matrix Community' %}</h1>
+  {% if has_matrix %}
+    <form action="{% url 'usersettings_matrixinvite' userdetails.id %}" method="post">{% csrf_token %}
+    <input
+      type="submit"
+      class="btn btn-primary"
+      value="{% trans 'Invite me to members Matrix space' %}"
+    />
+  </form>
+  {% else %}
+    {% if matrix_registration_url %}
+      <a href="{{ matrix_registration_url }}">{% trans 'Create Matrix account here' %}</a><br/>
+      <b>{{ matrix_registration_help }}</b>
+    {% endif %}
+  {% endif %}
   <hr />
   <h1>{% trans 'Extra Services' %}</h1>
   {% blocktrans %}Here you can see extra services that you can subscribe yourself. You can only unsubscribe services when you have

@@ -6,7 +6,7 @@
   <h1>
     {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
   </h1>
-
+  {% bootstrap_messages %}
   <table class="table">
     <tr>
       <td>{% trans 'Name' %}</td>
