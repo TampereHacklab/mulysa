@@ -399,6 +399,7 @@ def usersettings_claim_nfc(request, id):
 
     return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
+
 @login_required
 @self_or_staff_member_required
 def usersettings_send_mail(request, id):
