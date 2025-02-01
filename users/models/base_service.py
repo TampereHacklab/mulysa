@@ -8,6 +8,7 @@ Class that represents a service for members. For example:
  - Access rights
 """
 
+
 class BaseService(models.Model):
     service_id = models.CharField(
         unique=True,

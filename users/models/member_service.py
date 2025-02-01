@@ -13,7 +13,6 @@ Class that represents a service for members. For example:
 
 
 class MemberService(BaseService):
-
     """
     Defines another service that this this service pays for. If this service is paid, the referenced
     service is also marked as paid for days_per_payment after the payment date.
@@ -21,6 +20,7 @@ class MemberService(BaseService):
     Can be used to make service chains so that if a more expensive
     service is paid, the user can automatically receive cheaper ones.
     """
+
     pays_also_service = models.ForeignKey(
         "self", on_delete=models.SET_NULL, blank=True, null=True
     )
