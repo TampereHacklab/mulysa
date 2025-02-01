@@ -50,7 +50,9 @@ class HolviToolbox:
                     match = re.search(r"\b0*(\d+)\b", str(item["Message"]))
                     if match:
                         item["Reference"] = match.group(1)
-                        item["Message"] = item["Message"] + " (reference extracted from message)"
+                        item["Message"] = (
+                            item["Message"] + " (reference extracted from message)"
+                        )
 
                 # Force reference field to be strings
                 item["Reference"] = str(item["Reference"])
