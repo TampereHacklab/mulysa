@@ -46,7 +46,9 @@ class TestUserDeletion(TestCase):
             "Your account" in mail.outbox[0].subject
             or "poistettu" in mail.outbox[0].subject
         )
-        self.assertTrue("deletion" in mail.outbox[0].body or "poistettava" in mail.outbox[0].body)
+        self.assertTrue(
+            "deletion" in mail.outbox[0].body or "poistettava" in mail.outbox[0].body
+        )
         self.assertIn(self.user.first_name, mail.outbox[0].body)
 
         # clear outbox
