@@ -10,7 +10,9 @@ class BankTransaction(models.Model):
     """
 
     # User this transaction was made by, or null if unknown
-    user = models.ForeignKey("CustomUser", on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(
+        "CustomUser", on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     # Unique archival reference number that all transactions have
     archival_reference = models.CharField(
