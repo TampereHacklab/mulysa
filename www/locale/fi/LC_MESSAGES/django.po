@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 16:46+0000\n"
+"POT-Creation-Date: 2025-02-01 17:19+0000\n"
 "PO-Revision-Date: 2020-12-01 18:35+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -713,8 +713,11 @@ msgstr ""
 msgid "Send e-mail to user"
 msgstr "Lähetä sähköposti käyttäjälle"
 
+#: www/templates/www/usersettings.html:154
+msgid "Subject"
+msgstr "Otsikko"
+
 #: www/templates/www/usersettings.html:160
-#| msgid "Sender"
 msgid "Send"
 msgstr "Lähetä"
 
@@ -777,7 +780,6 @@ msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
 #: www/views.py:421
-#| msgid "E-mail"
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
