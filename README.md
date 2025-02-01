@@ -297,4 +297,6 @@ Just do one first with either dummy data or good guess then do the other.
 
 ## fingers crossed
 
-just try it out :)
+just try it out :) 
+It's easy :)
+
