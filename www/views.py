@@ -288,7 +288,9 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
-            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None
+            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
+            "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
+            "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
         },
     )
 

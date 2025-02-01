@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-19 13:14+0000\n"
+"POT-Creation-Date: 2025-02-01 13:46+0000\n"
 "PO-Revision-Date: 2020-11-14 21:45+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -26,37 +26,35 @@ msgstr "Sähköpostiosoite vaaditaan"
 
 #: users/filters.py:12
 msgid "Age"
-msgstr ""
+msgstr "Ikä"
 
 #: users/filters.py:20
 msgid "Under 18 years"
-msgstr ""
+msgstr "Alle 18 vuotias"
 
 #: users/filters.py:21
 msgid "Over 18 years"
-msgstr ""
+msgstr "Yli 18-vuotias"
 
 #: users/filters.py:22
 msgid "Under 30 years"
-msgstr ""
+msgstr "Alle 30-vuotias"
 
 #: users/filters.py:23
 msgid "20 to 60"
-msgstr ""
+msgstr "20-60-vuotias"
 
 #: users/filters.py:24
 msgid "Over 63 years"
-msgstr ""
+msgstr "Yli 63-vuotias"
 
 #: users/filters.py:55 users/filters.py:63 users/models/custom_user.py:130
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
 #: users/filters.py:64
-#, fuzzy
-#| msgid "Marked for deletion"
 msgid "NOT Marked for deletion"
-msgstr "Merkattu poistettavaksi"
+msgstr "EI merkattu poistettavaksi"
 
 #: users/models/bank_transaction.py:20
 msgid "Archival reference"
@@ -229,7 +227,7 @@ msgstr ""
 
 #: users/models/custom_user.py:90
 msgid "This phone number is already registered to a member"
-msgstr ""
+msgstr "Tämä puhelinnumero on jo käytössä jäsenellä"
 
 #: users/models/custom_user.py:99
 msgid "Bank account"
@@ -252,7 +250,7 @@ msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
 #: users/models/custom_user.py:116
-msgid "Automatically set to now when user is create"
+msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
 #: users/models/custom_user.py:122
@@ -290,7 +288,7 @@ msgstr ""
 
 #: users/models/member_service.py:113
 msgid "For accounting export"
-msgstr ""
+msgstr "Kirjanpitoa varten"
 
 #: users/models/member_service.py:117
 msgid "Member service"
@@ -403,44 +401,40 @@ msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"
 
 #: users/models/statistics.py:79
-#, fuzzy
-#| msgid "Date of the transaction"
 msgid "Date of this statistics event"
-msgstr "Tilisiirron päiväys"
+msgstr "Tilastotapahtuman päiväys"
 
 #: users/models/statistics.py:82
 msgid "Total number of users"
-msgstr ""
+msgstr "Käyttäjiä yhteensä"
 
 #: users/models/statistics.py:84
-#, fuzzy
-#| msgid "Active"
 msgid "Active users"
-msgstr "Käytettävissä"
+msgstr "Aktiivisia käyttäjiä"
 
 #: users/models/statistics.py:86
 msgid "Users pending deletion"
-msgstr ""
+msgstr "Poistamista odottavia käyttäjiä"
 
 #: users/models/statistics.py:90
-#, fuzzy
-#| msgid "New membership application"
 msgid "Number of open membership applications"
-msgstr "Uusi jäsenhakemus vastaanotettu"
+msgstr "Avointen jäsenhakemusten määrä"
 
 #: users/models/statistics.py:94
 msgid "Number of open custom invoices"
-msgstr ""
+msgstr "Avointen vapaamuotoisten laskujen määrä"
 
 #: users/models/statistics.py:97
 msgid "Total amount of open custom invoices"
-msgstr ""
+msgstr "Vapaamuotoisten laskujen yhteismäärä"
 
 #: users/models/statistics.py:103
 msgid ""
 "Statistics for service subscriptions. Each service will be its own key with "
 "counts for Active, Overdue and Suspended states"
 msgstr ""
+"Tilastot jäsenpalveluille. Jokainen palveli on oma avaimensa jolla määrät "
+"aktiivisille, vanhentuneille ja keskeytetyille tiloille"
 
 #: users/signals.py:150
 msgid "Thank you for applying membership and next steps"
@@ -461,7 +455,7 @@ msgstr "Hakemuksesi on hylätty"
 #: users/signals.py:291
 #: users/templates/mail/account_deactivated_and_marked_for_deletion.txt:5
 msgid "Your account has been deactivated and marked for deletion"
-msgstr ""
+msgstr "Käyttäjätilisi on poistettu käytöstä ja merkitty poistettavaksi"
 
 #: users/signals.py:320
 msgid "Door access denied"
@@ -542,16 +536,12 @@ msgstr ""
 "%(siteurl)s\n"
 
 #: users/templates/mail/door_access_denied.txt:16
-#, fuzzy
-#| msgid "Your services"
 msgid "Your services status:"
-msgstr "Jäsenpalvelusi"
+msgstr "Palveluitesi tila:"
 
 #: users/templates/mail/door_access_denied.txt:20
-#, fuzzy
-#| msgid "Your services"
 msgid "No services"
-msgstr "Jäsenpalvelusi"
+msgstr "Ei palveluja"
 
 #: users/templates/mail/new_application.txt:4
 msgid "New membership application"

@@ -59,6 +59,10 @@ MATRIX_ACCESS_TOKEN = ""
 MATRIX_SERVER = "https://matrix.hacklab.fi"
 # Room ID to invite new users. Default points to Hacklab.fi Matrix space.
 MATRIX_ROOM_ID = "!yNczWCtqHFeWuTbmhB:hacklab.fi"
+# URL to register to Matrix, if no account provided
+MATRIX_ACCOUNT_CRETION_URL="https://chat.hacklab.fi/#/login"
+# Site specific help text for registration
+MATRIX_ACCOUNT_CRETION_HELP="Choose Continue with Hacklab Finland Keycloack"
 
 # External urls, like links to members guide and rules
 ASSOCIATION_RULES_URL = (
