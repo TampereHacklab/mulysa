@@ -50,6 +50,7 @@ brew install git pipenv mysql gettext
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
+
 ## Installing prerequisites on other platforms
 
 Find a way to install the software on this list (click the links to find installer downloads):
@@ -246,9 +247,9 @@ Just do one first with either dummy data or good guess then do the other.
   * display name: mulysa (or what ever you want to call it)
   * trust email: yes
   * sync mode: force (this makes the data always update from mulysa)
-  * Authorization URL: <https://yourmulysadomain/o/authorize/>
-  * Token URL: <https://yourmulysadomain/o/token/>
-  * User Info URL: <https://yourmulysadomain/o/userinfo/>
+  * Authorization URL: https://yourmulysadomain/o/authorize/
+  * Token URL: https://yourmulysadomain/o/token/
+  * User Info URL: https://yourmulysadomain/o/userinfo/
   * Client Authentication: client secret sent as post
   * Client ID: the client id from mulysa
   * Client Secret: the client secret from mulysa
