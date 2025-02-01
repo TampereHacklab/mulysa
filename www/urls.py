@@ -35,6 +35,11 @@ urlpatterns = [
         name="usersettings_claim_nfc",
     ),
     path(
+        "usersettings/<int:id>/send_mail",
+        views.usersettings_send_mail,
+        name="usersettings_send_mail",
+    ),
+    path(
         "usersettings/<int:id>/delete_nfc",
         views.usersettings_delete_nfc,
         name="usersettings_delete_nfc",

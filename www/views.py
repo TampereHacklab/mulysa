@@ -41,6 +41,7 @@ from www.forms import (
     RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
+from django.core.mail import send_mail
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -289,6 +290,7 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
+            "show_send_email": customuser.is_staff,
             "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
             "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
             "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
@@ -394,6 +396,30 @@ def usersettings_claim_nfc(request, id):
         customuser.log(f"Registered new NFC card {censoredid}")
 
         messages.success(request, _("NFC Card successfully claimed"))
+
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+
+@login_required
+@self_or_staff_member_required
+def usersettings_send_mail(request, id):
+    """
+    Send e-mail to this user
+    """
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST":
+        send_mail(
+            request.POST['subject'],
+            request.POST['content'],
+            config.NOREPLY_FROM_ADDRESS,
+            [customuser.email],
+            fail_silently=False,
+        )
+
+        customuser.log(f"Sent e-mail to {customuser.email}: {request.POST['subject']}: {request.POST['content']}")
+
+        messages.success(request, _("E-mail sent"))
 
     return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
 
