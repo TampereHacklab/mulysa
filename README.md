@@ -45,22 +45,10 @@ sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
-brew install git
-```
-
-```sh
-brew install pipenv
+brew install git pipenv mysql gettext
 ```
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
-
-```sh
-brew install mysql
-```
-
-```sh
-brew install gettext
-```
 
 ## Installing prerequisites on other platforms
 
@@ -258,9 +246,9 @@ Just do one first with either dummy data or good guess then do the other.
   * display name: mulysa (or what ever you want to call it)
   * trust email: yes
   * sync mode: force (this makes the data always update from mulysa)
-  * Authorization URL: https://yourmulysadomain/o/authorize/
-  * Token URL: https://yourmulysadomain/o/token/
-  * User Info URL: https://yourmulysadomain/o/userinfo/
+  * Authorization URL: <https://yourmulysadomain/o/authorize/>
+  * Token URL: <https://yourmulysadomain/o/token/>
+  * User Info URL: <https://yourmulysadomain/o/userinfo/>
   * Client Authentication: client secret sent as post
   * Client ID: the client id from mulysa
   * Client Secret: the client secret from mulysa
