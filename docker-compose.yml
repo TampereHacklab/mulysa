@@ -47,6 +47,8 @@ services:
       - db
     volumes:
       - static_files:/code/static/
+    ports:
+      - 8000:8000
 
   proxy:
     image: "traefik:v2.8.1"
