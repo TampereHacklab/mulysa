@@ -1,5 +1,6 @@
 # Changelog
 
+* Try to fix latest changes. PR [#544](https://github.com/TampereHacklab/mulysa/pull/544) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.4 to 3.1.5. PR [#514](https://github.com/TampereHacklab/mulysa/pull/514) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.17 and other depencies update. PR [#506](https://github.com/TampereHacklab/mulysa/pull/506) by [@tswfi](https://github.com/tswfi).
@@ -115,4 +116,3 @@
 * Editable Userfields and fixes to usersettings page. PR [#281](https://github.com/TampereHacklab/mulysa/pull/281) by [@tswfi](https://github.com/tswfi).
 * Show last login in users list. PR [#273](https://github.com/TampereHacklab/mulysa/pull/273) by [@tswfi](https://github.com/tswfi).
 * Adding https://github.com/tiangolo/latest-changes. PR [#287](https://github.com/TampereHacklab/mulysa/pull/287) by [@tswfi](https://github.com/tswfi).
-
