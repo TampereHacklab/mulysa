@@ -279,6 +279,7 @@ def usersettings(request, id):
         .exclude(payload__isnull=True)
         .order_by("-date")
     )
+
     return render(
         request,
         "www/usersettings.html",
@@ -293,6 +294,7 @@ def usersettings(request, id):
             "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
         },
     )
+
 
 @login_required
 @self_or_staff_member_required

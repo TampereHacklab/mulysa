@@ -77,10 +77,11 @@ When you have the prerequisites installed, run these commands:
 ```bash
 git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
-pipenv lock
 pipenv sync --dev
 pipenv shell
 ```
+
+If pipenv sync asks to run pipenv lock, run it.
 
 If pipenv sync fails due to wrong Python version, change it in Pipfile, delete Pipfile.lock and try again.
 
@@ -99,7 +100,7 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ./manage.py runserver
 ```
 
-## To create a initial superuser account
+## To create an initial superuser account
 
 ```bash
 ./manage.py createsuperuser
