@@ -366,7 +366,7 @@ class TestNordigenmporter(TestCase):
             self.assertDictEqual(
                 res,
                 {
-                    "imported": 4,
+                    "imported": 5,
                     "exists": 1,
                     "error": 1,
                     "failedrows": [
@@ -380,6 +380,9 @@ class TestNordigenmporter(TestCase):
                     ],
                 },
             )
+            test5 = models.BankTransaction.objects.get(archival_reference="TEST5")
+            self.assertEqual(test5.amount, Decimal("80.00"))
+            self.assertEqual(test5.reference_number, "123")
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()
