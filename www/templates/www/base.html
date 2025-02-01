@@ -38,6 +38,7 @@
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'dataexport' %}active{% endif %}" href="{% url 'dataexport' %}">{% trans 'Export' %}</a></li>
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'ledger' %}active{% endif %}" href="{% url 'ledger' %}">{% trans 'Bank Ledger' %}</a></li>
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'custominvoices' %}active{% endif %}" href="{% url 'custominvoices' %}">{% trans 'Custom invoices' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Django Admin' %}</a></li>
               {% endif %}
             {% else %}
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'register' %}active{% endif %}" href="{% url 'register' %}">{% trans 'Apply membership' %}</a></li>
