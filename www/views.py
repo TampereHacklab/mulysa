@@ -304,7 +304,6 @@ def usersettings_matrixinvite(request, id):
     """
     customuser = get_object_or_404(CustomUser, id=id)
     mxid = customuser.mxid
-    print('Invite', mxid)
     mo = MatrixOperations(config.MATRIX_ACCESS_TOKEN, config.MATRIX_SERVER)
     mo.invite_user(mxid, config.MATRIX_ROOM_ID, _("Welcome to member's Matrix space"))
     messages.success(request, _("You have been invited"))
