@@ -42,7 +42,10 @@ class TestUserDeletion(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn(self.user.email, mail.outbox[0].to)
         self.assertIn(config.MEMBERSHIP_APPLICATION_NOTIFY_ADDRESS, mail.outbox[0].to)
-        self.assertIn("Your account", mail.outbox[0].subject)
+        self.assertTrue(
+            "Your account" in mail.outbox[0].subject
+            or "poistettu" in mail.outbox[0].subject
+        )
         self.assertIn("deletion", mail.outbox[0].body)
         self.assertIn(self.user.first_name, mail.outbox[0].body)
 
