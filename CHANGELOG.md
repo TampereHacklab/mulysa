@@ -1,5 +1,6 @@
 # Changelog
 
+* Add active to current link to visualise current page to the user. PR [#542](https://github.com/TampereHacklab/mulysa/pull/542) by [@Janne555](https://github.com/Janne555).
 * Try to fix latest changes. PR [#544](https://github.com/TampereHacklab/mulysa/pull/544) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.4 to 3.1.5. PR [#514](https://github.com/TampereHacklab/mulysa/pull/514) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
