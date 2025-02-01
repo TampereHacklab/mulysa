@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 13:46+0000\n"
+"POT-Creation-Date: 2025-02-01 16:46+0000\n"
 "PO-Revision-Date: 2020-11-14 21:45+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -453,13 +453,21 @@ msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
 #: users/signals.py:291
-#: users/templates/mail/account_deactivated_and_marked_for_deletion.txt:5
 msgid "Your account has been deactivated and marked for deletion"
 msgstr "Käyttäjätilisi on poistettu käytöstä ja merkitty poistettavaksi"
 
 #: users/signals.py:320
 msgid "Door access denied"
 msgstr "Ovipääsy kielletty"
+
+#: users/templates/mail/account_deactivated_and_marked_for_deletion.txt:5
+msgid ""
+"Your account has been deactivated and marked for deletion. All of your "
+"membership services linked to this account, including online services, will "
+"cease to function."
+msgstr ""
+"Käyttäjätunnuksesi on deaktivoitu ja merkitty poistettavaksi. Kaikki "
+"jäsenpalvelusi, myös verkossa olevat, lakkaavat toimimasta."
 
 #: users/templates/mail/application_received.txt:4
 #, python-format
@@ -649,8 +657,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
