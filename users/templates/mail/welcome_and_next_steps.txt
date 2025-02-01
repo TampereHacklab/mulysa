@@ -23,7 +23,7 @@ If you have not yet read the new members' guide please do so now: {{wikiurl}}
 {% blocktrans %}
 All {{sitename}} services work by voluntary basis so
 things might not always work. Please be patient! If you see something 
-that could use improvement we would be more than happy for your contribution.
+that could use improvement we would be very grateful for your contribution.
 
 Welcome!
 {% endblocktrans %}
