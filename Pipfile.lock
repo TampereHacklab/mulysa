@@ -1028,14 +1028,6 @@
             "index": "pypi",
             "version": "==7.6.10"
         },
-        "coveralls": {
-            "hashes": [
-                "sha256:7a6b1fa9848332c7b2221afb20f3df90272ac0167060f41b5fe90429b30b1809",
-                "sha256:7b2a0a2bcef94f295e3cf28dcc55ca40b71c77d1c2446b538e85f0f7bc21aa69"
-            ],
-            "index": "pypi",
-            "version": "==4.0.1"
-        },
         "decorator": {
             "hashes": [
                 "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330",
