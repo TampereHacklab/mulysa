@@ -133,6 +133,20 @@
     </tr>
   </table>
 
+  {% if show_send_email %}
+  <h1>{% trans 'Send e-mail to user' %}</h1>
+  <form action="{% url 'usersettings_send_mail' userdetails.id %}" method="post">
+    {% csrf_token %}
+    Subject:
+    <input type="text" name="subject" /></br>
+    <textarea name="content" cols="60" rows="10"></textarea></br>
+    <input
+    type="submit"
+    class="btn btn-primary btn-sm"
+    value="{% trans 'Send' %}"
+  />
+  </form>
+{% endif %}
 
 
   <div class="alert alert-info" role="alert">
