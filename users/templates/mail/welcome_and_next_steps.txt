@@ -4,17 +4,16 @@
 {% blocktrans with first_name=user.first_name siteurl=site.domain wikiurl=config.MEMBERS_GUIDE_URL %}
 Welcome aboard {{first_name}}!
 
-Great to have you onboard! Your membership application has been
-approved and now is a great time to to join our community by
-coming to the next community meeting on the first Tuesday of the
-month or poping by weekly open house every Tuesday. It is also
-highly recommendable to join our communication channels (Matrix,
-Telegram or IRC and email list). Be happy to ask if you like to
-know more!
+Your membership application has been approved! 
 
-Now is the time to login to {{siteurl}} and check your payment information and status.
+There are a couple of things to pay attention to next. 
 
-If you have not yet read the membership guide please do so now: {{wikiurl}}
+First of all, it is time to login to {{siteurl}} and check your payment information and status.
+
+If you would like to meet community members face to face as much as we would like to meet you, please join us in the weekly open house or the monthly community meeting. Please check the local dates on our web site.
+
+It is also highly recommended to join our communication channels. We use Matrix, and you can connect by different apps -read the instructions, and if you haven't yet, the whole membership guide in {{wikiurl}}
+
 {% endblocktrans %}
 
 {% trans 'Your services' %}
