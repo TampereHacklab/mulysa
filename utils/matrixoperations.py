@@ -28,6 +28,7 @@ class MatrixOperations:
 		else:
 			logger.warn(f"Sending Matrix message failed:", r.content)
 
+	# Currently only used and tested function
 	def invite_user(self, user_id, room_id, reason):
 		loop = asyncio.new_event_loop()
 		asyncio.set_event_loop(loop)

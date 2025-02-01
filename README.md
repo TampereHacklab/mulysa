@@ -67,7 +67,7 @@ brew install gettext
 Find a way to install the software on this list (click the links to find installer downloads):
 
 * [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-* [python](https://www.python.org/downloads/) 3.9
+* [python](https://www.python.org/downloads/) 3.11
 * [gettext](https://www.gnu.org/software/gettext/) for translation editing and compiling
 * [MySQL C API (libmysqlclient)](https://dev.mysql.com/downloads/c-api/)
 * [pipenv](https://github.com/pypa/pipenv)
@@ -77,6 +77,7 @@ When you have the prerequisites installed, run these commands:
 ```bash
 git clone https://github.com/TampereHacklab/mulysa.git
 cd mulysa
+pipenv lock
 pipenv sync --dev
 pipenv shell
 ```
