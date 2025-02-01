@@ -16,6 +16,7 @@ from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
 from drfx import config
+from utils.matrixoperations import MatrixOperations
 from users.models import (
     BankTransaction,
     CustomInvoice,
@@ -288,8 +289,25 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
+            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
+            "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
+            "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
         },
     )
+
+
+@login_required
+@self_or_staff_member_required
+def usersettings_matrixinvite(request, id):
+    """
+    Invite user to matrix room/space
+    """
+    customuser = get_object_or_404(CustomUser, id=id)
+    mxid = customuser.mxid
+    mo = MatrixOperations(config.MATRIX_ACCESS_TOKEN, config.MATRIX_SERVER)
+    mo.invite_user(mxid, config.MATRIX_ROOM_ID, _("Welcome to member's Matrix space"))
+    messages.success(request, _("You have been invited"))
+    return userdetails(request, id)
 
 
 @login_required
