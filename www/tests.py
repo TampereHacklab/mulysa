@@ -403,6 +403,7 @@ class TestNFC(TestCase):
         logentry = DeviceAccessLogEntry()
         logentry.payload = "1234567"
         logentry.device = device
+        logentry.method = "nfc"
         logentry.granted = False
         logentry.save()
 
