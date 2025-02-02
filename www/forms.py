@@ -75,9 +75,8 @@ class FileImportForm(forms.Form):
     filetype = forms.ChoiceField(
         label="File type",
         choices=[
-            ("TITO", "Transactions (Nordea TITO)"),
-            ("M", "Members (csv)"),
             ("HOLVI", "Holvi (xls)"),
+            ("TITO", "Transactions (Nordea TITO)"),
         ],
     )
     file = forms.FileField()

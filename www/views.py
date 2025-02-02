@@ -114,8 +114,6 @@ def dataimport(request):
         form = FileImportForm(request.POST, request.FILES)
         if form.is_valid():
             dataimport = DataImport()
-            if request.POST["filetype"] == "M":
-                report = dataimport.importmembers(request.FILES["file"])
             if request.POST["filetype"] == "TITO":
                 report = dataimport.import_tito(request.FILES["file"])
             if request.POST["filetype"] == "HOLVI":
