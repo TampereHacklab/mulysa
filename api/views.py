@@ -49,6 +49,79 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
     # default queryset as none
     queryset = CustomUser.objects.none
 
+    def access_token_abstraction(self, request, format, method):
+        logentry = DeviceAccessLogEntry()
+        inserializer = AccessDataSerializer(data=request.data)
+        inserializer.is_valid(raise_exception=True)
+
+        # check that we know which device this is
+        deviceqs = AccessDevice.objects.all()
+        deviceid = inserializer.validated_data.get("deviceid")
+        device = get_object_or_404(deviceqs, deviceid=deviceid)
+        logging.debug(f"found device {device}")
+
+        access_token = inserializer.validated_data.get("payload")
+        if method == "phone":
+            # phone number comes in payload, but it is in a wrong format
+            # the number will most probably start with 00 instead of +
+            access_token = normalize_number(access_token)
+        users = []
+        if method == "phone":
+            users = CustomUser.objects.filter(phone=access_token)
+        elif method == "nfc":
+            users = NFCCard.objects.filter(cardid=access_token)
+        elif method == "mxid":
+            users = CustomUser.objects.filter(mxid=access_token)
+
+        logentry.device = device
+        logentry.payload = access_token
+
+        # 0 = success, any other = failure
+        response_status = 0
+
+        # nothing found, 480
+        if users.count() == 0:
+            logentry.granted = False
+            logentry.save()
+            return Response(status=480)
+
+        # planned database scheme says that
+        # phone numbers, MXIDs, nfc tags are/will be unique
+        user = None
+        if method == "nfc":
+            user = users.first().user
+            logentry.nfccard = users.first()
+        else:
+            user = users.first()
+
+        # user does not have access rights
+        if not user.has_door_access():
+            response_status = 481
+
+        logentry.granted = response_status == 0
+        logentry.save()
+
+        if response_status == 0:
+            if method != "phone":
+                # uppercase NFC and MXID
+                user.log(f"Door opened with {method.upper()}")
+            else:
+                user.log(f"Door opened with {method}")
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data)
+
+        if response_status == 481:
+            if method != "phone":
+                # uppercase NFC and MXID
+                user.log(f"Door access denied with {method.upper()}")
+            else:
+                user.log(f"Door access denied with {method}")
+            door_access_denied.send(sender=self.__class__, user=user, method=method)
+            outserializer = UserAccessSerializer(user)
+            return Response(outserializer.data, status=response_status)
+
+        return Response(status=response_status)
+
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
     def phone(self, request, format=None):
         """
@@ -62,40 +135,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         users with enough power will also get a list of all users with door access with this endpoint
         """
-
-        inserializer = AccessDataSerializer(data=request.data)
-        inserializer.is_valid(raise_exception=True)
-
-        # check that we know which device this is
-        deviceqs = AccessDevice.objects.all()
-        deviceid = inserializer.validated_data.get("deviceid")
-        device = get_object_or_404(deviceqs, deviceid=deviceid)
-        logging.debug(f"found device {device}")
-
-        # phone number comes in payload, but it is in a wrong format
-        # the number will most probably start with 00 instead of +
-
-        number = inserializer.validated_data.get("payload")
-        number = normalize_number(number)
-        qs = CustomUser.objects.filter(phone=number)
-
-        # nothing found, 480
-        if qs.count() == 0:
-            return Response(status=480)
-
-        # our user
-        user = qs.first()
-
-        # user does not have access rights
-        if not user.has_door_access():
-            user.log("Door access denied with phone")
-            door_access_denied.send(sender=self.__class__, user=user, method="phone")
-            outserializer = UserAccessSerializer(user)
-            return Response(outserializer.data, status=481)
-
-        user.log("Door opened with phone")
-        outserializer = UserAccessSerializer(user)
-        return Response(outserializer.data)
+        return AccessViewSet.access_token_abstraction(self, request, format, "phone")
 
     @phone.mapping.get
     def phone_list(self, request, format=None):
@@ -124,98 +164,14 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         """
         NFC card access
         """
-        logentry = DeviceAccessLogEntry()
-        inserializer = AccessDataSerializer(data=request.data)
-        inserializer.is_valid(raise_exception=True)
-
-        deviceqs = AccessDevice.objects.all()
-        deviceid = inserializer.validated_data.get("deviceid")
-        device = get_object_or_404(deviceqs, deviceid=deviceid)
-        logging.debug(f"found device {device}")
-
-        cardid = inserializer.validated_data.get("payload")
-        qs = NFCCard.objects.filter(cardid=cardid)
-
-        logentry.device = device
-        logentry.payload = cardid
-
-        # 0 = success, any other = failure
-        response_status = 0
-
-        if qs.count() == 0:
-            response_status = 480
-        else:
-            logentry.nfccard = qs.first()
-
-            # our user
-            user = qs.first().user
-
-            # user does not have access rights
-            if not user.has_door_access():
-                user.log("Door access denied with NFC")
-                door_access_denied.send(sender=self.__class__, user=user, method="nfc")
-                response_status = 481
-
-        logentry.granted = response_status == 0
-
-        logentry.save()
-
-        if response_status == 0:
-            user.log("Door opened with NFC")
-            outserializer = UserAccessSerializer(user)
-            return Response(outserializer.data)
-
-        if response_status == 481:
-            outserializer = UserAccessSerializer(user)
-            return Response(outserializer.data, status=response_status)
-
-        return Response(status=response_status)
+        return AccessViewSet.access_token_abstraction(self, request, format, "nfc")
 
     @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
     def mxid(self, request, format=None):
         """
         Matrix mxid access
         """
-        logentry = DeviceAccessLogEntry()
-        inserializer = AccessDataSerializer(data=request.data)
-        inserializer.is_valid(raise_exception=True)
-
-        deviceqs = AccessDevice.objects.all()
-        deviceid = inserializer.validated_data.get("deviceid")
-        device = get_object_or_404(deviceqs, deviceid=deviceid)
-        logging.debug(f"found device {device}")
-
-        mxid = inserializer.validated_data.get("payload")
-        users = CustomUser.objects.filter(mxid=mxid)
-
-        logentry.device = device
-        logentry.payload = mxid
-
-        # 0 = success, any other = failure
-        response_status = 0
-
-        if users.count() != 1:
-            response_status = 480
-        else:
-            user = users.first()
-
-            # user does not have access rights
-            if not user.has_door_access():
-                door_access_denied.send(sender=self.__class__, user=user, method="mxid")
-                response_status = 481
-
-        logentry.granted = response_status == 0
-        logentry.save()
-
-        if response_status == 0:
-            outserializer = UserAccessSerializer(user)
-            return Response(outserializer.data)
-
-        if response_status == 481:
-            outserializer = UserAccessSerializer(user)
-            return Response(outserializer.data, status=response_status)
-
-        return Response(status=response_status)
+        return AccessViewSet.access_token_abstraction(self, request, format, "mxid")
 
     def list(self, request):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
