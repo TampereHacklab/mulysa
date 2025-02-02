@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 18:23+0200\n"
+"POT-Creation-Date: 2025-02-02 14:59+0000\n"
 "PO-Revision-Date: 2020-12-01 18:28+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -17,6 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
+"X-Language: fi\n"
+"X-Source-Language: en\n"
 
 #: api/models.py:19
 msgid "User creation date"
@@ -89,6 +91,14 @@ msgstr "Varaaja"
 #: api/models.py:84
 msgid "Who claimed this entry"
 msgstr "Kuka varasi tämän merkinnän"
+
+#: api/models.py:90
+msgid "Method"
+msgstr "Tapa"
+
+#: api/models.py:91
+msgid "Method of device access"
+msgstr "Kirjautumistapa"
 
 #~ msgid "User who claimed this"
 #~ msgstr "Käyttäjä joka haltuunotti tämän"
