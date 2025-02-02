@@ -4,9 +4,7 @@ import logging
 import datetime
 from decimal import Decimal
 
-from django.db.utils import IntegrityError
-
-from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
+from users.models import BankTransaction
 
 from utils.businesslogic import BusinessLogic
 from utils.holvitoolbox import HolviToolbox
@@ -21,11 +19,7 @@ class ParseError(Exception):
 
 
 """
-This class contains static members to import data to Mulysa. Data can be:
-
- - Member data. Current implementation imports CSV file used by old
-   Tampere hacklab registry. It is only for reference - write your
-   own importer!
+This class contains data importers
 
  - Bank events. This is in form of bank transactions in and out of an
    account. Only one account is supported currently.
@@ -41,117 +35,9 @@ are displayed in the import UI.
 
 
 class DataImport:
-    # Import cvs member list. Only for reference.
-    @staticmethod
-    def importmembers(f):
-        csv = f.read().decode("utf8")
-        lines = csv.split("\n")
-        imported = exists = error = 0
-        failedrows = []
-
-        service_mo = MemberService.objects.get(name="Vuosimaksu")
-        service_ar = MemberService.objects.get(name="Tilankäyttöoikeus")
-
-        # Ignore header line
-        for line in lines[1:]:
-            try:
-                line = line.replace('"', "")
-                fields = line.split(",")
-                if len(fields) < 13:
-                    raise ParseError("Not enough fields on this row")
-                name = fields[3].split(" ")
-                first_name = ""
-                last_name = ""
-
-                if len(name) < 2:
-                    raise ParseError("No proper name supplied: " + str(name))
-
-                first_name = name[0]
-                last_name = name[len(name) - 1]
-
-                birthday = None
-                try:
-                    birthday = datetime.date.fromisoformat(fields[5])
-                except ValueError as err:
-                    print(
-                        "Unable to parse ISO date: {}, error: {}", fields[5], str(err)
-                    )
-                try:
-                    birthday = datetime.datetime.strptime(fields[5], "%Y/%m/%d")
-                except ValueError as err:
-                    print(
-                        "Unable to parse / separated date: {}, error: {}",
-                        fields[5],
-                        str(err),
-                    )
-                try:
-                    birthday = datetime.datetime.strptime(fields[5], "%Y-%m-%d")
-                except ValueError as err:
-                    print(
-                        "Unable to parse - separated date: {}, error: {}",
-                        fields[5],
-                        str(err),
-                    )
-
-                if not birthday:
-                    birthday = datetime.date(day=1, month=1, year=1970)
-
-                # Todo: how to really interpret these
-                membership_plan = "MO"
-                if fields[2] == "1":
-                    membership_plan = "AR"
-
-                phone = fields[8]
-                # Fix missing international prefix
-                if len(phone) > 0 and phone[0] == "0":
-                    phone = "+358" + phone[1:]
-
-                newuser = CustomUser.objects.create_customuser(
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=fields[4],
-                    birthday=birthday,
-                    municipality=fields[6],
-                    nick=fields[7],
-                    phone=phone,
-                )
-                newuser.log("User imported")
-
-                # Setup member service subscriptions
-
-                ServiceSubscription.objects.create(
-                    user=newuser, service=service_mo, state=ServiceSubscription.OVERDUE
-                )
-                if membership_plan == "AR":
-                    ServiceSubscription.objects.create(
-                        user=newuser,
-                        service=service_ar,
-                        state=ServiceSubscription.OVERDUE,
-                    )
-
-                imported = imported + 1
-            except IntegrityError as err:
-                print("Integrity error:", str(err))
-                exists = exists + 1
-                failedrows.append(line + " (" + str(err) + ")")
-            except ParseError as err:
-                print("Parse error: ", str(err))
-                error = error + 1
-                failedrows.append(line + " (" + str(err) + ")")
-            except ValueError as err:
-                print("Value error: ", str(err))
-                error = error + 1
-                failedrows.append(line + " (" + str(err) + ")")
-
-        return {
-            "imported": imported,
-            "exists": exists,
-            "error": error,
-            "failedrows": failedrows,
-        }
-
     # Nordea TITO import. TITO spec here: https://www.nordea.fi/Images/146-84478/xml_tiliote.pdf
     # Note: this is the text-based TITO, not XML.
+    # DEPRECATED: but the decorator is only available after python 3.13
     @staticmethod
     def import_tito(f):
         tito = f.read().decode("utf8")

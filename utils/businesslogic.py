@@ -18,6 +18,7 @@ from users.models import (
 from users.signals import application_approved, application_denied
 
 from utils import referencenumber
+from utils.matrixoperations import MatrixOperations
 
 logger = logging.getLogger(__name__)
 
@@ -195,7 +196,13 @@ class BusinessLogic:
             )
 
         application.delete()
+
         BusinessLogic.updateuser(user)
+
+        # If user has Matrix ID and Matrix room is configured, invite the user
+        if len(config.MATRIX_ACCESS_TOKEN) > 0 and user.mxid is not None:
+            mo = MatrixOperations(config.MATRIX_ACCESS_TOKEN, config.MATRIX_SERVER)
+            mo.invite_user(user.mxid, config.MATRIX_ROOM_ID, _("Accepted as member"))
 
     @staticmethod
     def create_servicesubscription(user, service, state):

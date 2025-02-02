@@ -384,7 +384,7 @@ msgstr "Tilastot"
 
 #: www/templates/www/graphs.html:10
 msgid "Transactions rolling 12 months"
-msgstr ""
+msgstr "12 kuukauden tilisiirrot"
 
 #: www/templates/www/index.html:11
 msgid "Welcome back!"
@@ -534,8 +534,8 @@ msgstr "Oven avausnumero"
 
 #: www/templates/www/user.html:62
 msgid ""
-"This service has been suspended. Please contact management if you want to re-"
-"apply for it."
+"This service has been suspended. Please contact management if you want to "
+"re-apply for it."
 msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
@@ -627,7 +627,7 @@ msgstr "Aktiivinen"
 
 #: www/templates/www/users.html:17
 msgid "Nick"
-msgstr "Kutsumanimi"
+msgstr "Nimimerkki"
 
 #: www/templates/www/users.html:23
 msgid "Extra services"
@@ -647,7 +647,7 @@ msgstr "Muokkaa"
 
 #: www/templates/www/users.html:71
 msgid "Recalc"
-msgstr ""
+msgstr "Laske uudelleen"
 
 #: www/templates/www/users.html:75
 msgid "View in admin"
@@ -661,7 +661,19 @@ msgstr "Omat asetukset"
 msgid "Save"
 msgstr "Tallenna"
 
-#: www/templates/www/usersettings.html:30
+#: www/templates/www/usersettings.html:28
+msgid "Matrix Community"
+msgstr "Matrix-yhteisö"
+
+#: www/templates/www/usersettings.html:34
+msgid "Invite me to members Matrix space"
+msgstr "Kutsu minut jäsenten Matrix-tilaan"
+
+#: www/templates/www/usersettings.html:39
+msgid "Create Matrix account here"
+msgstr "Tee Matrix-tunnus täällä"
+
+#: www/templates/www/usersettings.html:44
 msgid "Extra Services"
 msgstr "Lisäpalvelut"
 
@@ -714,7 +726,19 @@ msgstr ""
 "Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä "
 "se täällä 5 minuutin kuluessa"
 
-#: www/templates/www/usersettings.html:139
+#: www/templates/www/usersettings.html:151
+msgid "Send e-mail to user"
+msgstr "Lähetä sähköposti käyttäjälle"
+
+#: www/templates/www/usersettings.html:154
+msgid "Subject"
+msgstr "Otsikko"
+
+#: www/templates/www/usersettings.html:160
+msgid "Send"
+msgstr "Lähetä"
+
+#: www/templates/www/usersettings.html:167
 msgid ""
 "If you have questions and or want to change something that is not available "
 "here, please send an email."
@@ -736,7 +760,15 @@ msgstr "Hyväksytty %(name)sn jäsenhakemus"
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:312
+#: www/views.py:310
+msgid "Welcome to member's Matrix space"
+msgstr "Tervetuloa jäsenten Matrix-tilaan"
+
+#: www/views.py:311
+msgid "You have been invited"
+msgstr "Sinut on nyt kutsuttu"
+
+#: www/views.py:330
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
@@ -760,11 +792,15 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:380
+#: www/views.py:398
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:402
+#: www/views.py:421
+msgid "E-mail sent"
+msgstr "Sähköposti lähetetty"
+
+#: www/views.py:443
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
@@ -795,11 +831,17 @@ msgstr ""
 #~ msgid "capture"
 #~ msgstr "haltuunota"
 
+#~ msgid "Nickname"
+#~ msgstr "Kutsumanimi"
+
 #~ msgid "Matrix ID"
 #~ msgstr "Matrix ID"
 
 #~ msgid "Claim NFC card"
 #~ msgstr "Käytä NFC-korttia"
+
+#~ msgid "Save changes"
+#~ msgstr "Tallenna muutokset"
 
 #~ msgid "Matrix ID already in use"
 #~ msgstr "Matrix ID on jo käytössä"

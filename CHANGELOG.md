@@ -1,5 +1,12 @@
 # Changelog
 
+* docs: simplify homebrew installation command. PR [#536](https://github.com/TampereHacklab/mulysa/pull/536) by [@braaar](https://github.com/braaar).
+* add test that migrations are ok. PR [#554](https://github.com/TampereHacklab/mulysa/pull/554) by [@tswfi](https://github.com/tswfi).
+* Combine NFC, MXID, and phone number door access logic. PR [#552](https://github.com/TampereHacklab/mulysa/pull/552) by [@drjaska](https://github.com/drjaska).
+* Remove members import. Fixes #118. PR [#548](https://github.com/TampereHacklab/mulysa/pull/548) by [@tswfi](https://github.com/tswfi).
+* Add link to admin site for superusers' nav bar. PR [#545](https://github.com/TampereHacklab/mulysa/pull/545) by [@Janne555](https://github.com/Janne555).
+* Add active to current link to visualise current page to the user. PR [#542](https://github.com/TampereHacklab/mulysa/pull/542) by [@Janne555](https://github.com/Janne555).
+* Try to fix latest changes. PR [#544](https://github.com/TampereHacklab/mulysa/pull/544) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.4 to 3.1.5. PR [#514](https://github.com/TampereHacklab/mulysa/pull/514) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.17 and other depencies update. PR [#506](https://github.com/TampereHacklab/mulysa/pull/506) by [@tswfi](https://github.com/tswfi).
@@ -115,4 +122,3 @@
 * Editable Userfields and fixes to usersettings page. PR [#281](https://github.com/TampereHacklab/mulysa/pull/281) by [@tswfi](https://github.com/tswfi).
 * Show last login in users list. PR [#273](https://github.com/TampereHacklab/mulysa/pull/273) by [@tswfi](https://github.com/tswfi).
 * Adding https://github.com/tiangolo/latest-changes. PR [#287](https://github.com/TampereHacklab/mulysa/pull/287) by [@tswfi](https://github.com/tswfi).
-

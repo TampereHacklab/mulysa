@@ -45,22 +45,11 @@ sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
-brew install git
-```
-
-```sh
-brew install pipenv
+brew install git pipenv mysql gettext
 ```
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
-```sh
-brew install mysql
-```
-
-```sh
-brew install gettext
-```
 
 ## Installing prerequisites on other platforms
 
@@ -81,6 +70,10 @@ pipenv sync --dev
 pipenv shell
 ```
 
+If pipenv sync asks to run pipenv lock, run it.
+
+If pipenv sync fails due to wrong Python version, change it in Pipfile, delete Pipfile.lock and try again.
+
 Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
 
 ```
@@ -94,6 +87,12 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ./manage.py migrate --skip-checks
 ./manage.py loaddata memberservices
 ./manage.py runserver
+```
+
+## To create an initial superuser account
+
+```bash
+./manage.py createsuperuser
 ```
 
 ## To update localizations
