@@ -87,6 +87,14 @@
           <td>{{bank_iban|default_if_none:"-"}}</td>
         </tr>
         <tr>
+          <td>{% trans 'Payment receiver name' %}</td>
+          <td>{{bank_name|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Bank BIC' %}</td>
+          <td>{{bank_bic|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
           <td>{% trans 'Service price' %}</td>
           <td>{{subscription.service.cost_string|default_if_none:"-"}}</td>
         </tr>
