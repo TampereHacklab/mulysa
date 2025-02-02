@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-01 18:23+0200\n"
-"PO-Revision-Date: 2020-12-01 18:35+0200\n"
+"POT-Creation-Date: 2025-02-02 15:39+0000\n"
+"PO-Revision-Date: 2025-02-02 18:57+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -37,8 +37,8 @@ msgstr "Valitse vähintään yksi jäsenpalvelu"
 msgid "%(servicename)s, %(cost)s"
 msgstr "%(servicename)s, %(cost)s"
 
-#: www/forms.py:100 www/templates/www/custominvoice.html:28
-#: www/templates/www/custominvoice.html:51 www/templates/www/user.html:96
+#: www/forms.py:100 www/templates/www/custominvoice.html:32
+#: www/templates/www/custominvoice.html:55 www/templates/www/user.html:151
 #: www/templates/www/usersettings.html:37
 msgid "Service"
 msgstr "Jäsenpalvelu"
@@ -78,7 +78,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:50
+#: www/templates/www/base.html:52
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -147,18 +147,19 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 msgid "Send me instructions!"
 msgstr "Lähetä minulle ohjeet!"
 
-#: www/templates/www/applications.html:6 www/templates/www/base.html:34
+#: www/templates/www/applications.html:6 www/templates/www/base.html:36
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
 #: www/templates/www/applications.html:12
-#: www/templates/www/custominvoice.html:27
-#: www/templates/www/custominvoice.html:50 www/templates/www/user.html:95
-#: www/templates/www/user.html:123 www/templates/www/user.html:139
+#: www/templates/www/custominvoice.html:31
+#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:104
+#: www/templates/www/user.html:120 www/templates/www/user.html:150
 msgid "Date"
 msgstr "Päiväys"
 
-#: www/templates/www/applications.html:13 www/templates/www/user.html:19
+#: www/templates/www/applications.html:13 www/templates/www/user.html:12
+#: www/templates/www/users.html:16
 msgid "Name"
 msgstr "Nimi"
 
@@ -166,8 +167,8 @@ msgstr "Nimi"
 msgid "E-mail"
 msgstr "Sähköposti"
 
-#: www/templates/www/applications.html:15 www/templates/www/user.html:124
-#: www/templates/www/user.html:143
+#: www/templates/www/applications.html:15 www/templates/www/user.html:105
+#: www/templates/www/user.html:124
 msgid "Message"
 msgstr "Viesti"
 
@@ -175,7 +176,7 @@ msgstr "Viesti"
 msgid "Agreement"
 msgstr "Hyväksyntä"
 
-#: www/templates/www/applications.html:22 www/templates/www/users.html:45
+#: www/templates/www/applications.html:22 www/templates/www/users.html:46
 msgid "days"
 msgstr "päivää"
 
@@ -220,58 +221,66 @@ msgstr ""
 "     Kiitos ja kerrohan kavereillekkin %(name)s:sta :)\n"
 "    "
 
-#: www/templates/www/base.html:28 www/templates/www/index.html:19
+#: www/templates/www/base.html:29 www/templates/www/index.html:19
 msgid "Show my user information"
 msgstr "Näytä käyttäjätietoni"
 
-#: www/templates/www/base.html:30
+#: www/templates/www/base.html:31
 msgid "Change my settings"
 msgstr "Omat asetukset"
 
-#: www/templates/www/base.html:33
+#: www/templates/www/base.html:32
+msgid "Graphs"
+msgstr "Kaaviot"
+
+#: www/templates/www/base.html:35
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: www/templates/www/base.html:35
+#: www/templates/www/base.html:37
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: www/templates/www/base.html:36
+#: www/templates/www/base.html:38
 msgid "Export"
 msgstr "Tiedon vienti"
 
-#: www/templates/www/base.html:37
+#: www/templates/www/base.html:39
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:38 www/templates/www/custominvoice.html:5
-#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:92
+#: www/templates/www/base.html:40 www/templates/www/custominvoice.html:5
+#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:140
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:41
+#: www/templates/www/base.html:43
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:48
+#: www/templates/www/base.html:50
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:58
+#: www/templates/www/base.html:59
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:85
+#: www/templates/www/base.html:86
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:86
+#: www/templates/www/base.html:87
 msgid "Report bugs at"
 msgstr "Raportoi bugit ja osallistu projektiin"
 
-#: www/templates/www/base.html:86
+#: www/templates/www/base.html:87
 msgid "GitHub"
 msgstr "GitHub"
+
+#: www/templates/www/base.html:88
+msgid "View changelog"
+msgstr "Näytä muutoshistoria"
 
 #: www/templates/www/createuser.html:8
 msgid "Create user"
@@ -282,56 +291,70 @@ msgid "Create"
 msgstr "Luo"
 
 #: www/templates/www/custominvoice.html:8
-msgid "Note: You can always delete invoice if you choose not to pay it"
-msgstr "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
+msgid ""
+"\n"
+"  <strong>NOTE:</strong> Custominvoices are meant for special situations "
+"where you are paying for \n"
+"  multiple months using one transaction. We suggest using monthly "
+"recurring \n"
+"  payments for all regular situations.\n"
+"  "
+msgstr ""
+"\n"
+"      <strong>HUOMIO:</strong> Vapaamuotoiset laskut on tarkoitettu "
+"erikoistapauksiin, \n"
+"      joissa maksetaan useampi kuukausi yhdellä laskulla. \n"
+"      Oletuksena suosittelemme käyttämään toistuvaa kuukausittaista "
+"maksua. \n"
+"    "
 
-#: www/templates/www/custominvoice.html:15
+#: www/templates/www/custominvoice.html:19
 msgid "Preview.."
 msgstr "Esikatsele.."
 
-#: www/templates/www/custominvoice.html:18
+#: www/templates/www/custominvoice.html:22
 #, python-format
 msgid ""
 "This will pay %(days)s days of service %(servicename)s and costs %(amount)s€"
 msgstr ""
 "Tämä maksaa %(days)s päivää palvelua %(servicename)s ja maksaa %(amount)s€"
 
-#: www/templates/www/custominvoice.html:20
+#: www/templates/www/custominvoice.html:24
 msgid "Create invoice"
 msgstr "Luo lasku"
 
-#: www/templates/www/custominvoice.html:23
+#: www/templates/www/custominvoice.html:27
 msgid "Pending invoices"
 msgstr "Maksamattomat laskut"
 
-#: www/templates/www/custominvoice.html:29
-#: www/templates/www/custominvoice.html:52 www/templates/www/user.html:97
-#: www/templates/www/user.html:140
+#: www/templates/www/custominvoice.html:33
+#: www/templates/www/custominvoice.html:56 www/templates/www/user.html:121
+#: www/templates/www/user.html:152
 msgid "Amount"
 msgstr "Määrä"
 
-#: www/templates/www/custominvoice.html:30
-#: www/templates/www/custominvoice.html:53 www/templates/www/user.html:55
-#: www/templates/www/user.html:98 www/templates/www/user.html:141
+#: www/templates/www/custominvoice.html:34
+#: www/templates/www/custominvoice.html:57 www/templates/www/user.html:79
+#: www/templates/www/user.html:122 www/templates/www/user.html:153
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: www/templates/www/custominvoice.html:31
+#: www/templates/www/custominvoice.html:35
 #: www/templates/www/usersettings.html:39
 #: www/templates/www/usersettings.html:92
 msgid "Action"
 msgstr "Toiminto"
 
-#: www/templates/www/custominvoice.html:36
-#: www/templates/www/custominvoice.html:59 www/templates/www/user.html:104
+#: www/templates/www/custominvoice.html:40
+#: www/templates/www/custominvoice.html:63 www/templates/www/user.html:159
 msgid "days of"
 msgstr "päivää"
 
-#: www/templates/www/custominvoice.html:39
+#: www/templates/www/custominvoice.html:43
 msgid "delete"
 msgstr "poista"
 
-#: www/templates/www/custominvoice.html:44
+#: www/templates/www/custominvoice.html:48
 #, python-format
 msgid ""
 " Custominvoices are paid with the custominvoice specific amount and "
@@ -342,18 +365,26 @@ msgstr ""
 "Maksut tilille: <b>%(bank_iban)s</b>. Jos suorituksen summa tai viitenumero "
 "ei ole oikein maksua ei rekisteröidä"
 
-#: www/templates/www/custominvoice.html:46
+#: www/templates/www/custominvoice.html:50
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
 
-#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:99
+#: www/templates/www/custominvoice.html:58 www/templates/www/user.html:154
 msgid "Paid"
 msgstr "Maksettu"
 
-#: www/templates/www/custominvoice.html:66
-#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:111
+#: www/templates/www/custominvoice.html:70
+#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:166
 msgid "Not paid yet"
 msgstr "Ei maksettu"
+
+#: www/templates/www/graphs.html:8
+msgid "Statistics"
+msgstr "Tilastot"
+
+#: www/templates/www/graphs.html:10
+msgid "Transactions rolling 12 months"
+msgstr ""
 
 #: www/templates/www/index.html:11
 msgid "Welcome back!"
@@ -461,23 +492,15 @@ msgstr ""
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
 
-#: www/templates/www/user.html:12
-msgid "Update user's data"
-msgstr "Päivitä käyttäjän data"
-
-#: www/templates/www/user.html:13
-msgid "View in admin"
-msgstr "Tarkastele admin-näkymässä"
-
-#: www/templates/www/user.html:23
+#: www/templates/www/user.html:16 www/templates/www/users.html:18
 msgid "Email"
 msgstr "Sähköposti"
 
-#: www/templates/www/user.html:27
+#: www/templates/www/user.html:20 www/templates/www/users.html:19
 msgid "Phone"
 msgstr "Puhelin"
 
-#: www/templates/www/user.html:34
+#: www/templates/www/user.html:27
 msgid ""
 "Your membership application is being processed. You will receive e-mail when "
 "the process is finished. This may take up to two weeks."
@@ -485,31 +508,31 @@ msgstr ""
 "Jäsenhakemuksesi on vireillä. Saat sähköpostia kun hakemuksesi on käsitelty. "
 "Tämä voi kestää parikin viikkoa."
 
-#: www/templates/www/user.html:37
+#: www/templates/www/user.html:30
 msgid "Service subscriptions"
 msgstr "Jäsenpalvelut"
 
-#: www/templates/www/user.html:45
+#: www/templates/www/user.html:38
 msgid "State"
 msgstr "Tila"
 
-#: www/templates/www/user.html:51
+#: www/templates/www/user.html:44
 msgid "Paid until"
 msgstr "Voimassaoloaika"
 
-#: www/templates/www/user.html:52
+#: www/templates/www/user.html:45
 msgid "days left"
 msgstr "päivää jäljellä"
 
-#: www/templates/www/user.html:59
+#: www/templates/www/user.html:48
 msgid "Last payment"
 msgstr "Viimeisin maksu"
 
-#: www/templates/www/user.html:64
+#: www/templates/www/user.html:54
 msgid "Door opening number"
 msgstr "Oven avausnumero"
 
-#: www/templates/www/user.html:72
+#: www/templates/www/user.html:62
 msgid ""
 "This service has been suspended. Please contact management if you want to re-"
 "apply for it."
@@ -517,40 +540,34 @@ msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
 
-#: www/templates/www/user.html:75
-msgid "This is paid by other member services - you do not need to pay for it."
+#: www/templates/www/user.html:69
+msgid ""
+"This is paid by following member services: (you do not need to pay for it)"
 msgstr ""
-"Tätä jäsenpalvelua ei tarvitse erikseen maksaa - toinen sinulla oleva "
-"jäsenpalvelu maksaa sen."
+"Toinen sinulla oleva jäsenpalvelu maksaa tämän palvelun: (tätä jäsenpalvelua "
+"ei tarvitse erikseen maksaa)"
 
 #: www/templates/www/user.html:82
-#, python-format
-msgid ""
-"This service can be paid with reference number %(ref)s\n"
-"                to bank account %(bank_iban)s. Service price is %(cost)s."
-msgstr ""
-"Tämä palvelu tulee maksaa viitenumerolla %(ref)s\n"
-"tilille %(bank_iban)s. Palvelun hinta on %(cost)s."
+msgid "Use this reference number or the payment is not registered"
+msgstr "Käytä tätä viitenumeroa, muuten maksu ei rekisteröidy"
 
-#: www/templates/www/user.html:84
-msgid "To pay this service multiple times, you can create a custom invoice."
-msgstr ""
-"Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit tehdä "
-"vapaamuotoisen laskun."
+#: www/templates/www/user.html:86
+msgid "Bank account number"
+msgstr "Tilinumero"
 
-#: www/templates/www/user.html:85 www/templates/www/user.html:118
-msgid "Create and view custom invoices"
-msgstr "Luo ja katsele vapaamuotoisia laskuja"
+#: www/templates/www/user.html:90
+msgid "Service price"
+msgstr "Palvelun hinta"
 
-#: www/templates/www/user.html:120
+#: www/templates/www/user.html:101
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:134
+#: www/templates/www/user.html:115
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:135
+#: www/templates/www/user.html:116
 msgid ""
 "Transactions are not processed in real time. Newest bank transactions "
 "uploaded to the system"
@@ -558,17 +575,87 @@ msgstr ""
 "Tilisiirrot eivät tule näkyviin reaaliajassa. Viimeisimmän tuodun "
 "tilisiirron päiväys on"
 
-#: www/templates/www/user.html:142
+#: www/templates/www/user.html:123
 msgid "Sender"
 msgstr "Lähettäjä"
 
-#: www/templates/www/user.html:144
+#: www/templates/www/user.html:125
 msgid "Comment"
 msgstr "Kommentti"
 
-#: www/templates/www/users.html:10
+#: www/templates/www/user.html:142
+msgid ""
+"\n"
+"      <strong>NOTE:</strong> Custominvoices are meant for special situations "
+"where you are paying for \n"
+"      multiple months using one transaction. We suggest using monthly "
+"recurring \n"
+"      payments for all regular situations.\n"
+"    "
+msgstr ""
+"\n"
+"      <strong>HUOMIO:</strong> Vapaamuotoiset laskut on tarkoitettu "
+"erikoistapauksiin, \n"
+"      joissa maksetaan useampi kuukausi yhdellä laskulla. \n"
+"      Oletuksena suosittelemme käyttämään toistuvaa kuukausittaista "
+"maksua. \n"
+"    "
+
+#: www/templates/www/user.html:173
+msgid "Create and view custom invoices"
+msgstr "Luo ja katsele vapaamuotoisia laskuja"
+
+#: www/templates/www/users.html:7
+#, fuzzy
+#| msgid "Users"
+msgid "User list"
+msgstr "Käyttäjät"
+
+#: www/templates/www/users.html:7
 msgid "Create new user"
 msgstr "Luo uusi käyttäjä"
+
+#: www/templates/www/users.html:15
+#, fuzzy
+#| msgid "Action"
+msgid "Active"
+msgstr "Toiminto"
+
+#: www/templates/www/users.html:17
+#, fuzzy
+#| msgid "Nickname"
+msgid "Nick"
+msgstr "Kutsumanimi"
+
+#: www/templates/www/users.html:23
+#, fuzzy
+#| msgid "Extra Services"
+msgid "Extra services"
+msgstr "Lisäpalvelut"
+
+#: www/templates/www/users.html:24
+#, fuzzy
+#| msgid "Back to login"
+msgid "Last login"
+msgstr "Takaisin sisäänkirjautumiseen"
+
+#: www/templates/www/users.html:25
+#, fuzzy
+#| msgid "Agreement"
+msgid "Management"
+msgstr "Hyväksyntä"
+
+#: www/templates/www/users.html:64
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: www/templates/www/users.html:71
+msgid "Recalc"
+msgstr ""
+
+#: www/templates/www/users.html:75
+msgid "View in admin"
+msgstr "Tarkastele admin-näkymässä"
 
 #: www/templates/www/usersettings.html:7
 msgid "User settings"
@@ -628,8 +715,8 @@ msgid ""
 "No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 "
 "minutes"
 msgstr ""
-"Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä se "
-"täällä 5 minuutin kuluessa"
+"Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä "
+"se täällä 5 minuutin kuluessa"
 
 #: www/templates/www/usersettings.html:139
 msgid ""
@@ -639,37 +726,37 @@ msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
 "täällä, voit lähettää ehdotuksen sähköpostilla."
 
-#: www/views.py:181
+#: www/views.py:195
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:186
+#: www/views.py:200
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:243
+#: www/views.py:253
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:302
+#: www/views.py:310
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:305
+#: www/views.py:313
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:313
+#: www/views.py:321
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:335
+#: www/views.py:341
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:340
+#: www/views.py:346
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -677,28 +764,46 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:372
+#: www/views.py:378
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:396
+#: www/views.py:400
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
+#: www/views.py:512
+#, python-brace-format
+msgid "Updateuser ran for user {user}"
+msgstr ""
+
+#~ msgid "Note: You can always delete invoice if you choose not to pay it"
+#~ msgstr ""
+#~ "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
+
+#~ msgid "Update user's data"
+#~ msgstr "Päivitä käyttäjän data"
+
+#~ msgid ""
+#~ "This service can be paid with reference number %(ref)s\n"
+#~ "                to bank account %(bank_iban)s. Service price is %(cost)s."
+#~ msgstr ""
+#~ "Tämä palvelu tulee maksaa viitenumerolla %(ref)s\n"
+#~ "tilille %(bank_iban)s. Palvelun hinta on %(cost)s."
+
+#~ msgid "To pay this service multiple times, you can create a custom invoice."
+#~ msgstr ""
+#~ "Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit "
+#~ "tehdä vapaamuotoisen laskun."
+
 #~ msgid "capture"
 #~ msgstr "haltuunota"
-
-#~ msgid "Nickname"
-#~ msgstr "Kutsumanimi"
 
 #~ msgid "Matrix ID"
 #~ msgstr "Matrix ID"
 
 #~ msgid "Claim NFC card"
 #~ msgstr "Käytä NFC-korttia"
-
-#~ msgid "Save changes"
-#~ msgstr "Tallenna muutokset"
 
 #~ msgid "Matrix ID already in use"
 #~ msgstr "Matrix ID on jo käytössä"
