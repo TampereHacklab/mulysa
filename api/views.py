@@ -137,6 +137,20 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         """
         return AccessViewSet.access_token_abstraction(self, request, format, "phone")
 
+    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
+    def nfc(self, request, format=None):
+        """
+        NFC card access
+        """
+        return AccessViewSet.access_token_abstraction(self, request, format, "nfc")
+
+    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
+    def mxid(self, request, format=None):
+        """
+        Matrix mxid access
+        """
+        return AccessViewSet.access_token_abstraction(self, request, format, "mxid")
+
     @phone.mapping.get
     def phone_list(self, request, format=None):
         """
@@ -158,20 +172,6 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # and output it
         outserializer = UserAccessSerializer(users_with_door_access, many=True)
         return Response(outserializer.data)
-
-    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
-    def nfc(self, request, format=None):
-        """
-        NFC card access
-        """
-        return AccessViewSet.access_token_abstraction(self, request, format, "nfc")
-
-    @action(detail=False, methods=["post"], throttle_classes=[VerySlowThrottle])
-    def mxid(self, request, format=None):
-        """
-        Matrix mxid access
-        """
-        return AccessViewSet.access_token_abstraction(self, request, format, "mxid")
 
     def list(self, request):
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
