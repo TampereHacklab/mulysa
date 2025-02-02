@@ -1,5 +1,6 @@
 # Changelog
 
+* Combine NFC, MXID, and phone number door access logic. PR [#552](https://github.com/TampereHacklab/mulysa/pull/552) by [@drjaska](https://github.com/drjaska).
 * Remove members import. Fixes #118. PR [#548](https://github.com/TampereHacklab/mulysa/pull/548) by [@tswfi](https://github.com/tswfi).
 * Add link to admin site for superusers' nav bar. PR [#545](https://github.com/TampereHacklab/mulysa/pull/545) by [@Janne555](https://github.com/Janne555).
 * Add active to current link to visualise current page to the user. PR [#542](https://github.com/TampereHacklab/mulysa/pull/542) by [@Janne555](https://github.com/Janne555).
