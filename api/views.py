@@ -9,7 +9,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework_tracking.mixins import LoggingMixin
-from users.models import CustomUser, NFCCard, ServiceSubscription
+from users.models import CustomUser, ServiceSubscription
 
 from utils.phonenumber import normalize_number
 
@@ -69,7 +69,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         if method == "phone":
             users = CustomUser.objects.filter(phone=access_token)
         elif method == "nfc":
-            users = NFCCard.objects.filter(cardid=access_token)
+            users = CustomUser.objects.filter(nfccard__cardid=access_token)
         elif method == "mxid":
             users = CustomUser.objects.filter(mxid=access_token)
 
@@ -79,7 +79,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # 0 = success, any other = failure
         response_status = 0
 
-        # nothing found, 480
+        # nothing found, 480 (NO_CONTENT)
         if users.count() == 0:
             logentry.granted = False
             logentry.save()
@@ -87,12 +87,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         # planned database scheme says that
         # phone numbers, MXIDs, nfc tags are/will be unique
-        user = None
-        if method == "nfc":
-            user = users.first().user
-            logentry.nfccard = users.first()
-        else:
-            user = users.first()
+        user = users.first()
 
         # user does not have access rights
         if not user.has_door_access():
