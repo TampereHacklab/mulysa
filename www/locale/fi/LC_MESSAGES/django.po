@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 13:46+0000\n"
+"POT-Creation-Date: 2025-02-01 17:19+0000\n"
 "PO-Revision-Date: 2020-12-01 18:35+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -545,9 +545,6 @@ msgstr ""
 
 #: www/templates/www/user.html:76
 #, python-format
-#| msgid ""
-#| "This service can be paid with reference number %(ref)s\n"
-#| "                to bank account %(bank_iban)s. Service price is %(cost)s."
 msgid ""
 "This service is paid with reference number <strong>%(ref)s</strong>\n"
 "                to bank account <strong>%(bank_iban)s</strong> (recurring "
@@ -652,7 +649,6 @@ msgid "Matrix Community"
 msgstr "Matrix-yhteisö"
 
 #: www/templates/www/usersettings.html:34
-#| msgid "Welcome to member's Matrix space"
 msgid "Invite me to members Matrix space"
 msgstr "Kutsu minut jäsenten Matrix-tilaan"
 
@@ -713,7 +709,19 @@ msgstr ""
 "Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä "
 "se täällä 5 minuutin kuluessa"
 
-#: www/templates/www/usersettings.html:153
+#: www/templates/www/usersettings.html:151
+msgid "Send e-mail to user"
+msgstr "Lähetä sähköposti käyttäjälle"
+
+#: www/templates/www/usersettings.html:154
+msgid "Subject"
+msgstr "Otsikko"
+
+#: www/templates/www/usersettings.html:160
+msgid "Send"
+msgstr "Lähetä"
+
+#: www/templates/www/usersettings.html:167
 msgid ""
 "If you have questions and or want to change something that is not available "
 "here, please send an email."
@@ -721,45 +729,45 @@ msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
 "täällä, voit lähettää ehdotuksen sähköpostilla."
 
-#: www/views.py:196
+#: www/views.py:197
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:201
+#: www/views.py:202
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:254
+#: www/views.py:255
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:307
+#: www/views.py:310
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:308
+#: www/views.py:311
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:327
+#: www/views.py:330
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:330
+#: www/views.py:333
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:338
+#: www/views.py:341
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:358
+#: www/views.py:361
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:363
+#: www/views.py:366
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -767,15 +775,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:395
+#: www/views.py:398
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:417
+#: www/views.py:421
+msgid "E-mail sent"
+msgstr "Sähköposti lähetetty"
+
+#: www/views.py:443
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:529
+#: www/views.py:555
 #, python-brace-format
 msgid "Updateuser ran for user {user}"
 msgstr "Updateuser pyörähti käyttäjälle {user}"

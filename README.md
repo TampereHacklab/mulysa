@@ -45,22 +45,11 @@ sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
-brew install git
-```
-
-```sh
-brew install pipenv
+brew install git pipenv mysql gettext
 ```
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
-```sh
-brew install mysql
-```
-
-```sh
-brew install gettext
-```
 
 ## Installing prerequisites on other platforms
 
