@@ -10,12 +10,6 @@ Class that represents a service for members. For example:
 
 
 class BaseService(models.Model):
-    service_id = models.CharField(
-        unique=True,
-        verbose_name=_("Service ID"),
-        help_text=_("Unique ID of the service"),
-        max_length=512,
-    )
     name = models.CharField(
         verbose_name=_("Service name"),
         help_text=_("Name of the service"),
@@ -45,3 +39,6 @@ class BaseService(models.Model):
     def cost_string(self):
         cs = str(self.cost) + "€ "
         return cs
+    
+    class Meta:
+        abstract = True
