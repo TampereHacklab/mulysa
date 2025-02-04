@@ -52,7 +52,7 @@ class ConfigAdmin(admin.ModelAdmin):
                     url=reverse(
                         "admin:nordigenautomation-do-new-requisition", args=[obj.pk]
                     ),
-                    text=_("Do requisition"),
+                    text=_("Do requisition - extra change here to test ci"),
                     title=_(
                         "Initialize requisition, first time will just create a new requisition and successive clicks will create a new requisition and deprecate all the old ones"
                     ),

@@ -89,6 +89,3 @@ msgstr "Varaaja"
 #: api/models.py:84
 msgid "Who claimed this entry"
 msgstr "Kuka varasi tämän merkinnän"
-
-#~ msgid "User who claimed this"
-#~ msgstr "Käyttäjä joka haltuunotti tämän"

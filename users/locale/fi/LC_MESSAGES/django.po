@@ -657,8 +657,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
@@ -672,41 +672,3 @@ msgstr ""
 #: users/validators.py:31
 msgid "You must agree to the terms"
 msgstr "Sinun tulee hyväksyä jäsenyyden ehdot"
-
-#~ msgid "Reference number of transaction"
-#~ msgstr "Tilisiirron viitenumero"
-
-#~ msgid "Reference number of membership fee payments"
-#~ msgstr "Viitenumero jäsenmaksujen maksamista varten"
-
-#~ msgid ""
-#~ "Remember to always use your unique reference number for membership fee "
-#~ "payments"
-#~ msgstr "Muista käyttää aina omaa viitenumeroasi jäsenmaksuja maksaessa"
-
-#~ msgid "Bank account information is"
-#~ msgstr "Pankkitiedot ovat"
-
-#~ msgid "Account holder"
-#~ msgstr "Tilin haltija"
-
-#~ msgid "IBAN"
-#~ msgstr "IBAN"
-
-#~ msgid "BIC"
-#~ msgstr "BIC"
-
-#~ msgid "Best regards %(site.name)s hackers!"
-#~ msgstr "Terveisin %(site.name)s!"
-
-#~ msgid "Your application to %(site.name)s has been rejected."
-#~ msgstr "Hakemuksesi %(site.name)s:n on hylätty"
-
-#~ msgid "New membership application in %(site.name)s"
-#~ msgstr "Uusi jäsenhakemus vastaanotettu %(site.name)s:n"
-
-#~ msgid "Format: DD.MM.YYYY"
-#~ msgstr "Muoto: PP.KK.VVVV"
-
-#~ msgid "Welcome and next steps"
-#~ msgstr "Tervetuloa ja seuraavat toimenpiteet"
