@@ -9,6 +9,9 @@ class BankTransaction(models.Model):
     Mapped to user instance if possible.
     """
 
+    class Meta:
+        unique_together = [["archival_reference", "date"]]
+
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(
         "CustomUser", on_delete=models.SET_NULL, null=True, blank=True
@@ -18,11 +21,12 @@ class BankTransaction(models.Model):
     archival_reference = models.CharField(
         blank=False,
         null=False,
-        unique=True,
         verbose_name=_("Archival reference"),
         max_length=32,
     )
     date = models.DateField(
+        blank=False,
+        null=False,
         verbose_name=_("Date"),
         help_text=_("Date of the transaction"),
     )

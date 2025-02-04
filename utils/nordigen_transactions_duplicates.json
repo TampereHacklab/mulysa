@@ -1,0 +1,57 @@
+{
+    "transactions": {
+        "booked": [
+            {
+                "transactionId": "REF1",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 1",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "TEST_NOTE": "same ref as before, and same date, this should not be imported",
+                "transactionId": "REF1",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 1",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            },
+            {
+                "TEST_NOTE": "same ref as before, different date, this should be imported",
+                "transactionId": "REF1",
+                "entryReference": "0000123",
+                "bookingDate": "2022-10-26",
+                "valueDate": "2022-10-25",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorName": "TESTER 1",
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "Viitemaksu",
+                "additionalInformation": "Viitemaksu"
+            }
+        ],
+        "pending": []
+    }
+}
