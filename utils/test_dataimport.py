@@ -383,3 +383,37 @@ class TestNordigenmporter(TestCase):
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()
+
+
+class TestBankTransactionUnique(TestCase):
+    """
+    At least OP does a strange thing where recurring transactions get the same transactionId for each recurring payment.
+    Previously this caused a problem where only the first transaction was imported and the rest were ignored.
+    Now the uniqueness is with transactionid and the date.
+    """
+
+    def test_same_transactionid(self):
+        with open("utils/nordigen_transactions_duplicates.json") as json_file:
+            data = json.load(json_file)
+            res = DataImport.import_nordigen(data)
+
+            self.assertDictEqual(
+                res,
+                {
+                    "imported": 2,
+                    "exists": 1,
+                    "error": 0,
+                    "failedrows": [],
+                },
+            )
+
+            # REF1 should be found twice even even tho it was in the file three times (one was on the same day)
+            self.assertEqual(
+                2,
+                models.BankTransaction.objects.filter(
+                    archival_reference="REF1"
+                ).count(),
+            )
+
+    def tearDown(self):
+        models.BankTransaction.objects.all().delete()
