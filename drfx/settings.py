@@ -357,12 +357,6 @@ OAUTH2_PROVIDER = {
 # Import just to get in the translation context
 # from utils import businesslogic
 
-# Load non-default settings from settings_local.py if it exists
-try:
-    from .settings_local import *  # noqa
-except ImportError:
-    pass
-
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
 # Constance config - settings for the app that are editable in django admin
@@ -401,3 +395,9 @@ CONSTANCE_CONFIG = {
     # "ACCOUNT_BIC": (ACCOUNT_BIC, "BIC of the association's bank account"),
     # "ACCOUNT_NAME": (ACCOUNT_NAME, "Name of the association's bank account"),
 }
+
+# Load non-default settings from settings_local.py if it exists
+try:
+    from .settings_local import *  # noqa
+except ImportError:
+    pass
