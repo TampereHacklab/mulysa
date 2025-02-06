@@ -1,4 +1,5 @@
 from io import BytesIO
+import re
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
@@ -44,6 +45,14 @@ class HolviToolbox:
 
                 # Parse payment date
                 item["Date_parsed"] = dateparser.parse(item["Payment date"])
+
+                if not item["Reference"]:
+                    match = re.search(r"\b0*(\d+)\b", str(item["Message"]))
+                    if match:
+                        item["Reference"] = match.group(1)
+                        item["Message"] = (
+                            item["Message"] + " (reference extracted from message)"
+                        )
 
                 # Force reference field to be strings
                 item["Reference"] = str(item["Reference"])
