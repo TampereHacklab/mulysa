@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-02 14:59+0000\n"
+"POT-Creation-Date: 2025-02-06 20:54+0000\n"
 "PO-Revision-Date: 2020-12-01 18:35+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -299,8 +299,8 @@ msgid ""
 "\n"
 "  <strong>NOTE:</strong> Custominvoices are meant for special situations "
 "where you are paying for \n"
-"  multiple months using one transaction. We suggest using monthly recurring "
-"\n"
+"  multiple months using one transaction. We suggest using monthly "
+"recurring \n"
 "  payments for all regular situations.\n"
 "  "
 msgstr ""
@@ -483,8 +483,8 @@ msgstr "Hae jäsenyyttä"
 
 #: www/templates/www/thanks.html:7
 msgid ""
-"Your membership application was successfully submitted! Please check your "
-"e-mail (and spam folder) for instuctions."
+"Your membership application was successfully submitted! Please check your e-"
+"mail (and spam folder) for instuctions."
 msgstr ""
 "Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
 "roskapostilaatikko) johon lähetimme lisäohjeita."
@@ -535,8 +535,8 @@ msgstr "Oven avausnumero"
 
 #: www/templates/www/user.html:65
 msgid ""
-"This service has been suspended. Please contact management if you want to "
-"re-apply for it."
+"This service has been suspended. Please contact management if you want to re-"
+"apply for it."
 msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
@@ -792,52 +792,5 @@ msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
 #: www/views.py:555
-#, python-brace-format
-msgid "Updateuser ran for user {user}"
-msgstr "Updateuser pyörähti käyttäjälle {user}"
-
-#, fuzzy
-#~| msgid ""
-#~| "To pay this service multiple times, you can create a custom invoice."
-#~ msgid ""
-#~ "To pay for multiple months at once, you can create a custom invoice. "
-#~ msgstr ""
-#~ "Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit "
-#~ "tehdä vapaamuotoisen laskun."
-
-#~ msgid "Note: You can always delete invoice if you choose not to pay it"
-#~ msgstr ""
-#~ "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
-
-#~ msgid "Update user's data"
-#~ msgstr "Päivitä käyttäjän data"
-
-#~ msgid "capture"
-#~ msgstr "haltuunota"
-
-#~ msgid "Matrix ID"
-#~ msgstr "Matrix ID"
-
-#~ msgid "Claim NFC card"
-#~ msgstr "Käytä NFC-korttia"
-
-#~ msgid "Matrix ID already in use"
-#~ msgstr "Matrix ID on jo käytössä"
-
-#~ msgid "Matrix ID changed successfully"
-#~ msgstr "Matrix ID vaihdettu"
-
-#~ msgid "Set Matrix ID to %(mxid)s"
-#~ msgstr "Matrix ID asetettu: %(mxid)s"
-
-#~ msgid "Invalid Matrix ID"
-#~ msgstr "Epäkelpo Matrix ID"
-
-#~ msgid "Nickname changed successfully"
-#~ msgstr "Nimimerkki vaihdettu"
-
-#~ msgid "You are not subscribed to that service"
-#~ msgstr "Sinulla ei ole tätä jäsenpalvelua"
-
-#~ msgid "Released NFC card"
-#~ msgstr "Vapautettu NFC-kortti"
+msgid "Updateuser ran for user: "
+msgstr ""

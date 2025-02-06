@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-04 15:54+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: nordigenautomation/admin.py:55
+msgid "Do requisition - extra change here to test ci"
+msgstr ""
+
+#: nordigenautomation/admin.py:57
+msgid ""
+"Initialize requisition, first time will just create a new requisition and "
+"successive clicks will create a new requisition and deprecate all the old "
+"ones"
+msgstr ""
+
+#: nordigenautomation/admin.py:61
+msgid "complete settings to get actions"
+msgstr ""
+
+#: nordigenautomation/models.py:59
+msgid "Nordigen API id"
+msgstr ""
+
+#: nordigenautomation/models.py:64
+msgid "Nordigen API key"
+msgstr ""
+
+#: nordigenautomation/models.py:69
+msgid "Nordigen API country"
+msgstr ""
+
+#: nordigenautomation/models.py:75
+msgid "Nordigen API Institution"
+msgstr ""
+
+#: nordigenautomation/models.py:82
+msgid "Creation date"
+msgstr ""
+
+#: nordigenautomation/models.py:83
+msgid "Automatically set to now"
+msgstr ""
+
+#: nordigenautomation/models.py:87
+msgid "Last modified datetime"
+msgstr ""
+
+#: nordigenautomation/models.py:88
+msgid "Automatically updated"
+msgstr ""
+
+#: nordigenautomation/models.py:169
+msgid "Nonce for verification purposes"
+msgstr ""
+
+#: nordigenautomation/models.py:174
+msgid "Nordigen URL to handle the requisition"
+msgstr ""
+
+#: nordigenautomation/models.py:179
+msgid "Nordigen Requisition id"
+msgstr ""
+
+#: nordigenautomation/models.py:185
+msgid "How long this requisition id is valid untill"
+msgstr ""
+
+#: nordigenautomation/models.py:190
+msgid "Is the requisition valid (user has completed the operation required)"
+msgstr ""
+
+#: nordigenautomation/models.py:195
+msgid "Deprecated requisition"
+msgstr ""
