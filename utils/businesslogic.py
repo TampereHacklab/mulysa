@@ -445,13 +445,21 @@ class BusinessLogic:
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
                     logger.debug("Service is suspended - no action")
                 else:
+                    #Calculate days between transaction and parent service paidto date 
                     added_days = servicesubscription.paid_until - transaction.date
                     child_days = 0
-                    # check if and howmuch forehand child servce is paid
+                    # check if and howmuch forehand child servce is paid, if not child_days=0
                     if paid_servicesubscription.paid_until:
                         if paid_servicesubscription.paid_until > transaction.date:
                             child_date = paid_servicesubscription.paid_until - transaction.date
                             child_days = child_date.days
+
+                    # Calculate child subscription payment to happen at same time that latest parrent subsciption,
+                    # useful with custominvoices that pays Parent subscription multiple times
+                    #1. calculate virtual payment day by substarctin one payment days from parentservice paid to date.
+                    #2. add days of on childservice payment days.
+                    #3. if child service is paid forehand substarct those days.
+                    #   Child services like yearly payment are practical to keep in sync
 
                     extra_days = (
                         added_days.days
@@ -469,14 +477,14 @@ class BusinessLogic:
                             = gained {extra_days} days more"""
                     )
 
+                    #But if child servie is paid forehand more than custominvoice would pay, paid to date is kept.
+
                     if extra_days < 0:
                         logger.debug(
                             "Gained days are negative, using previous paid to date"
                         )
                         extra_days = 0
 
-                    # Calculate child subscription payment to happen at same time that latest parrent subsciption,
-                    # useful with custominvoices that pays Parent subscription multiple times
                     BusinessLogic._service_paid_by_transaction(
                         paid_servicesubscription, transaction, extra_days
                     )
