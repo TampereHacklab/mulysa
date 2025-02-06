@@ -461,7 +461,7 @@ class BusinessLogic:
                     )
 
                     logger.debug(
-                        f"""Child prosess add days calculted by
+                        f"""Child process add days calculated by
                               {added_days.days}
                             - {servicesubscription.service.days_per_payment}
                             + {paid_servicesubscription.service.days_per_payment}
