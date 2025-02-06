@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-01 17:19+0000\n"
+"POT-Creation-Date: 2025-02-02 14:59+0000\n"
 "PO-Revision-Date: 2020-12-01 18:35+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -32,44 +32,44 @@ msgstr "Jäsenpalvelut"
 msgid "You must select at least one service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: www/forms.py:92
+#: www/forms.py:91
 #, python-format
 msgid "%(servicename)s, %(cost)s"
 msgstr "%(servicename)s, %(cost)s"
 
-#: www/forms.py:100 www/templates/www/custominvoice.html:32
+#: www/forms.py:99 www/templates/www/custominvoice.html:32
 #: www/templates/www/custominvoice.html:55 www/templates/www/user.html:136
 #: www/templates/www/usersettings.html:51
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: www/forms.py:102
+#: www/forms.py:101
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: www/forms.py:105
+#: www/forms.py:104
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
-#: www/forms.py:108
+#: www/forms.py:107
 msgid "Price per unit"
 msgstr "Hinta per yksikkö"
 
-#: www/forms.py:109
+#: www/forms.py:108
 msgid "See price from the service selected above"
 msgstr "Katso hinta valitusta palvelusta yllä"
 
-#: www/forms.py:124
+#: www/forms.py:123
 #, python-format
 msgid "Price cannot be above service max cost: %(max)s"
 msgstr "Hinta ei voi olla yli maksimin: %(max)s"
 
-#: www/forms.py:129
+#: www/forms.py:128
 #, python-format
 msgid "Cost cannot be below service min cost: %(min)s"
 msgstr "Hinta ei voi olla alle minimin: %(min)s"
 
-#: www/forms.py:135
+#: www/forms.py:134
 #, python-format
 msgid "Price must be the service cost: %(cost)s"
 msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
@@ -78,7 +78,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:52
+#: www/templates/www/base.html:53
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -254,31 +254,35 @@ msgstr "Tiliote"
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:43
+#: www/templates/www/base.html:41
+msgid "Django Admin"
+msgstr "Djangon ylläpitokäyttöliittymä"
+
+#: www/templates/www/base.html:44
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:50
+#: www/templates/www/base.html:51
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:59
+#: www/templates/www/base.html:60
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:86
+#: www/templates/www/base.html:87
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:87
+#: www/templates/www/base.html:88
 msgid "Report bugs at"
 msgstr "Raportoi bugit ja osallistu projektiin"
 
-#: www/templates/www/base.html:87
+#: www/templates/www/base.html:88
 msgid "GitHub"
 msgstr "GitHub"
 
-#: www/templates/www/base.html:88
+#: www/templates/www/base.html:89
 msgid "View changelog"
 msgstr "Katso muutoslokia"
 
@@ -729,45 +733,45 @@ msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
 "täällä, voit lähettää ehdotuksen sähköpostilla."
 
-#: www/views.py:197
+#: www/views.py:195
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:202
+#: www/views.py:200
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:255
+#: www/views.py:253
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:310
+#: www/views.py:309
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:311
+#: www/views.py:310
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:330
+#: www/views.py:329
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:333
+#: www/views.py:332
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:341
+#: www/views.py:340
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:361
+#: www/views.py:360
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:366
+#: www/views.py:365
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -775,7 +779,7 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:398
+#: www/views.py:397
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
