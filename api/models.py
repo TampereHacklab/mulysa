@@ -84,3 +84,11 @@ class DeviceAccessLogEntry(models.Model):
         help_text=_("Who claimed this entry"),
         on_delete=models.SET_NULL,
     )
+
+    method = models.CharField(
+        blank=False,
+        verbose_name=_("Method"),
+        help_text=_("Method of device access"),
+        default="",
+        max_length=64,
+    )

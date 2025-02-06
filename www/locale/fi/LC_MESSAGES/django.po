@@ -256,7 +256,7 @@ msgstr "Vapaamuotoiset laskut"
 
 #: www/templates/www/base.html:41
 msgid "Django Admin"
-msgstr ""
+msgstr "Djangon ylläpitokäyttöliittymä"
 
 #: www/templates/www/base.html:44
 msgid "Apply membership"
@@ -747,31 +747,31 @@ msgstr "Hyväksytty %(name)sn jäsenhakemus"
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:308
+#: www/views.py:309
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:309
+#: www/views.py:310
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:328
+#: www/views.py:329
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:331
+#: www/views.py:332
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:339
+#: www/views.py:340
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:359
+#: www/views.py:360
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:364
+#: www/views.py:365
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -779,7 +779,7 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:396
+#: www/views.py:397
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
