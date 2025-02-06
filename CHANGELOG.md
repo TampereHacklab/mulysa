@@ -1,5 +1,6 @@
 # Changelog
 
+* Access method to door api log, show only NFC in NFC ui. PR [#555](https://github.com/TampereHacklab/mulysa/pull/555) by [@vranki](https://github.com/vranki).
 * docs: simplify homebrew installation command. PR [#536](https://github.com/TampereHacklab/mulysa/pull/536) by [@braaar](https://github.com/braaar).
 * add test that migrations are ok. PR [#554](https://github.com/TampereHacklab/mulysa/pull/554) by [@tswfi](https://github.com/tswfi).
 * Combine NFC, MXID, and phone number door access logic. PR [#552](https://github.com/TampereHacklab/mulysa/pull/552) by [@drjaska](https://github.com/drjaska).
