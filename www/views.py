@@ -238,6 +238,7 @@ def userdetails(request, id):
             "userdetails": userdetails,
             "bank_iban": config.ACCOUNT_IBAN,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
+            "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
         },
     )
 
