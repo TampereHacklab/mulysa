@@ -94,6 +94,34 @@
                 },
                 "remittanceInformationUnstructured": "missing some data",
                 "additionalInformation": "Pano"
+            },
+            {
+                "transactionId": "TEST5",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "missing reference number but it can be found from the additionalInfo",
+                "additionalInformation": "0000123"
+            },
+            {
+                "transactionId": "TEST6",
+                "bookingDate": "2022-10-24",
+                "valueDate": "2022-10-23",
+                "transactionAmount": {
+                    "amount": "80.00",
+                    "currency": "EUR"
+                },
+                "debtorAccount": {
+                    "iban": "FI11111111"
+                },
+                "remittanceInformationUnstructured": "missing reference number and commend is not a reference",
+                "additionalInformation": "test"
             }
         ],
         "pending": [

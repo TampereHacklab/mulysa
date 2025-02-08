@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import datetime
+import re
 from decimal import Decimal
 
 from users.models import BankTransaction
@@ -202,9 +203,17 @@ class DataImport:
                     raise Exception("Cannot handle different currencies")
                 amount = one["transactionAmount"]["amount"]
                 reference = one.get("entryReference") or ""
+                # clear leading zeroes from real reference
                 reference = reference.lstrip("0")
                 sender = one.get("debtorName", "")
                 message = one.get("additionalInformation", "")
+
+                # If reference is empty, try extracting the first number from the message
+                if not reference:
+                    match = re.search(r"\b0*(\d+)\b", message)
+                    if match:
+                        reference = match.group(1)
+                        message = message + " (reference extracted from message)"
 
                 try:
                     BankTransaction.objects.get(archival_reference=archival_reference)

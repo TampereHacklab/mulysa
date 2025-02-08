@@ -302,13 +302,13 @@ class TestHolviImporter(TestCase):
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 8, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 11, "exists": 0, "error": 0, "failedrows": []}
         )
 
         # and again to test that it found the same rows
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 0, "exists": 8, "error": 0, "failedrows": []}
+            res, {"imported": 0, "exists": 11, "error": 0, "failedrows": []}
         )
 
         # quick check for the first imported item data, check the first line of
@@ -323,12 +323,12 @@ class TestHolviImporter(TestCase):
 
         # and the last as it has 'Sept' in the dateformat
         lastimported = models.BankTransaction.objects.last()
-        self.assertEqual(lastimported.date, date(2022, 9, 1))
+        self.assertEqual(lastimported.date, date(2022, 9, 4))
         self.assertEqual(lastimported.amount, Decimal("30"))
         # note, BankTransaction does not keep leading zeroes
-        self.assertEqual(lastimported.reference_number, "200046")
+        self.assertEqual(lastimported.reference_number, "200047")
         self.assertEqual(
-            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00a"
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00d"
         )
 
     def test_holvi_cents(self):
@@ -366,7 +366,7 @@ class TestNordigenmporter(TestCase):
             self.assertDictEqual(
                 res,
                 {
-                    "imported": 4,
+                    "imported": 6,
                     "exists": 1,
                     "error": 1,
                     "failedrows": [
@@ -380,6 +380,9 @@ class TestNordigenmporter(TestCase):
                     ],
                 },
             )
+            test5 = models.BankTransaction.objects.get(archival_reference="TEST5")
+            self.assertEqual(test5.amount, Decimal("80.00"))
+            self.assertEqual(test5.reference_number, "123")
 
     def tearDown(self):
         models.BankTransaction.objects.all().delete()
