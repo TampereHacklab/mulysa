@@ -84,18 +84,18 @@ class DataImport:
                     # Done parsing, add the transaction
 
                     try:
-                        # Archival reference should be unique ID
+                        # Archival reference with date is unique
                         BankTransaction.objects.get(
-                            archival_reference=archival_reference
+                            archival_reference=archival_reference, date=transaction_date
                         )
                         exists = exists + 1
                     except BankTransaction.DoesNotExist:
                         transaction = BankTransaction.objects.create(
+                            archival_reference=archival_reference,
                             date=transaction_date,
                             amount=amount,
                             reference_number=reference,
                             sender=peer,
-                            archival_reference=archival_reference,
                             transaction_id=transaction_id,
                             code=code,
                         )
@@ -147,16 +147,18 @@ class DataImport:
                 # Done parsing, add the transaction
 
                 try:
-                    # Archival reference should be unique ID
-                    BankTransaction.objects.get(archival_reference=archival_reference)
+                    # Archival reference with date is unique
+                    BankTransaction.objects.get(
+                        archival_reference=archival_reference, date=transaction_date
+                    )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
                     transaction = BankTransaction.objects.create(
+                        archival_reference=archival_reference,
                         date=transaction_date,
                         amount=amount,
                         reference_number=reference,
                         sender=peer,
-                        archival_reference=archival_reference,
                     )
                     BusinessLogic.new_transaction(transaction)
                     imported = imported + 1
@@ -216,13 +218,16 @@ class DataImport:
                         message = message + " (reference extracted from message)"
 
                 try:
-                    BankTransaction.objects.get(archival_reference=archival_reference)
+                    # Archival reference with date is unique
+                    BankTransaction.objects.get(
+                        archival_reference=archival_reference, date=transaction_date
+                    )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
                     transaction = BankTransaction.objects.create(
                         archival_reference=archival_reference,
-                        transaction_id=archival_reference,
                         date=transaction_date,
+                        transaction_id=archival_reference,
                         amount=amount,
                         reference_number=reference,
                         sender=sender,
