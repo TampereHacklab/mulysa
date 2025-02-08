@@ -1,5 +1,6 @@
 # Changelog
 
+* CI test for makemessages. PR [#557](https://github.com/TampereHacklab/mulysa/pull/557) by [@tswfi](https://github.com/tswfi).
 * Allow duplicate transaction ref if date differs, fixes #498. PR [#558](https://github.com/TampereHacklab/mulysa/pull/558) by [@tswfi](https://github.com/tswfi).
 * feat: add toggle in admin panel for hiding the custom invoice feature from users. PR [#537](https://github.com/TampereHacklab/mulysa/pull/537) by [@braaar](https://github.com/braaar).
 * Get reference also from transaction message. PR [#530](https://github.com/TampereHacklab/mulysa/pull/530) by [@tswfi](https://github.com/tswfi).
