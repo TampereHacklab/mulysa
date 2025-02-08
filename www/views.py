@@ -552,7 +552,7 @@ def updateuser(request):
     if request.method == "POST":
         user = get_object_or_404(CustomUser, id=request.POST["userid"])
         BusinessLogic.updateuser(user)
-        messages.success(request, _("Updateuser ran for user: ") + {user})
+        messages.success(request, _("Updateuser ran for user: %(user)" % {"user": user}))
     return HttpResponseRedirect(reverse("users"))
 
 
