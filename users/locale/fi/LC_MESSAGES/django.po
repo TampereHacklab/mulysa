@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-06 20:21+0000\n"
-"PO-Revision-Date: 2025-02-06 22:24+0200\n"
+"POT-Creation-Date: 2025-02-02 15:39+0000\n"
+"PO-Revision-Date: 2020-11-14 21:45+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -53,6 +53,8 @@ msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
 #: users/filters.py:64
+#, fuzzy
+#| msgid "Marked for deletion"
 msgid "NOT Marked for deletion"
 msgstr "EI merkattu poistettavaksi"
 
@@ -250,6 +252,8 @@ msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
 #: users/models/custom_user.py:116
+#, fuzzy
+#| msgid "Automatically set to now when user is create"
 msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 

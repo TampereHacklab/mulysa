@@ -45,13 +45,10 @@
         <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
       </tr>
       <tr>
-        <td>{% trans 'Reference number' %}</td>
-        <td>{{subscription.reference_number|default_if_none:"-"}}</td>
-      </tr>
-      <tr>
         <td>{% trans 'Last payment' %}</td>
         <td>{{subscription.last_payment|default_if_none:"-"}}</td>
       </tr>
+
       {% if subscription.service.access_phone_number %}
       <tr>
         <td>{% trans 'Door opening number' %}</td>
@@ -59,29 +56,55 @@
       </tr>
       {% endif %}
 
+      {% if subscription.state == "SUSPENDED" %}
       <tr>
-        <td colspan="2">
-          {% if subscription.state == "SUSPENDED" %}
-            {% trans 'This service has been suspended. Please contact management if you want to re-apply for it.'%}
-          {% else %}
-            {% if subscription.paid_by_subscriptions %}
-              {% trans 'This is paid by other member services - you do not need to pay for it.' %}
-              <ul>
-              {% for paying_sub in subscription.paid_by_subscriptions %}
-                <li>{{ paying_sub }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <p>
-              {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service is paid with reference number <strong>{{ ref }}</strong>
-                to bank account <strong>{{bank_iban}}</strong> (recurring monthly payments). <br />Service price is <strong>{{ cost }}</strong>.{% endblocktrans %}<br/>
-            </p>
-            {% endif %}
-          {% endif %}
-        </td>
+        <td></td>
+        <td>{% trans 'This service has been suspended. Please contact management if you want to re-apply for it.'%}</td>
       </tr>
+      {% else %}
+        {% if subscription.paid_by_subscriptions %}
+        <tr>
+          <td></td>
+          <td>
+            {% trans 'This is paid by following member services: (you do not need to pay for it)' %}
+            <ul>
+            {% for paying_sub in subscription.paid_by_subscriptions %}
+              <li>{{ paying_sub }}</li>
+            {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td>{% trans 'Reference number' %}</td>
+          <td>
+            {{subscription.reference_number|default_if_none:"-"}} </br>
+            <strong>({% trans 'Use this reference number or the payment is not registered' %})</strong>
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Bank account number' %}</td>
+          <td>{{bank_iban|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Payment receiver name' %}</td>
+          <td>{{bank_name|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Bank BIC' %}</td>
+          <td>{{bank_bic|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Service price' %}</td>
+          <td>{{subscription.service.cost_string|default_if_none:"-"}}</td>
+        </tr>
+        {% endif %}
+      {% endif %}
     </table>
     {% endfor %}
+
+
+
 
     <h2>{% trans 'Activity log' %}</h2>
     <table class="table table-sm table-responsive-sm">
