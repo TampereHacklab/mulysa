@@ -102,6 +102,7 @@ class BusinessLogic:
 
             for subscription in subscriptions:
                 transaction_user = subscription.user
+                transaction_comment = f"New transaction for {subscription}"
 
             # Search custom invoices for reference..
             if not transaction_user:
@@ -116,9 +117,11 @@ class BusinessLogic:
 
                 for custominvoice in custominvoices:
                     transaction_user = custominvoice.user
+                    transaction_comment = f"New transaction for {custominvoice}"
 
             if transaction_user:
                 transaction.user = transaction_user
+                transaction.comment = transaction_comment + "\n"
                 transaction.save()
 
         if transaction.user:
@@ -143,8 +146,9 @@ class BusinessLogic:
         Updates the user's status based on the data in database. Can be called from outside.
         """
         # Check for custom invoices..
+        logger.debug("Examining custom invoices")
         invoices = CustomInvoice.objects.filter(
-            user=user, payment_transaction__isnull=True
+            user=user,
         )
         for invoice in invoices:
             transactions = BankTransaction.objects.filter(
@@ -292,46 +296,43 @@ class BusinessLogic:
         """
         invoices = CustomInvoice.objects.filter(
             reference_number=transaction.reference_number,
-            payment_transaction__isnull=True,
         )
 
         for invoice in invoices:
-            if transaction.amount >= invoice.amount:
-                try:
-                    logger.debug(f"Transaction {transaction} pays invoice {invoice}")
-                    subscription = ServiceSubscription.objects.get(
-                        user=invoice.user, id=invoice.subscription.id
+            invoice_cost_min = invoice.cost_min()
+            if (
+                invoice.payment_transaction
+                and config.CUSTOM_INVOICE_ALLOW_MULTIPLE_PAYMENTS is False
+            ):
+                transaction.comment += "Custom invoice is already paid and multiple payment is not allowed\n"
+                transaction.save()
+                break
+            if (
+                config.CUSTOM_INVOICE_DYNAMIC_PRICING
+                and transaction.amount >= invoice_cost_min
+                or transaction.amount >= invoice.amount
+            ):
+                subscription = ServiceSubscription.objects.get(
+                    user=invoice.user, id=invoice.subscription.id
+                )
+                transaction.user = subscription.user
+                inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
+                    subscription,
+                    transaction,
+                    subscription.service.days_per_payment,
+                )
+                if inlimit is True:
+                    BusinessLogic._service_paid_by_transaction(
+                        subscription, transaction, invoice.days
                     )
-                    if not subscription.paid_until:
-                        subscription.paid_until = transaction.date
-                    subscription.paid_until = subscription.paid_until + timedelta(
-                        days=invoice.days
+                else:
+                    subscription.user.log(
+                        f"Payment of {invoice} would extend {subscription.service} paid to date over maximum by {inlimit} days. Transaction is not used"
                     )
-                    subscription.last_payment = transaction
-                    invoice.payment_transaction = transaction
-                    transaction.has_been_used = True
-                    transaction.user = invoice.user
+                    transaction.comment += f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used\n"
                     transaction.save()
-                    invoice.save()
-                    subscription.save()
-                    transaction.user.log(
-                        _(
-                            "Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s"
-                            % {
-                                "days": invoice.days,
-                                "name": subscription.service.name,
-                                "until": subscription.paid_until,
-                                "transaction": transaction,
-                            }
-                        )
-                    )
-                    BusinessLogic._check_servicesubscription_state(subscription)
-                except ServiceSubscription.DoesNotExist:
-                    logger.debug(
-                        "Transaction would pay for invoice but user has no servicesubscription??"
-                    )
             else:
-                transaction.comment = f"Insufficient amount for invoice {invoice}"
+                transaction.comment += f"Insufficient amount for invoice {invoice}\n"
                 transaction.save()
                 logger.debug(
                     f"Transaction {transaction} insufficient for invoice {invoice}"
@@ -375,13 +376,28 @@ class BusinessLogic:
                 transaction, subscription.service
             ):
                 logger.debug(
-                    f"Transaction is new and pays for service {subscription.service}"
+                    f"Transaction is new and enough for service {subscription.service}"
                 )
-                BusinessLogic._service_paid_by_transaction(subscription, transaction)
+                inlimit = BusinessLogic._service_maxdays_after_payment_inlimit(
+                    subscription,
+                    transaction,
+                    subscription.service.days_per_payment,
+                )
+                if inlimit is True:
+                    BusinessLogic._service_paid_by_transaction(
+                        subscription, transaction, subscription.service.days_per_payment
+                    )
+                else:
+                    subscription.user.log(
+                        f"Payment would extend {subscription.service} paid to date over maximum by {inlimit} days. {transaction} is not used"
+                    )
+                    transaction.user = subscription.user
+                    transaction.comment += f"Service {subscription.service} paid untill date would get over maximum limit by {inlimit} days. Transaction is not used\n"
+                    transaction.save()
             else:
                 transaction.user = subscription.user
-                transaction.comment = (
-                    f"Amount insufficient to pay service {subscription.service}"
+                transaction.comment += (
+                    f"Amount insufficient to pay service {subscription.service}\n"
                 )
                 transaction.save()
                 logger.debug(f"Transaction does not pay service {subscription.service}")
@@ -392,10 +408,57 @@ class BusinessLogic:
         Checks if given transaction pays the service. Returns boolean.
         """
         if service.cost_min and transaction.amount < service.cost_min:
+            logger.debug(
+                f"{transaction} amount is insuficent to pay {service} with lowered price"
+            )
             return False
         if not service.cost_min and transaction.amount < service.cost:
+            logger.debug(
+                f"{service} has no .cost_min defined and {transaction} amount is insuficent to pay nominal price"
+            )
             return False
+        logger.debug(f"{transaction} is new and enough for service {service}")
         return True
+
+    @staticmethod
+    def _service_maxdays_after_payment_inlimit(
+        servicesubscription,
+        transaction,
+        add_days,
+    ):
+        """
+        Checks if payment of service would reach and pass .paid_until maximum limit. Returs true if in limit and days of limit exeede
+        """
+        if servicesubscription.paid_until:
+            paid_until = servicesubscription.paid_until
+        else:
+            paid_until = transaction.date
+            logger.debug(
+                "Service has never been paid, using transaction date as last payment date"
+            )
+        date_after_payment = paid_until + timedelta(days=add_days)
+        if (
+            servicesubscription.service.days_maximum
+            and 0 < servicesubscription.service.days_maximum
+        ):
+            date_max = transaction.date + timedelta(
+                days=servicesubscription.service.days_maximum
+            )
+            delta_date = date_after_payment - date_max
+        else:
+            logger.debug(
+                f"Service.days_maximum of {servicesubscription.service} is not defined or is zero, unlimited days?"
+            )
+            return True
+        if date_after_payment <= date_max:
+            logger.debug(
+                f"Date after payment is inlimit with {servicesubscription.service} service.days_maximum "
+            )
+            return True
+        logger.debug(
+            f"Payment would extend {servicesubscription.service} paid to date over maximum {servicesubscription.service.days_maximum} days by {delta_date.days} days."
+        )
+        return delta_date.days
 
     @staticmethod
     def _user_is_subscribed_to(servicesubscriptions, service):
@@ -408,15 +471,16 @@ class BusinessLogic:
         return False
 
     @staticmethod
-    def _service_paid_by_transaction(servicesubscription, transaction):
+    def _service_paid_by_transaction(servicesubscription, transaction, add_days):
         """
         Called if transaction actually pays for extra time on given service subscription
         """
         translation.activate(servicesubscription.user.language)
 
-        # How many days to add to subscription's paid until
-        days_to_add = timedelta(days=servicesubscription.service.days_per_payment)
+        logger.debug(f"Paying {servicesubscription} and gained {add_days} days more")
 
+        # How many days to add to subscription's paid until
+        days_to_add = timedelta(days=add_days)
         # First payment - initialize with payment date and add first time bonus days
         if not servicesubscription.paid_until:
             bonus_days = timedelta(
@@ -425,7 +489,8 @@ class BusinessLogic:
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
-            transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            transaction.comment += f"First payment of {servicesubscription} - added {bonus_days.days} bonus days.\n"
+
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
 
@@ -439,6 +504,7 @@ class BusinessLogic:
         # Mark transaction as used
         transaction.user = servicesubscription.user
         transaction.has_been_used = True
+        transaction.comment += f"Successful payment of {servicesubscription}\n"
         transaction.save()
 
         servicesubscription.user.log(
@@ -464,21 +530,34 @@ class BusinessLogic:
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
                     logger.debug("Service is suspended - no action")
                 else:
-                    extra_days = timedelta(
-                        days=paid_servicesubscription.service.days_per_payment
+                    added_days = servicesubscription.paid_until - transaction.date
+                    child_days = 0
+                    if paid_servicesubscription.paid_until:
+                        if paid_servicesubscription.paid_until > transaction.date:
+                            child_date = (
+                                paid_servicesubscription.paid_until - transaction.date
+                            )
+                            child_days = child_date.days
+
+                    extra_days = (
+                        added_days.days
+                        - servicesubscription.service.days_per_payment
+                        + paid_servicesubscription.service.days_per_payment
+                        - child_days
                     )
-                    paid_servicesubscription.paid_until = transaction.date + extra_days
-                    paid_servicesubscription.last_payment = transaction
-                    paid_servicesubscription.save()
-                    servicesubscription.user.log(
-                        _(
-                            "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s was paid"
-                        )
-                        % {
-                            "servicename": str(paid_servicesubscription),
-                            "until": str(paid_servicesubscription.paid_until),
-                            "anotherservicename": str(servicesubscription.service),
-                        }
+
+                    logger.debug(
+                        f"""Child prosess add days calculted by
+                              {added_days.days}
+                            - {servicesubscription.service.days_per_payment}
+                            + {paid_servicesubscription.service.days_per_payment}
+                            - {child_days}
+                            = gained {extra_days} days more"""
+                    )
+                    # Calculate child subscription payment to happen at same time that latest parrent subsciption,
+                    # useful with custominvoices that pays Parent subscription multiple times
+                    BusinessLogic._service_paid_by_transaction(
+                        paid_servicesubscription, transaction, extra_days
                     )
 
                     BusinessLogic._check_servicesubscription_state(
