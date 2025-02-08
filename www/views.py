@@ -240,6 +240,7 @@ def userdetails(request, id):
             "bank_bic": config.ACCOUNT_BIC,
             "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
+            "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
         },
     )
 
