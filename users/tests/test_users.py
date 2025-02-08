@@ -235,7 +235,7 @@ class TestNewApplicationHappyPathEmails(TestCase):
             len(mail.outbox), 1
         )  # because this sends one email to the member and one to admins
         self.assertIn(
-            f"Tervetuloa jäseneksi {self.user.first_name}",
+            f"Tervetuloa mukaan {self.user.first_name}",
             mail.outbox[0].body,
             "Welcome",
         )

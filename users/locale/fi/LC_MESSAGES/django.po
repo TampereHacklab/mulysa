@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-02 15:39+0000\n"
-"PO-Revision-Date: 2020-11-14 21:45+0200\n"
+"POT-Creation-Date: 2025-02-08 12:59+0000\n"
+"PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -58,70 +58,70 @@ msgstr "Merkattu poistettavaksi"
 msgid "NOT Marked for deletion"
 msgstr "EI merkattu poistettavaksi"
 
-#: users/models/bank_transaction.py:22
+#: users/models/bank_transaction.py:24
 msgid "Archival reference"
 msgstr "Arkistointitunnus"
 
-#: users/models/bank_transaction.py:26
+#: users/models/bank_transaction.py:30
 msgid "Date"
 msgstr "Päiväys"
 
-#: users/models/bank_transaction.py:27
+#: users/models/bank_transaction.py:31
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: users/models/bank_transaction.py:30 users/models/custom_invoice.py:36
+#: users/models/bank_transaction.py:34 users/models/custom_invoice.py:36
 msgid "Amount"
 msgstr "Määrä"
 
-#: users/models/bank_transaction.py:31
+#: users/models/bank_transaction.py:35
 msgid "Amount of money transferred to account"
 msgstr "Tilisiirron summa"
 
-#: users/models/bank_transaction.py:37
+#: users/models/bank_transaction.py:41
 #: users/models/membership_application.py:17 users/models/users_log.py:17
 msgid "Message"
 msgstr "Terveiset"
 
-#: users/models/bank_transaction.py:39
+#: users/models/bank_transaction.py:43
 msgid "Message attached to transaction by sender. Should not normally be used."
 msgstr "Tilisiirron maksajan kirjoittama viesti."
 
-#: users/models/bank_transaction.py:46
+#: users/models/bank_transaction.py:50
 msgid "Sender"
 msgstr "Maksaja"
 
-#: users/models/bank_transaction.py:47
+#: users/models/bank_transaction.py:51
 msgid "Sender of the transaction, if known."
 msgstr "Tilisiirron maksaja, jos tiedossa."
 
-#: users/models/bank_transaction.py:54
+#: users/models/bank_transaction.py:58
 msgid "Transaction reference"
 msgstr "Tilisiirron viitenumero"
 
-#: users/models/bank_transaction.py:56
+#: users/models/bank_transaction.py:60
 msgid ""
 "Reference number is set by transaction sender and should normally always be "
 "used."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: users/models/bank_transaction.py:63
+#: users/models/bank_transaction.py:67
 msgid "Transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: users/models/bank_transaction.py:64
+#: users/models/bank_transaction.py:68
 msgid "Bank transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: users/models/bank_transaction.py:70 users/models/bank_transaction.py:71
+#: users/models/bank_transaction.py:74 users/models/bank_transaction.py:75
 msgid "Code"
 msgstr "Koodi"
 
-#: users/models/bank_transaction.py:79
+#: users/models/bank_transaction.py:83
 msgid "True, if this transaction has already been used to pay for service."
 msgstr "Tosi, jos tilisiirtoa on käytetty jäsenpalvelun maksuun."
 
-#: users/models/bank_transaction.py:86
+#: users/models/bank_transaction.py:90
 msgid "free form comment field for strange transaction"
 msgstr "vapaamuotoinen kommenttikenttä erityisille tilisiirroille"
 
@@ -589,73 +589,52 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"Welcome aboard %(first_name)s!\n"
+"Welcome aboard, %(first_name)s!\n"
 "\n"
-"Great to have you onboard! Your membership application has been\n"
-"approved and now is a great time to to join our community by\n"
-"coming to the next community meeting on the first Tuesday of the\n"
-"month or poping by weekly open house every Tuesday. It is also\n"
-"highly recommendable to join our communication channels (Matrix,\n"
-"Telegram or IRC and email list). Be happy to ask if you like to\n"
-"know more!\n"
+"Your membership application has been approved. Great to have you onboard! \n"
 "\n"
 "Now is the time to login to %(siteurl)s and check your payment information "
 "and status.\n"
 "\n"
-"If you have not yet read the membership guide please do so now: %(wikiurl)s\n"
+"If you have not yet read the new members' guide please do so now: "
+"%(wikiurl)s\n"
 msgstr ""
 "\n"
-"Tervetuloa jäseneksi %(first_name)s!\n"
+"Tervetuloa mukaan %(first_name)s!\n"
 "\n"
-"Hienoa että olet mukana! \n"
+"Jäsenhakemuksesi on hyväksytty. Hienoa, että olet mukana!\n"
 "\n"
-"Ellet ole jo tehnyt niin, tule seuraavaan yhteisömiittiin esittelemään "
-"itsesi.\n"
-"Kannattaa myös liittyä pikaviestinkanaville ja sähköpostilistalle, jotta\n"
-"saat ajantasaista tietoa labin asioista.\n"
+"Nyt on aika kirjautua sisään %(siteurl)s ja tarkistaa maksutietosi ja "
+"tilasi.\n"
 "\n"
-"Nyt on viimeistään aika kirjautua jäsenjärjestelmään: %(siteurl)s josta "
-"löydät\n"
-"ohjeet jäsenyytesi maksamiseen ja voit tarkistaa tietosi.\n"
-"\n"
-"Lue vielä uudelleen läpi myös jäsenohje: %(wikiurl)s\n"
+"Jos et ole vielä lukenut uusien jäsenten opasta, tee se nyt: %(wikiurl)s\n"
 
-#: users/templates/mail/welcome_and_next_steps.txt:20
+#: users/templates/mail/welcome_and_next_steps.txt:14
 msgid "Your services"
 msgstr "Jäsenpalvelusi"
 
-#: users/templates/mail/welcome_and_next_steps.txt:23
+#: users/templates/mail/welcome_and_next_steps.txt:17
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: users/templates/mail/welcome_and_next_steps.txt:25
+#: users/templates/mail/welcome_and_next_steps.txt:19
 msgid "Door opening number"
 msgstr "Ovenavaus numero"
 
-#: users/templates/mail/welcome_and_next_steps.txt:29
+#: users/templates/mail/welcome_and_next_steps.txt:23
 #, python-format
 msgid ""
 "\n"
-"Important note about door access! The payment data from bank is synced only "
-"every two weeks or so and this might\n"
-"mean that your payment is not seen by the system until the next sync "
-"happens. You can check when the last sync happened in %(siteurl)s\n"
-"\n"
-"All Hacklab services work by voluntary basis so\n"
-"things might not always work. Please be patient. For the\n"
-"challenges help would be appreciated, and we would be more than\n"
-"happy for your contribution.\n"
+"All %(sitename)s services work by voluntary basis so\n"
+"things might not always work. Please be patient! If you see something \n"
+"that could use improvement we would be very grateful for your contribution.\n"
 "\n"
 "Welcome!\n"
 msgstr ""
 "\n"
-"Tärkeää tietoa tilankäytöstä! Maksutiedot pankista tulevat parin viikon "
-"viiveellä jäsenrekisteriin, tämä tarkoittaa\n"
-"sitä että vaikka olet juuri tehnyt maksun niin järjestelmä ei siitä "
-"välttämättä vielä tiedä. Voit tarkistaa milloin viimeisin pankki tieto on "
-"järjestelmään tullut kirjautumalla: %(siteurl)s\n"
-"\n"
-"Muistathan että kaikki Hacklabin palvelut toimivat vapaaehtoisvoimin.\n"
+"Kaikki %(sitename)s palvelut toimivat vapaaehtoisvoimin\n"
+"asiat eivät välttämättä aina toimi. Ole kärsivällinen! Jos näet jotain\n"
+"jossa olisi parantamisen varaa, olisimme hyvin kiitollisia panoksestasi.\n"
 "\n"
 "Tervetuloa!\n"
 
