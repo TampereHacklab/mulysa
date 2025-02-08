@@ -99,6 +99,3 @@ msgstr "Tapa"
 #: api/models.py:91
 msgid "Method of device access"
 msgstr "Kirjautumistapa"
-
-#~ msgid "User who claimed this"
-#~ msgstr "Käyttäjä joka haltuunotti tämän"
