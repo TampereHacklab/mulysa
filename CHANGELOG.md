@@ -1,5 +1,6 @@
 # Changelog
 
+* feat: add toggle in admin panel for hiding the custom invoice feature from users. PR [#537](https://github.com/TampereHacklab/mulysa/pull/537) by [@braaar](https://github.com/braaar).
 * Get reference also from transaction message. PR [#530](https://github.com/TampereHacklab/mulysa/pull/530) by [@tswfi](https://github.com/tswfi).
 * User page improvements. PR [#553](https://github.com/TampereHacklab/mulysa/pull/553) by [@Einherj](https://github.com/Einherj).
 * feat: make application_received email more generic. PR [#560](https://github.com/TampereHacklab/mulysa/pull/560) by [@Sandplum](https://github.com/Sandplum).
