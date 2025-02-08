@@ -275,6 +275,7 @@ def usersettings(request, id):
             granted=False,
             nfccard=None,
             claimed_by=None,
+            method='nfc',
             date__gte=timezone.now() - timedelta(minutes=5),
         )
         .exclude(payload__isnull=True)

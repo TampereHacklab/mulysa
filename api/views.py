@@ -75,6 +75,7 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
 
         logentry.device = device
         logentry.payload = access_token
+        logentry.method = method
 
         # 0 = success, any other = failure
         response_status = 0
