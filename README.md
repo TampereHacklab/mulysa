@@ -100,7 +100,7 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 Always start everything by opening the pipenv shell for this project first! (`pipenv shell`) or by prepending individual commands with (`pipenv run`) for system users that does not have shell access normally.
 
 ```bash
-./manage.py makemessages -l fi
+./manage.py makemessages -l fi --no-obsolete
 ```
 
 Edit the .po files
