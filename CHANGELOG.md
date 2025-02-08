@@ -1,5 +1,6 @@
 # Changelog
 
+* User page improvements. PR [#553](https://github.com/TampereHacklab/mulysa/pull/553) by [@Einherj](https://github.com/Einherj).
 * feat: make application_received email more generic. PR [#560](https://github.com/TampereHacklab/mulysa/pull/560) by [@Sandplum](https://github.com/Sandplum).
 * Access method to door api log, show only NFC in NFC ui. PR [#555](https://github.com/TampereHacklab/mulysa/pull/555) by [@vranki](https://github.com/vranki).
 * docs: simplify homebrew installation command. PR [#536](https://github.com/TampereHacklab/mulysa/pull/536) by [@braaar](https://github.com/braaar).

@@ -237,6 +237,8 @@ def userdetails(request, id):
         {
             "userdetails": userdetails,
             "bank_iban": config.ACCOUNT_IBAN,
+            "bank_bic": config.ACCOUNT_BIC,
+            "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
         },
     )
