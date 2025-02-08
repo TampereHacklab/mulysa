@@ -538,8 +538,8 @@ msgstr "Oven avausnumero"
 
 #: www/templates/www/user.html:62
 msgid ""
-"This service has been suspended. Please contact management if you want to "
-"re-apply for it."
+"This service has been suspended. Please contact management if you want to re-"
+"apply for it."
 msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
@@ -808,62 +808,6 @@ msgstr "Sähköposti lähetetty"
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:514
-#, python-brace-format
-msgid "Updateuser ran for user {user}"
+#: www/views.py:555
+msgid "Updateuser ran for user: %(user)"
 msgstr ""
-
-#~ msgid "Note: You can always delete invoice if you choose not to pay it"
-#~ msgstr ""
-#~ "Huomaa: Voit koska tahansa poistaa laskun jos et haluakaan maksaa sitä"
-
-#~ msgid "Update user's data"
-#~ msgstr "Päivitä käyttäjän data"
-
-#~ msgid ""
-#~ "This service can be paid with reference number %(ref)s\n"
-#~ "                to bank account %(bank_iban)s. Service price is %(cost)s."
-#~ msgstr ""
-#~ "Tämä palvelu tulee maksaa viitenumerolla %(ref)s\n"
-#~ "tilille %(bank_iban)s. Palvelun hinta on %(cost)s."
-
-#~ msgid "To pay this service multiple times, you can create a custom invoice."
-#~ msgstr ""
-#~ "Jos haluat maksaa palvelun useaan kertaan yhdellä tilisiirrolla, voit "
-#~ "tehdä vapaamuotoisen laskun."
-
-#~ msgid "capture"
-#~ msgstr "haltuunota"
-
-#~ msgid "Nickname"
-#~ msgstr "Kutsumanimi"
-
-#~ msgid "Matrix ID"
-#~ msgstr "Matrix ID"
-
-#~ msgid "Claim NFC card"
-#~ msgstr "Käytä NFC-korttia"
-
-#~ msgid "Save changes"
-#~ msgstr "Tallenna muutokset"
-
-#~ msgid "Matrix ID already in use"
-#~ msgstr "Matrix ID on jo käytössä"
-
-#~ msgid "Matrix ID changed successfully"
-#~ msgstr "Matrix ID vaihdettu"
-
-#~ msgid "Set Matrix ID to %(mxid)s"
-#~ msgstr "Matrix ID asetettu: %(mxid)s"
-
-#~ msgid "Invalid Matrix ID"
-#~ msgstr "Epäkelpo Matrix ID"
-
-#~ msgid "Nickname changed successfully"
-#~ msgstr "Nimimerkki vaihdettu"
-
-#~ msgid "You are not subscribed to that service"
-#~ msgstr "Sinulla ei ole tätä jäsenpalvelua"
-
-#~ msgid "Released NFC card"
-#~ msgstr "Vapautettu NFC-kortti"
