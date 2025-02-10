@@ -1,5 +1,6 @@
 # Changelog
 
+* Changed Holvi account statement import handling to use new header names. PR [#563](https://github.com/TampereHacklab/mulysa/pull/563) by [@mikeful](https://github.com/mikeful).
 * Some localisations. PR [#562](https://github.com/TampereHacklab/mulysa/pull/562) by [@tswfi](https://github.com/tswfi).
 * fix: make welcome email generic. PR [#538](https://github.com/TampereHacklab/mulysa/pull/538) by [@braaar](https://github.com/braaar).
 * CI test for makemessages. PR [#557](https://github.com/TampereHacklab/mulysa/pull/557) by [@tswfi](https://github.com/tswfi).
