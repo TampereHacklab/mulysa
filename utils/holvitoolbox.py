@@ -48,7 +48,7 @@ class HolviToolbox:
                         item["Date_parsed"] = dateparser.parse(item[field_name])
                         date_found = True
                         break
-                    except IndexError as exc:
+                    except KeyError as exc:
                         date_error = exc
 
                 # Reraise last date field not found exception if none found
