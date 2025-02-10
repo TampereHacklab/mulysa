@@ -331,6 +331,47 @@ class TestHolviImporter(TestCase):
             lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00d"
         )
 
+    def test_holvi_import_2025_01_format(self):
+        """
+        Test import with data format from 2025-01-01
+
+        Changed field headers.
+        """
+        models.BankTransaction.objects.all().delete()
+        xls = open("utils/holvi-account-test-statement-2025-01.xlsx", "rb")
+        name = xls.name
+        data = xls.read()
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 11, "exists": 0, "error": 0, "failedrows": []}
+        )
+
+        # and again to test that it found the same rows
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 0, "exists": 11, "error": 0, "failedrows": []}
+        )
+
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2025-01.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
+
+        # and the last as it has 'Sept' in the dateformat
+        lastimported = models.BankTransaction.objects.last()
+        self.assertEqual(lastimported.date, date(2022, 9, 4))
+        self.assertEqual(lastimported.amount, Decimal("30"))
+        # note, BankTransaction does not keep leading zeroes
+        self.assertEqual(lastimported.reference_number, "200047")
+        self.assertEqual(
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00d"
+        )
+
     def test_holvi_cents(self):
         models.BankTransaction.objects.all().delete()
         xls = open("utils/holvi-account-test-statement-2022-05.xlsx", "rb")

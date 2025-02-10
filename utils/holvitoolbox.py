@@ -20,15 +20,14 @@ class HolviToolbox:
         been uodated to handle both file types.
 
         Expected fields:
-        "Date"/"Payment date", "Amount", "Currency", "Counterparty", "Description", "Reference",
+        "Value date", "Booking date", "Amount", "Currency", "Counterparty", "Description", "Reference",
         "Message", "Filing ID"
-
-        Unused fields:
-        "Execution date" after "Payment date"
         """
         sheet = load_workbook(filename=BytesIO(uploaded_file.read())).active
 
-        date_fields = ["Payment date", "Date"]
+        date_fields = ["Value date", "Payment date", "Date"]
+        date_found = False
+        date_error = None
         headers = []
         items = []
         for row_index, row in enumerate(sheet.values):
@@ -44,7 +43,17 @@ class HolviToolbox:
                 item = dict(zip(headers, list(row)))
 
                 # Parse payment date
-                item["Date_parsed"] = dateparser.parse(item["Payment date"])
+                for field_name in date_fields:
+                    try:
+                        item["Date_parsed"] = dateparser.parse(item[field_name])
+                        date_found = True
+                        break
+                    except IndexError as exc:
+                        date_error = exc
+
+                # Reraise last date field not found exception if none found
+                if not date_found:
+                    raise date_error
 
                 if not item["Reference"]:
                     match = re.search(r"\b0*(\d+)\b", str(item["Message"]))
