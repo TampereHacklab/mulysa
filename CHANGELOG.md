@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump cryptography from 44.0.0 to 44.0.1. PR [#565](https://github.com/TampereHacklab/mulysa/pull/565) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * CI fix exit-code for makemessage diff, . PR [#564](https://github.com/TampereHacklab/mulysa/pull/564) by [@tswfi](https://github.com/tswfi).
 * Changed Holvi account statement import handling to use new header names. PR [#563](https://github.com/TampereHacklab/mulysa/pull/563) by [@mikeful](https://github.com/mikeful).
 * Some localisations. PR [#562](https://github.com/TampereHacklab/mulysa/pull/562) by [@tswfi](https://github.com/tswfi).
