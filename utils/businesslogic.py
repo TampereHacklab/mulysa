@@ -143,6 +143,7 @@ class BusinessLogic:
         Updates the user's status based on the data in database. Can be called from outside.
         """
         # Check for custom invoices..
+        logger.debug("Examining custom invoices")
         invoices = CustomInvoice.objects.filter(
             user=user, payment_transaction__isnull=True
         )
@@ -297,39 +298,14 @@ class BusinessLogic:
 
         for invoice in invoices:
             if transaction.amount >= invoice.amount:
-                try:
-                    logger.debug(f"Transaction {transaction} pays invoice {invoice}")
-                    subscription = ServiceSubscription.objects.get(
-                        user=invoice.user, id=invoice.subscription.id
-                    )
-                    if not subscription.paid_until:
-                        subscription.paid_until = transaction.date
-                    subscription.paid_until = subscription.paid_until + timedelta(
-                        days=invoice.days
-                    )
-                    subscription.last_payment = transaction
-                    invoice.payment_transaction = transaction
-                    transaction.has_been_used = True
-                    transaction.user = invoice.user
-                    transaction.save()
-                    invoice.save()
-                    subscription.save()
-                    transaction.user.log(
-                        _(
-                            "Paid %(days)s days of %(name)s, ending at %(until)s with transaction %(transaction)s"
-                            % {
-                                "days": invoice.days,
-                                "name": subscription.service.name,
-                                "until": subscription.paid_until,
-                                "transaction": transaction,
-                            }
-                        )
-                    )
-                    BusinessLogic._check_servicesubscription_state(subscription)
-                except ServiceSubscription.DoesNotExist:
-                    logger.debug(
-                        "Transaction would pay for invoice but user has no servicesubscription??"
-                    )
+                subscription = ServiceSubscription.objects.get(
+                    user=invoice.user, id=invoice.subscription.id
+                )
+                BusinessLogic._service_paid_by_transaction(
+                    subscription, transaction, invoice.days
+                )
+                invoice.payment_transaction = transaction
+                invoice.save()
             else:
                 transaction.comment = f"Insufficient amount for invoice {invoice}"
                 transaction.save()
@@ -377,7 +353,9 @@ class BusinessLogic:
                 logger.debug(
                     f"Transaction is new and pays for service {subscription.service}"
                 )
-                BusinessLogic._service_paid_by_transaction(subscription, transaction)
+                BusinessLogic._service_paid_by_transaction(
+                    subscription, transaction, subscription.service.days_per_payment
+                )
             else:
                 transaction.user = subscription.user
                 transaction.comment = (
@@ -408,15 +386,16 @@ class BusinessLogic:
         return False
 
     @staticmethod
-    def _service_paid_by_transaction(servicesubscription, transaction):
+    def _service_paid_by_transaction(servicesubscription, transaction, add_days):
         """
         Called if transaction actually pays for extra time on given service subscription
         """
         translation.activate(servicesubscription.user.language)
 
-        # How many days to add to subscription's paid until
-        days_to_add = timedelta(days=servicesubscription.service.days_per_payment)
+        logger.debug(f"Paying {servicesubscription} and gained {add_days} days more")
 
+        # How many days to add to subscription's paid until
+        days_to_add = timedelta(days=add_days)
         # First payment - initialize with payment date and add first time bonus days
         if not servicesubscription.paid_until:
             bonus_days = timedelta(
@@ -425,7 +404,14 @@ class BusinessLogic:
             logger.debug(
                 f"{servicesubscription} paid for first time, adding bonus of {bonus_days}"
             )
-            transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+            if transaction.comment:
+                transaction.comment = (
+                    transaction.comment
+                    + f"\r\nFirst payment of {servicesubscription} - added {bonus_days.days} bonus days."
+                )
+            else:
+                transaction.comment = f"First payment of {servicesubscription} - added {bonus_days.days} bonus days."
+
             days_to_add = days_to_add + bonus_days
             servicesubscription.paid_until = transaction.date
 
@@ -464,21 +450,50 @@ class BusinessLogic:
                 if paid_servicesubscription.state == ServiceSubscription.SUSPENDED:
                     logger.debug("Service is suspended - no action")
                 else:
-                    extra_days = timedelta(
-                        days=paid_servicesubscription.service.days_per_payment
+                    # Calculate days between transaction and parent service paidto date
+                    added_days = servicesubscription.paid_until - transaction.date
+                    child_days = 0
+                    # check if and howmuch forehand child servce is paid, if not child_days=0
+                    if paid_servicesubscription.paid_until:
+                        if paid_servicesubscription.paid_until > transaction.date:
+                            child_date = (
+                                paid_servicesubscription.paid_until - transaction.date
+                            )
+                            child_days = child_date.days
+
+                    # Calculate child subscription payment to happen at same time that latest parrent subsciption,
+                    # useful with custominvoices that pays Parent subscription multiple times
+                    # 1. calculate virtual payment day by substarctin one payment days from parentservice paid to date.
+                    # 2. add days of on childservice payment days.
+                    # 3. if child service is paid forehand substarct those days.
+                    #   Child services like yearly payment are practical to keep in sync
+
+                    extra_days = (
+                        added_days.days
+                        - servicesubscription.service.days_per_payment
+                        + paid_servicesubscription.service.days_per_payment
+                        - child_days
                     )
-                    paid_servicesubscription.paid_until = transaction.date + extra_days
-                    paid_servicesubscription.last_payment = transaction
-                    paid_servicesubscription.save()
-                    servicesubscription.user.log(
-                        _(
-                            "%(servicename)s is now paid until %(until)s due to %(anotherservicename)s was paid"
+
+                    logger.debug(
+                        f"""Child process add days calculated by
+                              {added_days.days}
+                            - {servicesubscription.service.days_per_payment}
+                            + {paid_servicesubscription.service.days_per_payment}
+                            - {child_days}
+                            = gained {extra_days} days more"""
+                    )
+
+                    # But if child servie is paid forehand more than custominvoice would pay, paid to date is kept.
+
+                    if extra_days < 0:
+                        logger.debug(
+                            "Gained days are negative, using previous paid to date"
                         )
-                        % {
-                            "servicename": str(paid_servicesubscription),
-                            "until": str(paid_servicesubscription.paid_until),
-                            "anotherservicename": str(servicesubscription.service),
-                        }
+                        extra_days = 0
+
+                    BusinessLogic._service_paid_by_transaction(
+                        paid_servicesubscription, transaction, extra_days
                     )
 
                     BusinessLogic._check_servicesubscription_state(
