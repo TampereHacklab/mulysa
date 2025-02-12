@@ -643,8 +643,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format

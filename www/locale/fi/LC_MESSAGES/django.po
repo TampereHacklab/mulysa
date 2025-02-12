@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 13:06+0000\n"
+"POT-Creation-Date: 2025-02-08 13:27+0000\n"
 "PO-Revision-Date: 2025-02-02 20:00+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -38,7 +38,7 @@ msgid "%(servicename)s, %(cost)s"
 msgstr "%(servicename)s, %(cost)s"
 
 #: www/forms.py:99 www/templates/www/custominvoice.html:32
-#: www/templates/www/custominvoice.html:55 www/templates/www/user.html:158
+#: www/templates/www/custominvoice.html:55 www/templates/www/user.html:166
 #: www/templates/www/usersettings.html:51
 msgid "Service"
 msgstr "Jäsenpalvelu"
@@ -153,8 +153,8 @@ msgstr "Jäsenhakemukset"
 
 #: www/templates/www/applications.html:12
 #: www/templates/www/custominvoice.html:31
-#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:112
-#: www/templates/www/user.html:128 www/templates/www/user.html:157
+#: www/templates/www/custominvoice.html:54 www/templates/www/user.html:120
+#: www/templates/www/user.html:136 www/templates/www/user.html:165
 msgid "Date"
 msgstr "Päiväys"
 
@@ -167,8 +167,8 @@ msgstr "Nimi"
 msgid "E-mail"
 msgstr "Sähköposti"
 
-#: www/templates/www/applications.html:15 www/templates/www/user.html:113
-#: www/templates/www/user.html:132
+#: www/templates/www/applications.html:15 www/templates/www/user.html:121
+#: www/templates/www/user.html:140
 msgid "Message"
 msgstr "Viesti"
 
@@ -176,7 +176,8 @@ msgstr "Viesti"
 msgid "Agreement"
 msgstr "Hyväksyntä"
 
-#: www/templates/www/applications.html:22 www/templates/www/users.html:46
+#: www/templates/www/applications.html:22 www/templates/www/user.html:49
+#: www/templates/www/users.html:46
 msgid "days"
 msgstr "päivää"
 
@@ -250,7 +251,7 @@ msgid "Bank Ledger"
 msgstr "Tiliote"
 
 #: www/templates/www/base.html:40 www/templates/www/custominvoice.html:5
-#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:147
+#: www/templates/www/custominvoices.html:4 www/templates/www/user.html:155
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
@@ -332,14 +333,15 @@ msgid "Pending invoices"
 msgstr "Maksamattomat laskut"
 
 #: www/templates/www/custominvoice.html:33
-#: www/templates/www/custominvoice.html:56 www/templates/www/user.html:129
-#: www/templates/www/user.html:159
+#: www/templates/www/custominvoice.html:56 www/templates/www/user.html:137
+#: www/templates/www/user.html:167
 msgid "Amount"
 msgstr "Määrä"
 
 #: www/templates/www/custominvoice.html:34
-#: www/templates/www/custominvoice.html:57 www/templates/www/user.html:79
-#: www/templates/www/user.html:130 www/templates/www/user.html:160
+#: www/templates/www/custominvoice.html:57 www/templates/www/user.html:52
+#: www/templates/www/user.html:87 www/templates/www/user.html:138
+#: www/templates/www/user.html:168
 msgid "Reference number"
 msgstr "Viitenumero"
 
@@ -350,7 +352,7 @@ msgid "Action"
 msgstr "Toiminto"
 
 #: www/templates/www/custominvoice.html:40
-#: www/templates/www/custominvoice.html:63 www/templates/www/user.html:166
+#: www/templates/www/custominvoice.html:63 www/templates/www/user.html:174
 msgid "days of"
 msgstr "päivää"
 
@@ -373,12 +375,12 @@ msgstr ""
 msgid "Paid invoices"
 msgstr "Maksetut laskut"
 
-#: www/templates/www/custominvoice.html:58 www/templates/www/user.html:161
+#: www/templates/www/custominvoice.html:58 www/templates/www/user.html:169
 msgid "Paid"
 msgstr "Maksettu"
 
 #: www/templates/www/custominvoice.html:70
-#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:173
+#: www/templates/www/custominvoices.html:35 www/templates/www/user.html:181
 msgid "Not paid yet"
 msgstr "Ei maksettu"
 
@@ -529,14 +531,18 @@ msgid "days left"
 msgstr "päivää jäljellä"
 
 #: www/templates/www/user.html:48
+msgid "Days past due"
+msgstr "Päivää myöhässä"
+
+#: www/templates/www/user.html:56
 msgid "Last payment"
 msgstr "Viimeisin maksu"
 
-#: www/templates/www/user.html:54
+#: www/templates/www/user.html:62
 msgid "Door opening number"
 msgstr "Oven avausnumero"
 
-#: www/templates/www/user.html:62
+#: www/templates/www/user.html:70
 msgid ""
 "This service has been suspended. Please contact management if you want to re-"
 "apply for it."
@@ -544,42 +550,42 @@ msgstr ""
 "Tämä jäsenpalvelu on osaltasi keskeytetty. Ota yhteyttä hallitukseen jos "
 "haluat anoa sitä uudestaan."
 
-#: www/templates/www/user.html:69
+#: www/templates/www/user.html:77
 msgid ""
 "This is paid by following member services: (you do not need to pay for it)"
 msgstr ""
 "Toinen sinulla oleva jäsenpalvelu maksaa tämän palvelun: (tätä jäsenpalvelua "
 "ei tarvitse erikseen maksaa)"
 
-#: www/templates/www/user.html:82
+#: www/templates/www/user.html:90
 msgid "Use this reference number or the payment is not registered"
 msgstr "Käytä tätä viitenumeroa, muuten maksu ei rekisteröidy"
 
-#: www/templates/www/user.html:86
+#: www/templates/www/user.html:94
 msgid "Bank account number"
 msgstr "Tilinumero"
 
-#: www/templates/www/user.html:90
+#: www/templates/www/user.html:98
 msgid "Payment receiver name"
 msgstr "Maksun saajan nimi"
 
-#: www/templates/www/user.html:94
+#: www/templates/www/user.html:102
 msgid "Bank BIC"
 msgstr "BIC-koodi"
 
-#: www/templates/www/user.html:98
+#: www/templates/www/user.html:106
 msgid "Service price"
 msgstr "Palvelun hinta"
 
-#: www/templates/www/user.html:109
+#: www/templates/www/user.html:117
 msgid "Activity log"
 msgstr "Loki"
 
-#: www/templates/www/user.html:123
+#: www/templates/www/user.html:131
 msgid "Bank transactions"
 msgstr "Tilisiirrot"
 
-#: www/templates/www/user.html:124
+#: www/templates/www/user.html:132
 msgid ""
 "Transactions are not processed in real time. Newest bank transactions "
 "uploaded to the system"
@@ -587,15 +593,15 @@ msgstr ""
 "Tilisiirrot eivät tule näkyviin reaaliajassa. Viimeisimmän tuodun "
 "tilisiirron päiväys on"
 
-#: www/templates/www/user.html:131
+#: www/templates/www/user.html:139
 msgid "Sender"
 msgstr "Lähettäjä"
 
-#: www/templates/www/user.html:133
+#: www/templates/www/user.html:141
 msgid "Comment"
 msgstr "Kommentti"
 
-#: www/templates/www/user.html:149
+#: www/templates/www/user.html:157
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -622,7 +628,7 @@ msgstr ""
 "maksua. \n"
 "    "
 
-#: www/templates/www/user.html:180
+#: www/templates/www/user.html:188
 msgid "Create and view custom invoices"
 msgstr "Luo ja katsele vapaamuotoisia laskuja"
 

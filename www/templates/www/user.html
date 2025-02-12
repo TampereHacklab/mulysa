@@ -45,6 +45,14 @@
         <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
       </tr>
       <tr>
+        <td>{% trans 'Days past due' %}</td>
+        <td>{{subscription.days_overdue|default_if_none:"-"}} {% trans 'days'%}</td>
+      </tr>
+      <tr>
+        <td>{% trans 'Reference number' %}</td>
+        <td>{{subscription.reference_number|default_if_none:"-"}}</td>
+      </tr>
+      <tr>
         <td>{% trans 'Last payment' %}</td>
         <td>{{subscription.last_payment|default_if_none:"-"}}</td>
       </tr>
