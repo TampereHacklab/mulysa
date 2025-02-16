@@ -1,5 +1,6 @@
 # Changelog
 
+* UI: show overdue days to member. PR [#561](https://github.com/TampereHacklab/mulysa/pull/561) by [@Sandplum](https://github.com/Sandplum).
 * Mulysa custom invoice paid by transaction. PR [#551](https://github.com/TampereHacklab/mulysa/pull/551) by [@sbeach92](https://github.com/sbeach92).
 * Bump cryptography from 44.0.0 to 44.0.1. PR [#565](https://github.com/TampereHacklab/mulysa/pull/565) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * CI fix exit-code for makemessage diff, . PR [#564](https://github.com/TampereHacklab/mulysa/pull/564) by [@tswfi](https://github.com/tswfi).
