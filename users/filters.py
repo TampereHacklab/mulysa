@@ -10,7 +10,7 @@ import rest_framework_filters as filters
 from . import models
 
 
-class ServiceSubscriptionCountFilter(SimpleListFilter):
+class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
     title = 'Service Subscription Count'
     parameter_name = 'service_subscription_count'
 
