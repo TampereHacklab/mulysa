@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from rangefilter.filters import DateRangeFilter
 
-from .filters import PredefAgeListFilter, MarkedForDeletionFilter
+from .filters import PredefAgeListFilter, MarkedForDeletionFilter, ServiceSubscriptionCountFilter
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import (
     BankTransaction,
@@ -54,6 +54,7 @@ class CustomUserAdmin(UserAdmin):
         "municipality",
         PredefAgeListFilter,
         ("birthday", DateRangeFilter),
+        ServiceSubscriptionCountFilter,
     )
     readonly_fields = (
         "age_years",
