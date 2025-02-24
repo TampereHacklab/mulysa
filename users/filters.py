@@ -9,7 +9,6 @@ import rest_framework_filters as filters
 
 from . import models
 
-
 class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
     title = _("Service Subscription Count")
     parameter_name = "service_subscription_count"
@@ -26,13 +25,13 @@ class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         # Filters the queryset based on the selected option
         if self.value() == "0":
-            return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=0)
+            return queryset.annotate(num_subscriptions=Count("servicesubscription")).filter(num_subscriptions=0)
         elif self.value() == "1":
-            return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=1)
+            return queryset.annotate(num_subscriptions=Count("servicesubscription")).filter(num_subscriptions=1)
         elif self.value() == "2":
-            return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=2)
+            return queryset.annotate(num_subscriptions=Count("servicesubscription")).filter(num_subscriptions=2)
         elif self.value() == "more_than_2":
-            return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions__gt=2)
+            return queryset.annotate(num_subscriptions=Count("servicesubscription")).filter(num_subscriptions__gt=2)
         return queryset
         
 class PredefAgeListFilter(admin.SimpleListFilter):
@@ -77,7 +76,6 @@ class PredefAgeListFilter(admin.SimpleListFilter):
             dt = dt.replace(year=dt.year + years, day=dt.day - 1)
         return dt
 
-
 class MarkedForDeletionFilter(admin.SimpleListFilter):
     title = _("Marked for deletion")
     parameter_name = "marked_for_deletion_on__isnull"
@@ -99,7 +97,6 @@ class MarkedForDeletionFilter(admin.SimpleListFilter):
             return queryset.filter(marked_for_deletion_on__isnull=False)
 
         return queryset
-
 
 class UserFilter(filters.FilterSet):
     class Meta:
