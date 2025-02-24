@@ -11,27 +11,27 @@ from . import models
 
 
 class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
-    title = 'Service Subscription Count'
-    parameter_name = 'service_subscription_count'
+    title = _("Service Subscription Count")
+    parameter_name = "service_subscription_count"
 
     def lookups(self, request, model_admin):
         # Defines filter options in the dropdown
         return (
-            ('0', '0 Subscriptions'),
-            ('1', '1 Subscription'),
-            ('2', '2 Subscriptions'),
-            ('more_than_2', 'More than 2 Subscriptions'),
+            ("0", _("0 Subscriptions")),
+            ("1", _("1 Subscription")),
+            ("2", _("2 Subscriptions")),
+            ("more_than_2", _("More than 2 Subscriptions")),
         )
 
     def queryset(self, request, queryset):
         # Filters the queryset based on the selected option
-        if self.value() == '0':
+        if self.value() == "0":
             return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=0)
-        elif self.value() == '1':
+        elif self.value() == "1":
             return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=1)
-        elif self.value() == '2':
+        elif self.value() == "2":
             return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions=2)
-        elif self.value() == 'more_than_2':
+        elif self.value() == "more_than_2":
             return queryset.annotate(num_subscriptions=Count('servicesubscription')).filter(num_subscriptions__gt=2)
         return queryset
         
