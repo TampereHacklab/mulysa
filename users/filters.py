@@ -3,7 +3,6 @@ import datetime as dt
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Count
-from users.models import CustomUser
 
 import rest_framework_filters as filters
 
@@ -33,7 +32,7 @@ class ServiceSubscriptionCountFilter(admin.SimpleListFilter):
         elif self.value() == "more_than_2":
             return queryset.annotate(num_subscriptions=Count("servicesubscription")).filter(num_subscriptions__gt=2)
         return queryset
-        
+
 class PredefAgeListFilter(admin.SimpleListFilter):
     title = _("Age")
     parameter_name = "age"
