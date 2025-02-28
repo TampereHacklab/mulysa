@@ -1,5 +1,6 @@
 # Changelog
 
+* Add matrix ID to www pages. PR [#567](https://github.com/TampereHacklab/mulysa/pull/567) by [@Sandplum](https://github.com/Sandplum).
 * Filter users by quantity of service subscriptions. PR [#566](https://github.com/TampereHacklab/mulysa/pull/566) by [@Sandplum](https://github.com/Sandplum).
 * UI: show overdue days to member. PR [#561](https://github.com/TampereHacklab/mulysa/pull/561) by [@Sandplum](https://github.com/Sandplum).
 * Mulysa custom invoice paid by transaction. PR [#551](https://github.com/TampereHacklab/mulysa/pull/551) by [@sbeach92](https://github.com/sbeach92).
