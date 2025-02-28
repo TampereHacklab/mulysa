@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-08 12:59+0000\n"
+"POT-Creation-Date: 2025-02-28 09:35+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -24,35 +24,55 @@ msgstr ""
 msgid "User must have an email address"
 msgstr "Sähköpostiosoite vaaditaan"
 
-#: users/filters.py:12
+#: users/filters.py:13
+msgid "Service Subscription Count"
+msgstr ""
+
+#: users/filters.py:19
+msgid "0 Subscriptions"
+msgstr ""
+
+#: users/filters.py:20
+msgid "1 Subscription"
+msgstr ""
+
+#: users/filters.py:21
+msgid "2 Subscriptions"
+msgstr ""
+
+#: users/filters.py:22
+msgid "More than 2 Subscriptions"
+msgstr ""
+
+#: users/filters.py:47
 msgid "Age"
 msgstr "Ikä"
 
-#: users/filters.py:20
+#: users/filters.py:55
 msgid "Under 18 years"
 msgstr "Alle 18 vuotias"
 
-#: users/filters.py:21
+#: users/filters.py:56
 msgid "Over 18 years"
 msgstr "Yli 18-vuotias"
 
-#: users/filters.py:22
+#: users/filters.py:57
 msgid "Under 30 years"
 msgstr "Alle 30-vuotias"
 
-#: users/filters.py:23
+#: users/filters.py:58
 msgid "20 to 60"
 msgstr "20-60-vuotias"
 
-#: users/filters.py:24
+#: users/filters.py:59
 msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
-#: users/filters.py:55 users/filters.py:63 users/models/custom_user.py:130
+#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:130
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
-#: users/filters.py:64
+#: users/filters.py:99
 #, fuzzy
 #| msgid "Marked for deletion"
 msgid "NOT Marked for deletion"
