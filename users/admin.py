@@ -166,6 +166,28 @@ class MemberServiceAdmin(admin.ModelAdmin):
     list_display = ["name", "cost", "pays_also_service", "accounting_id"]
 
 
+class AmountDirectionFilter(admin.SimpleListFilter):
+    title = "Transaction Type"
+    parameter_name = "type"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("deposit", "Deposits"),
+            ("withdrawal", "Withdrawals"),
+            ("zero", "Zero amount"),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "deposit":
+            return queryset.filter(amount__gt=0)
+        if value == "withdrawal":
+            return queryset.filter(amount__lt=0)
+        if value == "zero":
+            return queryset.filter(amount=0)
+        return queryset
+
+
 class BankTransactionAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -177,7 +199,7 @@ class BankTransactionAdmin(admin.ModelAdmin):
         "sender",
         "has_been_used",
     ]
-    list_filter = ("has_been_used", "date")
+    list_filter = (AmountDirectionFilter, "has_been_used", "date")
     ordering = ("-date",)
     search_fields = (
         "user__email",
