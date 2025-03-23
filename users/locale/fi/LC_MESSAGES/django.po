@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-28 09:35+0000\n"
+"POT-Creation-Date: 2025-03-23 13:25+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -78,70 +78,70 @@ msgstr "Merkattu poistettavaksi"
 msgid "NOT Marked for deletion"
 msgstr "EI merkattu poistettavaksi"
 
-#: users/models/bank_transaction.py:24
+#: users/models/bank_transaction.py:26
 msgid "Archival reference"
 msgstr "Arkistointitunnus"
 
-#: users/models/bank_transaction.py:30
+#: users/models/bank_transaction.py:32
 msgid "Date"
 msgstr "Päiväys"
 
-#: users/models/bank_transaction.py:31
+#: users/models/bank_transaction.py:33
 msgid "Date of the transaction"
 msgstr "Tilisiirron päiväys"
 
-#: users/models/bank_transaction.py:34 users/models/custom_invoice.py:36
+#: users/models/bank_transaction.py:36 users/models/custom_invoice.py:36
 msgid "Amount"
 msgstr "Määrä"
 
-#: users/models/bank_transaction.py:35
+#: users/models/bank_transaction.py:37
 msgid "Amount of money transferred to account"
 msgstr "Tilisiirron summa"
 
-#: users/models/bank_transaction.py:41
+#: users/models/bank_transaction.py:43
 #: users/models/membership_application.py:17 users/models/users_log.py:17
 msgid "Message"
 msgstr "Terveiset"
 
-#: users/models/bank_transaction.py:43
+#: users/models/bank_transaction.py:45
 msgid "Message attached to transaction by sender. Should not normally be used."
 msgstr "Tilisiirron maksajan kirjoittama viesti."
 
-#: users/models/bank_transaction.py:50
+#: users/models/bank_transaction.py:52
 msgid "Sender"
 msgstr "Maksaja"
 
-#: users/models/bank_transaction.py:51
+#: users/models/bank_transaction.py:53
 msgid "Sender of the transaction, if known."
 msgstr "Tilisiirron maksaja, jos tiedossa."
 
-#: users/models/bank_transaction.py:58
+#: users/models/bank_transaction.py:60
 msgid "Transaction reference"
 msgstr "Tilisiirron viitenumero"
 
-#: users/models/bank_transaction.py:60
+#: users/models/bank_transaction.py:62
 msgid ""
 "Reference number is set by transaction sender and should normally always be "
 "used."
 msgstr "Viitenumeron asettaa maksaja ja se pitäisi aina olla käytössä."
 
-#: users/models/bank_transaction.py:67
+#: users/models/bank_transaction.py:69
 msgid "Transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: users/models/bank_transaction.py:68
+#: users/models/bank_transaction.py:70
 msgid "Bank transaction id"
 msgstr "Tilisiirron tunniste"
 
-#: users/models/bank_transaction.py:74 users/models/bank_transaction.py:75
+#: users/models/bank_transaction.py:76 users/models/bank_transaction.py:77
 msgid "Code"
 msgstr "Koodi"
 
-#: users/models/bank_transaction.py:83
+#: users/models/bank_transaction.py:85
 msgid "True, if this transaction has already been used to pay for service."
 msgstr "Tosi, jos tilisiirtoa on käytetty jäsenpalvelun maksuun."
 
-#: users/models/bank_transaction.py:90
+#: users/models/bank_transaction.py:92
 msgid "free form comment field for strange transaction"
 msgstr "vapaamuotoinen kommenttikenttä erityisille tilisiirroille"
 

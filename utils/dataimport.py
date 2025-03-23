@@ -86,7 +86,9 @@ class DataImport:
                     try:
                         # Archival reference with date is unique
                         BankTransaction.objects.get(
-                            archival_reference=archival_reference, date=transaction_date
+                            archival_reference=archival_reference
+                            # reverted for now. the dates can differ when fething data from nordigen
+                            # , date=transaction_date
                         )
                         exists = exists + 1
                     except BankTransaction.DoesNotExist:
@@ -149,7 +151,9 @@ class DataImport:
                 try:
                     # Archival reference with date is unique
                     BankTransaction.objects.get(
-                        archival_reference=archival_reference, date=transaction_date
+                        archival_reference=archival_reference
+                        # reverted for now. the dates can differ when fething data from nordigen
+                        # , date=transaction_date
                     )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
@@ -199,7 +203,7 @@ class DataImport:
                 # see: https://nordigen.com/en/docs/account-information/output/transactions/
                 archival_reference = one["transactionId"]
                 transaction_date = datetime.datetime.strptime(
-                    one["bookingDate"], "%Y-%m-%d"
+                    one["valueDate"], "%Y-%m-%d"
                 ).date()
                 if one["transactionAmount"]["currency"] != "EUR":
                     raise Exception("Cannot handle different currencies")
@@ -220,7 +224,9 @@ class DataImport:
                 try:
                     # Archival reference with date is unique
                     BankTransaction.objects.get(
-                        archival_reference=archival_reference, date=transaction_date
+                        archival_reference=archival_reference
+                        # reverted for now. the dates can differ when fething data from nordigen
+                        # , date=transaction_date
                     )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
