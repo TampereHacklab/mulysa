@@ -22,6 +22,7 @@ class BankTransaction(models.Model):
     archival_reference = models.CharField(
         blank=False,
         null=False,
+        unique=True,
         verbose_name=_("Archival reference"),
         max_length=32,
     )
