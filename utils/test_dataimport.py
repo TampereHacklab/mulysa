@@ -2,6 +2,7 @@ import io
 import json
 from datetime import date, timedelta
 from decimal import Decimal
+import unittest
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -429,6 +430,7 @@ class TestNordigenmporter(TestCase):
         models.BankTransaction.objects.all().delete()
 
 
+@unittest.skip("Skipped until https://github.com/TampereHacklab/mulysa/issues/570 is completed")
 class TestBankTransactionUnique(TestCase):
     """
     At least OP does a strange thing where recurring transactions get the same transactionId for each recurring payment.

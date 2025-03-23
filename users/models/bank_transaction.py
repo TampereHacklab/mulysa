@@ -9,8 +9,9 @@ class BankTransaction(models.Model):
     Mapped to user instance if possible.
     """
 
-    class Meta:
-        unique_together = [["archival_reference", "date"]]
+    # reverted for now. the dates can differ when fething data from nordigen
+    # class Meta:
+    #    unique_together = [["archival_reference", "date"]]
 
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(
