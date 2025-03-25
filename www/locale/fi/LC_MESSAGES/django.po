@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-28 09:35+0000\n"
+"POT-Creation-Date: 2025-03-25 16:26+0000\n"
 "PO-Revision-Date: 2025-02-02 20:00+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -828,5 +828,6 @@ msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
 #: www/views.py:558
-msgid "Updateuser ran for user: %(user)"
+#, python-format
+msgid "Updateuser ran for user: %(user)s"
 msgstr ""
