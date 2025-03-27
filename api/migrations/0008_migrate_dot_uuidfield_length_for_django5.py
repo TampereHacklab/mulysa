@@ -47,7 +47,7 @@ def revert_jti_column(apps, schema_editor):
 
 class Migration(migrations.Migration):
     """
-    Update the length of the `jti` column in the `oauth2_provider_idtoken` table 
+    Update the length of the `jti` column in the `oauth2_provider_idtoken` table
     from CHAR(32) to CHAR(36).
 
     In Django versions < 5.0, UUIDFields were stored as 32-character hex strings.
@@ -57,12 +57,13 @@ class Migration(migrations.Migration):
     The `jti` field in django-oauth-toolkit uses a UUIDField and now requires a
     longer column to avoid DataError exceptions when saving tokens.
 
-    See also: 
+    See also:
     https://docs.djangoproject.com/en/5.1/releases/5.0/#migrating-uuidfield
     https://www.albertyw.com/note/django-5-mariadb-uuidfield
     """
 
     dependencies = [
+        ("api", "0007_deviceaccesslogentry_method"),
         ("oauth2_provider", "0012_add_token_checksum"),
     ]
 
