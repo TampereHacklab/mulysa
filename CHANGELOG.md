@@ -1,5 +1,6 @@
 # Changelog
 
+* Allow admin to send emails to non staff user. PR [#576](https://github.com/TampereHacklab/mulysa/pull/576) by [@sbeach92](https://github.com/sbeach92).
 * Fix of logout button. PR [#575](https://github.com/TampereHacklab/mulysa/pull/575) by [@sbeach92](https://github.com/sbeach92).
 * Add matrix ID to www pages. PR [#567](https://github.com/TampereHacklab/mulysa/pull/567) by [@Sandplum](https://github.com/Sandplum).
 * Filter users by quantity of service subscriptions. PR [#566](https://github.com/TampereHacklab/mulysa/pull/566) by [@Sandplum](https://github.com/Sandplum).
