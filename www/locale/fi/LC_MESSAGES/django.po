@@ -78,7 +78,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:53
+#: www/templates/www/base.html:56
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -263,27 +263,27 @@ msgstr "Djangon ylläpitokäyttöliittymä"
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:51
+#: www/templates/www/base.html:53
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:60
+#: www/templates/www/base.html:63
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:87
+#: www/templates/www/base.html:90
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:88
+#: www/templates/www/base.html:91
 msgid "Report bugs at"
 msgstr "Raportoi bugit ja osallistu projektiin"
 
-#: www/templates/www/base.html:88
+#: www/templates/www/base.html:91
 msgid "GitHub"
 msgstr "GitHub"
 
-#: www/templates/www/base.html:89
+#: www/templates/www/base.html:92
 msgid "View changelog"
 msgstr "Näytä muutoshistoria"
 
