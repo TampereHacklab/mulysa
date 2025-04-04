@@ -17,6 +17,8 @@ urlpatterns = [
     path("custominvoices", views.custominvoices, name="custominvoices"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
+    path("mydetails", views.mydetails, name="mydetails"),
+    path("mysettings", views.mysettings, name="mysettings"),
     path("graphs", views.AuthenticatedTemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
     path("graphs", TemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
     path(
