@@ -1,20 +1,14 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans with first_name=user.first_name siteurl=site.domain wikiurl=config.MEMBERS_GUIDE_URL %}
-Welcome aboard {{first_name}}!
+{% blocktrans with first_name=user.first_name siteurl=site.domain  sitename=site.name wikiurl=config.MEMBERS_GUIDE_URL %}
+Welcome aboard, {{first_name}}!
 
-Great to have you onboard! Your membership application has been
-approved and now is a great time to to join our community by
-coming to the next community meeting on the first Tuesday of the
-month or poping by weekly open house every Tuesday. It is also
-highly recommendable to join our communication channels (Matrix,
-Telegram or IRC and email list). Be happy to ask if you like to
-know more!
+Your membership application has been approved. Great to have you onboard! 
 
 Now is the time to login to {{siteurl}} and check your payment information and status.
 
-If you have not yet read the membership guide please do so now: {{wikiurl}}
+If you have not yet read the new members' guide please do so now: {{wikiurl}}
 {% endblocktrans %}
 
 {% trans 'Your services' %}
@@ -27,13 +21,9 @@ If you have not yet read the membership guide please do so now: {{wikiurl}}
 {% endfor %}
 
 {% blocktrans %}
-Important note about door access! The payment data from bank is synced only every two weeks or so and this might
-mean that your payment is not seen by the system until the next sync happens. You can check when the last sync happened in {{siteurl}}
-
-All Hacklab services work by voluntary basis so
-things might not always work. Please be patient. For the
-challenges help would be appreciated, and we would be more than
-happy for your contribution.
+All {{sitename}} services work by voluntary basis so
+things might not always work. Please be patient! If you see something 
+that could use improvement we would be very grateful for your contribution.
 
 Welcome!
 {% endblocktrans %}

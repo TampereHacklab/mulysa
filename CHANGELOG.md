@@ -1,5 +1,31 @@
 # Changelog
 
+* Bump django from 5.1.7 to 5.1.8. PR [#579](https://github.com/TampereHacklab/mulysa/pull/579) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Allow admin to send emails to non staff user. PR [#576](https://github.com/TampereHacklab/mulysa/pull/576) by [@sbeach92](https://github.com/sbeach92).
+* Fix of logout button. PR [#575](https://github.com/TampereHacklab/mulysa/pull/575) by [@sbeach92](https://github.com/sbeach92).
+* Add matrix ID to www pages. PR [#567](https://github.com/TampereHacklab/mulysa/pull/567) by [@Sandplum](https://github.com/Sandplum).
+* Filter users by quantity of service subscriptions. PR [#566](https://github.com/TampereHacklab/mulysa/pull/566) by [@Sandplum](https://github.com/Sandplum).
+* UI: show overdue days to member. PR [#561](https://github.com/TampereHacklab/mulysa/pull/561) by [@Sandplum](https://github.com/Sandplum).
+* Mulysa custom invoice paid by transaction. PR [#551](https://github.com/TampereHacklab/mulysa/pull/551) by [@sbeach92](https://github.com/sbeach92).
+* Bump cryptography from 44.0.0 to 44.0.1. PR [#565](https://github.com/TampereHacklab/mulysa/pull/565) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* CI fix exit-code for makemessage diff, . PR [#564](https://github.com/TampereHacklab/mulysa/pull/564) by [@tswfi](https://github.com/tswfi).
+* Changed Holvi account statement import handling to use new header names. PR [#563](https://github.com/TampereHacklab/mulysa/pull/563) by [@mikeful](https://github.com/mikeful).
+* Some localisations. PR [#562](https://github.com/TampereHacklab/mulysa/pull/562) by [@tswfi](https://github.com/tswfi).
+* fix: make welcome email generic. PR [#538](https://github.com/TampereHacklab/mulysa/pull/538) by [@braaar](https://github.com/braaar).
+* CI test for makemessages. PR [#557](https://github.com/TampereHacklab/mulysa/pull/557) by [@tswfi](https://github.com/tswfi).
+* Allow duplicate transaction ref if date differs, fixes #498. PR [#558](https://github.com/TampereHacklab/mulysa/pull/558) by [@tswfi](https://github.com/tswfi).
+* feat: add toggle in admin panel for hiding the custom invoice feature from users. PR [#537](https://github.com/TampereHacklab/mulysa/pull/537) by [@braaar](https://github.com/braaar).
+* Get reference also from transaction message. PR [#530](https://github.com/TampereHacklab/mulysa/pull/530) by [@tswfi](https://github.com/tswfi).
+* User page improvements. PR [#553](https://github.com/TampereHacklab/mulysa/pull/553) by [@Einherj](https://github.com/Einherj).
+* feat: make application_received email more generic. PR [#560](https://github.com/TampereHacklab/mulysa/pull/560) by [@Sandplum](https://github.com/Sandplum).
+* Access method to door api log, show only NFC in NFC ui. PR [#555](https://github.com/TampereHacklab/mulysa/pull/555) by [@vranki](https://github.com/vranki).
+* docs: simplify homebrew installation command. PR [#536](https://github.com/TampereHacklab/mulysa/pull/536) by [@braaar](https://github.com/braaar).
+* add test that migrations are ok. PR [#554](https://github.com/TampereHacklab/mulysa/pull/554) by [@tswfi](https://github.com/tswfi).
+* Combine NFC, MXID, and phone number door access logic. PR [#552](https://github.com/TampereHacklab/mulysa/pull/552) by [@drjaska](https://github.com/drjaska).
+* Remove members import. Fixes #118. PR [#548](https://github.com/TampereHacklab/mulysa/pull/548) by [@tswfi](https://github.com/tswfi).
+* Add link to admin site for superusers' nav bar. PR [#545](https://github.com/TampereHacklab/mulysa/pull/545) by [@Janne555](https://github.com/Janne555).
+* Add active to current link to visualise current page to the user. PR [#542](https://github.com/TampereHacklab/mulysa/pull/542) by [@Janne555](https://github.com/Janne555).
+* Try to fix latest changes. PR [#544](https://github.com/TampereHacklab/mulysa/pull/544) by [@tswfi](https://github.com/tswfi).
 * Bump jinja2 from 3.1.4 to 3.1.5. PR [#514](https://github.com/TampereHacklab/mulysa/pull/514) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * if new changes are pushed kill old ci runs. PR [#507](https://github.com/TampereHacklab/mulysa/pull/507) by [@tswfi](https://github.com/tswfi).
 * Django 4.2.17 and other depencies update. PR [#506](https://github.com/TampereHacklab/mulysa/pull/506) by [@tswfi](https://github.com/tswfi).
@@ -115,4 +141,3 @@
 * Editable Userfields and fixes to usersettings page. PR [#281](https://github.com/TampereHacklab/mulysa/pull/281) by [@tswfi](https://github.com/tswfi).
 * Show last login in users list. PR [#273](https://github.com/TampereHacklab/mulysa/pull/273) by [@tswfi](https://github.com/tswfi).
 * Adding https://github.com/tiangolo/latest-changes. PR [#287](https://github.com/TampereHacklab/mulysa/pull/287) by [@tswfi](https://github.com/tswfi).
-

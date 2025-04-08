@@ -18,7 +18,7 @@ class BaseService(models.Model):
     )
 
     cost = models.IntegerField(
-        verbose_name=_("Cost of the service"),
+        verbose_name=_("Normal cost of the service"),
         validators=[MinValueValidator(0)],
     )
 

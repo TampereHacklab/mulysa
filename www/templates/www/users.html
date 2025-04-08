@@ -17,6 +17,7 @@
       <th>{% trans 'Nick' %}</th>
       <th>{% trans 'Email' %}</th>
       <th>{% trans 'Phone' %}</th>
+      <th>{% trans 'Matrix ID' %}</th>
       {% for service in services %}
       <th>{{ service.name }}</th>
       {% endfor %}
@@ -37,6 +38,7 @@
     <td>{{ user.nick }}</td>
     <td><a href="{% url 'userdetails' user.id %}">{{ user.email }}</a></td>
     <td>{{ user.phone }}</td>
+    <td>{{ user.mxid }}</td>
     {% for service in services %}
     <td>
       {% for subscription in user.servicesubscriptions %}

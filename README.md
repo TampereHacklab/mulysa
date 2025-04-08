@@ -45,29 +45,18 @@ sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
 Make sure you have [Homebrew](https://brew.sh/) installed, then run:
 
 ```sh
-brew install git
-```
-
-```sh
-brew install pipenv
+brew install git pipenv mysql gettext
 ```
 
 _Note: Homebrew will automatically install python for you since it is a prerequisite of pipenv._
 
-```sh
-brew install mysql
-```
-
-```sh
-brew install gettext
-```
 
 ## Installing prerequisites on other platforms
 
 Find a way to install the software on this list (click the links to find installer downloads):
 
 * [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-* [python](https://www.python.org/downloads/) 3.9
+* [python](https://www.python.org/downloads/) 3.11
 * [gettext](https://www.gnu.org/software/gettext/) for translation editing and compiling
 * [MySQL C API (libmysqlclient)](https://dev.mysql.com/downloads/c-api/)
 * [pipenv](https://github.com/pypa/pipenv)
@@ -80,6 +69,10 @@ cd mulysa
 pipenv sync --dev
 pipenv shell
 ```
+
+If pipenv sync asks to run pipenv lock, run it.
+
+If pipenv sync fails due to wrong Python version, change it in Pipfile, delete Pipfile.lock and try again.
 
 Create your own `drfx/settings_local.py` file with at least this to get cookies working without ssl
 
@@ -96,12 +89,18 @@ CSRF_COOKIE_NAME = '__NotReallyHost-csrf'
 ./manage.py runserver
 ```
 
+## To create an initial superuser account
+
+```bash
+./manage.py createsuperuser
+```
+
 ## To update localizations
 
 Always start everything by opening the pipenv shell for this project first! (`pipenv shell`) or by prepending individual commands with (`pipenv run`) for system users that does not have shell access normally.
 
 ```bash
-./manage.py makemessages -l fi
+./manage.py makemessages -l fi --no-obsolete
 ```
 
 Edit the .po files

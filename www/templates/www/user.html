@@ -6,7 +6,7 @@
   <h1>
     {% trans 'User data for' %} {{ userdetails.first_name }} {{ userdetails.last_name }}
   </h1>
-
+  {% bootstrap_messages %}
   <table class="table">
     <tr>
       <td>{% trans 'Name' %}</td>
@@ -19,6 +19,10 @@
     <tr>
       <td>{% trans 'Phone' %}</td>
       <td>{{ userdetails.phone }}</td>
+    </tr>
+    <tr>
+      <td>{% trans 'Matrix ID' %}</td>
+      <td>{{ userdetails.mxid }}</td>
     </tr>
   </table>
 
@@ -45,6 +49,10 @@
         <td>{{subscription.paid_until|default_if_none:"-"}} ({{ subscription.days_left }} {% trans 'days left' %})</td>
       </tr>
       <tr>
+        <td>{% trans 'Days past due' %}</td>
+        <td>{{subscription.days_overdue|default_if_none:"-"}} {% trans 'days'%}</td>
+      </tr>
+      <tr>
         <td>{% trans 'Reference number' %}</td>
         <td>{{subscription.reference_number|default_if_none:"-"}}</td>
       </tr>
@@ -52,6 +60,7 @@
         <td>{% trans 'Last payment' %}</td>
         <td>{{subscription.last_payment|default_if_none:"-"}}</td>
       </tr>
+
       {% if subscription.service.access_phone_number %}
       <tr>
         <td>{% trans 'Door opening number' %}</td>
@@ -59,29 +68,55 @@
       </tr>
       {% endif %}
 
+      {% if subscription.state == "SUSPENDED" %}
       <tr>
-        <td colspan="2">
-          {% if subscription.state == "SUSPENDED" %}
-            {% trans 'This service has been suspended. Please contact management if you want to re-apply for it.'%}
-          {% else %}
-            {% if subscription.paid_by_subscriptions %}
-              {% trans 'This is paid by other member services - you do not need to pay for it.' %}
-              <ul>
-              {% for paying_sub in subscription.paid_by_subscriptions %}
-                <li>{{ paying_sub }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <p>
-              {% blocktrans with ref=subscription.reference_number cost=subscription.service.cost_string %}This service is paid with reference number <strong>{{ ref }}</strong>
-                to bank account <strong>{{bank_iban}}</strong> (recurring monthly payments). <br />Service price is <strong>{{ cost }}</strong>.{% endblocktrans %}<br/>
-            </p>
-            {% endif %}
-          {% endif %}
-        </td>
+        <td></td>
+        <td>{% trans 'This service has been suspended. Please contact management if you want to re-apply for it.'%}</td>
       </tr>
+      {% else %}
+        {% if subscription.paid_by_subscriptions %}
+        <tr>
+          <td></td>
+          <td>
+            {% trans 'This is paid by following member services: (you do not need to pay for it)' %}
+            <ul>
+            {% for paying_sub in subscription.paid_by_subscriptions %}
+              <li>{{ paying_sub }}</li>
+            {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td>{% trans 'Reference number' %}</td>
+          <td>
+            {{subscription.reference_number|default_if_none:"-"}} </br>
+            <strong>({% trans 'Use this reference number or the payment is not registered' %})</strong>
+          </td>
+        </tr>
+        <tr>
+          <td>{% trans 'Bank account number' %}</td>
+          <td>{{bank_iban|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Payment receiver name' %}</td>
+          <td>{{bank_name|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Bank BIC' %}</td>
+          <td>{{bank_bic|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Service price' %}</td>
+          <td>{{subscription.service.cost_string|default_if_none:"-"}}</td>
+        </tr>
+        {% endif %}
+      {% endif %}
     </table>
     {% endfor %}
+
+
+
 
     <h2>{% trans 'Activity log' %}</h2>
     <table class="table table-sm table-responsive-sm">
@@ -116,48 +151,47 @@
         <td>{{ transaction.reference_number }}</td>
         <td>{{ transaction.sender|default_if_none:"" }}</td>
         <td>{{ transaction.message }}</td>
-        <td>{{ transaction.comment|default_if_none:"" }}</td>
+        <td>{{ transaction.comment|default_if_none:""|linebreaks}}</td>
       </tr>
       {% endfor %}
     </table>
-
-
-    <h2>{% trans 'Custom invoices' %}</h2>
-    <div class="alert alert-danger">
-      {% blocktrans %}
-      <strong>NOTE:</strong> Custominvoices are meant for special situations where you are paying for 
-      multiple months using one transaction. We suggest using monthly recurring 
-      payments for all regular situations.
-    {% endblocktrans %}
-    </div>
-    <table class="table table-responsive-sm">
-      <tr>
-        <th>{% trans 'Date' %}</th>
-        <th>{% trans 'Service' %}</th>
-        <th>{% trans 'Amount' %}</th>
-        <th>{% trans 'Reference number' %}</th>
-        <th>{% trans 'Paid' %}</th>
-      </tr>
-      {% for custominvoice in userdetails.custominvoices %}
-      <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
-        <td>{{ custominvoice.created }}</td>
-        <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
-        <td>{{ custominvoice.amount }}</td>
-        <td>{{ custominvoice.reference_number }}</td>
-        <td>
-          {% if custominvoice.payment_transaction %}
-            <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
-          {% else %}
-            {% trans 'Not paid yet' %}
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-    <p>
-      <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
-    </p>
-
+    {% if hide_custom_invoice != True %}
+      <h2>{% trans 'Custom invoices' %}</h2>
+      <div class="alert alert-danger">
+        {% blocktrans %}
+        <strong>NOTE:</strong> Custominvoices are meant for special situations where you are paying for 
+        multiple months using one transaction. We suggest using monthly recurring 
+        payments for all regular situations.
+      {% endblocktrans %}
+      </div>
+      <table class="table table-responsive-sm">
+        <tr>
+          <th>{% trans 'Date' %}</th>
+          <th>{% trans 'Service' %}</th>
+          <th>{% trans 'Amount' %}</th>
+          <th>{% trans 'Reference number' %}</th>
+          <th>{% trans 'Paid' %}</th>
+        </tr>
+        {% for custominvoice in userdetails.custominvoices %}
+        <tr {% if custominvoice.payment_transaction %} class="strikeout" {% endif %}>
+          <td>{{ custominvoice.created }}</td>
+          <td>{{ custominvoice.days }} {% trans 'days of' %} {{ custominvoice.subscription.service.name }}</td>
+          <td>{{ custominvoice.amount }}</td>
+          <td>{{ custominvoice.reference_number }}</td>
+          <td>
+            {% if custominvoice.payment_transaction %}
+              <a href="{% url 'banktransaction-view' custominvoice.payment_transaction.id %}">{{ custominvoice.payment_transaction.date }}</a>
+            {% else %}
+              {% trans 'Not paid yet' %}
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <p>
+        <a href="{% url 'custominvoice' %}">{% trans 'Create and view custom invoices' %}</a>
+      </p>
+    {% endif %} 
   {% endif %}
 </div>
 {% endblock %}

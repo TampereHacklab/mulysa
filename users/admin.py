@@ -1,10 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils import timezone
+from django.db.models import Count
 
 from rangefilter.filters import DateRangeFilter
 
-from .filters import PredefAgeListFilter, MarkedForDeletionFilter
+from .filters import (
+    PredefAgeListFilter,
+    MarkedForDeletionFilter,
+    ServiceSubscriptionCountFilter,
+)
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import (
     BankTransaction,
@@ -54,6 +59,7 @@ class CustomUserAdmin(UserAdmin):
         "municipality",
         PredefAgeListFilter,
         ("birthday", DateRangeFilter),
+        ServiceSubscriptionCountFilter,
     )
     readonly_fields = (
         "age_years",
@@ -161,6 +167,50 @@ class MemberServiceAdmin(admin.ModelAdmin):
     list_display = ["name", "cost", "pays_also_service", "accounting_id"]
 
 
+class AmountDirectionFilter(admin.SimpleListFilter):
+    title = "Transaction Type"
+    parameter_name = "type"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("deposit", "Deposits"),
+            ("withdrawal", "Withdrawals"),
+            ("zero", "Zero amount"),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "deposit":
+            return queryset.filter(amount__gt=0)
+        if value == "withdrawal":
+            return queryset.filter(amount__lt=0)
+        if value == "zero":
+            return queryset.filter(amount=0)
+        return queryset
+
+
+class DuplicateTransactionIdFilter(admin.SimpleListFilter):
+    title = "Duplicate Archival reference"
+    parameter_name = "duplicate_archival_reference"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("yes", "Has duplicates"),
+        ]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == "yes":
+            duplicates = (
+                queryset.values("archival_reference")
+                .annotate(txn_count=Count("id"))
+                .filter(txn_count__gt=1)
+                .values_list("archival_reference", flat=True)
+            )
+            return queryset.filter(archival_reference__in=list(duplicates))
+        return queryset
+
+
 class BankTransactionAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -172,7 +222,12 @@ class BankTransactionAdmin(admin.ModelAdmin):
         "sender",
         "has_been_used",
     ]
-    list_filter = ("has_been_used", "date")
+    list_filter = (
+        AmountDirectionFilter,
+        "has_been_used",
+        "date",
+        DuplicateTransactionIdFilter,
+    )
     ordering = ("-date",)
     search_fields = (
         "user__email",

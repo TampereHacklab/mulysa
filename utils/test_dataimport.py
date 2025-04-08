@@ -2,6 +2,7 @@ import io
 import json
 from datetime import date, timedelta
 from decimal import Decimal
+import unittest
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -302,13 +303,13 @@ class TestHolviImporter(TestCase):
         data = xls.read()
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 8, "exists": 0, "error": 0, "failedrows": []}
+            res, {"imported": 11, "exists": 0, "error": 0, "failedrows": []}
         )
 
         # and again to test that it found the same rows
         res = DataImport.import_holvi(SimpleUploadedFile(name, data))
         self.assertDictEqual(
-            res, {"imported": 0, "exists": 8, "error": 0, "failedrows": []}
+            res, {"imported": 0, "exists": 11, "error": 0, "failedrows": []}
         )
 
         # quick check for the first imported item data, check the first line of
@@ -323,12 +324,53 @@ class TestHolviImporter(TestCase):
 
         # and the last as it has 'Sept' in the dateformat
         lastimported = models.BankTransaction.objects.last()
-        self.assertEqual(lastimported.date, date(2022, 9, 1))
+        self.assertEqual(lastimported.date, date(2022, 9, 4))
         self.assertEqual(lastimported.amount, Decimal("30"))
         # note, BankTransaction does not keep leading zeroes
-        self.assertEqual(lastimported.reference_number, "200046")
+        self.assertEqual(lastimported.reference_number, "200047")
         self.assertEqual(
-            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00a"
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00d"
+        )
+
+    def test_holvi_import_2025_01_format(self):
+        """
+        Test import with data format from 2025-01-01
+
+        Changed field headers.
+        """
+        models.BankTransaction.objects.all().delete()
+        xls = open("utils/holvi-account-test-statement-2025-01.xlsx", "rb")
+        name = xls.name
+        data = xls.read()
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 11, "exists": 0, "error": 0, "failedrows": []}
+        )
+
+        # and again to test that it found the same rows
+        res = DataImport.import_holvi(SimpleUploadedFile(name, data))
+        self.assertDictEqual(
+            res, {"imported": 0, "exists": 11, "error": 0, "failedrows": []}
+        )
+
+        # quick check for the first imported item data, check the first line of
+        # holvi-account-test-statement-2025-01.xlsx
+        firstimported = models.BankTransaction.objects.first()
+        self.assertEqual(firstimported.date, date(2022, 3, 30))
+        self.assertEqual(firstimported.amount, Decimal("-135.9"))
+        self.assertEqual(firstimported.reference_number, "1122002246684")
+        self.assertEqual(
+            firstimported.archival_reference, "285ef4ccf4957ea2ba807b961360bf26"
+        )
+
+        # and the last as it has 'Sept' in the dateformat
+        lastimported = models.BankTransaction.objects.last()
+        self.assertEqual(lastimported.date, date(2022, 9, 4))
+        self.assertEqual(lastimported.amount, Decimal("30"))
+        # note, BankTransaction does not keep leading zeroes
+        self.assertEqual(lastimported.reference_number, "200047")
+        self.assertEqual(
+            lastimported.archival_reference, "1924ceba5a3b1c5ffea892fb4850e00d"
         )
 
     def test_holvi_cents(self):
@@ -366,7 +408,7 @@ class TestNordigenmporter(TestCase):
             self.assertDictEqual(
                 res,
                 {
-                    "imported": 4,
+                    "imported": 6,
                     "exists": 1,
                     "error": 1,
                     "failedrows": [
@@ -379,6 +421,46 @@ class TestNordigenmporter(TestCase):
                         "handle different currencies)"
                     ],
                 },
+            )
+            test5 = models.BankTransaction.objects.get(archival_reference="TEST5")
+            self.assertEqual(test5.amount, Decimal("80.00"))
+            self.assertEqual(test5.reference_number, "123")
+
+    def tearDown(self):
+        models.BankTransaction.objects.all().delete()
+
+
+@unittest.skip(
+    "Skipped until https://github.com/TampereHacklab/mulysa/issues/570 is completed"
+)
+class TestBankTransactionUnique(TestCase):
+    """
+    At least OP does a strange thing where recurring transactions get the same transactionId for each recurring payment.
+    Previously this caused a problem where only the first transaction was imported and the rest were ignored.
+    Now the uniqueness is with transactionid and the date.
+    """
+
+    def test_same_transactionid(self):
+        with open("utils/nordigen_transactions_duplicates.json") as json_file:
+            data = json.load(json_file)
+            res = DataImport.import_nordigen(data)
+
+            self.assertDictEqual(
+                res,
+                {
+                    "imported": 2,
+                    "exists": 1,
+                    "error": 0,
+                    "failedrows": [],
+                },
+            )
+
+            # REF1 should be found twice even even tho it was in the file three times (one was on the same day)
+            self.assertEqual(
+                2,
+                models.BankTransaction.objects.filter(
+                    archival_reference="REF1"
+                ).count(),
             )
 
     def tearDown(self):
