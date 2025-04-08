@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import datetime
+import re
 from decimal import Decimal
 
 from users.models import BankTransaction
@@ -83,18 +84,20 @@ class DataImport:
                     # Done parsing, add the transaction
 
                     try:
-                        # Archival reference should be unique ID
+                        # Archival reference with date is unique
                         BankTransaction.objects.get(
                             archival_reference=archival_reference
+                            # reverted for now. the dates can differ when fething data from nordigen
+                            # , date=transaction_date
                         )
                         exists = exists + 1
                     except BankTransaction.DoesNotExist:
                         transaction = BankTransaction.objects.create(
+                            archival_reference=archival_reference,
                             date=transaction_date,
                             amount=amount,
                             reference_number=reference,
                             sender=peer,
-                            archival_reference=archival_reference,
                             transaction_id=transaction_id,
                             code=code,
                         )
@@ -146,16 +149,20 @@ class DataImport:
                 # Done parsing, add the transaction
 
                 try:
-                    # Archival reference should be unique ID
-                    BankTransaction.objects.get(archival_reference=archival_reference)
+                    # Archival reference with date is unique
+                    BankTransaction.objects.get(
+                        archival_reference=archival_reference
+                        # reverted for now. the dates can differ when fething data from nordigen
+                        # , date=transaction_date
+                    )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
                     transaction = BankTransaction.objects.create(
+                        archival_reference=archival_reference,
                         date=transaction_date,
                         amount=amount,
                         reference_number=reference,
                         sender=peer,
-                        archival_reference=archival_reference,
                     )
                     BusinessLogic.new_transaction(transaction)
                     imported = imported + 1
@@ -196,24 +203,37 @@ class DataImport:
                 # see: https://nordigen.com/en/docs/account-information/output/transactions/
                 archival_reference = one["transactionId"]
                 transaction_date = datetime.datetime.strptime(
-                    one["bookingDate"], "%Y-%m-%d"
+                    one["valueDate"], "%Y-%m-%d"
                 ).date()
                 if one["transactionAmount"]["currency"] != "EUR":
                     raise Exception("Cannot handle different currencies")
                 amount = one["transactionAmount"]["amount"]
                 reference = one.get("entryReference") or ""
+                # clear leading zeroes from real reference
                 reference = reference.lstrip("0")
                 sender = one.get("debtorName", "")
                 message = one.get("additionalInformation", "")
 
+                # If reference is empty, try extracting the first number from the message
+                if not reference:
+                    match = re.search(r"\b0*(\d+)\b", message)
+                    if match:
+                        reference = match.group(1)
+                        message = message + " (reference extracted from message)"
+
                 try:
-                    BankTransaction.objects.get(archival_reference=archival_reference)
+                    # Archival reference with date is unique
+                    BankTransaction.objects.get(
+                        archival_reference=archival_reference
+                        # reverted for now. the dates can differ when fething data from nordigen
+                        # , date=transaction_date
+                    )
                     exists = exists + 1
                 except BankTransaction.DoesNotExist:
                     transaction = BankTransaction.objects.create(
                         archival_reference=archival_reference,
-                        transaction_id=archival_reference,
                         date=transaction_date,
+                        transaction_id=archival_reference,
                         amount=amount,
                         reference_number=reference,
                         sender=sender,

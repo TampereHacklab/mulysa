@@ -9,6 +9,10 @@ class BankTransaction(models.Model):
     Mapped to user instance if possible.
     """
 
+    # reverted for now. the dates can differ when fething data from nordigen
+    # class Meta:
+    #    unique_together = [["archival_reference", "date"]]
+
     # User this transaction was made by, or null if unknown
     user = models.ForeignKey(
         "CustomUser", on_delete=models.SET_NULL, null=True, blank=True
@@ -23,6 +27,8 @@ class BankTransaction(models.Model):
         max_length=32,
     )
     date = models.DateField(
+        blank=False,
+        null=False,
         verbose_name=_("Date"),
         help_text=_("Date of the transaction"),
     )

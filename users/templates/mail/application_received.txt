@@ -1,23 +1,23 @@
 {% extends 'mail/email_base.txt' %}
 {% load i18n %}
 {% block content %}
-{% blocktrans with siteurl=site.domain wikiurl=config.MEMBERS_GUIDE_URL %}
+{% blocktrans with siteurl=site.domain sitename=site.name wikiurl=config.MEMBERS_GUIDE_URL %}
 Thank you for applying for membership!
 
 We will check your application and get back to you after your application has
 been processed.
 
-In the meantime the Best way to get started is to join our community meeting
-first Tuesday of the month or weekly open house every Tuesday. It is also
-highly recommendable to join our communication channels (Matrix, Telegram or
-IRC and email list). Be happy to ask if you like to know more!
+In the meantime, we recommend that you join our communication channels (Matrix and email list).
 
 Be sure to also read the membership guide in the wiki: {{wikiurl}}
 
-You should have received e-mail link to create a password to our membership
+You should have received an e-mail link to create a password for our membership
 management system. Please login and check your membership status: {{siteurl}}
 
-If you want to speed things up you can already pay your monthly fee using the
-payment information found in the membership system.
+All {{sitename}} services work by voluntary basis so
+things might not always work. Please be patient! If you see something 
+that could use improvement we would be very grateful for your contribution.
+
+Welcome!
 {% endblocktrans %}
 {% endblock %}

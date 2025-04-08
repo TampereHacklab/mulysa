@@ -237,7 +237,10 @@ def userdetails(request, id):
         {
             "userdetails": userdetails,
             "bank_iban": config.ACCOUNT_IBAN,
+            "bank_bic": config.ACCOUNT_BIC,
+            "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
+            "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
         },
     )
 
@@ -273,6 +276,7 @@ def usersettings(request, id):
             granted=False,
             nfccard=None,
             claimed_by=None,
+            method='nfc',
             date__gte=timezone.now() - timedelta(minutes=5),
         )
         .exclude(payload__isnull=True)
@@ -288,7 +292,7 @@ def usersettings(request, id):
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
-            "show_send_email": customuser.is_staff,
+            "show_send_email": request.user.is_staff,
             "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
             "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
             "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
@@ -399,7 +403,7 @@ def usersettings_claim_nfc(request, id):
 
 
 @login_required
-@self_or_staff_member_required
+@staff_member_required
 def usersettings_send_mail(request, id):
     """
     Send e-mail to this user
@@ -551,7 +555,7 @@ def updateuser(request):
     if request.method == "POST":
         user = get_object_or_404(CustomUser, id=request.POST["userid"])
         BusinessLogic.updateuser(user)
-        messages.success(request, _(f"Updateuser ran for user {user}"))
+        messages.success(request, _("Updateuser ran for user: %(user)s" % {"user": user}))
     return HttpResponseRedirect(reverse("users"))
 
 
