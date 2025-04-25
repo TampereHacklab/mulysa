@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump h11 from 0.14.0 to 0.16.0. PR [#583](https://github.com/TampereHacklab/mulysa/pull/583) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.1.7 to 5.1.8. PR [#579](https://github.com/TampereHacklab/mulysa/pull/579) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Allow admin to send emails to non staff user. PR [#576](https://github.com/TampereHacklab/mulysa/pull/576) by [@sbeach92](https://github.com/sbeach92).
 * Fix of logout button. PR [#575](https://github.com/TampereHacklab/mulysa/pull/575) by [@sbeach92](https://github.com/sbeach92).
