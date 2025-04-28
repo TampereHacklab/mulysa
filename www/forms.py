@@ -66,7 +66,7 @@ class RegistrationServicesFrom(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         required=True,
         label=_("Services"),
-        choices=build_service_choices(),
+        choices=build_service_choices,
         error_messages={"required": _("You must select at least one service")},
     )
 
