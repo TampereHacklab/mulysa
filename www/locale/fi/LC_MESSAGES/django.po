@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 16:26+0000\n"
+"POT-Creation-Date: 2025-04-04 22:14+0000\n"
 "PO-Revision-Date: 2025-02-02 20:00+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -78,7 +78,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:56
+#: www/templates/www/base.html:57
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -147,7 +147,7 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 msgid "Send me instructions!"
 msgstr "Lähetä minulle ohjeet!"
 
-#: www/templates/www/applications.html:6 www/templates/www/base.html:36
+#: www/templates/www/applications.html:6 www/templates/www/base.html:37
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
@@ -222,68 +222,68 @@ msgstr ""
 "     Kiitos ja kerrohan kavereillekkin %(name)s:sta :)\n"
 "    "
 
-#: www/templates/www/base.html:29 www/templates/www/index.html:19
+#: www/templates/www/base.html:30 www/templates/www/index.html:19
 msgid "Show my user information"
 msgstr "Näytä käyttäjätietoni"
 
-#: www/templates/www/base.html:31
+#: www/templates/www/base.html:32
 msgid "Change my settings"
 msgstr "Omat asetukset"
 
-#: www/templates/www/base.html:32
+#: www/templates/www/base.html:33
 msgid "Graphs"
 msgstr "Kaaviot"
 
-#: www/templates/www/base.html:35
+#: www/templates/www/base.html:36
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: www/templates/www/base.html:37
+#: www/templates/www/base.html:38
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: www/templates/www/base.html:38
+#: www/templates/www/base.html:39
 msgid "Export"
 msgstr "Tiedon vienti"
 
-#: www/templates/www/base.html:39
+#: www/templates/www/base.html:40
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:40 www/templates/www/custominvoice.html:5
+#: www/templates/www/base.html:41 www/templates/www/custominvoice.html:5
 #: www/templates/www/custominvoices.html:4 www/templates/www/user.html:159
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:41
+#: www/templates/www/base.html:42
 msgid "Django Admin"
 msgstr "Djangon ylläpitokäyttöliittymä"
 
-#: www/templates/www/base.html:44
+#: www/templates/www/base.html:45
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:53
+#: www/templates/www/base.html:54
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:63
+#: www/templates/www/base.html:64
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:90
+#: www/templates/www/base.html:91
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:91
+#: www/templates/www/base.html:92
 msgid "Report bugs at"
 msgstr "Raportoi bugit ja osallistu projektiin"
 
-#: www/templates/www/base.html:91
+#: www/templates/www/base.html:92
 msgid "GitHub"
 msgstr "GitHub"
 
-#: www/templates/www/base.html:92
+#: www/templates/www/base.html:93
 msgid "View changelog"
 msgstr "Näytä muutoshistoria"
 
@@ -779,35 +779,35 @@ msgstr "Hylätty %(name)s:n jäsenhakemus"
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:256
+#: www/views.py:283 www/views.py:336
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:312
+#: www/views.py:391
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:313
+#: www/views.py:392
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:332
+#: www/views.py:411
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:335
+#: www/views.py:414
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:343
+#: www/views.py:422
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:363
+#: www/views.py:442
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:368
+#: www/views.py:447
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -815,19 +815,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:400
+#: www/views.py:479
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:424
+#: www/views.py:503
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
-#: www/views.py:446
+#: www/views.py:525
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:558
+#: www/views.py:637
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
 msgstr ""
