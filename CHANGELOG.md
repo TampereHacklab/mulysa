@@ -1,5 +1,6 @@
 # Changelog
 
+* Fix initialization with empty database. PR [#581](https://github.com/TampereHacklab/mulysa/pull/581) by [@mvirkkunen](https://github.com/mvirkkunen).
 * Bump django from 5.1.8 to 5.1.9. PR [#584](https://github.com/TampereHacklab/mulysa/pull/584) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump h11 from 0.14.0 to 0.16.0. PR [#583](https://github.com/TampereHacklab/mulysa/pull/583) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.1.7 to 5.1.8. PR [#579](https://github.com/TampereHacklab/mulysa/pull/579) by [@dependabot[bot]](https://github.com/apps/dependabot).
