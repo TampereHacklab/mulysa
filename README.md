@@ -111,7 +111,7 @@ Edit the .po files
 
 Push only the .po files to git, not .mo's!
 
-# to update dependecies
+# to update dependencies
 
 run:
 
@@ -167,7 +167,7 @@ There are multiple api endpoints for checking door access: One phone number, nfc
 
 Phone number based access is based on the users phone number and they must have a active subscription to the default service (on a default installation this would be serviceid=2 "tilankäyttöoikeus"). User can also have multiple NFC cards that check the same service access.
 
-All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
+All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with different levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
 
 Examples:
 
