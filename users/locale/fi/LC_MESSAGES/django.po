@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
+"POT-Creation-Date: 2025-04-09 09:45+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -144,6 +144,32 @@ msgstr "Tosi, jos tilisiirtoa on käytetty jäsenpalvelun maksuun."
 #: users/models/bank_transaction.py:92
 msgid "free form comment field for strange transaction"
 msgstr "vapaamuotoinen kommenttikenttä erityisille tilisiirroille"
+
+#: users/models/base_service.py:15
+msgid "Service name"
+msgstr "Palvelun nimi"
+
+#: users/models/base_service.py:16
+msgid "Name of the service"
+msgstr "Palvelun nimi"
+
+#: users/models/base_service.py:21
+#, fuzzy
+#| msgid "Name of the service"
+msgid "Normal cost of the service"
+msgstr "Palvelun nimi"
+
+#: users/models/base_service.py:32
+msgid ""
+"True, if this service should not be shown for user member application form "
+"etc."
+msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
+
+#: users/models/base_service.py:37
+#, fuzzy
+#| msgid "No services"
+msgid "Base service"
+msgstr "Ei palveluja"
 
 #: users/models/custom_invoice.py:19
 msgid "How many days of service this invoice pays"
@@ -286,47 +312,33 @@ msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
 
-#: users/models/member_service.py:15
-msgid "Service name"
-msgstr "Palvelun nimi"
-
-#: users/models/member_service.py:16
-msgid "Name of the service"
-msgstr "Palvelun nimi"
-
-#: users/models/member_service.py:90
-msgid ""
-"True, if this service should not be shown for user member application form "
-"etc."
-msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
-
-#: users/models/member_service.py:98
+#: users/models/member_service.py:80
 msgid "Phone number that can be used to use this memberservice"
 msgstr "Puhelinnumero joka on rekisteröity tähän palveluun"
 
-#: users/models/member_service.py:107
+#: users/models/member_service.py:89
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
 "Tosi, jos käyttäjät voivat omatoimisesti ottaa tämän palvelun käyttöön."
 
-#: users/models/member_service.py:113
+#: users/models/member_service.py:95
 msgid "For accounting export"
 msgstr "Kirjanpitoa varten"
 
-#: users/models/member_service.py:117
+#: users/models/member_service.py:99
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: users/models/member_service.py:133
+#: users/models/member_service.py:115
 msgid "month"
 msgstr "kuukausi"
 
-#: users/models/member_service.py:135
+#: users/models/member_service.py:117
 msgid "year"
 msgstr "vuosi"
 
-#: users/models/member_service.py:136
+#: users/models/member_service.py:118
 msgid "days"
 msgstr "päivää"
 
@@ -663,8 +675,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
