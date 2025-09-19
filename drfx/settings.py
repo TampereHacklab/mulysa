@@ -46,7 +46,7 @@ SITE_URL = "https://mulysa.tld"
 PRIVACY_POLICY_URL = "https://example.com/privacy_policy.html"
 
 
-# these are for the receipt functionality
+# These are for the receipt functionality
 RECEIPTNAME = "Mulysa ry"
 RECEIPTREGID = "1234567-8"
 RECEIPTSTREET = "Street 12, Somewhere Finland"
