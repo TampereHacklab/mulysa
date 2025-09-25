@@ -30,6 +30,7 @@
               {% if user.membershipapplication_set.count == 0%}
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'usersettings' %}active{% endif %}" href="{% url 'usersettings' user.id %}">{% trans 'Change my settings' %}</a></li>
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'graphs' %}active{% endif %}" href="{% url 'graphs' %}">{% trans 'Graphs' %}</a></li>
+              <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'reservation_table' %}active{% endif %}" href="{% url 'reservation_table' %}"> {% trans 'Storage' %}</a></li>
               {% endif %}
               {% if user.is_staff %}
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'users' %}active{% endif %}" href="{% url 'users' %}">{% trans 'Users' %}</a></li>

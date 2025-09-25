@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     "users",
     "www",
     "emails",
+    "storage",
     # so that we don't have to write
     # hundreds of lines of css
     "bootstrap4",

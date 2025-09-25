@@ -6,6 +6,8 @@ from django.template.loader import render_to_string
 from django.utils import timezone, translation
 from django.utils.translation import gettext as _
 
+from decimal import Decimal, InvalidOperation, ROUND_DOWN
+
 from drfx import config
 from mailer import send_mail
 from users.models import (
@@ -16,6 +18,8 @@ from users.models import (
     ServiceSubscription,
 )
 from users.signals import application_approved, application_denied
+
+from storage.models import StorageReservation, StoragePayment
 
 from utils import referencenumber
 from utils.matrixoperations import MatrixOperations
@@ -116,6 +120,17 @@ class BusinessLogic:
 
                 for custominvoice in custominvoices:
                     transaction_user = custominvoice.user
+
+            # Search storage reservations for reference
+            if not transaction_user:
+                reservations = StorageReservation.objects.filter(
+                    reference_number=transaction.reference_number
+                )
+
+                for reservation in reservations:
+                    transaction_user = reservation.user
+
+                    BusinessLogic.handle_reservation_payment(reservation, transaction)
 
             if transaction_user:
                 transaction.user = transaction_user
@@ -499,3 +514,101 @@ class BusinessLogic:
                     BusinessLogic._check_servicesubscription_state(
                         paid_servicesubscription
                     )
+
+    @staticmethod
+    def handle_reservation_payment(reservation, transaction):
+        """
+        Process a payment for a StorageReservation:
+        - Determine months covered by payment
+        - Extend or activate reservation
+        - Create StoragePayment entry
+        """
+
+        today = timezone.now().date()
+
+        # Reject payment if reservation is expired or completed
+        if (
+            reservation.status == StorageReservation.EXPIRED
+            or reservation.status == StorageReservation.COMPLETED
+        ):
+            logger.info(f"Ignoring payment for EXPIRED reservation {reservation.id}.")
+            return None
+
+        # Safe decimal parsing
+        try:
+            amount = Decimal(str(transaction.amount))
+        except (InvalidOperation, TypeError):
+            logger.warning(
+                f"Invalid transaction.amount for transaction {transaction.pk}: {transaction.amount}"
+            )
+            amount = Decimal("0")
+
+        price = reservation.unit.price_per_month or Decimal("0")
+
+        # Determine how many months the payment covers
+        if price > 0 and amount > 0:
+            months_decimal = (amount / price).quantize(0, rounding=ROUND_DOWN)
+            months_to_add = int(months_decimal)
+        else:
+            months_to_add = 1 if amount > 0 else 0
+
+        # Reject if payment is too small to buy even 1 month
+        if months_to_add < 1:
+            logger.info(
+                f"Ignoring too-small payment for reservation {reservation.id}: amount={amount}, price={price}"
+            )
+            return None
+
+        # Extend or activate reservation
+        if reservation.is_active():
+            try:
+                months_added = reservation.extend(months_to_add)
+                if months_added < months_to_add:
+                    logger.warning(
+                        f"Reservation {reservation.id} reached maximum duration. "
+                        f"Only added {months_added} out of {months_to_add} months."
+                    )
+            except ValueError as e:
+                logger.warning(f"Could not extend reservation {reservation.id}: {e}")
+                return None  # Abort payment creation
+        else:
+            months_added = reservation.mark_as_paid(months_to_add)
+
+        # No payment records for 0 months
+        if months_added < 1:
+            logger.info(
+                f"No months added for reservation {reservation.id}. Not creating payment record."
+            )
+            return None
+
+        # Create StoragePayment record
+        payment = StoragePayment.objects.create(
+            reservation=reservation,
+            reference_number=transaction.reference_number,
+            amount=transaction.amount,
+            months=months_added,
+            created_at=transaction.date,
+        )
+
+        # Calculate how much of the transaction was actually used
+        used_amount = (price * months_added) if price > 0 else transaction.amount
+        unused_amount = amount - used_amount
+
+        # Mark transaction as used only if fully consumed
+        if unused_amount <= 0:
+            transaction.has_been_used = True
+        else:
+            transaction.has_been_used = False
+            logger.info(
+                f"Transaction {transaction.pk} partially used: "
+                f"Used {used_amount}, remaining {unused_amount}"
+            )
+
+        transaction.save()
+
+        logger.info(
+            f"Updated reservation {reservation.id}: +{months_added} months "
+            f"(total now {reservation.total_paid_months})"
+        )
+
+        return payment
