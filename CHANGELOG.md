@@ -1,5 +1,6 @@
 # Changelog
 
+* First pr just a comment first letter to capital change. PR [#603](https://github.com/TampereHacklab/mulysa/pull/603) by [@Ponolp](https://github.com/Ponolp).
 * Fix spelling //test. PR [#605](https://github.com/TampereHacklab/mulysa/pull/605) by [@elinahamalainen](https://github.com/elinahamalainen).
 * Fix typos. PR [#600](https://github.com/TampereHacklab/mulysa/pull/600) by [@valkanm](https://github.com/valkanm).
 * Fix initialization with empty database. PR [#581](https://github.com/TampereHacklab/mulysa/pull/581) by [@mvirkkunen](https://github.com/mvirkkunen).
