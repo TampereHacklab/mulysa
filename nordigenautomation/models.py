@@ -182,7 +182,7 @@ class Requisition(models.Model):
     valid_until = models.DateTimeField(
         blank=True,
         null=True,
-        verbose_name=_("How long this requisition id is valid untill"),
+        verbose_name=_("How long this requisition id is valid until"),
     )
     ready = models.BooleanField(
         default=False,
@@ -239,7 +239,7 @@ class Requisition(models.Model):
         # save the data
         self.link = init.link
         self.requisition_id = init.requisition_id
-        # tehcnically this is valid for 90 days but lets give
+        # technically this is valid for 90 days but let's give
         # one day of room for timezone stuff :)
         self.valid_until = timezone.now() + timedelta(days=89)
         self.save()
