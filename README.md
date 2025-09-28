@@ -34,10 +34,20 @@ Most of this works around our "User" model which can do multiple things
 
 In order to run your local development environment of mulysa, there are some prerequisites you first need to install.
 
-## Installing prerequisites on Debian 11.2
+## Installing prerequisites on Linux
+
+### Debian 11.2
 
 ```sh
 sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
+```
+
+### Fedora 42
+
+```sh
+sudo dnf install git python3-pip python3.11 python3.11-devel gettext mariadb mariadb-devel
+sudo dnf group install development-tools # installs GNU compilers and common libraries, required for pip to build dependencies
+pip install --user pipenv
 ```
 
 ## Installing prerequisites on Mac OS
