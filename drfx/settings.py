@@ -73,6 +73,8 @@ GITHUB_URL = "https://github.com/TampereHacklab/mulysa"
 
 # Application definition
 INSTALLED_APPS = [
+    # field translations for models
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
