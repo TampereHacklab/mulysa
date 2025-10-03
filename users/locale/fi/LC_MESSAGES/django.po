@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
+"POT-Creation-Date: 2025-10-03 22:05+0300\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -68,7 +68,8 @@ msgstr "20-60-vuotias"
 msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
-#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:130
+#: users/filters.py:90 users/filters.py:98
+#: users/models/custom_user.py:130
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -294,39 +295,47 @@ msgstr "Palvelun nimi"
 msgid "Name of the service"
 msgstr "Palvelun nimi"
 
-#: users/models/member_service.py:90
+#: users/models/member_service.py:21
+msgid "Service description"
+msgstr "Palvelun kuvaus"
+
+#: users/models/member_service.py:22
+msgid "User-facing description of what this service provides."
+msgstr "Kuvaus, mitä palvelu tarjoaa."
+
+#: users/models/member_service.py:97
 msgid ""
 "True, if this service should not be shown for user member application form "
 "etc."
 msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
 
-#: users/models/member_service.py:98
+#: users/models/member_service.py:105
 msgid "Phone number that can be used to use this memberservice"
 msgstr "Puhelinnumero joka on rekisteröity tähän palveluun"
 
-#: users/models/member_service.py:107
+#: users/models/member_service.py:114
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
 "Tosi, jos käyttäjät voivat omatoimisesti ottaa tämän palvelun käyttöön."
 
-#: users/models/member_service.py:113
+#: users/models/member_service.py:120
 msgid "For accounting export"
 msgstr "Kirjanpitoa varten"
 
-#: users/models/member_service.py:117
+#: users/models/member_service.py:124
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: users/models/member_service.py:133
+#: users/models/member_service.py:140
 msgid "month"
 msgstr "kuukausi"
 
-#: users/models/member_service.py:135
+#: users/models/member_service.py:142
 msgid "year"
 msgstr "vuosi"
 
-#: users/models/member_service.py:136
+#: users/models/member_service.py:143
 msgid "days"
 msgstr "päivää"
 
@@ -663,8 +672,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
