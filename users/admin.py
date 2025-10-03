@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils import timezone
 from django.db.models import Count
+from modeltranslation.admin import TranslationAdmin
 
 from rangefilter.filters import DateRangeFilter
 
@@ -163,8 +164,12 @@ class ServiceSubscriptionAdmin(admin.ModelAdmin):
     list_filter = ("service", "state")
 
 
-class MemberServiceAdmin(admin.ModelAdmin):
-    list_display = ["name", "cost", "pays_also_service", "accounting_id"]
+class MemberServiceAdmin(TranslationAdmin):
+    list_display = [
+        "name_fi", "name_en",
+        "description_fi", "description_en",
+        "cost", "pays_also_service", "accounting_id"
+    ]
 
 
 class AmountDirectionFilter(admin.SimpleListFilter):
