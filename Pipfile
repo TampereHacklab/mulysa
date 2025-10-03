@@ -43,6 +43,7 @@ nordigen = "*"
 openpyxl = "*"
 phonenumbers = "*"
 setuptools = "*"
+django-modeltranslation = "*"
 
 [requires]
 python_version = "3.11"

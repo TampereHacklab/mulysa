@@ -166,9 +166,13 @@ class ServiceSubscriptionAdmin(admin.ModelAdmin):
 
 class MemberServiceAdmin(TranslationAdmin):
     list_display = [
-        "name_fi", "name_en",
-        "description_fi", "description_en",
-        "cost", "pays_also_service", "accounting_id"
+        "name_fi",
+        "name_en",
+        "description_fi",
+        "description_en",
+        "cost",
+        "pays_also_service",
+        "accounting_id",
     ]
 
 
