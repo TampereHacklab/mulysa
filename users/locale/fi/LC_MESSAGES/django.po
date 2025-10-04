@@ -68,8 +68,7 @@ msgstr "20-60-vuotias"
 msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
-#: users/filters.py:90 users/filters.py:98
-#: users/models/custom_user.py:130
+#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:130
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -672,8 +671,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
-"@käyttäjä:esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
+"esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
