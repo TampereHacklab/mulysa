@@ -17,6 +17,13 @@ class MemberService(models.Model):
         max_length=512,
     )
 
+    description = models.TextField(
+        verbose_name=_("Service description"),
+        help_text=_("User-facing description of what this service provides."),
+        blank=True,
+        null=True,
+    )
+
     cost = models.IntegerField(
         verbose_name="Normal cost of the service",
         validators=[MinValueValidator(0)],
