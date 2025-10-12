@@ -32,7 +32,7 @@ class TestOAuthValidator(APITestCase):
         req = HttpRequest()
         req.user = self.ok_user
         expected = {
-            "sub": self.ok_user.email,
+            "sub": self.ok_user.oidc_sub,
             "email": self.ok_user.email,
             "firstName": self.ok_user.first_name,
             "lastName": self.ok_user.last_name,

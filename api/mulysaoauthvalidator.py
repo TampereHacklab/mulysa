@@ -12,10 +12,10 @@ class MulysaOAuth2Validator(OAuth2Validator):
 
     def get_additional_claims(self, request):
         """
-        give email, firstname and lastname in oid claims data
+        give sub, email, firstname and lastname in oid claims data
         """
         return {
-            "sub": request.user.email,
+            "sub": request.user.oidc_sub,
             "email": request.user.email,
             "firstName": request.user.first_name,
             "lastName": request.user.last_name,
