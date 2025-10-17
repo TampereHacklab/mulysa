@@ -164,7 +164,13 @@ class ServiceSubscriptionAdmin(admin.ModelAdmin):
 
 
 class MemberServiceAdmin(admin.ModelAdmin):
-    list_display = ["name", "cost", "pays_also_service", "accounting_id"]
+    list_display = [
+        "name",
+        "cost",
+        "pays_also_service",
+        "required_service",
+        "accounting_id",
+    ]
 
 
 class AmountDirectionFilter(admin.SimpleListFilter):

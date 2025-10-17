@@ -108,6 +108,19 @@ class MemberService(models.Model):
         ),
     )
 
+    # Optional prerequisite service: user must have this service active to be able to
+    # self-subscribe to this service.
+    required_service = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="dependent_services",
+        help_text=_(
+            "If set, this service requires another active service before it can be self-subscribed by users."
+        ),
+    )
+
     # for accounting
     accounting_id = models.CharField(
         max_length=20, blank=True, null=True, help_text=_("For accounting export")

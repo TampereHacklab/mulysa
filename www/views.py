@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
+from django.db import models
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -266,8 +267,20 @@ def usersettings(request, id):
     # services we can subsribe to
     # service that has self_subscribe
     # and we don't already have that service (TODO: actually you could have one service multiple times...)
+    # Start with services that allow self subscription and which the user doesn't already have
     subscribable_services = MemberService.objects.filter(self_subscribe=True).exclude(
         id__in=own_self_subscribe_services.values_list("service__id")
+    )
+
+    # Exclude services that have a required_service that the user does not have active
+    # A service is subscribable if required_service is null OR user has an ACTIVE subscription
+    # to the required_service.
+    user_active_service_ids = own_self_subscribe_services.filter(
+        state=ServiceSubscription.ACTIVE
+    ).values_list("service__id", flat=True)
+
+    subscribable_services = subscribable_services.filter(
+        models.Q(required_service__isnull=True) | models.Q(required_service__id__in=user_active_service_ids)
     )
 
     # find unclaimed nfc cards from the last XX minutes
