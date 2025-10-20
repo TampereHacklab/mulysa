@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-13 11:52+0000\n"
-"PO-Revision-Date: 2025-02-02 20:00+0200\n"
+"PO-Revision-Date: 2025-10-20 15:38+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -731,7 +731,7 @@ msgstr "NFC-Kortti sisäänpääsy"
 
 #: www/templates/www/usersettings.html:104
 msgid "More information about the NFC process here"
-msgstr ""
+msgstr "Lisätietoja NFC:n käytöstä täältä"
 
 #: www/templates/www/usersettings.html:109
 msgid "NFC Card"
