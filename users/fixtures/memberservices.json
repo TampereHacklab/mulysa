@@ -3,7 +3,10 @@
         "model": "users.memberservice",
         "pk": 1,
         "fields": {
-            "name": "Vuosimaksu",
+            "name_fi": "Vuosimaksu",
+            "name_en": "Annual Membership Fee",
+            "description_fi": "Jäsenmaksu, joka oikeuttaa jäsenyyteen yhdeksi vuodeksi.",
+            "description_en": "Membership fee granting one year of membership.",
             "cost": 20,
             "pays_also_service": null,
             "cost_min": null,
@@ -17,7 +20,10 @@
         "model": "users.memberservice",
         "pk": 2,
         "fields": {
-            "name": "Tilankäyttöoikeus",
+            "name_fi": "Tilankäyttöoikeus",
+            "name_en": "Space Access",
+            "description_fi": "Oikeus käyttää hacklabin tiloja ja työvälineitä.",
+            "description_en": "Grants access to hacklab facilities and tools.",
             "cost": 35,
             "pays_also_service": 1,
             "cost_min": 10,
