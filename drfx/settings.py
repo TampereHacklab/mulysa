@@ -73,6 +73,8 @@ GITHUB_URL = "https://github.com/TampereHacklab/mulysa"
 
 # Application definition
 INSTALLED_APPS = [
+    # field translations for models
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -113,6 +115,8 @@ INSTALLED_APPS = [
     # so that we don't have to write
     # hundreds of lines of css
     "bootstrap4",
+    # form wizard support
+    "formtools",
     # oauth provider for keycloack integration
     "oauth2_provider",
     # nordigen banking data automation
