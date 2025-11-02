@@ -830,4 +830,4 @@ msgstr "NFC-Kortti poistettu onnistuneesti"
 #: www/views.py:558
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
-msgstr ""
+msgstr "Updateuser suoritettiin käyttäjälle: %(user)s"
