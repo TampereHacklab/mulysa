@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump django from 5.2.7 to 5.2.8. PR [#615](https://github.com/TampereHacklab/mulysa/pull/615) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Add list of package dependencies for Fedora 42 to README. PR [#608](https://github.com/TampereHacklab/mulysa/pull/608) by [@brndd](https://github.com/brndd).
 * update all dependencies. PR [#590](https://github.com/TampereHacklab/mulysa/pull/590) by [@tswfi](https://github.com/tswfi).
 * First pr just a comment first letter to capital change. PR [#603](https://github.com/TampereHacklab/mulysa/pull/603) by [@Ponolp](https://github.com/Ponolp).
