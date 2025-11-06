@@ -36,74 +36,12 @@ from www.forms import (
     CustomInvoiceForm,
     EditUserForm,
     FileImportForm,
-    RegistrationApplicationForm,
-    RegistrationServicesFrom,
-    RegistrationUserForm,
 )
 from .decorators import self_or_staff_member_required
 from django.core.mail import send_mail
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
-
-
-def register(request):
-    if request.method == "POST":
-        userform = RegistrationUserForm(request.POST)
-        applicationform = RegistrationApplicationForm(request.POST)
-        servicesform = RegistrationServicesFrom(request.POST)
-
-        if (
-            userform.is_valid()
-            and applicationform.is_valid()
-            and servicesform.is_valid()
-        ):
-
-            # extra handling for services that pay for other services
-            # TODO: this logic should probably live in business logic
-            memberservices = MemberService.objects.all()
-            subscribed_services = []
-
-            print(servicesform.cleaned_data.get("services"))
-
-            for service in memberservices:
-                if str(service.id) in servicesform.cleaned_data.get("services", []):
-                    subscribed_services.append(service)
-                    if service.pays_also_service:
-                        subscribed_services.append(service.pays_also_service)
-
-            # Convert to set for unique items
-            subscribed_services = set(subscribed_services)
-
-            new_user = userform.save(commit=False)
-            new_application = applicationform.save(commit=False)
-            new_user.save()
-            new_application.user = new_user
-
-            for service in subscribed_services:
-                BusinessLogic.create_servicesubscription(
-                    new_user, service, ServiceSubscription.SUSPENDED
-                )
-
-            # save only after subscriptions are saved also so that the email
-            # knows about them
-            new_application.save()
-
-            return render(request, "www/thanks.html", {}, content_type="text/html")
-    else:
-        userform = RegistrationUserForm()
-        applicationform = RegistrationApplicationForm()
-        servicesform = RegistrationServicesFrom()
-    return render(
-        request,
-        "www/register.html",
-        {
-            "userform": userform,
-            "applicationform": applicationform,
-            "servicesform": servicesform,
-        },
-        content_type="text/html",
-    )
 
 
 @login_required
@@ -582,3 +520,8 @@ def changelog_view(request):
     changelog = mark_safe(markdown.markdown(text))
 
     return render(request, "www/changelog.html", {"changelog": changelog})
+
+
+def membership_application_success(request):
+    """Success page displayed after completing membership application."""
+    return render(request, 'www/registration/success.html')

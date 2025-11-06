@@ -1,0 +1,34 @@
+{% load i18n %}
+<div class="service-selection">
+    <div class="row">
+        {% for group_name, group_choices, group_index in widget.optgroups %}
+            {% for option in group_choices %}
+                <div class="col-12 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input type="radio" name="{{ widget.name }}" value="{{ option.value }}" 
+                                       class="form-check-input" id="{{ option.attrs.id }}"
+                                       {% if option.selected %}checked{% endif %}>
+                                <label class="form-check-label" for="{{ option.attrs.id }}">
+                                    <strong>{{ option.service_name|default:option.label }}</strong>
+                                    {% if option.cost_info %}
+                                        <span class="badge badge-primary ml-2">{{ option.cost_info }}</span>
+                                    {% endif %}
+                                </label>
+                                {% if option.description %}
+                                    <p class="text-muted mt-2 mb-0">{{ option.description }}</p>
+                                {% endif %}
+                                {% if option.includes_service %}
+                                    <p class="text-success mt-2 mb-0">
+                                        <small>{% trans "Includes" %}: {{ option.includes_service }}</small>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
