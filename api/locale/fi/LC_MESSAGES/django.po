@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-02 14:59+0000\n"
+"POT-Creation-Date: 2025-11-03 16:06+0200\n"
 "PO-Revision-Date: 2020-12-01 18:28+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -20,82 +20,82 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
-#: api/models.py:19
+#: .\api\models.py:19
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: api/models.py:20
+#: .\api\models.py:20
 msgid "Automatically set to now when user is create"
 msgstr "Automaattisesti asetettu täksi päiväksi kun käyttäjä on luotu"
 
-#: api/models.py:25
+#: .\api\models.py:25
 msgid "Last modified datetime"
 msgstr "Muokkauspäivä"
 
-#: api/models.py:26
+#: .\api\models.py:26
 msgid "Last time this user was modified"
 msgstr "Päiväys, koska viimeksi muokattu"
 
-#: api/models.py:30
+#: .\api\models.py:30
 msgid "Device name"
 msgstr "Laitteen nimi"
 
-#: api/models.py:31
+#: .\api\models.py:31
 msgid "Human readable name for the device, like door or laser"
 msgstr "Ihmisen luettava nimi laitteelle, kuten ovi tai laser"
 
-#: api/models.py:36
+#: .\api\models.py:36
 msgid "device id"
 msgstr "laitteen tunniste"
 
-#: api/models.py:37
+#: .\api\models.py:37
 msgid "used to know which device this was"
 msgstr "tunnistaa yksittäisen laitteen"
 
-#: api/models.py:50
+#: .\api\models.py:50
 msgid "Date of this entry"
 msgstr "Käytön päivämäärä"
 
-#: api/models.py:51
+#: .\api\models.py:51
 msgid "Automatically set to now when created"
 msgstr "Automaattisesti asetettu täksi päiväksi kun luotu"
 
-#: api/models.py:55
+#: .\api\models.py:55
 msgid "Granted"
 msgstr "Sallittu"
 
-#: api/models.py:55
+#: .\api\models.py:55
 msgid "Was the access granted"
 msgstr "Oliko pääsy sallittu"
 
-#: api/models.py:61
+#: .\api\models.py:61
 msgid "Device this event came from"
 msgstr "Laite, jolta tapahtuma tuli"
 
-#: api/models.py:68
+#: .\api\models.py:68
 msgid "NFC card id or phone number, or other field like that"
 msgstr "NFC-kortti, puhelinnumero, tai vastaava kenttä"
 
-#: api/models.py:75
+#: .\api\models.py:75
 msgid "NFC card"
 msgstr "NFC-kortti"
 
-#: api/models.py:76
+#: .\api\models.py:76
 msgid "NFC card this was mapped to, if any"
 msgstr "NFC-kortti johon tämä mäpättiin, jos sellainen oli"
 
-#: api/models.py:83
+#: .\api\models.py:83
 msgid "Claimed by"
 msgstr "Varaaja"
 
-#: api/models.py:84
+#: .\api\models.py:84
 msgid "Who claimed this entry"
 msgstr "Kuka varasi tämän merkinnän"
 
-#: api/models.py:90
+#: .\api\models.py:90
 msgid "Method"
 msgstr "Tapa"
 
-#: api/models.py:91
+#: .\api\models.py:91
 msgid "Method of device access"
 msgstr "Kirjautumistapa"
