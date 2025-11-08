@@ -1,6 +1,7 @@
 {% extends "www/base.html" %}
 {% load i18n %}
 {% load bootstrap4 %}
+{% load qr_tags %}
 {% block content %}
 <div class="container">
   <h1>
@@ -109,6 +110,13 @@
         <tr>
           <td>{% trans 'Service price' %}</td>
           <td>{{subscription.service.cost_string|default_if_none:"-"}}</td>
+        </tr>
+        <tr>
+          <td>{% trans 'Payment QR Code' %}</td>
+          <td>
+            <p class="text-muted">{% trans 'Scan with your banking app to pay' %}</p>
+            {% payment_qr_code subscription bank_iban bank_bic bank_name %}
+          </td>
         </tr>
         {% endif %}
       {% endif %}

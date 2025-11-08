@@ -43,6 +43,7 @@ nordigen = "*"
 openpyxl = "*"
 phonenumbers = "*"
 setuptools = "*"
+segno = "*"
 
 [requires]
 python_version = "3.11"
