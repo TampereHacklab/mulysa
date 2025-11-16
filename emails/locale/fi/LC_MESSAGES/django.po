@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-02 15:39+0000\n"
+"POT-Creation-Date: 2025-11-16 20:22+0200\n"
 "PO-Revision-Date: 2020-09-26 14:09+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -18,23 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: emails/admin.py:40
+#: .\emails\admin.py:40
 msgid "Show browser version"
 msgstr "Näytä selaimen versio"
 
-#: emails/admin.py:47 emails/templates/admin/send-email.html:13
+#: .\emails\admin.py:47 .\emails\templates\admin\send-email.html:13
 msgid "Send now"
 msgstr "Lähetä heti"
 
-#: emails/admin.py:85
+#: .\emails\admin.py:85
 msgid "Send email"
 msgstr "Lähetä email"
 
-#: emails/models.py:22 emails/templates/admin/send-email.html:8
+#: .\emails\models.py:22 .\emails\templates\admin\send-email.html:8
 msgid "Subject"
 msgstr "Aihe"
 
-#: emails/models.py:24
+#: .\emails\models.py:24
 msgid ""
 "Descriptive subject for the email. Finnish / English both should be written "
 "here"
@@ -42,11 +42,11 @@ msgstr ""
 "Kuvaava aihe sähköpostille. Sekä suomen- että englanninkieliset versiot "
 "tulisi kirjoittaa tähän"
 
-#: emails/models.py:34
+#: .\emails\models.py:34
 msgid "Content"
 msgstr "Sisältö"
 
-#: emails/models.py:36
+#: .\emails\models.py:36
 msgid ""
 "Content of the email. All emails will start with default 'View this message "
 "in browser' and end with 'You are receiving this message because') texts"
@@ -54,28 +54,28 @@ msgstr ""
 "Sähköpostin sisältö. Kaikki viestit alkavat 'Katsele viestiä selaimessa' ja "
 "loppuvat 'Sait tämän viestin koska' teksteillä"
 
-#: emails/models.py:43
+#: .\emails\models.py:43
 msgid "Creation date"
 msgstr "Luontipäivä"
 
-#: emails/models.py:48
+#: .\emails\models.py:48
 msgid "Last modified datetime"
 msgstr "Muokattu viimeksi päiväys"
 
-#: emails/models.py:52
+#: .\emails\models.py:52
 msgid "Datetime the message was sent"
 msgstr "Viestin lähetyksen päiväys"
 
-#: emails/templates/admin/send-email.html:9
+#: .\emails\templates\admin\send-email.html:9
 msgid "Body"
 msgstr "Sisältö"
 
-#: emails/templates/admin/send-email.html:17
+#: .\emails\templates\admin\send-email.html:17
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: emails/templates/mail_content_and_post.html:5
-#: emails/templates/mail_content_and_post.txt:5
+#: .\emails\templates\mail_content_and_post.html:5
+#: .\emails\templates\mail_content_and_post.txt:5
 #, python-format
 msgid ""
 "You are receiving this email because you are registered member of "

@@ -38,6 +38,31 @@ class AccessDevice(models.Model):
         max_length=255,
     )
 
+    DEVICE_TYPE_DOOR = "door"
+    DEVICE_TYPE_MACHINE = "machine"
+    DEVICE_TYPE_OTHER = "other"
+
+    DEVICE_TYPE_CHOICES = [
+        (DEVICE_TYPE_DOOR, "Door"),
+        (DEVICE_TYPE_MACHINE, "Machine"),
+        (DEVICE_TYPE_OTHER, "Other"),
+    ]
+
+    device_type = models.CharField(
+        max_length=32,
+        choices=DEVICE_TYPE_CHOICES,
+        default=DEVICE_TYPE_DOOR,
+        help_text=_("What kind of target this device represents (door, machine, ...)")
+    )
+
+    # Services that grant access when using this device. If empty, falls back to
+    # the previous single-default-service behaviour.
+    allowed_services = models.ManyToManyField(
+        "users.MemberService",
+        blank=True,
+        help_text=_("Services that grant access via this device (leave empty for default)"),
+    )
+
     # TODO:
     # * which services this device gives access to
     # * extra settings for this device (like how long the access lasts)
