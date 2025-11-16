@@ -122,6 +122,15 @@ class CustomUser(AbstractUser):
         help_text=_("Last time this user was modified"),
     )
 
+    # Role: Instructor
+    is_instructor = models.BooleanField(
+        default=False,
+        verbose_name=_("Instructor"),
+        help_text=_(
+            "Instructors can manage machine access for members."
+        ),
+    )
+
     # when the member wants to leave we will mark now to this field and then have a cleanup script
     # to remove the members information after XX days
     marked_for_deletion_on = models.DateTimeField(

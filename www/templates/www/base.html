@@ -50,7 +50,7 @@
               {% if user.is_authenticated %}
               <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-                <button class="btn btn-link" type="submit">{% trans 'log out' %} ({{ user.first_name }})</button>
+                <button class="btn btn-link" type="submit">{% trans 'log out' %} ({{ user.first_name }}{% if user.is_instructor %} <span class="badge badge-info">{% trans 'Instructor' %}</span>{% endif %})</button>
               </form>
               {% else %}
                 <a class="nav-link" href="{% url 'login' %}">{% trans 'Log in' %}</a>

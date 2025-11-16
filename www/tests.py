@@ -130,6 +130,20 @@ class TestUserViews(TestCase):
         self.assertEqual(len(userdetails.transactions), 0)
         self.assertEqual(len(userdetails.custominvoices), 0)
 
+    def test_instructor_badge_visibility(self):
+        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
+        self.assertNotContains(response, "Instructor")
+
+        self.user.is_instructor = True
+        self.user.save()
+        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
+        self.assertContains(response, "Instructor")
+
+        response = self.client.get(
+            reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
+        )
+        self.assertContains(response, "Instructor")
+
     def test_update_data(self):
         # get data
         response = self.client.get(
