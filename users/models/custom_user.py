@@ -13,8 +13,10 @@ from drfx import config
 
 logger = logging.getLogger(__name__)
 
+
 def get_uuid_str():
     return str(uuid.uuid4())
+
 
 class CustomUser(AbstractUser):
     class Meta:
@@ -44,7 +46,9 @@ class CustomUser(AbstractUser):
     )
 
     # unique subject identifier for SSO apps. UUID for new accounts, but email for legacy accounts for legacy reasons
-    oidc_sub = models.CharField(max_length=255, unique=True, editable=False, default=get_uuid_str)
+    oidc_sub = models.CharField(
+        max_length=255, unique=True, editable=False, default=get_uuid_str
+    )
 
     # django does not make these mandatory by default, lets make them mandatory
     first_name = models.CharField(
