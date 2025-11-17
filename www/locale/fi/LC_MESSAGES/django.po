@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-17 03:59+0000\n"
-"PO-Revision-Date: 2025-11-17 06:00+0200\n"
+"PO-Revision-Date: 2025-11-17 07:26+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -74,20 +74,18 @@ msgid "Price must be the service cost: %(cost)s"
 msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 
 #: www/forms.py:156
-#, fuzzy
 #| msgid "Change my password"
 msgid "New password"
-msgstr "Salasanan vaihto"
+msgstr "Uusi salasana"
 
 #: www/forms.py:159
 msgid "Leave blank if you do not want to change your password."
 msgstr "Jätä tyhjäksi jos et halua vaihtaa salasanaasi."
 
 #: www/forms.py:162
-#, fuzzy
 #| msgid "Change my password"
 msgid "Confirm new password"
-msgstr "Salasanan vaihto"
+msgstr "Vahvista uusi salasana"
 
 #: www/forms.py:188 www/views.py:375
 msgid "The email address is already in use."
@@ -727,10 +725,9 @@ msgid "Save"
 msgstr "Tallenna"
 
 #: www/templates/www/usersettings.html:29
-#, fuzzy
 #| msgid "User settings"
 msgid "Account settings"
-msgstr "Omat asetukset"
+msgstr "Tilin asetukset"
 
 #: www/templates/www/usersettings.html:46
 msgid "Matrix Community"

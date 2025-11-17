@@ -310,10 +310,7 @@ def usersettings(request, id):
         usereditform.save()
         messages.success(request, _("User details saved"))
 
-    if request.method == "POST" and request.POST.get("form_name") == "accountsettingsform":
-        accounteditform = EditAccountForm(request.POST, instance=customuser)
-    else:
-        accounteditform = EditAccountForm(instance=customuser)
+    accounteditform = EditAccountForm(instance=customuser)
 
     context = get_usersettings_context(
         request,
@@ -331,11 +328,11 @@ def usersettings_accountsettings(request, id):
 
     if request.method == "POST" and request.POST.get("form_name") == "accountsettingsform":
         original_email = customuser.email
-        form = EditAccountForm(request.POST or None, instance=customuser)
+        form = EditAccountForm(request.POST, instance=customuser)
         if form.is_valid():
-            email_changed = "email" in form.changed_data
-            if email_changed:
-                new_email = form.get_requested_email()
+            customuser = form.save()
+            new_email = form.get_requested_email()
+            if new_email != original_email:
                 send_email_change_confirmation(request, customuser, new_email, original_email)
                 messages.info(request, _("A confirmation email has been sent to {email}. Follow the link there to confirm the change.").format(email=new_email))
 
@@ -344,7 +341,7 @@ def usersettings_accountsettings(request, id):
                 update_session_auth_hash(request, customuser)
                 messages.success(request, _("Password changed successfully"))
 
-                context = {"user": customuser, "site": Site.objects.get_current() }
+                context = {"user": customuser, "site": Site.objects.get_current()}
                 plaintext_content = render_to_string("mail/password_changed.txt", context)
                 send_mail(
                     subject=_("Your password was changed"),
@@ -385,7 +382,7 @@ def confirm_email_change(request, token):
     # All good: update and show success
     old_email = user.email
     user.email = new_email
-    user.save()
+    user.save(update_fields=["email"])
 
     # Send a notification to the previous email
     context["success"] = True

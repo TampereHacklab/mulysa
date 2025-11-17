@@ -16,7 +16,6 @@ def make_email_change_token(user, new_email, old_email):
         "uid": user.pk,
         "new_email": new_email,
         "old_email": old_email,
-        "ts": int(timezone.now().timestamp()),
     }
     return signing.dumps(payload, salt=EMAIL_CHANGE_SALT)
 

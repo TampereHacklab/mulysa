@@ -196,10 +196,11 @@ class EditAccountForm(forms.ModelForm):
         if pw1 or pw2:
             if pw1 != pw2:
                 self.add_error("new_password2", _("The passwords do not match."))
-            try:
-                validate_password(pw1, self.instance)
-            except ValidationError as e:
-                self.add_error("new_password1", e)
+            else:
+                try:
+                    validate_password(pw1, self.instance)
+                except ValidationError as e:
+                    self.add_error("new_password1", e)
 
         # Restore the instance's email to avoid in-memory mutation
         if hasattr(self, "_original_email"):
