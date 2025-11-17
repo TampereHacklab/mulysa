@@ -1,4 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 16:26+0000\n"
-"PO-Revision-Date: 2025-02-02 20:00+0200\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"POT-Creation-Date: 2025-11-17 03:59+0000\n"
+"PO-Revision-Date: 2025-11-17 06:00+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,61 +17,85 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
-#: www/forms.py:65
+#: www/forms.py:67
 msgid "Choose if you want 24/7 access"
 msgstr "Valitse, jos haluat ympärivuorokautisen pääsyn"
 
-#: www/forms.py:68 www/templates/www/applications.html:17
+#: www/forms.py:70 www/templates/www/applications.html:17
 msgid "Services"
 msgstr "Jäsenpalvelut"
 
-#: www/forms.py:70
+#: www/forms.py:72
 msgid "You must select at least one service"
 msgstr "Valitse vähintään yksi jäsenpalvelu"
 
-#: www/forms.py:91
+#: www/forms.py:93
 #, python-format
 msgid "%(servicename)s, %(cost)s"
 msgstr "%(servicename)s, %(cost)s"
 
-#: www/forms.py:99 www/templates/www/custominvoice.html:32
+#: www/forms.py:101 www/templates/www/custominvoice.html:32
 #: www/templates/www/custominvoice.html:55 www/templates/www/user.html:170
-#: www/templates/www/usersettings.html:51
+#: www/templates/www/usersettings.html:69
 msgid "Service"
 msgstr "Jäsenpalvelu"
 
-#: www/forms.py:101
+#: www/forms.py:103
 msgid "Choose service.."
 msgstr "Valitse palvelu.."
 
-#: www/forms.py:104
+#: www/forms.py:106
 msgid "How many units of service you want"
 msgstr "Montako kertaa haluat maksaa palvelun"
 
-#: www/forms.py:107
+#: www/forms.py:109
 msgid "Price per unit"
 msgstr "Hinta per yksikkö"
 
-#: www/forms.py:108
+#: www/forms.py:110
 msgid "See price from the service selected above"
 msgstr "Katso hinta valitusta palvelusta yllä"
 
-#: www/forms.py:123
+#: www/forms.py:125
 #, python-format
 msgid "Price cannot be above service max cost: %(max)s"
 msgstr "Hinta ei voi olla yli maksimin: %(max)s"
 
-#: www/forms.py:128
+#: www/forms.py:130
 #, python-format
 msgid "Cost cannot be below service min cost: %(min)s"
 msgstr "Hinta ei voi olla alle minimin: %(min)s"
 
-#: www/forms.py:134
+#: www/forms.py:136
 #, python-format
 msgid "Price must be the service cost: %(cost)s"
 msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
+
+#: www/forms.py:156
+#, fuzzy
+#| msgid "Change my password"
+msgid "New password"
+msgstr "Salasanan vaihto"
+
+#: www/forms.py:159
+msgid "Leave blank if you do not want to change your password."
+msgstr "Jätä tyhjäksi jos et halua vaihtaa salasanaasi."
+
+#: www/forms.py:162
+#, fuzzy
+#| msgid "Change my password"
+msgid "Confirm new password"
+msgstr "Salasanan vaihto"
+
+#: www/forms.py:188 www/views.py:375
+msgid "The email address is already in use."
+msgstr "Sähköpostiosoite on jo käytössä."
+
+#: www/forms.py:198
+msgid "The passwords do not match."
+msgstr "Salasanat eivät täsmää."
 
 #: www/templates/registration/login.html:5
 #: www/templates/registration/login.html:11
@@ -346,8 +369,8 @@ msgid "Reference number"
 msgstr "Viitenumero"
 
 #: www/templates/www/custominvoice.html:35
-#: www/templates/www/usersettings.html:53
-#: www/templates/www/usersettings.html:106
+#: www/templates/www/usersettings.html:71
+#: www/templates/www/usersettings.html:124
 msgid "Action"
 msgstr "Toiminto"
 
@@ -383,6 +406,24 @@ msgstr "Maksettu"
 #: www/templates/www/custominvoices.html:35 www/templates/www/user.html:185
 msgid "Not paid yet"
 msgstr "Ei maksettu"
+
+#: www/templates/www/email_change_result.html:12
+msgid "Email changed"
+msgstr "Sähköpostiosoite vaihdettu"
+
+#: www/templates/www/email_change_result.html:13
+#| msgid "Your email was changed"
+msgid "Your email has been successfully changed."
+msgstr "Sähköpostiosoitteesi on vaihdettu onnistuneesti."
+
+#: www/templates/www/email_change_result.html:14
+#, python-format
+msgid "Your new email is %(new_email)s. "
+msgstr "Uusi sähköpostiosoitteesi on %(new_email)s."
+
+#: www/templates/www/email_change_result.html:16
+msgid "Error changing email"
+msgstr "Virhe sähköpostin vaihdossa"
 
 #: www/templates/www/graphs.html:8
 msgid "Statistics"
@@ -676,31 +717,38 @@ msgstr "Laske uudelleen"
 msgid "View in admin"
 msgstr "Tarkastele admin-näkymässä"
 
-#: www/templates/www/usersettings.html:7
+#: www/templates/www/usersettings.html:9
 msgid "User settings"
 msgstr "Omat asetukset"
 
-#: www/templates/www/usersettings.html:23
+#: www/templates/www/usersettings.html:24
+#: www/templates/www/usersettings.html:41
 msgid "Save"
 msgstr "Tallenna"
 
-#: www/templates/www/usersettings.html:28
+#: www/templates/www/usersettings.html:29
+#, fuzzy
+#| msgid "User settings"
+msgid "Account settings"
+msgstr "Omat asetukset"
+
+#: www/templates/www/usersettings.html:46
 msgid "Matrix Community"
 msgstr "Matrix-yhteisö"
 
-#: www/templates/www/usersettings.html:34
+#: www/templates/www/usersettings.html:52
 msgid "Invite me to members Matrix space"
 msgstr "Kutsu minut jäsenten Matrix-tilaan"
 
-#: www/templates/www/usersettings.html:39
+#: www/templates/www/usersettings.html:57
 msgid "Create Matrix account here"
 msgstr "Tee Matrix-tunnus täällä"
 
-#: www/templates/www/usersettings.html:44
+#: www/templates/www/usersettings.html:62
 msgid "Extra Services"
 msgstr "Lisäpalvelut"
 
-#: www/templates/www/usersettings.html:45
+#: www/templates/www/usersettings.html:63
 msgid ""
 "Here you can see extra services that you can subscribe yourself. You can "
 "only unsubscribe services when you have\n"
@@ -709,39 +757,39 @@ msgstr ""
 "Tässä näet lisäpalvelut jotka voit halutessasi ottaa käyttöön. Voit poistaa "
 "käytöstä palveluita ainoastaan kun ne ovat maksettu ja aktiivisessa tilassa."
 
-#: www/templates/www/usersettings.html:52
+#: www/templates/www/usersettings.html:70
 msgid "Information"
 msgstr "Tietoja"
 
-#: www/templates/www/usersettings.html:67
+#: www/templates/www/usersettings.html:85
 msgid "Subscribe service"
 msgstr "Ota käyttöön"
 
-#: www/templates/www/usersettings.html:84
+#: www/templates/www/usersettings.html:102
 msgid "Unsubscribe service"
 msgstr "Poista käytöstä"
 
-#: www/templates/www/usersettings.html:95
+#: www/templates/www/usersettings.html:113
 msgid "No services available to subscribe or unsubscribe "
 msgstr "Ei käyttöönotettavia tai poistettavia palveluita "
 
-#: www/templates/www/usersettings.html:101
+#: www/templates/www/usersettings.html:119
 msgid "NFC Card access"
 msgstr "NFC-Kortti sisäänpääsy"
 
-#: www/templates/www/usersettings.html:105
+#: www/templates/www/usersettings.html:123
 msgid "NFC Card"
 msgstr "NFC-Kortti"
 
-#: www/templates/www/usersettings.html:119
+#: www/templates/www/usersettings.html:137
 msgid "Release"
 msgstr "Vapauta"
 
-#: www/templates/www/usersettings.html:135
+#: www/templates/www/usersettings.html:153
 msgid "Claim"
 msgstr "Varaa"
 
-#: www/templates/www/usersettings.html:142
+#: www/templates/www/usersettings.html:160
 msgid ""
 "No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 "
 "minutes"
@@ -749,19 +797,19 @@ msgstr ""
 "Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä "
 "se täällä 5 minuutin kuluessa"
 
-#: www/templates/www/usersettings.html:151
+#: www/templates/www/usersettings.html:169
 msgid "Send e-mail to user"
 msgstr "Lähetä sähköposti käyttäjälle"
 
-#: www/templates/www/usersettings.html:154
+#: www/templates/www/usersettings.html:172
 msgid "Subject"
 msgstr "Otsikko"
 
-#: www/templates/www/usersettings.html:160
+#: www/templates/www/usersettings.html:178
 msgid "Send"
 msgstr "Lähetä"
 
-#: www/templates/www/usersettings.html:167
+#: www/templates/www/usersettings.html:185
 msgid ""
 "If you have questions and or want to change something that is not available "
 "here, please send an email."
@@ -769,45 +817,78 @@ msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
 "täällä, voit lähettää ehdotuksen sähköpostilla."
 
-#: www/views.py:195
+#: www/views.py:201
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:200
+#: www/views.py:206
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:256
+#: www/views.py:311
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:312
+#: www/views.py:340
+#, python-brace-format
+msgid ""
+"A confirmation email has been sent to {email}. Follow the link there to "
+"confirm the change."
+msgstr ""
+"Olemme lähettäneet vahvistusviestin osoitteeseen {email}. Klikkaa viestissä "
+"olevaa linkkiä viimeistelläksesi vaihdon."
+
+#: www/views.py:345
+msgid "Password changed successfully"
+msgstr "Salasana vaihdettu onnistuneesti"
+
+#: www/views.py:350
+msgid "Your password was changed"
+msgstr "Salasanasi on vaihdettu"
+
+#: www/views.py:362
+msgid "Email change"
+msgstr "Sähköpostin vaihdos"
+
+#: www/views.py:366
+msgid "This confirmation link has expired. Please request a new email change."
+msgstr "Vahvistuslinkki on vanhentunut. Yritä vaihtaa sähköpostisi uudestaan."
+
+#: www/views.py:369
+msgid "Invalid confirmation link."
+msgstr "Virheellinen vahvistuslinkki."
+
+#: www/views.py:389
+msgid "Your email was changed"
+msgstr "Sähköpostisi on vaihdettu"
+
+#: www/views.py:405
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:313
+#: www/views.py:406
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:332
+#: www/views.py:425
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:335
+#: www/views.py:428
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:343
+#: www/views.py:436
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:363
+#: www/views.py:456
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:368
+#: www/views.py:461
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -815,19 +896,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:400
+#: www/views.py:493
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:424
+#: www/views.py:517
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
-#: www/views.py:446
+#: www/views.py:539
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:558
+#: www/views.py:651
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
 msgstr ""

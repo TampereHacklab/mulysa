@@ -1,4 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
-"PO-Revision-Date: 2025-02-08 15:14+0200\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"POT-Creation-Date: 2025-11-17 03:35+0000\n"
+"PO-Revision-Date: 2025-11-17 05:47+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: users/custom_user_manager.py:34
 msgid "User must have an email address"
@@ -68,7 +67,7 @@ msgstr "20-60-vuotias"
 msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
-#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:130
+#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:136
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -174,7 +173,7 @@ msgstr "Laskun luontipäivä"
 msgid "Automatically set to now when invoice is created"
 msgstr "Asetetaan automaattisesti kun lasku luodaan"
 
-#: users/models/custom_invoice.py:49 users/models/custom_user.py:121
+#: users/models/custom_invoice.py:49 users/models/custom_user.py:127
 #: users/models/membership_application.py:30 users/models/nfc_card.py:22
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
@@ -192,54 +191,54 @@ msgstr ""
 "Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
 "käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
 
-#: users/models/custom_user.py:36
+#: users/models/custom_user.py:39
 msgid "Email address"
 msgstr "Sähköpostiosoite"
 
-#: users/models/custom_user.py:38
+#: users/models/custom_user.py:41
 msgid ""
 "Your email address will be used for important notifications about your "
 "membership"
 msgstr ""
 "Sähköpostia käytetään labin toimintaan ja jäsenyyteen liittyvään viestintään"
 
-#: users/models/custom_user.py:45
+#: users/models/custom_user.py:51
 msgid "First name"
 msgstr "Etunimi"
 
-#: users/models/custom_user.py:48
+#: users/models/custom_user.py:54
 msgid "Last name"
 msgstr "Sukunimi"
 
-#: users/models/custom_user.py:53
+#: users/models/custom_user.py:59
 msgid "Municipality / City"
 msgstr "Kotikunta"
 
-#: users/models/custom_user.py:60
+#: users/models/custom_user.py:66
 msgid "Nick"
 msgstr "Nimimerkki"
 
-#: users/models/custom_user.py:61
+#: users/models/custom_user.py:67
 msgid "Nickname you are known with on Internet"
 msgstr "Nimimerkki jolla sinut tunnetaan internetissä"
 
-#: users/models/custom_user.py:69
+#: users/models/custom_user.py:75
 msgid "Matrix ID"
 msgstr "Matrix ID"
 
-#: users/models/custom_user.py:70
+#: users/models/custom_user.py:76
 msgid "Matrix ID (@user:example.org)"
 msgstr "Matrix ID (@käyttäjä:esimerkki.org)"
 
-#: users/models/custom_user.py:77
+#: users/models/custom_user.py:83
 msgid "Birthday"
 msgstr "Syntymäpäivä"
 
-#: users/models/custom_user.py:84
+#: users/models/custom_user.py:90
 msgid "Mobile phone number"
 msgstr "Matkapuhelinnumero"
 
-#: users/models/custom_user.py:86
+#: users/models/custom_user.py:92
 msgid ""
 "This number will also be the one that gets access to the hacklab premises. "
 "International format (+35840123567)."
@@ -247,41 +246,41 @@ msgstr ""
 "Tätä numeroa käytetään myös esim. hacklabin oven avaamiseen. Kansainvälinen "
 "muoto (+35840123567)."
 
-#: users/models/custom_user.py:90
+#: users/models/custom_user.py:96
 msgid "This phone number is already registered to a member"
 msgstr "Tämä puhelinnumero on jo käytössä jäsenellä"
 
-#: users/models/custom_user.py:99
+#: users/models/custom_user.py:105
 msgid "Bank account"
 msgstr "Pankkitili"
 
-#: users/models/custom_user.py:100
+#: users/models/custom_user.py:106
 msgid "Bank account for paying invoices (IBAN format: FI123567890)"
 msgstr "Pankkitili mahdolliseen laskujen maksamiseen (IBAN-muoto: FI123567890)"
 
-#: users/models/custom_user.py:106
+#: users/models/custom_user.py:112
 msgid "Language"
 msgstr "Kieli"
 
-#: users/models/custom_user.py:107
+#: users/models/custom_user.py:113
 msgid "Language preferred by user"
 msgstr "Käyttämäsi kieli"
 
-#: users/models/custom_user.py:115
+#: users/models/custom_user.py:121
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: users/models/custom_user.py:116
+#: users/models/custom_user.py:122
 #, fuzzy
 #| msgid "Automatically set to now when user is create"
 msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: users/models/custom_user.py:122
+#: users/models/custom_user.py:128
 msgid "Last time this user was modified"
 msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
-#: users/models/custom_user.py:132
+#: users/models/custom_user.py:138
 msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
@@ -544,6 +543,25 @@ msgstr ""
 msgid "Your application has been rejected."
 msgstr "Hakemuksesi on hylätty."
 
+#: users/templates/mail/confirm_email_change.txt:4
+#, python-format
+msgid ""
+"\n"
+"Hello %(first_name)s,\n"
+"\n"
+"To finish changing your email on %(sitename)s, please click the following "
+"link:\n"
+"\n"
+"%(confirm_url)s\n"
+msgstr ""
+"\n"
+"Hei %(first_name)s,\n"
+"\n"
+"Viimeistelläksi sähköpostiosoitteesi vaihdon sivulla %(sitename)s, klikkaa "
+"alla olevaa linkkiä:\n"
+"\n"
+"%(confirm_url)s\n"
+
 #: users/templates/mail/door_access_denied.txt:4
 #, python-format
 msgid ""
@@ -578,9 +596,64 @@ msgstr "Palveluitesi tila:"
 msgid "No services"
 msgstr "Ei palveluja"
 
+#: users/templates/mail/email_changed.txt:4
+#, python-format
+msgid ""
+"\n"
+"Hello %(first_name)s!\n"
+"\n"
+"The email address for your account on %(sitename)s was just changed. The new "
+"email is %(new_email)s.\n"
+"\n"
+"If this was done by you, please ignore this email.\n"
+"\n"
+"If this was not done by you, please contact an administrator immediately.\n"
+msgstr ""
+"\n"
+"Hei %(first_name)s!\n"
+"\n"
+"Sähköpostiosoitteesi sivustolla %(sitename)s on vaihdettu. Uusi osoite on "
+"%(new_email)s.\n"
+"\n"
+"Jos vaihdoit sähköpostiosoitteesi itse, ei sinun tarvitse reagoida tähän "
+"viestiin.\n"
+"\n"
+"Jos et vaihtanut sähköpostiosoitettasi itse, ota välittömästi yhteyttä "
+"ylläpitäjään.\n"
+
 #: users/templates/mail/new_application.txt:4
 msgid "New membership application"
 msgstr "Uusi jäsenhakemus vastaanotettu"
+
+#: users/templates/mail/password_changed.txt:4
+#, python-format
+msgid ""
+"\n"
+"Hello %(first_name)s!\n"
+"\n"
+"The password for your account on %(sitename)s was just changed.\n"
+"\n"
+"If this was done by you, please ignore this email.\n"
+"\n"
+"If this was not done by you, please reset your password and contact an "
+"administrator immediately.\n"
+"\n"
+"You may reset your password by navigating to %(siteurl)s, clicking on \"Log "
+"in\", and then clicking on \"Forgot password\".\n"
+msgstr ""
+"\n"
+"Hei %(first_name)s!\n"
+"\n"
+"Salasanasi sivustolla %(sitename)s on vaihdettu.\n"
+"\n"
+"Jos vaihdoit salasanan, ei sinun tarvitse reagoida tähän viestiin.\n"
+"\n"
+"Jos et vaihtanut salasanaasi itse, resetoi salasanasi ja ota yhteys "
+"ylläpitäjään.\n"
+"\n"
+"Voit resetoida salasanasi menemällä osoitteeseen %(siteurl)s, klikkaamalla "
+"linkkiä \"Kirjaudu sisään\", ja sitten klikkaamalla \"Unohtuiko salasana?"
+"\".\n"
 
 #: users/templates/mail/service_subscription_about_to_expire.txt:4
 #, python-format
@@ -663,8 +736,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format

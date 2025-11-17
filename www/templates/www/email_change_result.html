@@ -9,11 +9,11 @@
   <div class="row">
     <div class="col-lg-4 offset-lg-4">
         {% if success %}
-            <h1>{{ _("Email changed") }}</h1>
-            <p>{% blocktrans %} Your email has been successfully changed. {% endblocktrans %}</p>
+            <h1>{% trans "Email changed" %}</h1>
+            <p>{% blocktrans %}Your email has been successfully changed.{% endblocktrans %}</p>
             <p>{% blocktrans %}Your new email is {{ new_email }}. {% endblocktrans %}</p>
         {% else %}
-            <h1>{{ _("Error changing email") }}</h1>
+            <h1>{% trans "Error changing email" %}</h1>
             <p>{{ error }}</p>
         {% endif %}
     </div>

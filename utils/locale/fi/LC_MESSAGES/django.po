@@ -1,4 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -7,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-11 16:56+0000\n"
-"PO-Revision-Date: 2020-10-21 02:15+0300\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"POT-Creation-Date: 2025-11-17 03:35+0000\n"
+"PO-Revision-Date: 2025-11-17 05:46+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: utils/businesslogic.py:65
 #, python-format
@@ -45,3 +44,7 @@ msgstr ""
 msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
 "%(servicename)s on nyt maksettu %(until)s asti tilisiirrolla %(transaction)s"
+
+#: utils/emailchange.py:30
+msgid "Confirm your email change"
+msgstr "Vahvista sähköpostiosoitteen vaihto"
