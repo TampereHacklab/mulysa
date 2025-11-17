@@ -4,12 +4,13 @@
 {% block content %}
 <div class="container">
 
-  <h1>{% trans 'User settings' %}</h1>
-
   {% bootstrap_messages %}
+
+  <h1>{% trans 'User settings' %}</h1>
 
   <form action="{% url 'usersettings' userdetails.id %}" method="post">
     {% csrf_token %}
+    <input type="hidden" name="form_name" value="usersettingsform" />
     {{ usereditform.media }}
 
     {% bootstrap_form_errors usereditform %}
@@ -24,6 +25,23 @@
     />
     {% endbuttons %}
   </form>
+  <hr />
+    <h1>{% trans 'Account settings' %}</h1>
+
+    <form action="{% url 'usersettings_accountsettings' userdetails.id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form_name" value="accountsettingsform" />
+        {{ accounteditform.media }}
+        {% bootstrap_form_errors accounteditform %}
+        {% bootstrap_form accounteditform %}
+        {% buttons %}
+            <input
+                type="submit"
+                class="btn btn-primary"
+                value="{% trans 'Save' %}"
+            />
+        {% endbuttons %}
+    </form>
   <hr />
   <h1>{% trans 'Matrix Community' %}</h1>
   {% if has_matrix %}

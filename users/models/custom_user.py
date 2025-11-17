@@ -1,5 +1,6 @@
 import datetime
 import logging
+import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -11,6 +12,10 @@ from users.validators import validate_mxid, validate_phone
 from drfx import config
 
 logger = logging.getLogger(__name__)
+
+
+def get_uuid_str():
+    return str(uuid.uuid4())
 
 
 class CustomUser(AbstractUser):
@@ -38,6 +43,11 @@ class CustomUser(AbstractUser):
             "Your email address will be used for important notifications about your membership"
         ),
         max_length=255,
+    )
+
+    # unique subject identifier for SSO apps. UUID for new accounts, but email for legacy accounts for legacy reasons
+    oidc_sub = models.CharField(
+        max_length=255, unique=True, editable=False, default=get_uuid_str
     )
 
     # django does not make these mandatory by default, lets make them mandatory
