@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 03:35+0000\n"
+"POT-Creation-Date: 2025-11-17 05:41+0000\n"
 "PO-Revision-Date: 2025-11-17 05:46+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
@@ -45,6 +45,6 @@ msgid "%(servicename)s is now paid until %(until)s due to %(transaction)s"
 msgstr ""
 "%(servicename)s on nyt maksettu %(until)s asti tilisiirrolla %(transaction)s"
 
-#: utils/emailchange.py:30
+#: utils/emailchange.py:38
 msgid "Confirm your email change"
 msgstr "Vahvista sähköpostiosoitteen vaihto"

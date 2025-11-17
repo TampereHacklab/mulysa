@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 03:35+0000\n"
+"POT-Creation-Date: 2025-11-17 05:41+0000\n"
 "PO-Revision-Date: 2025-11-17 05:47+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
@@ -67,7 +67,7 @@ msgstr "20-60-vuotias"
 msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
-#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:136
+#: users/filters.py:90 users/filters.py:98 users/models/custom_user.py:140
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -173,7 +173,7 @@ msgstr "Laskun luontipäivä"
 msgid "Automatically set to now when invoice is created"
 msgstr "Asetetaan automaattisesti kun lasku luodaan"
 
-#: users/models/custom_invoice.py:49 users/models/custom_user.py:127
+#: users/models/custom_invoice.py:49 users/models/custom_user.py:131
 #: users/models/membership_application.py:30 users/models/nfc_card.py:22
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
@@ -191,54 +191,54 @@ msgstr ""
 "Vapaamuotoinen lasku joka maksaa %(days)s päivää palvelua %(servicename)s "
 "käyttäjälle %(username)s - %(amount)s€, viitenumero: %(reference)s"
 
-#: users/models/custom_user.py:39
+#: users/models/custom_user.py:41
 msgid "Email address"
 msgstr "Sähköpostiosoite"
 
-#: users/models/custom_user.py:41
+#: users/models/custom_user.py:43
 msgid ""
 "Your email address will be used for important notifications about your "
 "membership"
 msgstr ""
 "Sähköpostia käytetään labin toimintaan ja jäsenyyteen liittyvään viestintään"
 
-#: users/models/custom_user.py:51
+#: users/models/custom_user.py:55
 msgid "First name"
 msgstr "Etunimi"
 
-#: users/models/custom_user.py:54
+#: users/models/custom_user.py:58
 msgid "Last name"
 msgstr "Sukunimi"
 
-#: users/models/custom_user.py:59
+#: users/models/custom_user.py:63
 msgid "Municipality / City"
 msgstr "Kotikunta"
 
-#: users/models/custom_user.py:66
+#: users/models/custom_user.py:70
 msgid "Nick"
 msgstr "Nimimerkki"
 
-#: users/models/custom_user.py:67
+#: users/models/custom_user.py:71
 msgid "Nickname you are known with on Internet"
 msgstr "Nimimerkki jolla sinut tunnetaan internetissä"
 
-#: users/models/custom_user.py:75
+#: users/models/custom_user.py:79
 msgid "Matrix ID"
 msgstr "Matrix ID"
 
-#: users/models/custom_user.py:76
+#: users/models/custom_user.py:80
 msgid "Matrix ID (@user:example.org)"
 msgstr "Matrix ID (@käyttäjä:esimerkki.org)"
 
-#: users/models/custom_user.py:83
+#: users/models/custom_user.py:87
 msgid "Birthday"
 msgstr "Syntymäpäivä"
 
-#: users/models/custom_user.py:90
+#: users/models/custom_user.py:94
 msgid "Mobile phone number"
 msgstr "Matkapuhelinnumero"
 
-#: users/models/custom_user.py:92
+#: users/models/custom_user.py:96
 msgid ""
 "This number will also be the one that gets access to the hacklab premises. "
 "International format (+35840123567)."
@@ -246,41 +246,41 @@ msgstr ""
 "Tätä numeroa käytetään myös esim. hacklabin oven avaamiseen. Kansainvälinen "
 "muoto (+35840123567)."
 
-#: users/models/custom_user.py:96
+#: users/models/custom_user.py:100
 msgid "This phone number is already registered to a member"
 msgstr "Tämä puhelinnumero on jo käytössä jäsenellä"
 
-#: users/models/custom_user.py:105
+#: users/models/custom_user.py:109
 msgid "Bank account"
 msgstr "Pankkitili"
 
-#: users/models/custom_user.py:106
+#: users/models/custom_user.py:110
 msgid "Bank account for paying invoices (IBAN format: FI123567890)"
 msgstr "Pankkitili mahdolliseen laskujen maksamiseen (IBAN-muoto: FI123567890)"
 
-#: users/models/custom_user.py:112
+#: users/models/custom_user.py:116
 msgid "Language"
 msgstr "Kieli"
 
-#: users/models/custom_user.py:113
+#: users/models/custom_user.py:117
 msgid "Language preferred by user"
 msgstr "Käyttämäsi kieli"
 
-#: users/models/custom_user.py:121
+#: users/models/custom_user.py:125
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: users/models/custom_user.py:122
+#: users/models/custom_user.py:126
 #, fuzzy
 #| msgid "Automatically set to now when user is create"
 msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: users/models/custom_user.py:128
+#: users/models/custom_user.py:132
 msgid "Last time this user was modified"
 msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
-#: users/models/custom_user.py:138
+#: users/models/custom_user.py:142
 msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
