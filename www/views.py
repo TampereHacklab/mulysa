@@ -333,22 +333,29 @@ def usersettings_accountsettings(request, id):
             customuser = form.save()
             new_email = form.get_requested_email()
             if new_email != original_email:
-                send_email_change_confirmation(request, customuser, new_email, original_email)
-                messages.info(request, _("A confirmation email has been sent to {email}. Follow the link there to confirm the change.").format(email=new_email))
+                try:
+                    send_email_change_confirmation(request, customuser, new_email, original_email)
+                    messages.info(request, _("A confirmation email has been sent to {email}. Follow the link there to confirm the change.").format(email=new_email))
+                except Exception as e:
+                    print(f"Failed to send email change confirmation: {e}")
+                    messages.warning(request, _("Email change requested, but confirmation email could not be sent. Please contact support."))
 
             password_changed = bool(form.cleaned_data.get("new_password1"))
             if password_changed:
                 update_session_auth_hash(request, customuser)
                 messages.success(request, _("Password changed successfully"))
 
-                context = {"user": customuser, "site": Site.objects.get_current()}
-                plaintext_content = render_to_string("mail/password_changed.txt", context)
-                send_mail(
-                    subject=_("Your password was changed"),
-                    message=plaintext_content,
-                    from_email=config.NOREPLY_FROM_ADDRESS,
-                    recipient_list=[customuser.email]
-                )
+                try:
+                    context = {"user": customuser, "site": Site.objects.get_current()}
+                    plaintext_content = render_to_string("mail/password_changed.txt", context)
+                    send_mail(
+                        subject=_("Your password was changed"),
+                        message=plaintext_content,
+                        from_email=config.NOREPLY_FROM_ADDRESS,
+                        recipient_list=[customuser.email]
+                    )
+                except Exception as e:
+                    print(f"Failed to send password change notification: {e}")
             return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
         else:
             context = get_usersettings_context(request, customuser, accounteditform=form)
