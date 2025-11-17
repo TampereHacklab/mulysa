@@ -10,6 +10,12 @@ def populate_oidc_sub(apps, schema_editor):
         user.oidc_sub = user.email
         user.save(update_fields=["oidc_sub"])
 
+def reverse_populate_oidc_sub(apps, schema_editor):
+    # On reverse, we can't meaningfully restore the state since new users
+    # would have UUIDs. Just leave oidc_sub as-is since the field will be
+    # removed by the previous migration's reverse.
+    pass
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -17,5 +23,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(populate_oidc_sub)
+        migrations.RunPython(populate_oidc_sub, reverse_populate_oidc_sub)
     ]
