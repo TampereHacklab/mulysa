@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django import forms
 from django.contrib.auth.password_validation import validate_password
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from users import models
 from users.models import MemberService, ServiceSubscription
