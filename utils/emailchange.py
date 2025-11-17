@@ -1,5 +1,4 @@
 from django.core import signing
-from django.utils import timezone
 import django.urls as urls
 from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
