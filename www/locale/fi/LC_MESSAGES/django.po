@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 05:41+0000\n"
-"PO-Revision-Date: 2025-11-17 07:26+0200\n"
+"POT-Creation-Date: 2025-11-17 06:30+0000\n"
+"PO-Revision-Date: 2025-11-17 08:32+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -85,7 +85,7 @@ msgstr "Jätä tyhjäksi jos et halua vaihtaa salasanaasi."
 msgid "Confirm new password"
 msgstr "Vahvista uusi salasana"
 
-#: www/forms.py:188 www/views.py:379
+#: www/forms.py:188 www/views.py:386
 msgid "The email address is already in use."
 msgstr "Sähköpostiosoite on jo käytössä."
 
@@ -824,7 +824,7 @@ msgstr "Hyväksytty %(name)sn jäsenhakemus"
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:337
+#: www/views.py:338
 #, python-brace-format
 msgid ""
 "A confirmation email has been sent to {email}. Follow the link there to "
@@ -833,55 +833,63 @@ msgstr ""
 "Olemme lähettäneet vahvistusviestin osoitteeseen {email}. Klikkaa viestissä "
 "olevaa linkkiä viimeistelläksesi vaihdon."
 
-#: www/views.py:342
+#: www/views.py:341
+msgid ""
+"Email change requested, but confirmation email could not be sent. Please "
+"contact support."
+msgstr ""
+"Sähköpostin vaihtoa yritettiin, mutta vahvistusviestiä ei voitu lähettää. "
+"Ota yhteys ylläpitoon."
+
+#: www/views.py:346
 msgid "Password changed successfully"
 msgstr "Salasana vaihdettu onnistuneesti"
 
-#: www/views.py:347
+#: www/views.py:352
 msgid "Your password was changed"
 msgstr "Salasanasi on vaihdettu"
 
-#: www/views.py:359
+#: www/views.py:366
 msgid "Email change"
 msgstr "Sähköpostin vaihdos"
 
-#: www/views.py:363 www/views.py:374
+#: www/views.py:370 www/views.py:381
 msgid "This confirmation link has expired. Please request a new email change."
 msgstr "Vahvistuslinkki on vanhentunut. Yritä vaihtaa sähköpostisi uudestaan."
 
-#: www/views.py:366
+#: www/views.py:373
 msgid "Invalid confirmation link."
 msgstr "Virheellinen vahvistuslinkki."
 
-#: www/views.py:393
+#: www/views.py:400
 msgid "Your email was changed"
 msgstr "Sähköpostisi on vaihdettu"
 
-#: www/views.py:409
+#: www/views.py:416
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:410
+#: www/views.py:417
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:429
+#: www/views.py:436
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:432
+#: www/views.py:439
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:440
+#: www/views.py:447
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:460
+#: www/views.py:467
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:465
+#: www/views.py:472
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -889,19 +897,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:497
+#: www/views.py:504
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:521
+#: www/views.py:528
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
-#: www/views.py:543
+#: www/views.py:550
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:655
+#: www/views.py:662
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
 msgstr ""
