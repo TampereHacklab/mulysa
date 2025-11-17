@@ -1,0 +1,11 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+{% blocktrans with first_name=user.first_name sitename=site.name confirm_url=confirm_url %}
+Hello {{first_name}},
+
+To finish changing your email on {{sitename}}, please click the following link:
+
+{{confirm_url}}
+{% endblocktrans %}
+{% endblock %}

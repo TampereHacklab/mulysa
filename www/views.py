@@ -2,10 +2,14 @@ from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.models import Site
+from django.core import signing
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -16,6 +20,7 @@ from django.utils.safestring import mark_safe
 
 from api.models import DeviceAccessLogEntry
 from drfx import config
+from utils.emailchange import send_email_change_confirmation, unsign_email_change_token
 from utils.matrixoperations import MatrixOperations
 from users.models import (
     BankTransaction,
@@ -35,6 +40,7 @@ from www.forms import (
     CreateUserForm,
     CustomInvoiceForm,
     EditUserForm,
+    EditAccountForm,
     FileImportForm,
     RegistrationApplicationForm,
     RegistrationServicesFrom,
@@ -244,18 +250,11 @@ def userdetails(request, id):
         },
     )
 
-
-@login_required
-@self_or_staff_member_required
-def usersettings(request, id):
-    # the base form for users basic information
-    customuser = get_object_or_404(CustomUser, id=id)
-    usereditform = EditUserForm(request.POST or None, instance=customuser)
-    if usereditform.is_valid():
-        usereditform.save()
-        messages.success(request, _("User details saved"))
-
-    # services we can unsubscribe from
+def get_usersettings_context(request, customuser, usereditform=None, accounteditform=None):
+    """
+    Helper to build the context dict for the usersettings page.
+    Allows overriding usereditform/accounteditform for error display.
+    """
     # we are the user
     # service selfsubscribe is on
     # subscription state is active
@@ -283,22 +282,123 @@ def usersettings(request, id):
         .order_by("-date")
     )
 
-    return render(
+    if usereditform is None:
+        usereditform = EditUserForm(instance=customuser)
+    if accounteditform is None:
+        accounteditform = EditAccountForm(instance=customuser)
+
+    return {
+        "usereditform": usereditform,
+        "userdetails": customuser,
+        "accounteditform": accounteditform,
+        "subscribable_services": subscribable_services,
+        "unsubscribable_services": unsubscribable_services,
+        "unclaimed_nfccards": unclaimed_nfccards,
+        "show_send_email": request.user.is_staff,
+        "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
+        "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
+        "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
+    }
+
+@login_required
+@self_or_staff_member_required
+def usersettings(request, id):
+    # the base form for users basic information
+    customuser = get_object_or_404(CustomUser, id=id)
+    usereditform = EditUserForm(request.POST or None, instance=customuser)
+    if usereditform.is_valid():
+        usereditform.save()
+        messages.success(request, _("User details saved"))
+
+    if request.method == "POST" and request.POST.get("form_name") == "accountsettingsform":
+        accounteditform = EditAccountForm(request.POST, instance=customuser)
+    else:
+        accounteditform = EditAccountForm(instance=customuser)
+
+    context = get_usersettings_context(
         request,
-        "www/usersettings.html",
-        {
-            "usereditform": usereditform,
-            "userdetails": customuser,
-            "subscribable_services": subscribable_services,
-            "unsubscribable_services": unsubscribable_services,
-            "unclaimed_nfccards": unclaimed_nfccards,
-            "show_send_email": request.user.is_staff,
-            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
-            "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
-            "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
-        },
+        customuser,
+        usereditform=usereditform,
+        accounteditform=accounteditform,
     )
 
+    return render(request, "www/usersettings.html", context)
+
+@login_required
+@self_or_staff_member_required
+def usersettings_accountsettings(request, id):
+    customuser = get_object_or_404(CustomUser, id=id)
+
+    if request.method == "POST" and request.POST.get("form_name") == "accountsettingsform":
+        original_email = customuser.email
+        form = EditAccountForm(request.POST or None, instance=customuser)
+        if form.is_valid():
+            email_changed = "email" in form.changed_data
+            if email_changed:
+                new_email = form.get_requested_email()
+                send_email_change_confirmation(request, customuser, new_email, original_email)
+                messages.info(request, _("A confirmation email has been sent to {email}. Follow the link there to confirm the change.").format(email=new_email))
+
+            password_changed = bool(form.cleaned_data.get("new_password1"))
+            if password_changed:
+                update_session_auth_hash(request, customuser)
+                messages.success(request, _("Password changed successfully"))
+
+                context = {"user": customuser, "site": Site.objects.get_current() }
+                plaintext_content = render_to_string("mail/password_changed.txt", context)
+                send_mail(
+                    subject=_("Your password was changed"),
+                    message=plaintext_content,
+                    from_email=config.NOREPLY_FROM_ADDRESS,
+                    recipient_list=[customuser.email]
+                )
+            return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+        else:
+            context = get_usersettings_context(request, customuser, accounteditform=form)
+            return render(request, "www/usersettings.html", context)
+    return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+def confirm_email_change(request, token):
+    context = {"success": False, "title": _("Email change"), "error": ""}
+    try:
+        data = unsign_email_change_token(token)
+    except signing.SignatureExpired:
+        context["error"] = _("This confirmation link has expired. Please request a new email change.")
+        return render(request, "www/email_change_result.html", context)
+    except signing.BadSignature:
+        context["error"] = _("Invalid confirmation link.")
+        return render(request, "www/email_change_result.html", context)
+
+    user = get_object_or_404(CustomUser, pk=data["uid"])
+
+    # Check that the old email in the link matches, to avoid replay attacks
+    old_email_signed = data.get("old_email", "")
+    if user.email != old_email_signed:
+        context["error"] = _("This confirmation link has expired. Please request a new email change.")
+        return render(request, "www/email_change_result.html", context)
+
+    new_email = data.get("new_email", "").strip().lower()
+    if CustomUser.objects.filter(email__iexact=new_email).exclude(pk=user.pk).exists():
+        context["error"] = _("The email address is already in use.")
+        return render(request, "www/email_change_result.html", context)
+
+    # All good: update and show success
+    old_email = user.email
+    user.email = new_email
+    user.save()
+
+    # Send a notification to the previous email
+    context["success"] = True
+    context["new_email"] = new_email
+    mail_context = {"user": user, "site": Site.objects.get_current(), "new_email": new_email}
+    plaintext_content = render_to_string("mail/email_changed.txt", mail_context)
+    send_mail(
+        subject=_("Your email was changed"),
+        message=plaintext_content,
+        from_email=config.NOREPLY_FROM_ADDRESS,
+        recipient_list=[old_email]
+    )
+    return render(request, "www/email_change_result.html", context)
 
 @login_required
 @self_or_staff_member_required

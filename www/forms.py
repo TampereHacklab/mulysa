@@ -1,11 +1,13 @@
 from datetime import datetime
 
 from django import forms
+from django.contrib.auth.password_validation import validate_password
 from django.utils.translation import gettext as _
 
 from users import models
 from users.models import MemberService, ServiceSubscription
 from django.db.utils import OperationalError
+from django.core.exceptions import ValidationError
 
 
 class RegistrationUserForm(forms.ModelForm):
@@ -147,6 +149,79 @@ class EditUserForm(forms.ModelForm):
             "mxid",
             "phone",
         ]
+
+class EditAccountForm(forms.ModelForm):
+    """Form for changing account information, such as email or password."""
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        required=False,
+        widget=forms.PasswordInput,
+        help_text=_("Leave blank if you do not want to change your password.")
+    )
+    new_password2 = forms.CharField(
+        label=_("Confirm new password"),
+        required=False,
+        widget=forms.PasswordInput,
+    )
+
+    class Meta:
+        model = models.CustomUser
+        fields = [
+            "email",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Store original email so we can avoid actually changing it before confirmation
+        self._original_email = getattr(self.instance, "email", None)
+        self._requested_email = None
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if not email:
+            return email
+        email = email.strip()
+        norm = email.lower()
+        qs = models.CustomUser.objects.filter(email__iexact=norm).exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError(_("The email address is already in use."))
+        self._requested_email = norm
+        return norm
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pw1 = cleaned_data.get("new_password1")
+        pw2 = cleaned_data.get("new_password2")
+        if pw1 or pw2:
+            if pw1 != pw2:
+                self.add_error("new_password2", _("The passwords do not match."))
+            try:
+                validate_password(pw1, self.instance)
+            except ValidationError as e:
+                self.add_error("new_password1", e)
+
+        # Restore the instance's email to avoid in-memory mutation
+        if hasattr(self, "_original_email"):
+            self.instance.email = self._original_email
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        # Restore original email
+        if hasattr(self, "_original_email"):
+            user.email = self._original_email
+
+        pw = self.cleaned_data.get('new_password1')
+        if pw:
+            user.set_password(pw)
+        if commit:
+            user.save()
+        return user
+
+    def get_requested_email(self):
+        return self._requested_email or self.cleaned_data.get("email")
 
 
 class CreateUserForm(forms.ModelForm):

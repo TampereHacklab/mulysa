@@ -1,0 +1,13 @@
+{% extends 'mail/email_base.txt' %}
+{% load i18n %}
+{% block content %}
+{% blocktrans with first_name=user.first_name sitename=site.name new_email=new_email %}
+Hello {{first_name}}!
+
+The email address for your account on {{sitename}} was just changed. The new email is {{new_email}}.
+
+If this was done by you, please ignore this email.
+
+If this was not done by you, please contact an administrator immediately.
+{% endblocktrans %}
+{% endblock %}
