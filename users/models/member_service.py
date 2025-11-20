@@ -98,6 +98,17 @@ class MemberService(models.Model):
         ),
     )
 
+    # Controls whether this service appears on registration form specifically
+    registration_form_visible = models.BooleanField(
+        blank=False,
+        null=False,
+        default=True,
+        verbose_name=_("Show on registration form"),
+        help_text=_(
+            "True, if this service should be shown as an option during member registration"
+        ),
+    )
+
     access_phone_number = models.CharField(
         max_length=20,
         blank=True,

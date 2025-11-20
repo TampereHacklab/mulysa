@@ -60,4 +60,13 @@ class Migration(migrations.Migration):
                 verbose_name="Service name",
             ),
         ),
+        migrations.AddField(
+            model_name="memberservice",
+            name="registration_form_visible",
+            field=models.BooleanField(
+                default=True,
+                help_text="True, if this service should be shown as an option during member registration",
+                verbose_name="Show on registration form",
+            ),
+        ),
     ]

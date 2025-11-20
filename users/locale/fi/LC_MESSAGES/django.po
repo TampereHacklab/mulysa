@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 22:05+0300\n"
+"POT-Creation-Date: 2025-11-20 16:38+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -308,33 +308,46 @@ msgid ""
 "etc."
 msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
 
-#: users/models/member_service.py:105
+#: users/models/member_service.py:106
+msgid "Show on registration form"
+msgstr ""
+
+#: users/models/member_service.py:108
+#, fuzzy
+#| msgid ""
+#| "True, if this service should not be shown for user member application "
+#| "form etc."
+msgid ""
+"True, if this service should be shown as an option during member registration"
+msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
+
+#: users/models/member_service.py:116
 msgid "Phone number that can be used to use this memberservice"
 msgstr "Puhelinnumero joka on rekisteröity tähän palveluun"
 
-#: users/models/member_service.py:114
+#: users/models/member_service.py:125
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
 "Tosi, jos käyttäjät voivat omatoimisesti ottaa tämän palvelun käyttöön."
 
-#: users/models/member_service.py:120
+#: users/models/member_service.py:131
 msgid "For accounting export"
 msgstr "Kirjanpitoa varten"
 
-#: users/models/member_service.py:124
+#: users/models/member_service.py:135
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: users/models/member_service.py:140
+#: users/models/member_service.py:151
 msgid "month"
 msgstr "kuukausi"
 
-#: users/models/member_service.py:142
+#: users/models/member_service.py:153
 msgid "year"
 msgstr "vuosi"
 
-#: users/models/member_service.py:143
+#: users/models/member_service.py:154
 msgid "days"
 msgstr "päivää"
 
@@ -671,8 +684,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: users/validators.py:23
 #, python-format
