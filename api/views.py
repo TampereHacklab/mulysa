@@ -90,20 +90,31 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # phone numbers, MXIDs, nfc tags are/will be unique
         user = users.first()
 
-        # If the device has explicit allowed_services configured, require the
-        # user to have an ACTIVE subscription to at least one of them. If no
-        # allowed_services are configured, fall back to legacy has_door_access().
-        if device.allowed_services.exists():
-            allowed_ids = list(device.allowed_services.values_list("id", flat=True))
-            has_active = ServiceSubscription.objects.filter(
-                user=user, service__in=allowed_ids, state=ServiceSubscription.ACTIVE
+        # If the device has explicit allowed_permissions configured, require the
+        # user to have at least one of those AccessPermissions. If no
+        # allowed_permissions are configured, fall back to legacy behaviour.
+        if getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists():
+            allowed_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            # check user's assigned permissions
+            has_perm = getattr(user, "access_permissions", None) and user.access_permissions.filter(
+                id__in=allowed_ids
             ).exists()
-            if not has_active:
+            if not has_perm:
                 response_status = 481
         else:
-            # legacy behaviour
-            if not user.has_door_access():
-                response_status = 481
+            # legacy behaviour: if there are still allowed_services configured
+            # (backward compatibility), check membership subscriptions; otherwise
+            # fall back to has_door_access().
+            if getattr(device, "allowed_services", None) and device.allowed_services.exists():
+                allowed_ids = list(device.allowed_services.values_list("id", flat=True))
+                has_active = ServiceSubscription.objects.filter(
+                    user=user, service__in=allowed_ids, state=ServiceSubscription.ACTIVE
+                ).exists()
+                if not has_active:
+                    response_status = 481
+            else:
+                if not user.has_door_access():
+                    response_status = 481
 
         logentry.granted = response_status == 0
         logentry.save()

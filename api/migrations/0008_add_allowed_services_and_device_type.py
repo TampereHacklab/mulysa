@@ -1,4 +1,4 @@
-# Generated migration to add allowed_services M2M and device_type field
+# Migration to add allowed_services M2M and device_type field
 from django.db import migrations, models
 
 class Migration(migrations.Migration):

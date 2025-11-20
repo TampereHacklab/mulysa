@@ -109,6 +109,12 @@ class CustomUser(AbstractUser):
         default=config.LANGUAGE_CODE,
     )
 
+    access_permissions = models.ManyToManyField(
+        "api.AccessPermission",
+        blank=True,
+        help_text=_("Access permissions granted to the user, e.g. machine trainings"),
+    )
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,

@@ -9,6 +9,20 @@ from users.models import NFCCard
 logger = logging.getLogger(__name__)
 
 
+class AccessPermission(models.Model):
+    """
+    Represents a permission required to use an access target (device).
+    For example: 'Cutter permission', or generic access levels.
+    """
+    name = models.CharField(max_length=255, verbose_name=_("Permission name"))
+    code = models.SlugField(max_length=100, unique=True, help_text=_("Short code for the permission"))
+    education_required = models.BooleanField(default=False, help_text=_("True if a training/education is required to use targets requiring this permission"))
+    description = models.TextField(blank=True, default="", help_text=_("Optional description for this permission"))
+
+    def __str__(self):
+        return str(self.name)
+
+
 class AccessDevice(models.Model):
     """
     Device thingy, used by access service to know what to do
@@ -68,6 +82,13 @@ class AccessDevice(models.Model):
     # * extra settings for this device (like how long the access lasts)
     # *
 
+    # Permissions that grant access when using this device. If empty, falls back to
+    # the previous single-default-service behaviour.
+    allowed_permissions = models.ManyToManyField(
+        "AccessPermission",
+        blank=True,
+        help_text=_("Permissions that grant access via this device (leave empty for default)"),
+    )
 
 class DeviceAccessLogEntry(models.Model):
     date = models.DateTimeField(

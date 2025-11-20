@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-16 20:22+0200\n"
+"POT-Creation-Date: 2025-11-20 19:49+0200\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -69,7 +69,7 @@ msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
 #: .\users\filters.py:90 .\users\filters.py:98
-#: .\users\models\custom_user.py:130
+#: .\users\models\custom_user.py:136
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -175,7 +175,7 @@ msgstr "Laskun luontipäivä"
 msgid "Automatically set to now when invoice is created"
 msgstr "Asetetaan automaattisesti kun lasku luodaan"
 
-#: .\users\models\custom_invoice.py:49 .\users\models\custom_user.py:121
+#: .\users\models\custom_invoice.py:49 .\users\models\custom_user.py:127
 #: .\users\models\membership_application.py:30 .\users\models\nfc_card.py:22
 msgid "Last modified datetime"
 msgstr "Viimeksi muokattu"
@@ -269,20 +269,24 @@ msgid "Language preferred by user"
 msgstr "Käyttämäsi kieli"
 
 #: .\users\models\custom_user.py:115
+msgid "Access permissions granted to the user, e.g. machine trainings"
+msgstr ""
+
+#: .\users\models\custom_user.py:121
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: .\users\models\custom_user.py:116
+#: .\users\models\custom_user.py:122
 #, fuzzy
 #| msgid "Automatically set to now when user is create"
 msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
-#: .\users\models\custom_user.py:122
+#: .\users\models\custom_user.py:128
 msgid "Last time this user was modified"
 msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
-#: .\users\models\custom_user.py:132
+#: .\users\models\custom_user.py:138
 msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"

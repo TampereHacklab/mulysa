@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AccessDevice, DeviceAccessLogEntry
+from .models import AccessDevice, DeviceAccessLogEntry, AccessPermission
 
 
 class AccessDeviceAdmin(admin.ModelAdmin):
@@ -8,13 +8,13 @@ class AccessDeviceAdmin(admin.ModelAdmin):
         "name",
         "deviceid",
         "device_type",
-        "allowed_services_list",
+        "allowed_permissions_list",
     ]
 
-    def allowed_services_list(self, obj):
-        return ", ".join([s.name for s in obj.allowed_services.all()])
+    def allowed_permissions_list(self, obj):
+        return ", ".join([p.name for p in obj.allowed_permissions.all()])
 
-    allowed_services_list.short_description = "Allowed services"
+    allowed_permissions_list.short_description = "Allowed permissions"
 
 
 class DeviceAccessLogEntryAdmin(admin.ModelAdmin):
@@ -29,3 +29,4 @@ class DeviceAccessLogEntryAdmin(admin.ModelAdmin):
 
 admin.site.register(AccessDevice, AccessDeviceAdmin)
 admin.site.register(DeviceAccessLogEntry, DeviceAccessLogEntryAdmin)
+admin.site.register(AccessPermission)

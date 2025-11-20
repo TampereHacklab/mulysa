@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-16 20:22+0200\n"
+"POT-Creation-Date: 2025-11-20 19:49+0200\n"
 "PO-Revision-Date: 2020-12-01 18:28+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -20,90 +20,112 @@ msgstr ""
 "X-Language: fi\n"
 "X-Source-Language: en\n"
 
+#: .\api\models.py:17
+msgid "Permission name"
+msgstr ""
+
+#: .\api\models.py:18
+msgid "Short code for the permission"
+msgstr ""
+
 #: .\api\models.py:19
+msgid ""
+"True if a training/education is required to use targets requiring this "
+"permission"
+msgstr ""
+
+#: .\api\models.py:20
+msgid "Optional description for this permission"
+msgstr ""
+
+#: .\api\models.py:33
 msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
-#: .\api\models.py:20
+#: .\api\models.py:34
 msgid "Automatically set to now when user is create"
 msgstr "Automaattisesti asetettu täksi päiväksi kun käyttäjä on luotu"
 
-#: .\api\models.py:25
+#: .\api\models.py:39
 msgid "Last modified datetime"
 msgstr "Muokkauspäivä"
 
-#: .\api\models.py:26
+#: .\api\models.py:40
 msgid "Last time this user was modified"
 msgstr "Päiväys, koska viimeksi muokattu"
 
-#: .\api\models.py:30
+#: .\api\models.py:44
 msgid "Device name"
 msgstr "Laitteen nimi"
 
-#: .\api\models.py:31
+#: .\api\models.py:45
 msgid "Human readable name for the device, like door or laser"
 msgstr "Ihmisen luettava nimi laitteelle, kuten ovi tai laser"
 
-#: .\api\models.py:36
+#: .\api\models.py:50
 msgid "device id"
 msgstr "laitteen tunniste"
 
-#: .\api\models.py:37
+#: .\api\models.py:51
 msgid "used to know which device this was"
 msgstr "tunnistaa yksittäisen laitteen"
 
-#: .\api\models.py:55
+#: .\api\models.py:69
 msgid "What kind of target this device represents (door, machine, ...)"
 msgstr ""
 
-#: .\api\models.py:63
+#: .\api\models.py:77
 msgid "Services that grant access via this device (leave empty for default)"
 msgstr ""
 
-#: .\api\models.py:75
+#: .\api\models.py:90
+msgid "Permissions that grant access via this device (leave empty for default)"
+msgstr ""
+
+#: .\api\models.py:96
 msgid "Date of this entry"
 msgstr "Käytön päivämäärä"
 
-#: .\api\models.py:76
+#: .\api\models.py:97
 msgid "Automatically set to now when created"
 msgstr "Automaattisesti asetettu täksi päiväksi kun luotu"
 
-#: .\api\models.py:80
+#: .\api\models.py:101
 msgid "Granted"
 msgstr "Sallittu"
 
-#: .\api\models.py:80
+#: .\api\models.py:101
 msgid "Was the access granted"
 msgstr "Oliko pääsy sallittu"
 
-#: .\api\models.py:86
+#: .\api\models.py:107
 msgid "Device this event came from"
 msgstr "Laite, jolta tapahtuma tuli"
 
-#: .\api\models.py:93
+#: .\api\models.py:114
 msgid "NFC card id or phone number, or other field like that"
 msgstr "NFC-kortti, puhelinnumero, tai vastaava kenttä"
 
-#: .\api\models.py:100
+#: .\api\models.py:121
 msgid "NFC card"
 msgstr "NFC-kortti"
 
-#: .\api\models.py:101
+#: .\api\models.py:122
 msgid "NFC card this was mapped to, if any"
 msgstr "NFC-kortti johon tämä mäpättiin, jos sellainen oli"
 
-#: .\api\models.py:108
+#: .\api\models.py:129
 msgid "Claimed by"
 msgstr "Varaaja"
 
-#: .\api\models.py:109
+#: .\api\models.py:130
 msgid "Who claimed this entry"
 msgstr "Kuka varasi tämän merkinnän"
 
-#: .\api\models.py:115
+#: .\api\models.py:136
 msgid "Method"
 msgstr "Tapa"
 
-#: .\api\models.py:116
+#: .\api\models.py:137
 msgid "Method of device access"
 msgstr "Kirjautumistapa"
