@@ -40,7 +40,7 @@ from www.forms import (
     RegistrationServicesFrom,
     RegistrationUserForm,
 )
-from .decorators import self_or_staff_member_required
+from .decorators import self_or_staff_member_required, instructor_or_staff_member_required
 from django.core.mail import send_mail
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
@@ -213,6 +213,12 @@ def applications(request):
         )
 
     return render(request, "www/applications.html", {"applications": applications})
+
+
+@instructor_or_staff_member_required
+def instructor_tools(request):
+    # Renders the machine access control instructor/admin page
+    return render(request, "www/machine_access_control.html")
 
 
 @login_required

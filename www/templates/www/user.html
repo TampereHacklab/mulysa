@@ -12,6 +12,12 @@
       <td>{% trans 'Name' %}</td>
       <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
     </tr>
+    {% if userdetails.is_instructor %}
+    <tr>
+      <td>{% trans 'Role' %}</td>
+      <td><span class="badge badge-info">{% trans 'Instructor' %}</span></td>
+    </tr>
+    {% endif %}
     <tr>
       <td>{% trans 'Email' %}</td>
       <td>{{ userdetails.email }}</td>

@@ -15,6 +15,7 @@ urlpatterns = [
     path("users/create", views.createuser, name="users/create"),
     path("ledger", views.ledger, name="ledger"),
     path("custominvoices", views.custominvoices, name="custominvoices"),
+    path("machine-access-control", views.instructor_tools, name="machine-access-control"),
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
     path("graphs", views.AuthenticatedTemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
