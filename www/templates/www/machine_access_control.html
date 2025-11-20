@@ -1,0 +1,11 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+  <h1>{% trans 'Machine Access Control' %}</h1>
+  <p class="text-muted">{% trans 'This page is available to instructors and admins.' %}</p>
+  <div class="alert alert-info">
+    {% trans 'Manage machine access permissions.' %}
+  </div>
+</div>
+{% endblock %}

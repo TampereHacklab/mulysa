@@ -49,6 +49,7 @@ class TestBasicSmoke(TestCase):
             reverse("users/create"),
             reverse("ledger"),
             reverse("custominvoices"),
+            reverse("machine-access-control"),
             reverse("userdetails", args=(self.user.id,)),
             reverse("usersettings", args=(self.user.id,)),
             reverse("usersettings_subscribe_service", args=(self.user.id,)),
@@ -83,6 +84,7 @@ class TestBasicSmoke(TestCase):
             reverse("users/create"),
             reverse("ledger"),
             reverse("custominvoices"),
+            reverse("machine-access-control"),
             reverse("application_operation", args=(1, "test")),
             reverse("banktransaction-view", args=(self.banktransaction.pk,)),
         ]
@@ -133,12 +135,12 @@ class TestUserViews(TestCase):
     def test_instructor_badge_visibility(self):
         response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
         self.assertNotContains(response, "Instructor")
-
+        self.assertNotContains(response, "Machine Access Control")
         self.user.is_instructor = True
         self.user.save()
         response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
         self.assertContains(response, "Instructor")
-
+        self.assertContains(response, "Machine Access Control")
         response = self.client.get(
             reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
         )
