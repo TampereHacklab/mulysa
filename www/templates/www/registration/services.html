@@ -1,0 +1,29 @@
+{% extends "www/registration/base.html" %}
+
+{% load i18n %}
+
+{% block step_description %}
+<p>{% trans "Please choose a service" %}</p>
+{% endblock %}
+{% block form_content %}
+<div class="service-selection">
+    {% for field in wizard.form %}
+        <div class="form-group">
+            <label class="form-label h6">{{ field.label }}</label>
+            {% if field.help_text %}
+                <small class="form-text text-muted d-block mb-3">{{ field.help_text }}</small>
+            {% endif %}
+
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {% for error in field.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ field }}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

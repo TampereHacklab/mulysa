@@ -1,0 +1,80 @@
+{% extends "www/registration/base.html" %}
+{% load i18n %}
+{% block form_content %}
+
+<!-- Summary -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">{% trans "Application Summary" %}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>{% trans "Personal Information" %}:</strong><br>
+                <small class="text-muted">
+                    {% trans "First name" %}: {{ summary_personal.first_name }}<br>
+                    {% trans "Last name" %}: {{ summary_personal.last_name }}<br>
+                    {% trans "Municipality" %}: {{ summary_personal.municipality }}
+                </small>
+            </div>
+            <div class="col-md-6">
+                <strong>{% trans "Contact Information" %}:</strong><br>
+                <small class="text-muted">
+                    {{ summary_contact.email }}<br>
+                    {{ summary_contact.phone }}
+                </small>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-12">
+                <strong>{% trans "Selected Services" %}:</strong><br>
+                <small class="text-muted">
+                    {% for service in summary_services %}
+                        <span class="badge badge-primary mr-1">{{ service.name }}</span>
+                    {% empty %}
+                        <span class="text-danger">{% trans "No services selected" %}</span>
+                    {% endfor %}
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Message to Board -->
+{% for field in wizard.form %}
+    {% if field.name == 'message' %}
+        <div class="form-group mb-4">
+            <label for="{{ field.id_for_label }}" class="form-label h6">{% trans "Optional message to the board" %}</label>
+            {{ field }}
+            {% if field.errors %}
+                <div class="text-danger">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}
+
+<!-- Terms and Conditions -->
+<div class="form-group">
+    <h5>{% trans "Terms and Conditions" %}</h5>
+    <p>{% trans "Please read and accept the following documents:" %}</p>
+    <ul>
+        <li><a href="https://wiki.tampere.hacklab.fi/en/jasenen_ohje" target="_blank">{% trans "Members Guide" %}</a></li>
+        <li><a href="https://tampere.hacklab.fi/pages/yhdistyksen-s%C3%A4%C3%A4nn%C3%B6t/" target="_blank">{% trans "Association Rules" %}</a></li>
+    </ul>
+    
+    {% for field in wizard.form %}
+        {% if field.name == 'agreement' %}
+            <div class="form-check mb-3">
+                {{ field }}
+                <label class="form-check-label" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {% if field.errors %}
+                    <div class="text-danger">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

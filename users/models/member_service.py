@@ -17,6 +17,13 @@ class MemberService(models.Model):
         max_length=512,
     )
 
+    description = models.TextField(
+        verbose_name=_("Service description"),
+        help_text=_("User-facing description of what this service provides."),
+        blank=True,
+        null=True,
+    )
+
     cost = models.IntegerField(
         verbose_name="Normal cost of the service",
         validators=[MinValueValidator(0)],
@@ -88,6 +95,17 @@ class MemberService(models.Model):
         default=False,
         help_text=_(
             "True, if this service should not be shown for user member application form etc."
+        ),
+    )
+
+    # Controls whether this service appears on registration form specifically
+    registration_form_visible = models.BooleanField(
+        blank=False,
+        null=False,
+        default=True,
+        verbose_name=_("Show on registration form"),
+        help_text=_(
+            "True, if this service should be shown as an option during member registration"
         ),
     )
 
