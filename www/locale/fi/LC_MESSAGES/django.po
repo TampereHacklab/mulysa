@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-26 07:49+0000\n"
-"PO-Revision-Date: 2025-02-02 20:00+0200\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"PO-Revision-Date: 2025-11-21 09:34+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -78,13 +78,12 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 
 #: www/registration_form.py:78
 msgid "Optional message to the board..."
-msgstr "Vaihtoehtoinen viesti hallitukselle..."
+msgstr "Vapaaehtoinen viesti hallitukselle..."
 
 #: www/registration_form.py:98
-#, fuzzy
 #| msgid "You must select at least one service"
 msgid "You must select one service"
-msgstr "Valitse vähintään yksi jäsenpalvelu"
+msgstr "Valitse vähintään yksi palvelu"
 
 #: www/templates/registration/login.html:5
 #: www/templates/registration/login.html:11
@@ -471,13 +470,12 @@ msgstr "Henkilötiedot"
 
 #: www/templates/www/registration/agreement.html:15
 msgid "First name"
-msgstr ""
+msgstr "Etunimi"
 
 #: www/templates/www/registration/agreement.html:16
-#, fuzzy
 #| msgid "Last payment"
 msgid "Last name"
-msgstr "Viimeisin maksu"
+msgstr "Sukunimi"
 
 #: www/templates/www/registration/agreement.html:17
 msgid "Municipality"
@@ -493,11 +491,11 @@ msgstr "Valitut palvelut"
 
 #: www/templates/www/registration/agreement.html:36
 msgid "No services selected"
-msgstr "Valitut palvelut"
+msgstr "Ei valittuja palveluita"
 
 #: www/templates/www/registration/agreement.html:48
 msgid "Optional message to the board"
-msgstr "Vaihtoehtoinen viesti hallitukselle"
+msgstr "Vapaaehtoinen viesti hallitukselle"
 
 #: www/templates/www/registration/agreement.html:59
 msgid "Terms and Conditions"
@@ -516,10 +514,9 @@ msgid "Association Rules"
 msgstr "Yhdistyksen säännöt"
 
 #: www/templates/www/registration/base.html:5
-#, fuzzy
 #| msgid "Member applications"
 msgid "Membership Application"
-msgstr "Jäsenhakemukset"
+msgstr "Jäsenhakemus"
 
 #: www/templates/www/registration/base.html:5
 msgid "Step"
