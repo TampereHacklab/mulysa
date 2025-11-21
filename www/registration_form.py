@@ -80,6 +80,7 @@ class RegistrationApplicationForm(forms.ModelForm):
         }
 
 class RegistrationServicesForm(forms.Form):
+    @staticmethod
     def build_service_choices():
         service_choices = []
         try:
