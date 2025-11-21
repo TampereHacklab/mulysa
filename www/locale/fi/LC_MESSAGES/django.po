@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 07:43+0000\n"
+"POT-Creation-Date: 2025-11-21 08:12+0000\n"
 "PO-Revision-Date: 2025-11-21 09:34+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Choose if you want 24/7 access"
 msgstr "Valitse, jos haluat ympärivuorokautisen pääsyn"
 
-#: www/forms.py:68 www/registration_form.py:96
+#: www/forms.py:68 www/registration_form.py:98
 #: www/templates/www/applications.html:17
 #: www/templates/www/registration/base.html:29
 msgid "Services"
@@ -80,7 +80,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 msgid "Optional message to the board..."
 msgstr "Vapaaehtoinen viesti hallitukselle..."
 
-#: www/registration_form.py:98
+#: www/registration_form.py:100
 msgid "You must select one service"
 msgstr "Valitse vähintään yksi palvelu"
 
