@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-26 07:49+0000\n"
+"POT-Creation-Date: 2025-11-21 07:43+0000\n"
 "PO-Revision-Date: 2025-11-21 09:34+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
@@ -81,7 +81,6 @@ msgid "Optional message to the board..."
 msgstr "Vapaaehtoinen viesti hallitukselle..."
 
 #: www/registration_form.py:98
-#| msgid "You must select at least one service"
 msgid "You must select one service"
 msgstr "Valitse vähintään yksi palvelu"
 
@@ -473,7 +472,6 @@ msgid "First name"
 msgstr "Etunimi"
 
 #: www/templates/www/registration/agreement.html:16
-#| msgid "Last payment"
 msgid "Last name"
 msgstr "Sukunimi"
 
@@ -514,7 +512,6 @@ msgid "Association Rules"
 msgstr "Yhdistyksen säännöt"
 
 #: www/templates/www/registration/base.html:5
-#| msgid "Member applications"
 msgid "Membership Application"
 msgstr "Jäsenhakemus"
 
