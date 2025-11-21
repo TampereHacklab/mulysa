@@ -79,18 +79,19 @@ class RegistrationApplicationForm(forms.ModelForm):
             })
         }
 
-class RegistrationServicesForm(forms.Form):
-    @staticmethod
-    def build_service_choices():
-        service_choices = []
-        try:
-            for service in MemberService.objects.filter(hidden=False, registration_form_visible=True):
-                service_choices.append((service.pk, service.name))
-        except OperationalError:
-            # Catch migrations/migrate startup errors when tables don't exist yet
-            pass
-        return service_choices
 
+def build_service_choices():
+    service_choices = []
+    try:
+        for service in MemberService.objects.filter(hidden=False, registration_form_visible=True):
+            service_choices.append((service.pk, service.name))
+    except OperationalError:
+        # Catch migrations/migrate startup errors when tables don't exist yet
+        pass
+    return service_choices
+
+
+class RegistrationServicesForm(forms.Form):
     services = forms.ChoiceField(
         widget=ServiceRadioSelect,
         required=True,
