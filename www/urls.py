@@ -3,12 +3,14 @@ from django.views.generic import TemplateView
 from django.views.i18n import JavaScriptCatalog
 
 from . import views
+from www.registration_form import MembershipApplicationView
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="www/index.html")),
     path("", include("django.contrib.auth.urls")),
     path("index", TemplateView.as_view(template_name="www/index.html"), name="index"),
-    path("register", views.register, name="register"),
+    path("membership/apply/", MembershipApplicationView.as_view(), name="membership_apply"),
+    path("membership/success/", views.membership_application_success, name="membership_application_success"),
     path("dataimport", views.dataimport, name="dataimport"),
     path("dataexport", views.dataexport, name="dataexport"),
     path("users", views.users, name="users"),
@@ -18,7 +20,6 @@ urlpatterns = [
     path("userdetails/<int:id>/", views.userdetails, name="userdetails"),
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
     path("graphs", views.AuthenticatedTemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
-    path("graphs", TemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
     path(
         "usersettings/<int:id>/subscribe_service",
         views.usersettings_subscribe_service,

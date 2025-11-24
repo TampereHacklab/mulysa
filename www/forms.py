@@ -41,7 +41,7 @@ class RegistrationApplicationForm(forms.ModelForm):
         fields = ["message", "agreement"]
 
 
-class RegistrationServicesFrom(forms.Form):
+class RegistrationServicesForm(forms.Form):
     def build_service_choices():
         """
         Helper for building service choices for the form

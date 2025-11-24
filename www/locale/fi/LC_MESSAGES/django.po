@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 16:26+0000\n"
-"PO-Revision-Date: 2025-02-02 20:00+0200\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"POT-Creation-Date: 2025-11-24 09:18+0000\n"
+"PO-Revision-Date: 2025-11-24 11:18+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,13 +18,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
 msgstr "Valitse, jos haluat ympärivuorokautisen pääsyn"
 
-#: www/forms.py:68 www/templates/www/applications.html:17
+#: www/forms.py:68 www/registration_form.py:101
+#: www/templates/www/applications.html:17
+#: www/templates/www/registration/base.html:29
 msgid "Services"
 msgstr "Jäsenpalvelut"
 
@@ -73,6 +75,38 @@ msgstr "Hinta ei voi olla alle minimin: %(min)s"
 #, python-format
 msgid "Price must be the service cost: %(cost)s"
 msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
+
+#: www/registration_form.py:70
+msgid "@user:example.com"
+msgstr ""
+
+#: www/registration_form.py:81
+msgid "Optional message to the board..."
+msgstr "Vapaaehtoinen viesti hallitukselle..."
+
+#: www/registration_form.py:103
+msgid "You must select one service"
+msgstr "Valitse vähintään yksi palvelu"
+
+#: www/registration_form.py:118
+msgid ""
+"Enter your Matrix ID if you already have one. If you don't have one, you can "
+"register for Hacklab Matrix after joining."
+msgstr ""
+"Syötä Matrix-ID:si jos sinulla on jo sellainen. Jos sinulla ei ole Matrix-ID:"
+"tä, voit rekisteröityä Hacklabin Matrixiin liittymisen jälkeen."
+
+#: www/registration_form.py:123
+msgid "Password"
+msgstr "Salasana"
+
+#: www/registration_form.py:129
+msgid "Confirm Password"
+msgstr "Vahvista salasana"
+
+#: www/registration_form.py:155
+msgid "Passwords do not match"
+msgstr "Salasanat eivät täsmää"
 
 #: www/templates/registration/login.html:5
 #: www/templates/registration/login.html:11
@@ -173,6 +207,7 @@ msgid "Message"
 msgstr "Viesti"
 
 #: www/templates/www/applications.html:16
+#: www/templates/www/registration/base.html:32
 msgid "Agreement"
 msgstr "Hyväksyntä"
 
@@ -448,67 +483,138 @@ msgstr ""
 msgid "Modify"
 msgstr "Muokkaa"
 
-#: www/templates/www/register.html:8
-#, python-format
-msgid "Apply membership to %(SITENAME)s"
-msgstr "Hae %(SITENAME)s jäsenyyttä"
+#: www/templates/www/registration/account.html:4
+msgid "Please provide your account information."
+msgstr "Syötä käyttäjätietosi."
 
-#: www/templates/www/register.html:27
-#, python-format
-msgid ""
-"Terms for membership: I have read and agree to\n"
-"          <a href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">members guide</a>\n"
-"          and\n"
-"          <a href=\"%(ASSOCIATION_RULES_URL)s\" target=\"_blank\" "
-"rel=\"noopener noreferrer\"\n"
-"            >association rules</a\n"
-"          >."
+#: www/templates/www/registration/agreement.html:8
+msgid "Application Summary"
+msgstr "Yhteenveto"
+
+#: www/templates/www/registration/agreement.html:13
+msgid "Personal Information"
+msgstr "Henkilötiedot"
+
+#: www/templates/www/registration/agreement.html:15
+msgid "First name"
+msgstr "Etunimi"
+
+#: www/templates/www/registration/agreement.html:16
+msgid "Last name"
+msgstr "Sukunimi"
+
+#: www/templates/www/registration/agreement.html:17
+msgid "Municipality"
+msgstr "Kotikunta"
+
+#: www/templates/www/registration/agreement.html:18
+#: www/templates/www/users.html:17
+msgid "Nick"
+msgstr "Nimimerkki"
+
+#: www/templates/www/registration/agreement.html:19
+#: www/templates/www/user.html:24 www/templates/www/users.html:20
+msgid "Matrix ID"
 msgstr ""
-"Jäsenyyden ehdot: Olen lukenut ja ymmärtänyt <a "
-"href=\"%(MEMBERS_GUIDE_URL)s\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">jäsenen ohjeen</a> ja <a href=\"%(ASSOCIATION_RULES_URL)s\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">yhdistyksen säännöt</a>."
 
-#: www/templates/www/register.html:36
-msgid ""
-"I promise to clean up any mess I have made at the lab (+little more)\n"
-"          and take responsibility for safety of myself, others and the "
-"premises. I will use\n"
-"          only power tools and machines I have got training and permission "
-"for.\n"
-"          "
-msgstr ""
-"Sitoudun siivoamaan aiheuttamani sotkut ja huolehdin työskennellessäni "
-"omasta ja labin turvallisuudesta."
+#: www/templates/www/registration/agreement.html:23
+#: www/templates/www/registration/base.html:26
+msgid "Account Details"
+msgstr "Käyttäjätiedot"
 
-#: www/templates/www/register.html:48
-msgid "Register"
-msgstr "Hae jäsenyyttä"
-
-#: www/templates/www/thanks.html:7
-msgid ""
-"Your membership application was successfully submitted! Please check your e-"
-"mail (and spam folder) for instuctions."
-msgstr ""
-"Kiitos hakemuksesta. Tarkasta seuraavaksi sähköpostisi (tarvittaessa myös "
-"roskapostilaatikko) johon lähetimme lisäohjeita."
-
-#: www/templates/www/user.html:7
-msgid "User data for"
-msgstr "Tiedot käyttäjälle"
-
+#: www/templates/www/registration/agreement.html:25
 #: www/templates/www/user.html:16 www/templates/www/users.html:18
 msgid "Email"
 msgstr "Sähköposti"
 
+#: www/templates/www/registration/agreement.html:26
 #: www/templates/www/user.html:20 www/templates/www/users.html:19
 msgid "Phone"
 msgstr "Puhelin"
 
-#: www/templates/www/user.html:24 www/templates/www/users.html:20
-msgid "Matrix ID"
-msgstr ""
+#: www/templates/www/registration/agreement.html:33
+msgid "Selected Services"
+msgstr "Valitut palvelut"
+
+#: www/templates/www/registration/agreement.html:38
+msgid "No services selected"
+msgstr "Ei valittuja palveluita"
+
+#: www/templates/www/registration/agreement.html:50
+msgid "Optional message to the board"
+msgstr "Vapaaehtoinen viesti hallitukselle"
+
+#: www/templates/www/registration/agreement.html:61
+msgid "Terms and Conditions"
+msgstr "Ehdot ja Edellytykset"
+
+#: www/templates/www/registration/agreement.html:62
+msgid "Please read and accept the following documents:"
+msgstr "Lue ja hyväksy seuraavat asiakirjat:"
+
+#: www/templates/www/registration/agreement.html:64
+msgid "Members Guide"
+msgstr "Jäsenopas"
+
+#: www/templates/www/registration/agreement.html:65
+msgid "Association Rules"
+msgstr "Yhdistyksen säännöt"
+
+#: www/templates/www/registration/base.html:5
+msgid "Membership Application"
+msgstr "Jäsenhakemus"
+
+#: www/templates/www/registration/base.html:5
+msgid "Step"
+msgstr "Vaihe"
+
+#: www/templates/www/registration/base.html:23
+msgid "Personal Info"
+msgstr "Henkilötiedot"
+
+#: www/templates/www/registration/base.html:60
+msgid "Next"
+msgstr "Seuraava"
+
+#: www/templates/www/registration/base.html:64
+msgid "Submit Application"
+msgstr "Lähetä hakemus"
+
+#: www/templates/www/registration/base.html:72
+msgid "Previous"
+msgstr "Edellinen"
+
+#: www/templates/www/registration/personal.html:4
+msgid "Please provide your basic personal information."
+msgstr "Anna henkilötietosi."
+
+#: www/templates/www/registration/service_select.html:24
+msgid "Includes"
+msgstr "Sisältää"
+
+#: www/templates/www/registration/services.html:6
+msgid "Please choose a service"
+msgstr "Valitse palvelu"
+
+#: www/templates/www/registration/success.html:11
+msgid "Your membership application was successfully submitted!"
+msgstr "Jäsenhakemuksesi lähetettiin onnistuneesti!"
+
+#: www/templates/www/registration/success.html:14
+msgid "What happens next?"
+msgstr "Mitä tapahtuu seuraavaksi?"
+
+#: www/templates/www/registration/success.html:16
+msgid "Please check your E-mail (and spam) for more instructions."
+msgstr "Tarkista sähköpostisi (ja roskaposti) saadaksesi lisäohjeita."
+
+#: www/templates/www/registration/success.html:21
+msgid "Return to Homepage"
+msgstr "Palaa etusivulle"
+
+#: www/templates/www/user.html:7
+msgid "User data for"
+msgstr "Tiedot käyttäjälle"
 
 #: www/templates/www/user.html:31
 msgid ""
@@ -648,10 +754,6 @@ msgstr "Luo uusi käyttäjä"
 msgid "Active"
 msgstr "Aktiivinen"
 
-#: www/templates/www/users.html:17
-msgid "Nick"
-msgstr "Nimimerkki"
-
 #: www/templates/www/users.html:24
 msgid "Extra services"
 msgstr "Lisäpalvelut"
@@ -769,45 +871,45 @@ msgstr ""
 "Jos sinulla on kysyttävää tai haluat muuttaa jotain mitä ei ole saatavilla "
 "täällä, voit lähettää ehdotuksen sähköpostilla."
 
-#: www/views.py:195
+#: www/views.py:133
 #, python-format
 msgid "Rejected member application from %(name)s"
 msgstr "Hylätty %(name)s:n jäsenhakemus"
 
-#: www/views.py:200
+#: www/views.py:138
 #, python-format
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:256
+#: www/views.py:194
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:312
+#: www/views.py:250
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:313
+#: www/views.py:251
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:332
+#: www/views.py:270
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:335
+#: www/views.py:273
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:343
+#: www/views.py:281
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:363
+#: www/views.py:301
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:368
+#: www/views.py:306
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -815,19 +917,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:400
+#: www/views.py:338
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:424
+#: www/views.py:362
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
-#: www/views.py:446
+#: www/views.py:384
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:558
+#: www/views.py:496
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
 msgstr ""

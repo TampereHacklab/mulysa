@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
-"PO-Revision-Date: 2025-02-08 15:14+0200\n"
-"Last-Translator: Sami Olmari <sami@olmari.fi>\n"
+"POT-Creation-Date: 2025-11-21 07:43+0000\n"
+"PO-Revision-Date: 2025-11-21 09:32+0200\n"
+"Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: users/custom_user_manager.py:34
 msgid "User must have an email address"
@@ -294,39 +294,56 @@ msgstr "Palvelun nimi"
 msgid "Name of the service"
 msgstr "Palvelun nimi"
 
-#: users/models/member_service.py:90
+#: users/models/member_service.py:21
+msgid "Service description"
+msgstr "Palvelun kuvaus"
+
+#: users/models/member_service.py:22
+msgid "User-facing description of what this service provides."
+msgstr "Käyttäjälle näkyvä kuvaus siitä mitä palvelu tarjoaa."
+
+#: users/models/member_service.py:97
 msgid ""
 "True, if this service should not be shown for user member application form "
 "etc."
 msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
 
-#: users/models/member_service.py:98
+#: users/models/member_service.py:106
+msgid "Show on registration form"
+msgstr ""
+
+#: users/models/member_service.py:108
+msgid ""
+"True, if this service should be shown as an option during member registration"
+msgstr "Tosi, jos palvelua ei tule näyttää jäsenhakemuskaavakkeessa"
+
+#: users/models/member_service.py:116
 msgid "Phone number that can be used to use this memberservice"
 msgstr "Puhelinnumero joka on rekisteröity tähän palveluun"
 
-#: users/models/member_service.py:107
+#: users/models/member_service.py:125
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
 "Tosi, jos käyttäjät voivat omatoimisesti ottaa tämän palvelun käyttöön."
 
-#: users/models/member_service.py:113
+#: users/models/member_service.py:131
 msgid "For accounting export"
 msgstr "Kirjanpitoa varten"
 
-#: users/models/member_service.py:117
+#: users/models/member_service.py:135
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: users/models/member_service.py:133
+#: users/models/member_service.py:151
 msgid "month"
 msgstr "kuukausi"
 
-#: users/models/member_service.py:135
+#: users/models/member_service.py:153
 msgid "year"
 msgstr "vuosi"
 
-#: users/models/member_service.py:136
+#: users/models/member_service.py:154
 msgid "days"
 msgstr "päivää"
 

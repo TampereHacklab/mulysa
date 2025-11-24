@@ -1,0 +1,84 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block title %}{% trans "Membership Application" %} - {% trans "Step" %} {{ wizard.steps.step1 }} / {{ wizard.steps.count }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Progress bar -->
+            <div class="mb-4">
+                {% widthratio wizard.steps.step1 wizard.steps.count 100 as progress_percent %}
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-primary" role="progressbar" 
+                         aria-valuenow="{{ wizard.steps.step1 }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="{{ wizard.steps.count }}"
+                         {% if progress_percent %}style="width: {{ progress_percent }}%"{% endif %}>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <small class="text-muted {% if wizard.steps.step1 >= 1 %}text-primary font-weight-bold{% endif %}">
+                        {% trans "Personal Info" %}
+                    </small>
+                    <small class="text-muted {% if wizard.steps.step1 >= 2 %}text-primary font-weight-bold{% endif %}">
+                        {% trans "Account Details" %}
+                    </small>
+                    <small class="text-muted {% if wizard.steps.step1 >= 3 %}text-primary font-weight-bold{% endif %}">
+                        {% trans "Services" %}
+                    </small>
+                    <small class="text-muted {% if wizard.steps.step1 >= 4 %}text-primary font-weight-bold{% endif %}">
+                        {% trans "Agreement" %}
+                    </small>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        {% block step_title %}{{ wizard.steps.step1 }}/{{ wizard.steps.count }}{% endblock %}
+                    </h4>
+                </div>
+                
+                <div class="card-body">
+                    {% bootstrap_messages %}
+                    
+                    {% block step_description %}{% endblock %}
+                    
+                    <form action="" method="post" novalidate>
+                        {% csrf_token %}
+                        {{ wizard.management_form }}
+                        
+                        {% block form_content %}
+                        {% bootstrap_form wizard.form %}
+                        {% endblock %}
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            {% if wizard.steps.next %}
+                                <button type="submit" class="btn btn-primary order-2">
+                                    {% trans "Next" %}
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-success order-2">
+                                    {% trans "Submit Application" %}
+                                </button>
+                            {% endif %}
+                            
+                            {% if wizard.steps.prev %}
+                                <button name="wizard_goto_step" type="submit" 
+                                        value="{{ wizard.steps.prev }}" 
+                                        class="btn btn-outline-secondary order-1">
+                                    {% trans "Previous" %}
+                                </button>
+                            {% else %}
+                                <div class="order-1"></div>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="text-center mb-4">
+        <i class="text-success" style="font-size: 4rem;"></i>
+      </div>
+      <h1 class="text-success">
+        {% trans 'Your membership application was successfully submitted!' %}
+      </h1>
+      <div class="alert alert-info mt-4">
+        <h5>{% trans "What happens next?" %}</h5>
+        <ul>
+          <li>{% trans "Please check your E-mail (and spam) for more instructions." %}</li>
+        </ul>
+      </div>
+      <div class="text-center mt-4">
+        <a href="{% url 'index' %}" class="btn btn-primary">
+          {% trans "Return to Homepage" %}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
