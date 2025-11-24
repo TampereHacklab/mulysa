@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django import forms
+from django.contrib.auth.password_validation import validate_password
 from django.db.utils import OperationalError
 from django.forms.widgets import RadioSelect
 from django.shortcuts import redirect
@@ -9,6 +10,7 @@ from formtools.wizard.views import SessionWizardView
 from utils.businesslogic import BusinessLogic
 from users import models
 from users.models import MemberService, ServiceSubscription
+from django.core.exceptions import ValidationError
 
 
 class ServiceRadioSelect(RadioSelect):
@@ -64,7 +66,8 @@ class RegistrationUserForm(forms.ModelForm):
                         datetime.today().year - 100, datetime.today().year + 1
                     )
                 ]
-            )
+            ),
+            "mxid": forms.TextInput(attrs={"placeholder": _("@user:example.com")}),
         }
 
 class RegistrationApplicationForm(forms.ModelForm):
@@ -105,19 +108,53 @@ class PersonalInfoForm(RegistrationUserForm):
         fields = [
             "first_name",
             "last_name",
-            "nick",
             "municipality",
             "birthday",
+            "nick",
+            "mxid",
+            "language",
         ]
+        help_texts = {
+            "mxid": _("Enter your Matrix ID if you already have one. If you don't have one, you can register for Hacklab Matrix after joining.")
+        }
 
-class ContactDetailsForm(RegistrationUserForm):
+class AccountDetailsForm(RegistrationUserForm):
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+        required=True,
+    )
+    password_confirm = forms.CharField(
+        label=_("Confirm Password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        strip=False,
+        required=True,
+    )
+
     class Meta(RegistrationUserForm.Meta):
         fields = [
             "email",
             "phone",
-            "mxid",
-            "language",
         ]
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        if password:
+            try:
+                validate_password(password, user=None)
+            except ValidationError as e:
+                raise forms.ValidationError(e.messages)
+        return password
+
+    def clean(self):
+        cleaned = super().clean()
+        pw = cleaned.get("password")
+        pw2 = cleaned.get("password_confirm")
+        if pw and pw2 and pw != pw2:
+            raise forms.ValidationError({"password_confirm": _("Passwords do not match")})
+        return cleaned
+
 
 class ServiceSelectionForm(RegistrationServicesForm):
     pass
@@ -130,14 +167,14 @@ class MembershipApplicationView(SessionWizardView):
 
     form_list = [
         ('personal', PersonalInfoForm),
-        ('contact', ContactDetailsForm),
+        ('account', AccountDetailsForm),
         ('services', ServiceSelectionForm),
         ('agreement', AgreementForm),
     ]
 
     templates = {
         'personal': 'www/registration/personal.html',
-        'contact': 'www/registration/contact.html',
+        'account': 'www/registration/account.html',
         'services': 'www/registration/services.html',
         'agreement': 'www/registration/agreement.html',
     }
@@ -150,7 +187,7 @@ class MembershipApplicationView(SessionWizardView):
         # Build summary of all previous steps for the final agreement page
         if self.steps.current == 'agreement':
             personal = self.get_cleaned_data_for_step('personal') or {}
-            contact = self.get_cleaned_data_for_step('contact') or {}
+            account = self.get_cleaned_data_for_step('account') or {}
             services_data = self.get_cleaned_data_for_step('services') or {}
 
             service_id = services_data.get('services')
@@ -166,20 +203,20 @@ class MembershipApplicationView(SessionWizardView):
 
             context.update({
                 'summary_personal': personal,
-                'summary_contact': contact,
+                'summary_account': account,
                 'summary_services': services,
             })
         return context
 
     def done(self, form_list, **kwargs):
         personal_form = form_list[0]
-        contact_form = form_list[1]
+        account_form = form_list[1]
         services_form = form_list[2]
         application_form = form_list[3]
 
         combined_user_data = {}
         combined_user_data.update(personal_form.cleaned_data)
-        combined_user_data.update(contact_form.cleaned_data)
+        combined_user_data.update(account_form.cleaned_data)
 
         application_data = application_form.cleaned_data.copy()
 
@@ -201,6 +238,13 @@ class MembershipApplicationView(SessionWizardView):
 
         # Create user and application objects
         new_user = userform.save(commit=False)
+
+        password = account_form.cleaned_data.get("password")
+        if password:
+            new_user.set_password(password)
+        else:
+            new_user.set_unusable_password()
+
         new_application = applicationform.save(commit=False)
         new_user.save()
         new_application.user = new_user

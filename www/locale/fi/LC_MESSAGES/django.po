@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 08:12+0000\n"
-"PO-Revision-Date: 2025-11-21 09:34+0200\n"
+"POT-Creation-Date: 2025-11-24 09:18+0000\n"
+"PO-Revision-Date: 2025-11-24 11:18+0200\n"
 "Last-Translator: Pekka Oinas <peoinas@protonmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Choose if you want 24/7 access"
 msgstr "Valitse, jos haluat ympärivuorokautisen pääsyn"
 
-#: www/forms.py:68 www/registration_form.py:98
+#: www/forms.py:68 www/registration_form.py:101
 #: www/templates/www/applications.html:17
 #: www/templates/www/registration/base.html:29
 msgid "Services"
@@ -76,13 +76,37 @@ msgstr "Hinta ei voi olla alle minimin: %(min)s"
 msgid "Price must be the service cost: %(cost)s"
 msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 
-#: www/registration_form.py:78
+#: www/registration_form.py:70
+msgid "@user:example.com"
+msgstr ""
+
+#: www/registration_form.py:81
 msgid "Optional message to the board..."
 msgstr "Vapaaehtoinen viesti hallitukselle..."
 
-#: www/registration_form.py:100
+#: www/registration_form.py:103
 msgid "You must select one service"
 msgstr "Valitse vähintään yksi palvelu"
+
+#: www/registration_form.py:118
+msgid ""
+"Enter your Matrix ID if you already have one. If you don't have one, you can "
+"register for Hacklab Matrix after joining."
+msgstr ""
+"Syötä Matrix-ID:si jos sinulla on jo sellainen. Jos sinulla ei ole Matrix-"
+"ID:tä, voit rekisteröityä Hacklabin Matrixiin liittymisen jälkeen."
+
+#: www/registration_form.py:123
+msgid "Password"
+msgstr "Salasana"
+
+#: www/registration_form.py:129
+msgid "Confirm Password"
+msgstr "Vahvista salasana"
+
+#: www/registration_form.py:155
+msgid "Passwords do not match"
+msgstr "Salasanat eivät täsmää"
 
 #: www/templates/registration/login.html:5
 #: www/templates/registration/login.html:11
@@ -459,6 +483,10 @@ msgstr ""
 msgid "Modify"
 msgstr "Muokkaa"
 
+#: www/templates/www/registration/account.html:4
+msgid "Please provide your account information."
+msgstr "Syötä käyttäjätietosi."
+
 #: www/templates/www/registration/agreement.html:8
 msgid "Application Summary"
 msgstr "Yhteenveto"
@@ -479,35 +507,56 @@ msgstr "Sukunimi"
 msgid "Municipality"
 msgstr "Kotikunta"
 
-#: www/templates/www/registration/agreement.html:21
-msgid "Contact Information"
-msgstr "Yhteystiedot"
+#: www/templates/www/registration/agreement.html:18
+#: www/templates/www/users.html:17
+msgid "Nick"
+msgstr "Nimimerkki"
 
-#: www/templates/www/registration/agreement.html:31
+#: www/templates/www/registration/agreement.html:19
+#: www/templates/www/user.html:24 www/templates/www/users.html:20
+msgid "Matrix ID"
+msgstr ""
+
+#: www/templates/www/registration/agreement.html:23
+#: www/templates/www/registration/base.html:26
+msgid "Account Details"
+msgstr "Käyttäjätiedot"
+
+#: www/templates/www/registration/agreement.html:25
+#: www/templates/www/user.html:16 www/templates/www/users.html:18
+msgid "Email"
+msgstr "Sähköposti"
+
+#: www/templates/www/registration/agreement.html:26
+#: www/templates/www/user.html:20 www/templates/www/users.html:19
+msgid "Phone"
+msgstr "Puhelin"
+
+#: www/templates/www/registration/agreement.html:33
 msgid "Selected Services"
 msgstr "Valitut palvelut"
 
-#: www/templates/www/registration/agreement.html:36
+#: www/templates/www/registration/agreement.html:38
 msgid "No services selected"
 msgstr "Ei valittuja palveluita"
 
-#: www/templates/www/registration/agreement.html:48
+#: www/templates/www/registration/agreement.html:50
 msgid "Optional message to the board"
 msgstr "Vapaaehtoinen viesti hallitukselle"
 
-#: www/templates/www/registration/agreement.html:59
+#: www/templates/www/registration/agreement.html:61
 msgid "Terms and Conditions"
 msgstr "Ehdot ja Edellytykset"
 
-#: www/templates/www/registration/agreement.html:60
+#: www/templates/www/registration/agreement.html:62
 msgid "Please read and accept the following documents:"
 msgstr "Lue ja hyväksy seuraavat asiakirjat:"
 
-#: www/templates/www/registration/agreement.html:62
+#: www/templates/www/registration/agreement.html:64
 msgid "Members Guide"
 msgstr "Jäsenopas"
 
-#: www/templates/www/registration/agreement.html:63
+#: www/templates/www/registration/agreement.html:65
 msgid "Association Rules"
 msgstr "Yhdistyksen säännöt"
 
@@ -523,10 +572,6 @@ msgstr "Vaihe"
 msgid "Personal Info"
 msgstr "Henkilötiedot"
 
-#: www/templates/www/registration/base.html:26
-msgid "Contact Details"
-msgstr "Yhteystiedot"
-
 #: www/templates/www/registration/base.html:60
 msgid "Next"
 msgstr "Seuraava"
@@ -538,10 +583,6 @@ msgstr "Lähetä hakemus"
 #: www/templates/www/registration/base.html:72
 msgid "Previous"
 msgstr "Edellinen"
-
-#: www/templates/www/registration/contact.html:4
-msgid "Please provide your contact information."
-msgstr "Anna yhteystietosi."
 
 #: www/templates/www/registration/personal.html:4
 msgid "Please provide your basic personal information."
@@ -574,18 +615,6 @@ msgstr "Palaa etusivulle"
 #: www/templates/www/user.html:7
 msgid "User data for"
 msgstr "Tiedot käyttäjälle"
-
-#: www/templates/www/user.html:16 www/templates/www/users.html:18
-msgid "Email"
-msgstr "Sähköposti"
-
-#: www/templates/www/user.html:20 www/templates/www/users.html:19
-msgid "Phone"
-msgstr "Puhelin"
-
-#: www/templates/www/user.html:24 www/templates/www/users.html:20
-msgid "Matrix ID"
-msgstr ""
 
 #: www/templates/www/user.html:31
 msgid ""
@@ -724,10 +753,6 @@ msgstr "Luo uusi käyttäjä"
 #: www/templates/www/users.html:15
 msgid "Active"
 msgstr "Aktiivinen"
-
-#: www/templates/www/users.html:17
-msgid "Nick"
-msgstr "Nimimerkki"
 
 #: www/templates/www/users.html:24
 msgid "Extra services"

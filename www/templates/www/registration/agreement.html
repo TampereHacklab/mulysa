@@ -12,16 +12,18 @@
             <div class="col-md-6">
                 <strong>{% trans "Personal Information" %}:</strong><br>
                 <small class="text-muted">
-                    {% trans "First name" %}: {{ summary_personal.first_name }}<br>
-                    {% trans "Last name" %}: {{ summary_personal.last_name }}<br>
-                    {% trans "Municipality" %}: {{ summary_personal.municipality }}
+                    <b>{% trans "First name" %}:</b> {{ summary_personal.first_name }}<br>
+                    <b>{% trans "Last name" %}:</b> {{ summary_personal.last_name }}<br>
+                    <b>{% trans "Municipality" %}:</b> {{ summary_personal.municipality }}<br>
+                    <b>{% trans "Nick" %}:</b> {{ summary_personal.nick }}<br>
+                    <b>{% trans "Matrix ID" %}:</b> {{ summary_personal.mxid }}
                 </small>
             </div>
             <div class="col-md-6">
-                <strong>{% trans "Contact Information" %}:</strong><br>
+                <strong>{% trans "Account Details" %}:</strong><br>
                 <small class="text-muted">
-                    {{ summary_contact.email }}<br>
-                    {{ summary_contact.phone }}
+                    <b>{% trans "Email" %}:</b> {{ summary_account.email }}<br>
+                    <b>{% trans "Phone" %}:</b> {{ summary_account.phone }}
                 </small>
             </div>
         </div>
