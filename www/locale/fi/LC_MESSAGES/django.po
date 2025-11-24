@@ -93,8 +93,8 @@ msgid ""
 "Enter your Matrix ID if you already have one. If you don't have one, you can "
 "register for Hacklab Matrix after joining."
 msgstr ""
-"Syötä Matrix-ID:si jos sinulla on jo sellainen. Jos sinulla ei ole Matrix-"
-"ID:tä, voit rekisteröityä Hacklabin Matrixiin liittymisen jälkeen."
+"Syötä Matrix-ID:si jos sinulla on jo sellainen. Jos sinulla ei ole Matrix-ID:"
+"tä, voit rekisteröityä Hacklabin Matrixiin liittymisen jälkeen."
 
 #: www/registration_form.py:123
 msgid "Password"
