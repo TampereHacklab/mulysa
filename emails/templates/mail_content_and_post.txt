@@ -2,4 +2,13 @@
 {% load i18n %}{% autoescape off %}{{ email.content }}
 
 ---
-{% blocktrans %}You are receiving this email because you are registered member of {{ SITENAME }}{% endblocktrans %}{% endautoescape %}
+{% if category_name and category_is_configurable %}
+{% blocktrans with cat=category_name %}
+You are receiving this email because you are a registered member of {{ SITENAME }} and have opted in to {{ cat }} in your email preferences.
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+You are receiving this email because you are a registered member of {{ SITENAME }}.
+{% endblocktrans %}
+{% endif %}
+{% endautoescape %}

@@ -42,6 +42,7 @@ from www.forms import (
 )
 from .decorators import self_or_staff_member_required
 from django.core.mail import send_mail
+from emails.models import EmailCategory, EmailPreference
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
     pass
@@ -255,6 +256,24 @@ def usersettings(request, id):
         usereditform.save()
         messages.success(request, _("User details saved"))
 
+    # Handle email preferences update
+    if request.method == "POST" and 'email_preferences' in request.POST:
+        categories = EmailCategory.objects.filter(user_configurable=True)
+        for category in categories:
+            enabled = request.POST.get(f'category_{category.id}') == 'on'
+            EmailPreference.objects.update_or_create(
+                user=customuser,
+                category=category,
+                defaults={'enabled': enabled}
+            )
+        messages.success(request, _("Email preferences updated"))
+        return HttpResponseRedirect(reverse("usersettings", args=(customuser.id,)))
+
+    # Get email preferences for display
+    email_categories = EmailCategory.objects.filter(user_configurable=True)
+    for category in email_categories:
+        category.user_enabled = customuser.get_email_preference(category)
+
     # services we can unsubscribe from
     # we are the user
     # service selfsubscribe is on
@@ -289,6 +308,7 @@ def usersettings(request, id):
         {
             "usereditform": usereditform,
             "userdetails": customuser,
+            "email_categories": email_categories,
             "subscribable_services": subscribable_services,
             "unsubscribable_services": unsubscribable_services,
             "unclaimed_nfccards": unclaimed_nfccards,
