@@ -250,6 +250,17 @@ class BusinessLogic:
             and subscription.paid_until
             and subscription.paid_until < date.today()
         ):
+            # If disable_on_expiry is set, delete the subscription instead of going overdue
+            if subscription.disable_on_expiry:
+                logger.debug(
+                    f"{subscription} has expired and disable_on_expiry is set - deleting subscription"
+                )
+                subscription.user.log(
+                    f"Service {subscription.service.name} automatically unsubscribed after expiry"
+                )
+                subscription.delete()
+                return
+
             logger.debug(f"{subscription} payment overdue so changing state to OVERDUE")
             subscription.state = ServiceSubscription.OVERDUE
             subscription.save()
@@ -420,6 +431,12 @@ class BusinessLogic:
         # Add days and mark this transaction to be the last payment
         servicesubscription.paid_until = servicesubscription.paid_until + days_to_add
         servicesubscription.last_payment = transaction
+        # Clear disable_on_expiry flag when new payment is received
+        if servicesubscription.disable_on_expiry:
+            logger.debug(
+                f"{servicesubscription} received payment - clearing disable_on_expiry flag"
+            )
+            servicesubscription.disable_on_expiry = False
         servicesubscription.save()
 
         # Mark transaction as used

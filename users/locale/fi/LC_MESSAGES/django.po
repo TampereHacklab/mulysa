@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
+"POT-Creation-Date: 2025-11-27 12:31+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -419,7 +419,21 @@ msgstr ""
 "Päiväys jolloin muistutusviesti on lähetetty käyttäjälle. Palautetaan "
 "NULLiksi kun palvelun tila muuttuu."
 
-#: users/models/service_subscription.py:136
+#: users/models/service_subscription.py:77
+msgid "Disable on expiry"
+msgstr "Poista käytöstä erääntyessä"
+
+#: users/models/service_subscription.py:79
+msgid ""
+"If true, this subscription will be deleted (instead of going overdue) when "
+"paid days run out. Automatically set when user self-unsubscribes. Cleared "
+"when new payment is received."
+msgstr ""
+"Jos tosi, tämä tilaus poistetaan (sen sijaan että se menisi erääntyneeksi), "
+"kun maksetut päivät loppuvat. Asetetaan automaattisesti, kun käyttäjä "
+"irtisanoo tilauksen itse. Tyhjennetään, kun uusi maksu vastaanotetaan."
+
+#: users/models/service_subscription.py:145
 #, python-format
 msgid "Service %(servicename)s for %(username)s"
 msgstr "Jäsenpalvelu %(servicename)s %(username)s:lle"

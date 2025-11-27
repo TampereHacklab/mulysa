@@ -282,7 +282,12 @@ class TestUserViews(TestCase):
         )
         messages = list(response.context["messages"])
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "Service unsubscribed")
+        # Message changed because now it schedules unsubscribe instead of immediate delete
+        self.assertIn("unsubscribe", str(messages[0]).lower())
+
+        # Check that disable_on_expiry flag was set
+        ss.refresh_from_db()
+        self.assertTrue(ss.disable_on_expiry)
 
         # check that our log has the entries
         response = self.client.get(

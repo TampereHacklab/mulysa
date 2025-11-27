@@ -358,9 +358,32 @@ def usersettings_unsubscribe_service(request, id):
             ServiceSubscription, id=request.POST["subscriptionid"]
         )
         if subscription.state == ServiceSubscription.ACTIVE:
-            customuser.log(f"Self unsubscribing from {subscription.service.name}")
-            subscription.delete()
-            messages.success(request, _("Service unsubscribed"))
+            # Toggle the disable_on_expiry flag
+            if subscription.disable_on_expiry:
+                # Cancel the pending unsubscribe
+                subscription.disable_on_expiry = False
+                subscription.save()
+                customuser.log(
+                    f"Cancelled unsubscribe for {subscription.service.name}"
+                )
+                messages.success(request, _("Service unsubscribe cancelled"))
+            else:
+                # Set flag to auto-delete when paid days run out, preserving paid time
+                subscription.disable_on_expiry = True
+                subscription.save()
+                customuser.log(
+                    f"Self unsubscribing from {subscription.service.name} - will disable on {subscription.paid_until}"
+                )
+                if subscription.paid_until:
+                    messages.success(
+                        request,
+                        _(
+                            "Service will be unsubscribed on %(date)s when your paid days run out"
+                        )
+                        % {"date": subscription.paid_until.strftime("%d.%m.%Y")},
+                    )
+                else:
+                    messages.success(request, _("Service unsubscribe scheduled"))
         else:
             messages.error(
                 request,
