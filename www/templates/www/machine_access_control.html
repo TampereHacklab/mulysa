@@ -1,11 +1,122 @@
 {% extends "www/base.html" %}
 {% load i18n %}
+{% load bootstrap4 %}
 {% block content %}
 <div class="container">
-  <h1>{% trans 'Machine Access Control' %}</h1>
-  <p class="text-muted">{% trans 'This page is available to instructors and admins.' %}</p>
-  <div class="alert alert-info">
-    {% trans 'Manage machine access permissions.' %}
-  </div>
+    <h1>{% trans 'Machine Access Control' %}</h1>
+
+    <!-- Member search card -->
+    <div class="card p-3">
+        <h4>Search Member</h4>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label>Member number</label>
+                <input id="member_number" class="form-control" type="text">
+            </div>
+            <div class="col-md-4">
+                <label>Last name</label>
+                <input id="last_name" class="form-control" type="text">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" onclick="searchMember()">Search</button>
+            </div>
+        </div>
+        <div id="search_result" class="mt-3"></div>
+    </div>
+
+    <!-- Permissions table -->
+    <div class="mt-4">
+        <h4>Permissions</h4>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Machine</th>
+                    <th>Allowed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for machine in machines %}
+                <tr>
+                    <td>{{ machine.name }}</td>
+                    <td>
+                        <input type="checkbox"
+                            class="perm-check"
+                            data-machine="{{ machine.id }}"
+                            data-permissions="{% for p in machine.allowed_permissions.all %}{{ p.id }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                            disabled>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+let selectedUserId = null;
+
+// Disable all permission checkboxes
+function disableAll() {
+    document.querySelectorAll(".perm-check").forEach(c => {
+        c.checked = false;
+        c.disabled = true;
+    });
+}
+
+// Search member by number and last name
+function searchMember() {
+    const num = document.getElementById("member_number").value;
+    const last = document.getElementById("last_name").value;
+
+    fetch(`/www/machine-access-control/search/?member_number=${num}&last_name=${last}`)
+        .then(r => r.json())
+        .then(data => {
+            if (!data.found) {
+                document.getElementById("search_result").innerHTML =
+                    "<div class='alert alert-danger'>Member not found.</div>";
+                disableAll();
+                return;
+            }
+
+            selectedUserId = data.user_id;
+            document.getElementById("search_result").innerHTML =
+                `<div class='alert alert-success'>
+                    Member found: <b>${data.first_name} ${data.last_name}</b> – permissions (changes are saved automatically when you click a checkbox):
+                </div>`;
+
+            const userPermissions = data.allowed_permissions;
+
+            // Enable checkboxes and mark them according to user's permissions
+            document.querySelectorAll(".perm-check").forEach(c => {
+                c.disabled = false;
+                const devicePerms = c.dataset.permissions.split(",").filter(x => x.trim().length > 0).map(Number);
+                c.checked = devicePerms.every(p => userPermissions.includes(p));
+            });
+        });
+}
+
+// Send updates when checkbox changes
+document.querySelectorAll(".perm-check").forEach(cb => {
+    cb.addEventListener("change", function() {
+        if (!selectedUserId) return;
+
+        // Create POST data.
+        const formData = new URLSearchParams();
+        formData.append("user_id", selectedUserId);
+        formData.append("machine_id", this.dataset.machine);
+        formData.append("checked", this.checked);
+
+        // Send a POST request to the server.
+        fetch("/www/machine-access-control/update/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: formData.toString()
+        });
+    });
+});
+</script>
+
 {% endblock %}

@@ -20,6 +20,8 @@ urlpatterns = [
     path("usersettings/<int:id>/", views.usersettings, name="usersettings"),
     path("graphs", views.AuthenticatedTemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
     path("graphs", TemplateView.as_view(template_name="www/graphs.html"), name="graphs"),
+    path("machine-access-control/search/", views.search_member, name="search_member"),
+    path("machine-access-control/update/", views.update_permission, name="update_permission"),
     path(
         "usersettings/<int:id>/subscribe_service",
         views.usersettings_subscribe_service,

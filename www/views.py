@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import markdown
 from django.utils.safestring import mark_safe
 
-from api.models import DeviceAccessLogEntry
+from api.models import AccessDevice, DeviceAccessLogEntry
 from drfx import config
 from utils.matrixoperations import MatrixOperations
 from users.models import (
@@ -215,10 +215,78 @@ def applications(request):
     return render(request, "www/applications.html", {"applications": applications})
 
 
+@login_required
 @instructor_or_staff_member_required
 def instructor_tools(request):
-    # Renders the machine access control instructor/admin page
-    return render(request, "www/machine_access_control.html")
+    """
+    Renders the machine access control instructor/admin page
+    """
+    machines = AccessDevice.objects.all()
+    return render(request, "www/machine_access_control.html", {"machines": machines})
+
+
+@login_required
+@instructor_or_staff_member_required
+def search_member(request):
+    """
+    Looks up a member by member number and last name.
+    Returns JSON containing basic user info and their assigned permissions.
+    """
+    member_number = request.GET.get("member_number", "").strip()
+    last_name = request.GET.get("last_name", "").strip().lower()
+
+    if not member_number or not last_name:
+        return JsonResponse({"found": False})
+
+    try:
+        member_number = int(member_number)
+    except ValueError:
+        return JsonResponse({"found": False})
+
+    user = (
+        CustomUser.objects
+        .filter(pk=member_number, last_name__iexact=last_name)
+        .first()
+    )
+
+    if not user:
+        return JsonResponse({"found": False})
+
+    # Contains a list of ID numbers representing all access permissions the user has.
+    # The front-end can then use this list to mark the corresponding checkboxes as checked.
+    allowed = list(user.access_permissions.values_list("id", flat=True))
+
+    return JsonResponse({
+        "found": True,
+        "user_id": user.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "allowed_permissions": list(user.access_permissions.values_list("id", flat=True)),
+    })
+
+
+@login_required
+@instructor_or_staff_member_required
+def update_permission(request):
+    """
+    Updates a user’s machine access permissions when a checkbox is toggled in the UI.
+    """
+    user_id = request.POST.get("user_id")
+    device_id = request.POST.get("machine_id")
+    checked = request.POST.get("checked") == "true"
+
+    user = get_object_or_404(CustomUser, id=user_id)
+    device = get_object_or_404(AccessDevice, id=device_id)
+
+    # All permissions granted by this device
+    perms = device.allowed_permissions.all()
+
+    if checked:
+        user.access_permissions.add(*perms)
+    else:
+        user.access_permissions.remove(*perms)
+
+    return JsonResponse({"success": True})
 
 
 @login_required
