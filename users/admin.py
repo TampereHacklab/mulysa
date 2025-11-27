@@ -40,7 +40,7 @@ class CustomUserAdmin(UserAdmin):
         "first_name",
         "last_name",
     )
-    list_display = ( "id",
+    list_display = (
         "email",
         "first_name",
         "last_name",
