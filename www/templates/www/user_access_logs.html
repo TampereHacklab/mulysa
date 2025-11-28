@@ -1,0 +1,54 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+  <h1>{% trans 'Access Logs' %} – {{ userdetails.first_name }} {{ userdetails.last_name }}</h1>
+
+  <table class="table table-sm table-responsive-sm">
+    <thead class="thead-light">
+      <tr>
+        <th>{% trans 'Date' %}</th>
+        <th>{% trans 'Device' %}</th>
+        <th>{% trans 'Method' %}</th>
+        <th>{% trans 'Granted' %}</th>
+        <th>{% trans 'Identifier' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in page_obj.object_list %}
+      <tr>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.device.name|default_if_none:"-" }}</td>
+        <td>{{ entry.method|upper }}</td>
+        <td>{% if entry.granted %}{% trans 'Yes' %}{% else %}{% trans 'No' %}{% endif %}</td>
+        <td>{{ entry.payload|default_if_none:"-" }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">{% trans 'No access log entries found.' %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if page_obj.paginator.num_pages > 1 %}
+  <nav aria-label="Access logs pagination">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans 'Previous' %}</a></li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">{% trans 'Previous' %}</span></li>
+      {% endif %}
+
+      <li class="page-item disabled"><span class="page-link">{% trans 'Page' %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span></li>
+
+      {% if page_obj.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans 'Next' %}</a></li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">{% trans 'Next' %}</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}
