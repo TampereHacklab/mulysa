@@ -7,7 +7,7 @@ from django.test.utils import override_settings
 
 from django.http import HttpRequest
 
-from api.models import AccessDevice
+from api.models import AccessDevice, AccessPermission
 from drfx import config
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -289,6 +289,54 @@ class TestAccess(APITestCase):
         url = reverse("access-nfc")
         response = self.client.post(
             url, {"deviceid": self.device.deviceid, "payload": self.not_ok_card.cardid}
+        )
+        self.assertEqual(response.status_code, 481)
+
+    def test_device_requires_both_service_and_permission(self, mock):
+        """Device configured with both allowed_permissions and allowed_services requires BOTH."""
+        # create a permission and attach to device
+        perm = AccessPermission.objects.create(name="Special Permission", code="special_perm")
+        self.device.allowed_permissions.add(perm)
+
+        # attach the device to require default account service as well
+        default_service = MemberService.objects.get(pk=config.DEFAULT_ACCOUNT_SERVICE)
+        self.device.allowed_services.add(default_service)
+
+        # case 1: ok_user has service and permission -> success
+        self.ok_user.access_permissions.add(perm)
+        response = self.client.post(
+            reverse("access-phone"), {"deviceid": self.device.deviceid, "payload": self.ok_user.phone}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # case 2: user with permission only (no service) -> denied
+        user_only_perm = CustomUser.objects.create(email="permonly@example.com", birthday=timezone.now(), phone="+358777111")
+        user_only_perm.access_permissions.add(perm)
+        response = self.client.post(
+            reverse("access-phone"), {"deviceid": self.device.deviceid, "payload": user_only_perm.phone}
+        )
+        self.assertEqual(response.status_code, 481)
+
+    def test_device_with_permission_only_allows_permissioned_user(self, mock):
+        """If device only requires permissions, a user with permission but no service should be allowed."""
+        perm = AccessPermission.objects.create(name="OnlyPerm", code="only_perm")
+        self.device.allowed_permissions.add(perm)
+
+        user_perm_only = CustomUser.objects.create(email="permonly2@example.com", birthday=timezone.now(), phone="+358777333")
+        user_perm_only.access_permissions.add(perm)
+
+        # ensure this user has no service subscription
+        response = self.client.post(
+            reverse("access-phone"), {"deviceid": self.device.deviceid, "payload": user_perm_only.phone}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # case 3: user with service only (no permission) -> denied
+        user_only_service = CustomUser.objects.create(email="serviceonly@example.com", birthday=timezone.now(), phone="+358777222")
+        default_service = MemberService.objects.get(pk=config.DEFAULT_ACCOUNT_SERVICE)
+        ServiceSubscription.objects.create(user=user_only_service, service=default_service, state=ServiceSubscription.ACTIVE)
+        response = self.client.post(
+            reverse("access-phone"), {"deviceid": self.device.deviceid, "payload": user_only_service.phone}
         )
         self.assertEqual(response.status_code, 481)
 

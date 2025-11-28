@@ -76,12 +76,6 @@ class AccessDevice(models.Model):
         blank=True,
         help_text=_("Services that grant access via this device (leave empty for default)"),
     )
-
-    # TODO:
-    # * which services this device gives access to
-    # * extra settings for this device (like how long the access lasts)
-    # *
-
     # Permissions that grant access when using this device. If empty, falls back to
     # the previous single-default-service behaviour.
     allowed_permissions = models.ManyToManyField(
@@ -89,6 +83,12 @@ class AccessDevice(models.Model):
         blank=True,
         help_text=_("Permissions that grant access via this device (leave empty for default)"),
     )
+
+    # TODO:
+    # * which services this device gives access to
+    # * extra settings for this device (like how long the access lasts)
+    # *
+
 
 class DeviceAccessLogEntry(models.Model):
     date = models.DateTimeField(

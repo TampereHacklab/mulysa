@@ -90,31 +90,50 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # phone numbers, MXIDs, nfc tags are/will be unique
         user = users.first()
 
-        # If the device has explicit allowed_permissions configured, require the
-        # user to have at least one of those AccessPermissions. If no
-        # allowed_permissions are configured, fall back to legacy behaviour.
-        if getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists():
-            allowed_ids = list(device.allowed_permissions.values_list("id", flat=True))
-            # check user's assigned permissions
+        # Access decision rules:
+        # - If the device has both allowed_permissions and allowed_services configured,
+        #   require the user to satisfy BOTH (permission AND active service).
+        # - If only allowed_permissions is configured, require a matching AccessPermission.
+        # - If only allowed_services is configured, require an active ServiceSubscription.
+        # - If none are configured, fall back to user.has_door_access().
+
+        has_perms_config = getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists()
+        has_services_config = getattr(device, "allowed_services", None) and device.allowed_services.exists()
+
+        if has_perms_config and has_services_config:
+            # both configured -> require both
+            perm_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            svc_ids = list(device.allowed_services.values_list("id", flat=True))
+
             has_perm = getattr(user, "access_permissions", None) and user.access_permissions.filter(
-                id__in=allowed_ids
+                id__in=perm_ids
+            ).exists()
+            has_active = ServiceSubscription.objects.filter(
+                user=user, service__in=svc_ids, state=ServiceSubscription.ACTIVE
+            ).exists()
+
+            if not (has_perm and has_active):
+                response_status = 481
+        elif has_perms_config:
+            # only permissions configured -> require at least one permission
+            perm_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            has_perm = getattr(user, "access_permissions", None) and user.access_permissions.filter(
+                id__in=perm_ids
             ).exists()
             if not has_perm:
                 response_status = 481
+        elif has_services_config:
+            # only services configured -> require active service subscription
+            svc_ids = list(device.allowed_services.values_list("id", flat=True))
+            has_active = ServiceSubscription.objects.filter(
+                user=user, service__in=svc_ids, state=ServiceSubscription.ACTIVE
+            ).exists()
+            if not has_active:
+                response_status = 481
         else:
-            # legacy behaviour: if there are still allowed_services configured
-            # (backward compatibility), check membership subscriptions; otherwise
-            # fall back to has_door_access().
-            if getattr(device, "allowed_services", None) and device.allowed_services.exists():
-                allowed_ids = list(device.allowed_services.values_list("id", flat=True))
-                has_active = ServiceSubscription.objects.filter(
-                    user=user, service__in=allowed_ids, state=ServiceSubscription.ACTIVE
-                ).exists()
-                if not has_active:
-                    response_status = 481
-            else:
-                if not user.has_door_access():
-                    response_status = 481
+            # nothing configured -> legacy fallback
+            if not user.has_door_access():
+                response_status = 481
 
         logentry.granted = response_status == 0
         logentry.save()
