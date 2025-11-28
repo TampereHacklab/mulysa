@@ -13,6 +13,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 import markdown
 from django.utils.safestring import mark_safe
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 from api.models import AccessDevice, DeviceAccessLogEntry
 from drfx import config
@@ -305,6 +307,32 @@ def userdetails(request, id):
         user=userdetails
     ).first()
     latest_transaction = BankTransaction.objects.order_by("-date").first()
+
+    # Compute machines the user can access according to current access rules
+    accessible_machines = []
+    for device in AccessDevice.objects.filter(device_type=AccessDevice.DEVICE_TYPE_MACHINE):
+        has_access = False
+        # If device has explicit allowed permissions, user needs at least one
+        if getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists():
+            allowed_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            has_access = getattr(userdetails, "access_permissions", None) and userdetails.access_permissions.filter(
+                id__in=allowed_ids
+            ).exists()
+        else:
+            # If device has allowed services, require active subscription
+            if getattr(device, "allowed_services", None) and device.allowed_services.exists():
+                allowed_service_ids = list(device.allowed_services.values_list("id", flat=True))
+                has_access = ServiceSubscription.objects.filter(
+                    user=userdetails,
+                    service__in=allowed_service_ids,
+                    state=ServiceSubscription.ACTIVE,
+                ).exists()
+            else:
+                # Fallback to default door access rules
+                has_access = userdetails.has_door_access()
+
+        if has_access:
+            accessible_machines.append(device)
     return render(
         request,
         "www/user.html",
@@ -315,6 +343,39 @@ def userdetails(request, id):
             "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
             "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
+            "accessible_machines": accessible_machines,
+        },
+    )
+
+
+@login_required
+@self_or_staff_member_required
+def useraccesslogs(request, id):
+    """
+    Show access logs related to a specific user.
+    """
+    user = get_object_or_404(CustomUser, id=id)
+    card_ids = list(user.nfccard_set.values_list("cardid", flat=True))
+    q = Q()
+    if user.phone:
+        q |= Q(method="phone", payload=user.phone)
+    if user.mxid:
+        q |= Q(method="mxid", payload=user.mxid)
+    if card_ids:
+        q |= Q(method="nfc", payload__in=card_ids)
+    q |= Q(nfccard__user=user) | Q(claimed_by=user)
+
+    logs = DeviceAccessLogEntry.objects.filter(q).order_by("-date")
+    paginator = Paginator(logs, 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "www/user_access_logs.html",
+        {
+            "userdetails": user,
+            "page_obj": page_obj,
         },
     )
 
