@@ -25,6 +25,55 @@
     {% endbuttons %}
   </form>
   <hr />
+  <h1>{% trans 'Email Preferences' %}</h1>
+  <p>{% trans 'Choose which types of emails you would like to receive:' %}</p>
+
+  <form action="{% url 'usersettings' userdetails.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="email_preferences" value="1" />
+
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th>{% trans 'Email Category' %}</th>
+          <th>{% trans 'Description' %}</th>
+          <th>{% trans 'Receive' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for category in email_categories %}
+        <tr>
+          <td><strong>{{ category.display_name }}</strong></td>
+          <td>{{ category.description }}</td>
+          <td>
+            <input
+              type="checkbox"
+              name="category_{{ category.id }}"
+              id="category_{{ category.id }}"
+              {% if category.user_enabled %}checked{% endif %}
+            />
+            <label for="category_{{ category.id }}">{% trans 'Yes' %}</label>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">{% trans 'No configurable email categories available' %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if email_categories %}
+    {% buttons %}
+    <input
+      type="submit"
+      class="btn btn-primary"
+      value="{% trans 'Update Email Preferences' %}"
+    />
+    {% endbuttons %}
+    {% endif %}
+  </form>
+  <hr />
   <h1>{% trans 'Matrix Community' %}</h1>
   {% if has_matrix %}
     <form action="{% url 'usersettings_matrixinvite' userdetails.id %}" method="post">{% csrf_token %}

@@ -188,3 +188,53 @@ class CustomUser(AbstractUser):
     def age_years(self):
         today = datetime.datetime.today()
         return int((today.date() - self.birthday).days / 365.25)
+
+    def get_email_preference(self, category):
+        """
+        Get user's email preference for category.
+        Creates with default if the preference doesn't exist.
+        """
+        from emails.models import EmailPreference, EmailCategory
+
+        if isinstance(category, str):
+            category = EmailCategory.objects.get(name=category)
+
+        preference, created = EmailPreference.objects.get_or_create(
+            user=self,
+            category=category,
+            defaults={'enabled': category.default_enabled}
+        )
+        return preference.enabled
+
+    def should_receive_email(self, category):
+        """
+        Checks if user should receive email from the given category.
+        Returns true if:
+        - Category is not user configurable (mandatory emails)
+        - User has enabled this category
+        - User has no preference set and category is default_enabled
+        """
+        from emails.models import EmailCategory
+
+        if isinstance(category, str):
+            category = EmailCategory.objects.get(name=category)
+
+        if not category.user_configurable:
+            return True
+
+        return self.get_email_preference(category)
+
+    def get_all_email_preferences(self):
+        """
+        Get all email preferences for this user.
+        Creates missing preferences with defaults.
+        """
+        from emails.models import EmailCategory
+
+        categories = EmailCategory.objects.filter(user_configurable=True)
+        preferences = {}
+
+        for category in categories:
+            preferences[category] = self.get_email_preference(category)
+
+        return preferences
