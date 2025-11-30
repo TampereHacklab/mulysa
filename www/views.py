@@ -223,7 +223,8 @@ def instructor_tools(request):
     """
     Renders the machine access control instructor/admin page
     """
-    machines = AccessDevice.objects.all()
+    machines = AccessDevice.objects.filter(
+        allowed_permissions__education_required=True).distinct()
     return render(request, "www/machine_access_control.html", {"machines": machines})
 
 
