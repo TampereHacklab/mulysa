@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-20 19:49+0200\n"
+"POT-Creation-Date: 2025-11-30 19:42+0200\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -69,7 +69,7 @@ msgid "Over 63 years"
 msgstr "Yli 63-vuotias"
 
 #: .\users\filters.py:90 .\users\filters.py:98
-#: .\users\models\custom_user.py:136
+#: .\users\models\custom_user.py:145
 msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
@@ -286,7 +286,15 @@ msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 msgid "Last time this user was modified"
 msgstr "Päiväys, kun käyttäjän tietoja on viimeksi muokattu"
 
-#: .\users\models\custom_user.py:138
+#: .\users\models\custom_user.py:134
+msgid "Instructor"
+msgstr ""
+
+#: .\users\models\custom_user.py:136
+msgid "Instructors can manage machine access for members."
+msgstr ""
+
+#: .\users\models\custom_user.py:147
 msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
@@ -568,8 +576,8 @@ msgstr ""
 "\n"
 "Hei %(first_name)s!\n"
 "\n"
-"Huomasimme, että yritit päästä laitteeseen %(device_type)s \"%(device_name)s"
-"\" käyttämällä %(method)s.\n"
+"Huomasimme, että yritit päästä laitteeseen %(device_type)s "
+"\"%(device_name)s\" käyttämällä %(method)s.\n"
 "\n"
 "Käyttäjätililläsi ei ole tällä hetkellä pääsyä laitteeseen %(device_type)s "
 "\"%(device_name)s\".\n"
@@ -671,8 +679,8 @@ msgstr ""
 msgid ""
 "%(value)s is not a valid Matrix id. It must be in format @user:example.org"
 msgstr ""
-"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa @käyttäjä:"
-"esimerkki.org"
+"%(value)s ei ole kelvollinen Matrix id. Sen tulee olla muodossa "
+"@käyttäjä:esimerkki.org"
 
 #: .\users\validators.py:23
 #, python-format
