@@ -244,6 +244,33 @@ def userdetails(request, id):
         },
     )
 
+@login_required
+def mydetails(request):
+    mydetails = CustomUser.objects.get(id=request.user.id)
+    mydetails.servicesubscriptions = ServiceSubscription.objects.filter(
+        user=mydetails
+    )
+    mydetails.transactions = BankTransaction.objects.filter(
+        user=mydetails
+    ).order_by("-date")
+    mydetails.userslog = UsersLog.objects.filter(user=mydetails).order_by("-date")
+    mydetails.custominvoices = CustomInvoice.objects.filter(user=mydetails)
+    mydetails.membership_application = MembershipApplication.objects.filter(
+        user=mydetails
+    ).first()
+    latest_transaction = BankTransaction.objects.order_by("-date").first()
+    return render(
+        request,
+        "www/user.html",
+        {
+            "userdetails": mydetails,
+            "bank_iban": config.ACCOUNT_IBAN,
+            "bank_bic": config.ACCOUNT_BIC,
+            "bank_name": config.ACCOUNT_NAME,
+            "last_transaction": latest_transaction.date if latest_transaction else "-",
+            "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
+        },
+    )
 
 @login_required
 @self_or_staff_member_required
@@ -299,6 +326,58 @@ def usersettings(request, id):
         },
     )
 
+@login_required
+def mysettings(request):
+    # the base form for users basic information
+    customuser = get_object_or_404(CustomUser, id=request.user.id)
+    usereditform = EditUserForm(request.POST or None, instance=customuser)
+    if usereditform.is_valid():
+        usereditform.save()
+        messages.success(request, _("User details saved"))
+
+    # services we can unsubscribe from
+    # we are the user
+    # service selfsubscribe is on
+    # subscription state is active
+    own_self_subscribe_services = customuser.servicesubscription_set.all()
+    unsubscribable_services = own_self_subscribe_services.filter(
+        service__self_subscribe=True
+    )
+    # services we can subsribe to
+    # service that has self_subscribe
+    # and we don't already have that service (TODO: actually you could have one service multiple times...)
+    subscribable_services = MemberService.objects.filter(self_subscribe=True).exclude(
+        id__in=own_self_subscribe_services.values_list("service__id")
+    )
+
+    # find unclaimed nfc cards from the last XX minutes
+    unclaimed_nfccards = (
+        DeviceAccessLogEntry.objects.filter(
+            granted=False,
+            nfccard=None,
+            claimed_by=None,
+            method='nfc',
+            date__gte=timezone.now() - timedelta(minutes=5),
+        )
+        .exclude(payload__isnull=True)
+        .order_by("-date")
+    )
+
+    return render(
+        request,
+        "www/usersettings.html",
+        {
+            "usereditform": usereditform,
+            "userdetails": customuser,
+            "subscribable_services": subscribable_services,
+            "unsubscribable_services": unsubscribable_services,
+            "unclaimed_nfccards": unclaimed_nfccards,
+            "show_send_email": request.user.is_staff,
+            "has_matrix": len(config.MATRIX_ACCESS_TOKEN) > 0 and customuser.mxid is not None,
+            "matrix_registration_url": config.MATRIX_ACCOUNT_CRETION_URL,
+            "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
+        },
+    )
 
 @login_required
 @self_or_staff_member_required
