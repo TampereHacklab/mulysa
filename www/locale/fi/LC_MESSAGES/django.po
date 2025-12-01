@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 16:26+0000\n"
-"PO-Revision-Date: 2025-02-02 20:00+0200\n"
+"POT-Creation-Date: 2025-10-13 11:52+0000\n"
+"PO-Revision-Date: 2025-10-20 15:38+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: fi\n"
 "X-Source-Language: en\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 
 #: www/forms.py:65
 msgid "Choose if you want 24/7 access"
@@ -347,7 +347,7 @@ msgstr "Viitenumero"
 
 #: www/templates/www/custominvoice.html:35
 #: www/templates/www/usersettings.html:53
-#: www/templates/www/usersettings.html:106
+#: www/templates/www/usersettings.html:110
 msgid "Action"
 msgstr "Toiminto"
 
@@ -725,23 +725,27 @@ msgstr "Poista käytöstä"
 msgid "No services available to subscribe or unsubscribe "
 msgstr "Ei käyttöönotettavia tai poistettavia palveluita "
 
-#: www/templates/www/usersettings.html:101
+#: www/templates/www/usersettings.html:102
 msgid "NFC Card access"
 msgstr "NFC-Kortti sisäänpääsy"
 
-#: www/templates/www/usersettings.html:105
+#: www/templates/www/usersettings.html:104
+msgid "More information about the NFC process here"
+msgstr "Lisätietoja NFC:n käytöstä täältä"
+
+#: www/templates/www/usersettings.html:109
 msgid "NFC Card"
 msgstr "NFC-Kortti"
 
-#: www/templates/www/usersettings.html:119
+#: www/templates/www/usersettings.html:123
 msgid "Release"
 msgstr "Vapauta"
 
-#: www/templates/www/usersettings.html:135
+#: www/templates/www/usersettings.html:139
 msgid "Claim"
 msgstr "Varaa"
 
-#: www/templates/www/usersettings.html:142
+#: www/templates/www/usersettings.html:146
 msgid ""
 "No recent unclaimed NFC cards. Go to door, use a card and claim it here in 5 "
 "minutes"
@@ -749,19 +753,19 @@ msgstr ""
 "Ei varattavissa olevia NFC-kortteja  - mene ovelle, leimaa kortti ja yhdistä "
 "se täällä 5 minuutin kuluessa"
 
-#: www/templates/www/usersettings.html:151
+#: www/templates/www/usersettings.html:156
 msgid "Send e-mail to user"
 msgstr "Lähetä sähköposti käyttäjälle"
 
-#: www/templates/www/usersettings.html:154
+#: www/templates/www/usersettings.html:159
 msgid "Subject"
 msgstr "Otsikko"
 
-#: www/templates/www/usersettings.html:160
+#: www/templates/www/usersettings.html:165
 msgid "Send"
 msgstr "Lähetä"
 
-#: www/templates/www/usersettings.html:167
+#: www/templates/www/usersettings.html:172
 msgid ""
 "If you have questions and or want to change something that is not available "
 "here, please send an email."
