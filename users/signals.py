@@ -309,10 +309,12 @@ door_access_denied = Signal()
 
 
 @receiver(door_access_denied)
-def notify_user_door_access_denied(sender, user: models.CustomUser, method, **kwargs):
+def notify_user_door_access_denied(sender, user: models.CustomUser, method, device=None, **kwargs):
     context = {
         "user": user,
         "method": method,
+        "device_type": device.get_device_type_display() if device else "Device",
+        "device_name": device.name if device and getattr(device, 'name', None) else "",
         "config": config,
         "site": Site.objects.get_current(),
     }

@@ -12,6 +12,12 @@
       <td>{% trans 'Name' %}</td>
       <td>{{ userdetails.first_name }} {{ userdetails.last_name }}</td>
     </tr>
+    {% if userdetails.is_instructor %}
+    <tr>
+      <td>{% trans 'Role' %}</td>
+      <td><span class="badge badge-info">{% trans 'Instructor' %}</span></td>
+    </tr>
+    {% endif %}
     <tr>
       <td>{% trans 'Email' %}</td>
       <td>{{ userdetails.email }}</td>
@@ -131,6 +137,21 @@
       </tr>
       {% endfor %}
     </table>
+
+    <p>
+      <a class="btn btn-outline-secondary btn-sm" href="{% url 'useraccesslogs' userdetails.id %}">{% trans 'View access logs' %}</a>
+    </p>
+
+    <h2>{% trans 'Machine Access' %}</h2>
+    {% if accessible_machines and accessible_machines|length > 0 %}
+      <ul>
+        {% for machine in accessible_machines %}
+          <li>{{ machine.name }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{% trans 'You currently do not have access to any machines.' %}</p>
+    {% endif %}
 
     <h2>{% trans 'Bank transactions' %}</h2>
     <p>{% trans 'Transactions are not processed in real time. Newest bank transactions uploaded to the system' %}: {{ last_transaction }}</p>

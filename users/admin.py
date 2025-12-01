@@ -11,6 +11,7 @@ from .filters import (
     ServiceSubscriptionCountFilter,
 )
 from .forms import CustomUserChangeForm, CustomUserCreationForm
+from api.models import AccessPermission
 from .models import (
     BankTransaction,
     CustomInvoice,
@@ -46,6 +47,7 @@ class CustomUserAdmin(UserAdmin):
         "nick",
         "mxid",
         "marked_for_deletion_on",
+        "is_instructor",
         "is_active",
         "is_staff",
         "is_superuser",
@@ -54,6 +56,7 @@ class CustomUserAdmin(UserAdmin):
     list_filter = (
         "is_active",
         "is_staff",
+        "is_instructor",
         MarkedForDeletionFilter,
         "language",
         "municipality",
@@ -80,6 +83,8 @@ class CustomUserAdmin(UserAdmin):
                     "mxid",
                     "language",
                     "municipality",
+                    "is_instructor",
+                    "access_permissions",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -107,6 +112,7 @@ class CustomUserAdmin(UserAdmin):
                     "mxid",
                     "language",
                     "municipality",
+                    "is_instructor",
                     "is_active",
                     "is_staff",
                     "is_superuser",
@@ -127,6 +133,8 @@ class CustomUserAdmin(UserAdmin):
     )
 
     inlines = [ServiceSubscriptionInline]
+
+    filter_horizontal = ("access_permissions",)
 
     actions = ["mark_for_deletion_on", "mark_for_deletion_off"]
 

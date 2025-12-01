@@ -9,6 +9,20 @@ from users.models import NFCCard
 logger = logging.getLogger(__name__)
 
 
+class AccessPermission(models.Model):
+    """
+    Represents a permission required to use an access target (device).
+    For example: 'Cutter permission', or generic access levels.
+    """
+    name = models.CharField(max_length=255, verbose_name=_("Permission name"))
+    code = models.SlugField(max_length=100, unique=True, help_text=_("Short code for the permission"))
+    education_required = models.BooleanField(default=False, help_text=_("True if a training/education is required to use targets requiring this permission"))
+    description = models.TextField(blank=True, default="", help_text=_("Optional description for this permission"))
+
+    def __str__(self):
+        return str(self.name)
+
+
 class AccessDevice(models.Model):
     """
     Device thingy, used by access service to know what to do
@@ -36,6 +50,38 @@ class AccessDevice(models.Model):
         verbose_name=_("device id"),
         help_text=_("used to know which device this was"),
         max_length=255,
+    )
+
+    DEVICE_TYPE_DOOR = "door"
+    DEVICE_TYPE_MACHINE = "machine"
+    DEVICE_TYPE_OTHER = "other"
+
+    DEVICE_TYPE_CHOICES = [
+        (DEVICE_TYPE_DOOR, "Door"),
+        (DEVICE_TYPE_MACHINE, "Machine"),
+        (DEVICE_TYPE_OTHER, "Other"),
+    ]
+
+    device_type = models.CharField(
+        max_length=32,
+        choices=DEVICE_TYPE_CHOICES,
+        default=DEVICE_TYPE_DOOR,
+        help_text=_("What kind of target this device represents (door, machine, ...)")
+    )
+
+    # Services that grant access when using this device. If empty, falls back to
+    # the previous single-default-service behaviour.
+    allowed_services = models.ManyToManyField(
+        "users.MemberService",
+        blank=True,
+        help_text=_("Services that grant access via this device (leave empty for default)"),
+    )
+    # Permissions that grant access when using this device. If empty, falls back to
+    # the previous single-default-service behaviour.
+    allowed_permissions = models.ManyToManyField(
+        "AccessPermission",
+        blank=True,
+        help_text=_("Permissions that grant access via this device (leave empty for default)"),
     )
 
     # TODO:
