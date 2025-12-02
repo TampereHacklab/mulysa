@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump werkzeug from 3.1.3 to 3.1.4. PR [#623](https://github.com/TampereHacklab/mulysa/pull/623) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Add NFC wiki link to user settings page #521. PR [#612](https://github.com/TampereHacklab/mulysa/pull/612) by [@elinahamalainen](https://github.com/elinahamalainen).
 * Bump django from 5.2.7 to 5.2.8. PR [#615](https://github.com/TampereHacklab/mulysa/pull/615) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Add list of package dependencies for Fedora 42 to README. PR [#608](https://github.com/TampereHacklab/mulysa/pull/608) by [@brndd](https://github.com/brndd).
