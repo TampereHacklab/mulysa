@@ -39,6 +39,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
       - reference_number = reference number
       - pending_until = the date the reservation has to be paid
     """
+
     permission_classes = [IsAuthenticated]
     queryset = StorageReservation.objects.select_related("unit").all()
 
