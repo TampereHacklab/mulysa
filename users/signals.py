@@ -34,6 +34,10 @@ create_application = Signal()
 application_approved = Signal()
 # and application denials
 application_denied = Signal()
+#
+# Signal for other modules to handle new reservation
+#
+reservation_created = Signal()
 
 
 @receiver(post_save, sender=models.CustomUser)
@@ -296,6 +300,34 @@ def handle_marked_for_deletion(sender, instance: models.CustomUser, raw, **kwarg
         )
 
         send_mail(subject, plaintext_content, from_email, to)
+
+
+@receiver(reservation_created)
+def send_reservation_confirmation_email(sender, instance, **kwargs):
+    """Send storage reservation confirmation email to user."""
+    reservation = instance
+    user = reservation.user
+
+    context = {
+        "user": user,
+        "reservation": reservation,
+        "unit": reservation.unit,
+        "service": reservation.unit.service,
+        "site": Site.objects.get_current(),
+        "config": config,
+    }
+
+    translation.activate(user.language)
+
+    subject = _("Your storage reservation confirmation")
+    txt = render_to_string("mail/new_storage_reservation.txt", context)
+
+    send_mail(
+        subject,
+        txt,
+        config.NOREPLY_FROM_ADDRESS,
+        [user.email],
+    )
 
 
 #

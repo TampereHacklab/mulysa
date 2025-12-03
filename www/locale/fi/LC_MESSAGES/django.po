@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 11:52+0000\n"
+"POT-Creation-Date: 2025-11-29 21:27+0200\n"
 "PO-Revision-Date: 2025-10-20 15:38+0300\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -78,7 +78,7 @@ msgstr "Hinnan pitää olla palvelun hinta: %(cost)s"
 #: www/templates/registration/login.html:11
 #: www/templates/registration/login.html:21
 #: www/templates/registration/password_reset_complete.html:15
-#: www/templates/www/base.html:56
+#: www/templates/www/base.html:57
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
@@ -147,7 +147,7 @@ msgstr "Anna sähköpostiosoitteesi, niin lähetämme ohjeet uuden asettamiseksi
 msgid "Send me instructions!"
 msgstr "Lähetä minulle ohjeet!"
 
-#: www/templates/www/applications.html:6 www/templates/www/base.html:36
+#: www/templates/www/applications.html:6 www/templates/www/base.html:37
 msgid "Member applications"
 msgstr "Jäsenhakemukset"
 
@@ -234,56 +234,60 @@ msgstr "Omat asetukset"
 msgid "Graphs"
 msgstr "Kaaviot"
 
-#: www/templates/www/base.html:35
+#: www/templates/www/base.html:33
+msgid "Storage"
+msgstr "Varasto"
+
+#: www/templates/www/base.html:36
 msgid "Users"
 msgstr "Käyttäjät"
 
-#: www/templates/www/base.html:37
+#: www/templates/www/base.html:38
 msgid "Import"
 msgstr "Tiedon tuonti"
 
-#: www/templates/www/base.html:38
+#: www/templates/www/base.html:39
 msgid "Export"
 msgstr "Tiedon vienti"
 
-#: www/templates/www/base.html:39
+#: www/templates/www/base.html:40
 msgid "Bank Ledger"
 msgstr "Tiliote"
 
-#: www/templates/www/base.html:40 www/templates/www/custominvoice.html:5
+#: www/templates/www/base.html:41 www/templates/www/custominvoice.html:5
 #: www/templates/www/custominvoices.html:4 www/templates/www/user.html:159
 msgid "Custom invoices"
 msgstr "Vapaamuotoiset laskut"
 
-#: www/templates/www/base.html:41
+#: www/templates/www/base.html:42
 msgid "Django Admin"
 msgstr "Djangon ylläpitokäyttöliittymä"
 
-#: www/templates/www/base.html:44
+#: www/templates/www/base.html:45
 msgid "Apply membership"
 msgstr "Hae jäsenyyttä"
 
-#: www/templates/www/base.html:53
+#: www/templates/www/base.html:54
 msgid "log out"
 msgstr "kirjaudu ulos"
 
-#: www/templates/www/base.html:63
+#: www/templates/www/base.html:64
 msgid "Language"
 msgstr "Kieli"
 
-#: www/templates/www/base.html:90
+#: www/templates/www/base.html:91
 msgid "Privacy policy"
 msgstr "Tietosuojakäytäntö"
 
-#: www/templates/www/base.html:91
+#: www/templates/www/base.html:92
 msgid "Report bugs at"
 msgstr "Raportoi bugit ja osallistu projektiin"
 
-#: www/templates/www/base.html:91
+#: www/templates/www/base.html:92
 msgid "GitHub"
 msgstr "GitHub"
 
-#: www/templates/www/base.html:92
+#: www/templates/www/base.html:93
 msgid "View changelog"
 msgstr "Näytä muutoshistoria"
 

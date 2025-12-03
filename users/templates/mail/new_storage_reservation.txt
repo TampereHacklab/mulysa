@@ -1,0 +1,22 @@
+{% extends "mail/email_base.txt" %}
+{% load i18n %}
+
+{% block content %}
+{% blocktrans with name=user.first_name unit=unit.name start=reservation.start_date end=reservation.end_date reference=reservation.reference_number  due_date=reservation.pending_until %}
+Hello {{ name }},
+
+Your storage reservation has been created successfully!
+
+Storage unit: {{ unit }}
+Reservation period: {{ start }} – {{ end }}
+Reference number: {{ reference }}
+Due date: {{ due_date }}
+
+Please complete the payment before the due date, otherwise your reservation will expire.
+{% endblocktrans %}
+
+{% trans "Payment details:" %}
+- {% trans "Price per month" %}: {{ unit.price_per_month }} €
+- {% trans "Maximum rental duration" %}: {{ unit.max_rental_months }} {% trans "months" %}
+
+{% endblock %}
