@@ -524,8 +524,6 @@ class BusinessLogic:
         - Create StoragePayment entry
         """
 
-        today = timezone.now().date()
-
         # Reject payment if reservation is expired or completed
         if (
             reservation.status == StorageReservation.EXPIRED

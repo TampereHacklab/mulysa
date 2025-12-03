@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from storage.models.storage_reservation import StorageReservation
-from dateutil.relativedelta import relativedelta
 
 
 class StoragePayment(models.Model):
