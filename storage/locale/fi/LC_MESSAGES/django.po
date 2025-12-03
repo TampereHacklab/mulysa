@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 11:04+0000\n"
+"POT-Creation-Date: 2025-12-03 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,51 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: storage/models/storage_payment.py:16
+#: storage/models/storage_payment.py:15
 msgid "Related reservation"
 msgstr "Liittyvä varaus"
 
-#: storage/models/storage_payment.py:24
+#: storage/models/storage_payment.py:23
 #: storage/models/storage_reservation.py:68
 #: storage/templates/storage/reservation_table.html:16
 msgid "Reference number"
 msgstr "Viitenumero"
 
-#: storage/models/storage_payment.py:26
+#: storage/models/storage_payment.py:25
 msgid "Reference number used for this payment (same as reservation reference)"
 msgstr "Tämän maksun viitenumero (sama kuin varauksen viitenumero)"
 
-#: storage/models/storage_payment.py:33
+#: storage/models/storage_payment.py:32
 msgid "Amount (€)"
 msgstr "Summa (€)"
 
-#: storage/models/storage_payment.py:34
+#: storage/models/storage_payment.py:33
 msgid "Total amount of money paid for this reservation."
 msgstr "Tämän varauksen maksettu kokonaissumma"
 
-#: storage/models/storage_payment.py:38
+#: storage/models/storage_payment.py:37
 msgid "Paid months"
 msgstr "Maksetut kuukaudet"
 
-#: storage/models/storage_payment.py:39
+#: storage/models/storage_payment.py:38
 msgid "How many months of storage this payment covers."
 msgstr "Kuinka monta kuukautta tämä maksu kattaa"
 
-#: storage/models/storage_payment.py:44
+#: storage/models/storage_payment.py:43
 #: storage/models/storage_reservation.py:88
 #: storage/models/storage_service.py:37 storage/models/storage_unit.py:61
 msgid "Created at"
 msgstr "Luotu"
 
-#: storage/models/storage_payment.py:45
+#: storage/models/storage_payment.py:44
 msgid "Automatically set when the payment record is created"
 msgstr "Asetetaan automaattisesti kun maksutietue luodaan"
 
-#: storage/models/storage_payment.py:51
+#: storage/models/storage_payment.py:50
 msgid "Payment date"
 msgstr "Maksun päivämäärä"
 
-#: storage/models/storage_payment.py:52
+#: storage/models/storage_payment.py:51
 msgid "Date when payment was received"
 msgstr "Päivämäärä, jolloin maksu saapui"
 
