@@ -133,14 +133,13 @@ class TestUserViews(TestCase):
         self.assertEqual(len(userdetails.custominvoices), 0)
 
     def test_instructor_badge_visibility(self):
-        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
+        response = self.client.get(
+            reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
+        )
         self.assertNotContains(response, "Instructor")
-        self.assertNotContains(response, "Machine Access Control")
+
         self.user.is_instructor = True
         self.user.save()
-        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
-        self.assertContains(response, "Instructor")
-        self.assertContains(response, "Machine Access Control")
         response = self.client.get(
             reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
         )
@@ -485,3 +484,45 @@ class TestNFC(TestCase):
 
     def tearDown(self):
         get_user_model().objects.all().delete()
+
+
+class TestInstructorAccessControl(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="Alice",
+            last_name="Member",
+            email="alice@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="alice",
+            phone="+358111111",
+        )
+
+    def test_machine_access_control_requires_login(self):
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertRedirects(response, f"/www/login/?next={url}")
+
+    def test_machine_access_control_denied_for_basic_user(self):
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertRedirects(response, f"/www/login/?next={url}")
+
+    def test_machine_access_control_allowed_for_instructor(self):
+        self.user.is_instructor = True
+        self.user.save()
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Machine Access Control")
+
+    def test_machine_access_control_allowed_for_staff(self):
+        self.user.is_staff = True
+        self.user.save()
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Machine Access Control")
