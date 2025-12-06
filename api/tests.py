@@ -217,7 +217,7 @@ class TestAccess(APITestCase):
         # check that we notified the user by email of this failure
         self.assertIn("Hei", mail.outbox[0].body, "Hei")
         self.assertIn(
-            "Käyttäjätililläsi ei ole tällähetkellä pääsyä oveen.",
+            "Käyttäjätililläsi ei ole tällä hetkellä pääsyä laitteeseen",
             mail.outbox[0].body,
             "failure notification intro text",
         )
