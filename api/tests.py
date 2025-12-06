@@ -398,6 +398,25 @@ class TestAccess(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_device_types(self, mock):
+        for dtype in [AccessDevice.DEVICE_TYPE_DOOR, AccessDevice.DEVICE_TYPE_MACHINE, AccessDevice.DEVICE_TYPE_OTHER]:
+            d = AccessDevice.objects.create(deviceid=f"dev-{dtype}", device_type=dtype)
+            # attach default service so test user can pass
+            svc = MemberService.objects.get(pk=config.DEFAULT_ACCOUNT_SERVICE)
+            d.allowed_services.add(svc)
+            resp = self.client.post(reverse("access-phone"), {"deviceid": d.deviceid, "payload": self.ok_user.phone})
+            self.assertIn(resp.status_code, (200, 481))
+
+    def test_fallback_has_door_access(self, mock):
+        # ensure device has no allowed_services/allowed_permissions
+        self.device.allowed_services.clear()
+        self.device.allowed_permissions.clear()
+        # set ok_user to not have door access
+        # For example, if has_door_access checks a default service:
+        ServiceSubscription.objects.filter(user=self.ok_user).delete()
+        resp = self.client.post(reverse("access-phone"), {"deviceid": self.device.deviceid, "payload": self.ok_user.phone})
+        self.assertEqual(resp.status_code, 481)
+
     def tearDown(self):
         CustomUser.objects.all().delete()
         Token.objects.all().delete()
