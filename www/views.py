@@ -255,10 +255,6 @@ def search_member(request):
     if not user:
         return JsonResponse({"found": False})
 
-    # Contains a list of ID numbers representing all access permissions the user has.
-    # The front-end can then use this list to mark the corresponding checkboxes as checked.
-    allowed = list(user.access_permissions.values_list("id", flat=True))
-
     return JsonResponse({
         "found": True,
         "user_id": user.id,
