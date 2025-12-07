@@ -52,7 +52,11 @@
     </div>
 </div>
 
+<!-- CSRF token as meta tag -->
+<meta name="csrf-token" content="{{ csrf_token }}">
+
 <script>
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 let selectedUserId = null;
 
 // Disable all permission checkboxes
@@ -79,6 +83,7 @@ function searchMember() {
             }
 
             selectedUserId = data.user_id;
+            
             document.getElementById("search_result").innerHTML =
                 `<div class='alert alert-success'>
                     Member found: <b>${data.first_name} ${data.last_name}</b> – permissions (changes are saved automatically when you click a checkbox):
@@ -111,7 +116,7 @@ document.querySelectorAll(".perm-check").forEach(cb => {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "X-CSRFToken": "{{ csrf_token }}"
+                "X-CSRFToken": csrftoken
             },
             body: formData.toString()
         });
