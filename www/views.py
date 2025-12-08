@@ -221,7 +221,8 @@ def applications(request):
 @instructor_or_staff_member_required
 def instructor_tools(request):
     """
-    Renders the machine access control instructor/admin page
+    Renders the machine access control instructor/admin page.
+    Only includes devices where allowed permissions require education.
     """
     machines = AccessDevice.objects.filter(
         allowed_permissions__education_required=True).distinct()
@@ -232,7 +233,7 @@ def instructor_tools(request):
 @instructor_or_staff_member_required
 def search_member(request):
     """
-    Looks up a member by member number and last name.
+    Searches for a member by member number and last name.
     Returns JSON containing basic user info and their assigned permissions.
     """
     member_number = request.GET.get("member_number", "").strip()
@@ -255,12 +256,17 @@ def search_member(request):
     if not user:
         return JsonResponse({"found": False})
 
+    user_perms = list(user.access_permissions.values_list("id", flat=True))
+    instructor_perms = list(request.user.access_permissions.values_list("id", flat=True))
+
     return JsonResponse({
         "found": True,
         "user_id": user.id,
         "first_name": user.first_name,
         "last_name": user.last_name,
-        "allowed_permissions": list(user.access_permissions.values_list("id", flat=True)),
+        "allowed_permissions": user_perms,
+        "instructor_permissions": instructor_perms,
+        "is_admin": request.user.is_superuser or request.user.is_staff,
     })
 
 
@@ -268,8 +274,12 @@ def search_member(request):
 @instructor_or_staff_member_required
 def update_permission(request):
     """
-    Updates a user’s machine access permissions when a checkbox is toggled in the UI.
+    Updates a user’s machine access permissions when a checkbox is toggled
+    in the UI and if the instructor has authority.
     """
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid method"}, status=405)
+
     user_id = request.POST.get("user_id")
     device_id = request.POST.get("machine_id")
     checked = request.POST.get("checked") == "true"
@@ -277,8 +287,15 @@ def update_permission(request):
     user = get_object_or_404(CustomUser, id=user_id)
     device = get_object_or_404(AccessDevice, id=device_id)
 
-    # All permissions granted by this device
     perms = device.allowed_permissions.all()
+
+    # Check authorization: Instructors can only modify education_required devices
+    if not request.user.is_staff or not request.user.is_superuser:
+        instructor_perms = request.user.access_permissions.all()
+
+        if not all(p in instructor_perms for p in perms):
+            return JsonResponse({"success": False, "error": "Not allowed"},
+                                status=403)
 
     if checked:
         user.access_permissions.add(*perms)

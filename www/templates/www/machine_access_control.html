@@ -90,11 +90,18 @@ function searchMember() {
                 </div>`;
 
             const userPermissions = data.allowed_permissions;
+            const instructorPermissions = data.instructor_permissions;
 
             // Enable checkboxes and mark them according to user's permissions
             document.querySelectorAll(".perm-check").forEach(c => {
-                c.disabled = false;
-                const devicePerms = c.dataset.permissions.split(",").filter(x => x.trim().length > 0).map(Number);
+                const devicePerms = c.dataset.permissions
+                    .split(",")
+                    .filter(x => x.trim().length > 0)
+                    .map(Number);
+
+                const instructorCanEdit = isAdmin || devicePerms.every(p => instructorPermissions.includes(p));
+
+                c.disabled = !instructorCanEdit; // only editable if instructor has authority
                 c.checked = devicePerms.every(p => userPermissions.includes(p));
             });
         });
@@ -105,13 +112,11 @@ document.querySelectorAll(".perm-check").forEach(cb => {
     cb.addEventListener("change", function() {
         if (!selectedUserId) return;
 
-        // Create POST data.
         const formData = new URLSearchParams();
         formData.append("user_id", selectedUserId);
         formData.append("machine_id", this.dataset.machine);
         formData.append("checked", this.checked);
 
-        // Send a POST request to the server.
         fetch("/www/machine-access-control/update/", {
             method: "POST",
             headers: {
@@ -119,7 +124,13 @@ document.querySelectorAll(".perm-check").forEach(cb => {
                 "X-CSRFToken": csrftoken
             },
             body: formData.toString()
-        });
+        }).then(r => r.json())
+          .then(resp => {
+              if (!resp.success) {
+                  alert(resp.error || "Update failed");
+                  this.checked = !this.checked;
+              }
+          });
     });
 });
 </script>
