@@ -1,0 +1,393 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-03 11:25+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: storage/models/storage_payment.py:15
+msgid "Related reservation"
+msgstr "Liittyvä varaus"
+
+#: storage/models/storage_payment.py:23
+#: storage/models/storage_reservation.py:68
+#: storage/templates/storage/reservation_table.html:16
+msgid "Reference number"
+msgstr "Viitenumero"
+
+#: storage/models/storage_payment.py:25
+msgid "Reference number used for this payment (same as reservation reference)"
+msgstr "Tämän maksun viitenumero (sama kuin varauksen viitenumero)"
+
+#: storage/models/storage_payment.py:32
+msgid "Amount (€)"
+msgstr "Summa (€)"
+
+#: storage/models/storage_payment.py:33
+msgid "Total amount of money paid for this reservation."
+msgstr "Tämän varauksen maksettu kokonaissumma"
+
+#: storage/models/storage_payment.py:37
+msgid "Paid months"
+msgstr "Maksetut kuukaudet"
+
+#: storage/models/storage_payment.py:38
+msgid "How many months of storage this payment covers."
+msgstr "Kuinka monta kuukautta tämä maksu kattaa"
+
+#: storage/models/storage_payment.py:43
+#: storage/models/storage_reservation.py:88
+#: storage/models/storage_service.py:37 storage/models/storage_unit.py:61
+msgid "Created at"
+msgstr "Luotu"
+
+#: storage/models/storage_payment.py:44
+msgid "Automatically set when the payment record is created"
+msgstr "Asetetaan automaattisesti kun maksutietue luodaan"
+
+#: storage/models/storage_payment.py:50
+msgid "Payment date"
+msgstr "Maksun päivämäärä"
+
+#: storage/models/storage_payment.py:51
+msgid "Date when payment was received"
+msgstr "Päivämäärä, jolloin maksu saapui"
+
+#: storage/models/storage_reservation.py:21
+msgid "Start date"
+msgstr "Alkupäivämäärä"
+
+#: storage/models/storage_reservation.py:22
+msgid "The date when the reservation starts"
+msgstr "Varauksen alkupäivämäärä"
+
+#: storage/models/storage_reservation.py:26
+msgid "End date"
+msgstr "Päättymispäivä"
+
+#: storage/models/storage_reservation.py:27
+msgid "The date when the reservation ends"
+msgstr "Varauksen päättymispäivä"
+
+#: storage/models/storage_reservation.py:37
+msgid "Active"
+msgstr "Aktiivinen"
+
+#: storage/models/storage_reservation.py:38
+msgid "Pending"
+msgstr "Odottaa maksua"
+
+#: storage/models/storage_reservation.py:39
+msgid "Expired"
+msgstr "Rauennut"
+
+#: storage/models/storage_reservation.py:40
+msgid "Completed"
+msgstr "Päättynyt"
+
+#: storage/models/storage_reservation.py:46
+#: storage/templates/storage/reservation_table.html:14
+#: storage/templates/storage/reservation_table.html:65
+#: storage/templates/storage/reservation_table.html:204
+msgid "Status"
+msgstr "Tila"
+
+#: storage/models/storage_reservation.py:47
+msgid "Current state of the reservation"
+msgstr "Varauksen tila tällä hetkellä"
+
+#: storage/models/storage_reservation.py:52
+msgid "Total paid months"
+msgstr "Maksetut kuukaudet"
+
+#: storage/models/storage_reservation.py:53
+msgid "How many months have been paid for this reservation."
+msgstr "Kuinka monta kuukautta tätä varausta on maksettu"
+
+#: storage/models/storage_reservation.py:59
+msgid "Maximum duration (months)"
+msgstr "Maksimiaika (kuukausia)"
+
+#: storage/models/storage_reservation.py:60
+msgid "Maximum allowed duration for this reservation."
+msgstr "Tälle varaukselle sallittu maksimiaika"
+
+#: storage/models/storage_reservation.py:69
+msgid "Payment reference number for this reservation"
+msgstr "Maksun viitenumero tälle varaukselle"
+
+#: storage/models/storage_reservation.py:75
+msgid "Pending until"
+msgstr "Voimassa asti"
+
+#: storage/models/storage_reservation.py:76
+msgid "Date when the pending reservation expires if unpaid."
+msgstr ""
+"Päivämäärä, jonka jälkeen maksua odottava varaus raukeaa, jos sitä ei makseta"
+
+#: storage/models/storage_reservation.py:82
+msgid "Paid at"
+msgstr "Maksettu"
+
+#: storage/models/storage_reservation.py:83
+msgid "Timestamp when the reservation was paid."
+msgstr "Milloin varaus maksettiin"
+
+#: storage/models/storage_reservation.py:89
+msgid "Automatically set when reservation is created"
+msgstr "Asetetaan automaattisesti kun varaus luodaan"
+
+#: storage/models/storage_service.py:15
+msgid "Storage service name"
+msgstr "Varaston nimi"
+
+#: storage/models/storage_service.py:17
+msgid "A short name for this storage service (e.g. 'Hacklab shelf storage')."
+msgstr "Lyhyt nimi tälle varauspalvelulle"
+
+#: storage/models/storage_service.py:24 storage/models/storage_unit.py:45
+msgid "Description"
+msgstr "Kuvaus"
+
+#: storage/models/storage_service.py:25
+msgid "Optional longer description of the storage service."
+msgstr "Vapaaehtoinen pidempi kuvaus varastopalvelulle"
+
+#: storage/models/storage_service.py:29
+msgid "Pending payment period (days)"
+msgstr "Varauksen odotusaika (päivinä)"
+
+#: storage/models/storage_service.py:31
+msgid "Number of days a reservation stays pending before expiring if unpaid."
+msgstr "Varauksen odotusaika (päivinä) ennen vanhentumista maksamattomana."
+
+#: storage/models/storage_service.py:38
+msgid "Automatically set when this storage service is created"
+msgstr "Luodaan automaattisesti kun tämä varasto luodaan"
+
+#: storage/models/storage_service.py:43 storage/models/storage_unit.py:67
+msgid "Last modified"
+msgstr "Viimeksi muokattu"
+
+#: storage/models/storage_service.py:44
+msgid "Timestamp when this storage service was last modified"
+msgstr "Milloin tätä varastoa muokattiin viimeksi"
+
+#: storage/models/storage_unit.py:18
+#: storage/templates/storage/reservation_table.html:12
+#: storage/templates/storage/reservation_table.html:64
+msgid "Name"
+msgstr "Nimi"
+
+#: storage/models/storage_unit.py:19
+msgid "Name or identifier of the unit"
+msgstr "Varastopaikan nimi tai tunniste"
+
+#: storage/models/storage_unit.py:24 storage/models/storage_unit.py:115
+#: storage/templates/storage/reservation_table.html:101
+msgid "Disabled"
+msgstr "Pois käytöstä"
+
+#: storage/models/storage_unit.py:26
+msgid ""
+"If true, this unit cannot be reserved (e.g. blocked or permanently occupied)."
+msgstr ""
+"Tosi, jos tätä paikkaa ei voi varata (esim. pois käytöstä tai pysyvästi "
+"varattu)"
+
+#: storage/models/storage_unit.py:33
+#: storage/templates/storage/reservation_table.html:15
+#: storage/templates/storage/reservation_table.html:67
+#: storage/templates/storage/reservation_table.html:170
+msgid "Price per month"
+msgstr "Kuukausihinta"
+
+#: storage/models/storage_unit.py:34
+msgid "Monthly price for renting this storage unit"
+msgstr "Kuukausihinta tämän varastonpaikan vuokraamiselle"
+
+#: storage/models/storage_unit.py:38
+msgid "Maximum rental duration (months)"
+msgstr "Maksimivuokrausaika (kuukausia)"
+
+#: storage/models/storage_unit.py:39
+msgid "Maximum allowed rental duration for this storage unit"
+msgstr "Varastopaikalle sallittu maksimivuokrausaika"
+
+#: storage/models/storage_unit.py:47
+msgid ""
+"Optional description for this storage unit (e.g. dimensions, location "
+"details)."
+msgstr "Vapaaehtoinen varastopaikan kuvaus (esim. mitat, sijainti)"
+
+#: storage/models/storage_unit.py:53
+msgid "Allow self-subscription"
+msgstr "Salli omatoiminen varaus"
+
+#: storage/models/storage_unit.py:55
+msgid "If true, users can reserve this unit themselves without admin approval."
+msgstr "Tosi, jos käyttäjät voivat omatoimisesti varata tämän paikan."
+
+#: storage/models/storage_unit.py:62
+msgid "Automatically set when this storage unit is created"
+msgstr "Asetetaan automaattisesti kun tämä varastopaikka on luodaan"
+
+#: storage/models/storage_unit.py:68
+msgid "Timestamp when this unit was last modified"
+msgstr "Viimeksi muokattu"
+
+#: storage/models/storage_unit.py:123
+#: storage/templates/storage/reservation_table.html:104
+msgid "Reserved"
+msgstr "Varattu"
+
+#: storage/models/storage_unit.py:124
+msgid "Available"
+msgstr "Vapaa"
+
+#: storage/templates/storage/reservation_table.html:7
+msgid "Your reservations"
+msgstr "Omat varaukset"
+
+#: storage/templates/storage/reservation_table.html:13
+#: storage/templates/storage/reservation_table.html:66
+#: storage/templates/storage/reservation_table.html:202
+msgid "Reservation time"
+msgstr "Varausaika"
+
+#: storage/templates/storage/reservation_table.html:17
+#: storage/templates/storage/reservation_table.html:173
+msgid "Total price"
+msgstr "Kokonaishinta"
+
+#: storage/templates/storage/reservation_table.html:18
+#: storage/templates/storage/reservation_table.html:73
+msgid "Actions"
+msgstr "Toiminnot"
+
+#: storage/templates/storage/reservation_table.html:45
+#: storage/templates/storage/reservation_table.html:125
+msgid "Payment details"
+msgstr "Maksutiedot"
+
+#: storage/templates/storage/reservation_table.html:53
+msgid "No reservations"
+msgstr "Ei varauksia"
+
+#: storage/templates/storage/reservation_table.html:59
+msgid "Storage units"
+msgstr "Varastopaikat"
+
+#: storage/templates/storage/reservation_table.html:70
+msgid "Reserved by"
+msgstr "Varaaja"
+
+#: storage/templates/storage/reservation_table.html:97
+msgid "Show history"
+msgstr "Näytä historia"
+
+#: storage/templates/storage/reservation_table.html:113
+#: storage/templates/storage/reservation_table.html:185
+msgid "Reserve"
+msgstr "Varaa"
+
+#: storage/templates/storage/reservation_table.html:127
+msgid "Bank details"
+msgstr "Maksutiedot"
+
+#: storage/templates/storage/reservation_table.html:128
+msgid "Reference number:"
+msgstr "Viitenumero"
+
+#: storage/templates/storage/reservation_table.html:129
+msgid "IBAN:"
+msgstr "Tilinumero"
+
+#: storage/templates/storage/reservation_table.html:130
+msgid "Payment receiver:"
+msgstr "Maksun saaja"
+
+#: storage/templates/storage/reservation_table.html:131
+msgid "BIC:"
+msgstr "BIC"
+
+#: storage/templates/storage/reservation_table.html:135
+msgid "Reservation details"
+msgstr "Varauksen tiedot"
+
+#: storage/templates/storage/reservation_table.html:136
+msgid "Period:"
+msgstr "Jakso"
+
+#: storage/templates/storage/reservation_table.html:137
+msgid "Price per month:"
+msgstr "Kuukausihinta"
+
+#: storage/templates/storage/reservation_table.html:138
+msgid "Total paid months:"
+msgstr "Maksettujen kuukausien määrä"
+
+#: storage/templates/storage/reservation_table.html:139
+msgid "Total paid amount:"
+msgstr "Maksettu kokonaissumma"
+
+#: storage/templates/storage/reservation_table.html:143
+msgid "Extending your reservation"
+msgstr "Varauksen jatkaminen"
+
+#: storage/templates/storage/reservation_table.html:145
+msgid ""
+"\n"
+"      You can extend this reservation for <strong><span id=\"modalMonths\"></"
+"span></strong> more months.\n"
+"      To extend, simply pay the monthly price using the same reference "
+"number.\n"
+"    "
+msgstr ""
+"\n"
+"      Voit jatkaa tämän varauksen voimassaoloa <strong><span "
+"id=\"modalMonths\"></span></strong> kuukaudella.\n"
+"      Jatkaaksesi, maksa kuukausihinta käyttäen samaa viitenumeroa.\n"
+"    "
+
+#: storage/templates/storage/reservation_table.html:151
+msgid "Close"
+msgstr "Sulje"
+
+#: storage/templates/storage/reservation_table.html:167
+msgid "Reservation length (months)"
+msgstr "Varauksen pituus (kuukausia)"
+
+#: storage/templates/storage/reservation_table.html:182
+msgid "You have"
+msgstr "Sinulla on"
+
+#: storage/templates/storage/reservation_table.html:182
+msgid "days to pay after reservation or your reservation will be cancelled"
+msgstr "päivää aikaa maksaa tai varauksesi perutaan"
+
+#: storage/templates/storage/reservation_table.html:190
+#: storage/templates/storage/reservation_table.html:212
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: storage/templates/storage/reservation_table.html:197
+msgid "Reservation history"
+msgstr "Varaushistoria"
+
+#: storage/templates/storage/reservation_table.html:203
+msgid "User"
+msgstr "Käyttäjä"

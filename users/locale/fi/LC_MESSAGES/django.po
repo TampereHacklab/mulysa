@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
+"POT-Creation-Date: 2025-11-29 21:27+0200\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -460,27 +460,31 @@ msgstr ""
 "Tilastot jäsenpalveluille. Jokainen palveli on oma avaimensa jolla määrät "
 "aktiivisille, vanhentuneille ja keskeytetyille tiloille"
 
-#: users/signals.py:150
+#: users/signals.py:154
 msgid "Thank you for applying membership and next steps"
 msgstr "Kiitos hakemuksestasi, ja seuraavat toimenpiteet"
 
-#: users/signals.py:173
+#: users/signals.py:177
 msgid "New membership application received"
 msgstr "Uusi jäsenhakemus vastaanotettu"
 
-#: users/signals.py:199
+#: users/signals.py:203
 msgid "Your application has been approved"
 msgstr "Hakemuksesi on hyväksytty"
 
-#: users/signals.py:217
+#: users/signals.py:221
 msgid "Your application has been rejected"
 msgstr "Hakemuksesi on hylätty"
 
-#: users/signals.py:291
+#: users/signals.py:295
 msgid "Your account has been deactivated and marked for deletion"
 msgstr "Käyttäjätilisi on poistettu käytöstä ja merkitty poistettavaksi"
 
-#: users/signals.py:320
+#: users/signals.py:322
+msgid "Your storage reservation confirmation"
+msgstr "Varastopaikan varausvahvistus"
+
+#: users/signals.py:352
 msgid "Door access denied"
 msgstr "Ovipääsy kielletty"
 
@@ -581,6 +585,55 @@ msgstr "Ei palveluja"
 #: users/templates/mail/new_application.txt:4
 msgid "New membership application"
 msgstr "Uusi jäsenhakemus vastaanotettu"
+
+#: users/templates/mail/new_storage_reservation.txt:5
+#, python-format
+msgid ""
+"\n"
+"Hello %(name)s,\n"
+"\n"
+"Your storage reservation has been created successfully!\n"
+"\n"
+"Storage unit: %(unit)s\n"
+"Reservation period: %(start)s – %(end)s\n"
+"Reference number: %(reference)s\n"
+"Due date: %(due_date)s\n"
+"\n"
+"Please complete the payment before the due date, otherwise your reservation "
+"will expire.\n"
+msgstr ""
+"\n"
+"Hei %(name)s,\n"
+"\n"
+"Varauksesi varastopaikkaan on luotu onnistuneesti!\n"
+"\n"
+"Varastopaikka: %(unit)s\n"
+"Varausaika: %(start)s – %(end)s\n"
+"Viitenumero: %(reference)s\n"
+"Eräpäivä: %(due_date)s\n"
+"\n"
+"Olethan hyvä ja suoritat maksun ennen eräpäivää. Muussa tapauksessa varaus "
+"raukeaa.\n"
+
+#: users/templates/mail/new_storage_reservation.txt:18
+#, fuzzy
+#| msgid "Payment overdue"
+msgid "Payment details:"
+msgstr "Maksutiedot:"
+
+#: users/templates/mail/new_storage_reservation.txt:19
+msgid "Price per month"
+msgstr "Kuukausihinta"
+
+#: users/templates/mail/new_storage_reservation.txt:20
+msgid "Maximum rental duration"
+msgstr "Vuokrauksen enimmäiskesto"
+
+#: users/templates/mail/new_storage_reservation.txt:20
+#, fuzzy
+#| msgid "month"
+msgid "months"
+msgstr "kuukautta"
 
 #: users/templates/mail/service_subscription_about_to_expire.txt:4
 #, python-format

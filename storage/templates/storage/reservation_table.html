@@ -1,0 +1,345 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div class="container">
+
+    <h1>{% trans 'Your reservations' %}</h1>
+
+    <table class="table">
+    <thead>
+        <tr>
+            <th>{% trans 'Name' %}</th>
+            <th>{% trans 'Reservation time' %}</th>
+            <th>{% trans 'Status' %}</th>
+            <th>{% trans 'Price per month' %}</th>
+            <th>{% trans 'Reference number' %}</th>
+            <th>{% trans 'Total price' %}</th>
+            <th>{% trans 'Actions' %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if reservations %}
+        {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.unit.name }}</td>
+            <td>{{ reservation.start_date }} -  {{ reservation.end_date }}</td>
+            <td>{{ reservation.status }}</td>
+            <td>{{ reservation.unit.price_per_month }}</td>
+            <td>{{ reservation.reference_number }}</td>
+            <td>{{ reservation.total_price }}</td>
+            <td>
+                {% if reservation.status == "PENDING" or reservation.months_left > 0 %}
+                <button class="btn btn-primary" onClick="openPaymentDetails(
+                    '{{ reservation.reference_number }}',
+                    '{{ reservation.start_date }}',
+                    '{{ reservation.end_date }}',
+                    '{{ reservation.unit.price_per_month }}',
+                    '{{ reservation.total_paid_months }}',
+                    '{{ reservation.total_price }}',
+                    '{{ bank_iban }}',
+                    '{{ bank_name }}',
+                    '{{ bank_bic}}',
+                    '{{ reservation.months_left }}'
+                )" > 
+                    {% trans 'Payment details' %}
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="7">{% trans 'No reservations' %}</td>
+        </tr>
+        {% endif %}
+    </tbody>
+    </table>
+
+    <h1>{% trans 'Storage units' %}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans 'Name' %}</th>
+                <th>{% trans 'Status' %}</th>
+                <th>{% trans 'Reservation time' %}</th>
+                <th>{% trans 'Price per month' %}</th>
+
+                {% if user.is_staff %}
+                <th>{% trans 'Reserved by' %}</th>
+                {% endif %}
+
+                <th>{% trans 'Actions' %}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for unit in units %}
+            <tr>
+                <td>{{ unit.name }}</td>
+                <td>{{ unit.status }}</td>
+                <td>
+                    {% if unit.status == "Reserved" %} 
+                    {{ unit.current_reservation.start_date}} - {{unit.current_reservation.end_date}}
+                    {% endif %}
+                </td>
+                <td>{{ unit.price_per_month }} €</td>
+
+                {% if user.is_staff %}
+                <td>{{ unit.get_current_renter_admin }}</td>
+                {% endif %}
+
+                <td>
+                    {% if user.is_staff %}
+                    <button class="btn btn-secondary" onclick="openUnitHistoryModal(
+                        '{{ unit.id }}')">
+                        {% trans 'Show history' %}</button>
+                    {% endif %}
+                    
+                    {% if unit.is_disabled %}
+                    <span class="text">{% trans 'Disabled' %}</span>
+
+                    {% elif  unit.status == "Reserved" %}
+                    <span class="text">{% trans 'Reserved' %}</span>
+
+                    {% else %}
+                    <button class="btn btn-primary" onclick="openReservationModal(
+                        '{{ unit.id }}',
+                        '{{ unit.name }}',
+                        '{{ unit.price_per_month }}',
+                        '{{ unit.service.pending_payment_days }}',
+                        '{{ unit.max_rental_months }}')"> 
+                        {% trans 'Reserve' %} </button>    
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+<div id="paymentModal" class="modal hidden" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+  <div style="background:white; width:400px; margin:80px auto; padding:20px; border-radius:8px;">
+    
+    <h3>{% trans "Payment details" %}</h3>
+
+    <h4 style="margin-top:20px;">{% trans "Bank details" %}</h4>
+    <p><strong>{% trans "Reference number:" %}</strong> <span id="modalReference"></span></p>
+    <p><strong>{% trans "IBAN:" %}</strong> <span id="modalIban"></span></p>
+    <p><strong>{% trans "Payment receiver:" %}</strong> <span id="modalBankName"></span></p>
+    <p><strong>{% trans "BIC:" %}</strong> <span id="modalBIC"></span></p>
+
+    <hr style="margin:20px 0;">
+
+    <h4>{% trans "Reservation details" %}</h4>
+    <p><strong>{% trans "Period:" %}</strong> <span id="modalStart"></span> – <span id="modalEnd"></span></p>
+    <p><strong>{% trans "Price per month:" %}</strong> <span id="modalPrice"></span> €</p>
+    <p><strong>{% trans "Total paid months:" %}</strong> <span id="modalMonthsPaid"></span></p>
+    <p><strong>{% trans "Total paid amount:" %}</strong> <span id="modalTotal"></span> €</p>
+
+    <hr style="margin:20px 0;">
+
+    <h4>{% trans "Extending your reservation" %}</h4>
+
+    {% blocktrans %}
+      You can extend this reservation for <strong><span id="modalMonths"></span></strong> more months.
+      To extend, simply pay the monthly price using the same reference number.
+    {% endblocktrans %}
+
+    <button class="btn btn-secondary w-100 mt-3" onclick="closePaymentModal()">
+      {% trans "Close" %}
+    </button>
+
+  </div>
+</div>
+
+
+<div id="reservationModal" class="modal hidden" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+    <div style="background:white; width:400px; margin:80px auto; padding:20px; border-radius:8px;">
+
+        <h3 id="modalTitle"></h3>
+
+        <form method="POST" id="reservationForm">
+            {% csrf_token %}
+            <input type="hidden" name="unit_id" id="unitIdInput">
+
+            <label>{% trans 'Reservation length (months)' %}</label>
+            <select name="months" id="months" class="form-control"></select>
+
+            <label class="mt-2">{% trans "Price per month" %}</label>
+            <input type="text" id="unitPrice" class="form-control" disabled>
+
+            <label class="mt-2">{% trans "Total price" %}</label>
+            <input type="text" id="totalPrice" class="form-control" disabled>
+            <input type="hidden" name="total_price" id="totalPriceHidden">
+
+            <p id="startDate" class="mt-2"></p>
+            <p id="endDate"></p>
+
+            <hr>
+
+            <p>{% trans 'You have' %} <span id="pendingDays"></span> {% trans 'days to pay after reservation or your reservation will be cancelled' %}</p>
+
+            <button type="submit" class="btn btn-primary mt-3 w-100">
+                {% trans "Reserve" %}
+            </button>
+        </form>
+
+        <button class="btn btn-secondary mt-2 w-100" onclick="closeReservationModal()">
+            {% trans "Cancel" %}
+        </button>
+    </div>
+</div>
+
+<div id="historyModal" class="modal hidden" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
+    <div style="background:white; width:500px; margin:80px auto; padding:20px; border-radius:8px;">
+        <h3>{% trans 'Reservation history' %}</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans 'Reservation time' %}</th>
+                    <th>{% trans 'User' %}</th>
+                    <th>{% trans 'Status' %}</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyTableBody"></tbody>
+        </table>
+
+        <button class="btn btn-secondary mt-2 w-100" onclick="closeUnitHistoryModal()">
+            {% trans "Cancel" %}
+        </button>
+    </div>
+</div>
+
+<script>
+function openReservationModal(unitId, unitName, unitPrice, pendingDays, maxMonths) {
+    window.reservationId = null;
+
+    unitPrice = parseFloat(String(unitPrice).replace(",", "."));
+
+    document.getElementById("modalTitle").innerText = "Reserve " + unitName;
+    document.getElementById("unitPrice").value = unitPrice;
+    document.getElementById("unitIdInput").value = unitId;
+
+    document.getElementById("pendingDays").innerText = pendingDays;
+
+    monthSelector(maxMonths);
+    updatePriceAndDates();
+
+    document.getElementById("reservationModal").style.display = "block";
+}
+
+function closeReservationModal() {
+    document.getElementById("reservationModal").style.display = "none";
+}
+
+function updatePriceAndDates() {
+    const months = Number(document.getElementById("months").value);
+    const unitPrice = parseFloat(document.getElementById("unitPrice").value);
+
+    document.getElementById("totalPrice").value = (months * unitPrice);
+
+    let start, end;
+
+    if (window.reservationMode === "extend" && window.currentEndDate) {
+        start = new Date(window.currentEndDate);
+        end = new Date(window.currentEndDate);
+    } else {
+        start = new Date();
+        end = new Date();
+    }
+
+    end.setMonth(end.getMonth() + months);
+
+    document.getElementById("startDate").innerText = "Reservation starts " + start.toISOString().split("T")[0];
+    document.getElementById("endDate").innerText = "Reservation ends " + end.toISOString().split("T")[0];
+}
+
+function monthSelector(maxMonths) {
+    const monthSelector = document.getElementById("months");
+    monthSelector.innerHTML = "";
+    for (let i = 1; i <= maxMonths; i++) {
+        monthSelector.innerHTML += `<option value="${i}">${i} kk</option>`;
+    }
+    monthSelector.onchange = () => updatePriceAndDates();
+}
+
+async function openUnitHistoryModal(unitId) {
+    const resp = await fetch(`/storage/api/admin/storage/${unitId}/reservation_history/`);
+    const history = await resp.json();
+    fillHistoryModal(history);
+
+    document.getElementById("historyModal").style.display = "block";
+
+}
+
+function closeUnitHistoryModal() {
+    document.getElementById("historyModal").style.display = "none";
+}
+
+function fillHistoryModal(history) {
+    const tbody = document.getElementById("historyTableBody");
+    tbody.innerHTML = "";
+
+    history.forEach(item => {
+        tbody.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${item.start_date} - ${item.end_date ?? "-"}</td>
+                <td>${item.user_name} (${item.user_email})</td>
+                <td>${item.status}</td>
+            </tr>`);
+    });
+}
+
+function openPaymentDetails( reference, start, end, price, monthsPaid, total, iban, name, bic, months) {
+    document.getElementById("modalReference").innerText = reference;
+    document.getElementById("modalStart").innerText = start;
+    document.getElementById("modalEnd").innerText = end;
+    document.getElementById("modalPrice").innerText = price;
+    document.getElementById("modalMonthsPaid").innerText = monthsPaid;
+    document.getElementById("modalTotal").innerText = total;
+    document.getElementById("modalIban").innerText = iban;
+    document.getElementById("modalBankName").innerText = name;
+    document.getElementById("modalBIC").innerText = bic;
+    document.getElementById("modalMonths").innerText = months;
+
+    document.getElementById("paymentModal").style.display = "block";
+}
+
+function closePaymentModal() {
+    document.getElementById("paymentModal").style.display = "none";
+}
+
+document.getElementById("reservationForm").onsubmit = async function(e) {
+    e.preventDefault();
+
+    const months = document.getElementById("months").value;
+    const unitPrice = Number(document.getElementById("unitPrice").value);
+
+    const unitId = document.getElementById("unitIdInput").value;
+
+    const resp = await fetch("/storage/api/reservations/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: JSON.stringify({
+            unit: unitId,
+            duration_months: months
+        }),
+    });
+
+    if (resp.ok) {
+        return window.location.reload();
+    } else {
+        const err = await resp.json();
+        return alert("Failed to create reservation:\n" + JSON.stringify(err));
+    }
+};
+</script>
+
+{% endblock %}
