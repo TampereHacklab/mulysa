@@ -10,4 +10,5 @@ def external_urls(request):
         "SITE_URL": site.domain,
         "GITHUB_URL": config.GITHUB_URL,
         "PRIVACY_POLICY_URL": config.PRIVACY_POLICY_URL,
+        "NFC_WIKI_URL": config.NFC_WIKI_URL,
     }

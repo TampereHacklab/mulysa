@@ -98,7 +98,11 @@
   </table>
 
   <hr />
+
   <h1>{% trans 'NFC Card access' %}</h1>
+
+  <a target="_blank" rel="noopener noreferrer" href="{{ NFC_WIKI_URL }}">{% trans 'More information about the NFC process here' %}</a><br/>
+
   <table class="table table-striped table-responsive-sm">
     <thead class="thead-light">
       <tr>
@@ -147,6 +151,7 @@
     </tr>
   </table>
 
+  <hr />
   {% if show_send_email %}
   <h1>{% trans 'Send e-mail to user' %}</h1>
   <form action="{% url 'usersettings_send_mail' userdetails.id %}" method="post">
