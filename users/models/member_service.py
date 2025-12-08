@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
+from users.models.base_service import BaseService
+
 
 """
 Class that represents a service for members. For example:
@@ -10,18 +12,7 @@ Class that represents a service for members. For example:
 """
 
 
-class MemberService(models.Model):
-    name = models.CharField(
-        verbose_name=_("Service name"),
-        help_text=_("Name of the service"),
-        max_length=512,
-    )
-
-    cost = models.IntegerField(
-        verbose_name="Normal cost of the service",
-        validators=[MinValueValidator(0)],
-    )
-
+class MemberService(BaseService):
     """
     Defines another service that this this service pays for. If this service is paid, the referenced
     service is also marked as paid for days_per_payment after the payment date.
@@ -29,6 +20,7 @@ class MemberService(models.Model):
     Can be used to make service chains so that if a more expensive
     service is paid, the user can automatically receive cheaper ones.
     """
+
     pays_also_service = models.ForeignKey(
         "self", on_delete=models.SET_NULL, blank=True, null=True
     )
@@ -79,16 +71,6 @@ class MemberService(models.Model):
         null=True,
         verbose_name="How many days service can be in payment pending state until it is moved to suspended state",
         validators=[MinValueValidator(0)],
-    )
-
-    # This can be used to make "private" services that need to be added by admin to user.
-    hidden = models.BooleanField(
-        blank=False,
-        null=False,
-        default=False,
-        help_text=_(
-            "True, if this service should not be shown for user member application form etc."
-        ),
     )
 
     access_phone_number = models.CharField(
