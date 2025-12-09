@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+import json
 
 from api.models import AccessDevice, DeviceAccessLogEntry, AccessPermission
 from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
@@ -629,6 +630,112 @@ class TestMachineAccessList(TestCase):
     def test_no_machine_access_message(self):
         response = self.client.get(reverse("userdetails", args=(self.user.id,)))
         self.assertContains(response, "You currently do not have access to any machines.")
+
+
+class TestMachineAccessControlView(TestCase):
+    def setUp(self):
+        self.member = get_user_model().objects.create_customuser(
+            first_name="Bob",
+            last_name="Member",
+            email="bob@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="bob",
+            phone="+358777777",
+        )
+
+        self.instructor = get_user_model().objects.create_customuser(
+            first_name="Ina",
+            last_name="Structor",
+            email="ina@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="ina",
+            phone="+358222222",
+        )
+        self.instructor.is_instructor = True
+        self.instructor.save()
+
+        self.admin = get_user_model().objects.create_customuser(
+            first_name="Adam",
+            last_name="Admin",
+            email="adam@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="adam",
+            phone="+358333333",
+        )
+        self.admin.is_staff = True
+        self.admin.save()
+
+        self.perm1 = AccessPermission.objects.create(name="Training A", code="train-a", education_required=True)
+        self.perm2 = AccessPermission.objects.create(name="Training B", code="train-b", education_required=True)
+        self.member.access_permissions.add(self.perm1)
+
+        self.machine = AccessDevice.objects.create(
+            name="CNC Router",
+            deviceid="cnc-1",
+            device_type=AccessDevice.DEVICE_TYPE_MACHINE,
+        )
+        self.machine.allowed_permissions.add(self.perm1, self.perm2)
+
+    def test_search_member_for_instructor(self):
+        self.instructor.access_permissions.add(self.perm1)
+        self.client.force_login(self.instructor)
+        url = reverse("search_member")
+        response = self.client.get(url, {"member_number": str(self.member.id), "last_name": self.member.last_name})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertTrue(data["found"])
+        self.assertEqual(data["user_id"], self.member.id)
+        self.assertEqual(sorted(data["allowed_permissions"]), sorted(list(self.member.access_permissions.values_list("id", flat=True))))
+        self.assertEqual(sorted(data["instructor_permissions"]), sorted(list(self.instructor.access_permissions.values_list("id", flat=True))))
+        self.assertFalse(data["is_admin"])
+
+    def test_search_member_for_admin(self):
+        self.client.force_login(self.admin)
+        url = reverse("search_member")
+        response = self.client.get(url, {"member_number": str(self.member.id), "last_name": self.member.last_name})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertTrue(data["is_admin"])
+        all_perm_ids = list(AccessPermission.objects.values_list("id", flat=True))
+        self.assertEqual(sorted(data["instructor_permissions"]), sorted(all_perm_ids))
+
+    def test_update_permission_instructor_without_required_perms(self):
+        self.instructor.access_permissions.add(self.perm1)
+        self.client.force_login(self.instructor)
+        url = reverse("update_permission")
+        response = self.client.post(url, {"user_id": self.member.id, "machine_id": self.machine.id, "checked": "true"})
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(sorted(list(self.member.access_permissions.values_list("id", flat=True))), sorted([self.perm1.id]))
+
+    def test_update_permission_instructor_with_required_perms(self):
+        self.instructor.access_permissions.add(self.perm1, self.perm2)
+        self.client.force_login(self.instructor)
+        url = reverse("update_permission")
+        response = self.client.post(url, {"user_id": self.member.id, "machine_id": self.machine.id, "checked": "true"})
+        self.assertEqual(response.status_code, 200)
+        member_perm_ids = set(self.member.access_permissions.values_list("id", flat=True))
+        self.assertTrue({self.perm1.id, self.perm2.id}.issubset(member_perm_ids))
+        response = self.client.post(url, {"user_id": self.member.id, "machine_id": self.machine.id, "checked": "false"})
+        self.assertEqual(response.status_code, 200)
+        member_perm_ids = set(self.member.access_permissions.values_list("id", flat=True))
+        self.assertFalse({self.perm1.id, self.perm2.id}.issubset(member_perm_ids))
+
+    def test_update_permission_admin(self):
+        self.client.force_login(self.admin)
+        url = reverse("update_permission")
+        response = self.client.post(url, {"user_id": self.member.id, "machine_id": self.machine.id, "checked": "true"})
+        self.assertEqual(response.status_code, 200)
+        member_perm_ids = set(self.member.access_permissions.values_list("id", flat=True))
+        self.assertTrue({self.perm1.id, self.perm2.id}.issubset(member_perm_ids))
+        response = self.client.post(url, {"user_id": self.member.id, "machine_id": self.machine.id, "checked": "false"})
+        self.assertEqual(response.status_code, 200)
+        member_perm_ids = set(self.member.access_permissions.values_list("id", flat=True))
+        self.assertFalse({self.perm1.id, self.perm2.id}.issubset(member_perm_ids))
+
+
 class TestInstructorAccessControl(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.create_customuser(
