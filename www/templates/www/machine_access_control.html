@@ -39,6 +39,7 @@
                 <tr>
                     <td>{{ machine.name }}</td>
                     <td>
+                        <!-- Checkbox for each machine; disabled by default -->
                         <input type="checkbox"
                             class="perm-check"
                             data-machine="{{ machine.id }}"
@@ -58,8 +59,9 @@
 <script>
 const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 let selectedUserId = null;
+let isAdmin = false;
 
-// Disable all permission checkboxes
+// Disable all checkboxes (used on error or when no user is found)
 function disableAll() {
     document.querySelectorAll(".perm-check").forEach(c => {
         c.checked = false;
@@ -67,15 +69,20 @@ function disableAll() {
     });
 }
 
-// Search member by number and last name
+// Search for a member
 function searchMember() {
     const num = document.getElementById("member_number").value;
     const last = document.getElementById("last_name").value;
 
     fetch(`/www/machine-access-control/search/?member_number=${num}&last_name=${last}`)
-        .then(r => r.json())
+        .then(r => {
+            // Check HTTP response status
+            if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+            return r.json();
+        })
         .then(data => {
             if (!data.found) {
+                // Member not found
                 document.getElementById("search_result").innerHTML =
                     "<div class='alert alert-danger'>Member not found.</div>";
                 disableAll();
@@ -83,7 +90,9 @@ function searchMember() {
             }
 
             selectedUserId = data.user_id;
-            
+            isAdmin = data.is_admin; // Whether logged-in user is admin
+
+            // Show success message with member name
             document.getElementById("search_result").innerHTML =
                 `<div class='alert alert-success'>
                     Member found: <b>${data.first_name} ${data.last_name}</b> – permissions (changes are saved automatically when you click a checkbox):
@@ -104,10 +113,15 @@ function searchMember() {
                 c.disabled = !instructorCanEdit; // only editable if instructor has authority
                 c.checked = devicePerms.every(p => userPermissions.includes(p));
             });
+        })
+        .catch(err => { // Show network/server errors
+            disableAll();
+            document.getElementById("search_result").innerHTML =
+                `<div class='alert alert-danger'>Error fetching member data: ${err.message}</div>`;
         });
 }
 
-// Send updates when checkbox changes
+// Update permissions when checkbox changes
 document.querySelectorAll(".perm-check").forEach(cb => {
     cb.addEventListener("change", function() {
         if (!selectedUserId) return;
@@ -124,13 +138,21 @@ document.querySelectorAll(".perm-check").forEach(cb => {
                 "X-CSRFToken": csrftoken
             },
             body: formData.toString()
-        }).then(r => r.json())
-          .then(resp => {
-              if (!resp.success) {
-                  alert(resp.error || "Update failed");
-                  this.checked = !this.checked;
-              }
-          });
+        })
+        .then(r => {
+            if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+            return r.json();
+        })
+        .then(resp => {
+            if (!resp.success) {
+                alert(resp.error || "Update failed");
+                this.checked = !this.checked;
+            }
+        })
+        .catch(err => {
+            alert("Network or server error: " + err.message);
+            this.checked = !this.checked;
+        });
     });
 });
 </script>

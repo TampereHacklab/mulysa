@@ -16,7 +16,7 @@ from django.utils.safestring import mark_safe
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from api.models import AccessDevice, DeviceAccessLogEntry
+from api.models import AccessDevice, AccessPermission, DeviceAccessLogEntry
 from drfx import config
 from utils.matrixoperations import MatrixOperations
 from users.models import (
@@ -234,7 +234,8 @@ def instructor_tools(request):
 def search_member(request):
     """
     Searches for a member by member number and last name.
-    Returns JSON containing basic user info and their assigned permissions.
+    Returns JSON containing basic user info, their permissions,
+    and the instructor's authority info (is_admin and accessible permissions).
     """
     member_number = request.GET.get("member_number", "").strip()
     last_name = request.GET.get("last_name", "").strip().lower()
@@ -257,7 +258,13 @@ def search_member(request):
         return JsonResponse({"found": False})
 
     user_perms = list(user.access_permissions.values_list("id", flat=True))
-    instructor_perms = list(request.user.access_permissions.values_list("id", flat=True))
+    is_admin = request.user.is_superuser or request.user.is_staff
+
+    # Permissions that the instructor can modify. Admin can modify all permissions.
+    if is_admin:
+        instructor_perms = list(AccessPermission.objects.values_list("id", flat=True))
+    else:
+        instructor_perms = list(request.user.access_permissions.values_list("id", flat=True))
 
     return JsonResponse({
         "found": True,
@@ -266,7 +273,7 @@ def search_member(request):
         "last_name": user.last_name,
         "allowed_permissions": user_perms,
         "instructor_permissions": instructor_perms,
-        "is_admin": request.user.is_superuser or request.user.is_staff,
+        "is_admin": is_admin,
     })
 
 
@@ -289,13 +296,14 @@ def update_permission(request):
 
     perms = device.allowed_permissions.all()
 
-    # Check authorization: Instructors can only modify education_required devices
-    if not request.user.is_staff or not request.user.is_superuser:
-        instructor_perms = request.user.access_permissions.all()
+    is_admin = request.user.is_superuser or request.user.is_staff
 
-        if not all(p in instructor_perms for p in perms):
-            return JsonResponse({"success": False, "error": "Not allowed"},
-                                status=403)
+    if not is_admin:
+        instructor_perm_ids = set(request.user.access_permissions.values_list("id", flat=True))
+        required_perm_ids = set(perms.values_list("id", flat=True))
+
+        if not required_perm_ids.issubset(instructor_perm_ids):
+            return JsonResponse({"success": False, "error": "Not allowed"}, status=403)
 
     if checked:
         user.access_permissions.add(*perms)
