@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from api.models import AccessDevice, DeviceAccessLogEntry
+from api.models import AccessDevice, DeviceAccessLogEntry, AccessPermission
 from users.models import BankTransaction, CustomUser, MemberService, ServiceSubscription
 
 
@@ -133,14 +133,13 @@ class TestUserViews(TestCase):
         self.assertEqual(len(userdetails.custominvoices), 0)
 
     def test_instructor_badge_visibility(self):
-        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
+        response = self.client.get(
+            reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
+        )
         self.assertNotContains(response, "Instructor")
-        self.assertNotContains(response, "Machine Access Control")
+
         self.user.is_instructor = True
         self.user.save()
-        response = self.client.get(reverse("index"), HTTP_ACCEPT_LANGUAGE="en")
-        self.assertContains(response, "Instructor")
-        self.assertContains(response, "Machine Access Control")
         response = self.client.get(
             reverse("userdetails", args=(self.user.id,)), HTTP_ACCEPT_LANGUAGE="en"
         )
@@ -485,3 +484,188 @@ class TestNFC(TestCase):
 
     def tearDown(self):
         get_user_model().objects.all().delete()
+
+
+class TestAccessLogs(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.client.force_login(self.user)
+        # create a device
+        self.device = AccessDevice.objects.create(name="Main Door")
+
+    def test_access_logs_requires_login(self):
+        self.client.logout()
+        url = reverse("useraccesslogs", args=(self.user.id,))
+        response = self.client.get(url)
+        self.assertRedirects(response, f"/www/login/?next={url}")
+
+    def test_access_logs_visible_to_self_with_pagination(self):
+        # create 25 log entries associated with user's phone
+        for i in range(25):
+            DeviceAccessLogEntry.objects.create(
+                device=self.device,
+                method="phone",
+                payload=self.user.phone,
+                granted=(i % 2 == 0),
+            )
+
+        url = reverse("useraccesslogs", args=(self.user.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        # page 1 should have pagination and show Next
+        self.assertContains(response, "Next")
+        # go to page 2
+        response = self.client.get(url + "?page=2")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Previous")
+
+    def test_access_logs_visible_to_staff_for_other_user(self):
+        other = get_user_model().objects.create_customuser(
+            first_name="Other",
+            last_name="User",
+            email="other@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="otheruser",
+            phone="+358999999",
+        )
+        # create a log entry for other user
+        DeviceAccessLogEntry.objects.create(
+            device=self.device,
+            method="phone",
+            payload=other.phone,
+            granted=True,
+        )
+        # make current user staff
+        self.user.is_staff = True
+        self.user.save()
+        url = reverse("useraccesslogs", args=(other.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_access_logs_not_visible_to_instructor_for_others(self):
+        instructor = get_user_model().objects.create_customuser(
+            first_name="Inst",
+            last_name="Ructor",
+            email="inst@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="instructor",
+            phone="+358555555",
+        )
+        instructor.is_instructor = True
+        instructor.save()
+        # create a log entry for self to ensure page renders for own logs
+        DeviceAccessLogEntry.objects.create(
+            device=self.device,
+            method="phone",
+            payload=instructor.phone,
+            granted=True,
+        )
+
+        self.client.force_login(instructor)
+        # instructor can see own logs
+        own_url = reverse("useraccesslogs", args=(instructor.id,))
+        response = self.client.get(own_url)
+        self.assertEqual(response.status_code, 200)
+
+        # instructor cannot see other user's logs
+        other_url = reverse("useraccesslogs", args=(self.user.id,))
+        response = self.client.get(other_url)
+        self.assertRedirects(response, f"/www/login/?next={other_url}")
+
+
+class TestMachineAccessList(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="FirstName",
+            last_name="LastName",
+            email="user1@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="user1",
+            phone="+358123123",
+        )
+        self.client.force_login(self.user)
+
+    def test_machine_access_via_permission(self):
+        perm = AccessPermission.objects.create(name="Cutter", code="cutter")
+        machine = AccessDevice.objects.create(
+            name="Laser Cutter",
+            deviceid="laser-1",
+            device_type=AccessDevice.DEVICE_TYPE_MACHINE,
+        )
+        machine.allowed_permissions.add(perm)
+        # grant user the permission
+        self.user.access_permissions.add(perm)
+
+        response = self.client.get(reverse("userdetails", args=(self.user.id,)))
+        self.assertContains(response, "Machine Access")
+        self.assertContains(response, "Laser Cutter")
+
+    def test_machine_access_via_service(self):
+        # create a machine that requires a specific service
+        service = MemberService.objects.create(name="Woodshop", cost=10, days_per_payment=30, days_before_warning=2)
+        machine = AccessDevice.objects.create(
+            name="Table Saw",
+            deviceid="saw-1",
+            device_type=AccessDevice.DEVICE_TYPE_MACHINE,
+        )
+        machine.allowed_services.add(service)
+        # subscribe user to the service and mark active
+        ServiceSubscription.objects.create(user=self.user, service=service, state=ServiceSubscription.ACTIVE)
+
+        response = self.client.get(reverse("userdetails", args=(self.user.id,)))
+        self.assertContains(response, "Table Saw")
+
+    def test_no_machine_access_message(self):
+        response = self.client.get(reverse("userdetails", args=(self.user.id,)))
+        self.assertContains(response, "You currently do not have access to any machines.")
+class TestInstructorAccessControl(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_customuser(
+            first_name="Alice",
+            last_name="Member",
+            email="alice@example.com",
+            birthday=timezone.now(),
+            municipality="City",
+            nick="alice",
+            phone="+358111111",
+        )
+
+    def test_machine_access_control_requires_login(self):
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertRedirects(response, f"/www/login/?next={url}")
+
+    def test_machine_access_control_denied_for_basic_user(self):
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertRedirects(response, f"/www/login/?next={url}")
+
+    def test_machine_access_control_allowed_for_instructor(self):
+        self.user.is_instructor = True
+        self.user.save()
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Machine Access Control")
+
+    def test_machine_access_control_allowed_for_staff(self):
+        self.user.is_staff = True
+        self.user.save()
+        self.client.force_login(self.user)
+        url = reverse("machine-access-control")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Machine Access Control")
