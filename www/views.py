@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
@@ -13,8 +13,10 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 import markdown
 from django.utils.safestring import mark_safe
+from django.core.paginator import Paginator
+from django.db.models import Q
 
-from api.models import DeviceAccessLogEntry
+from api.models import AccessDevice, AccessPermission, DeviceAccessLogEntry
 from drfx import config
 from utils.matrixoperations import MatrixOperations
 from users.models import (
@@ -40,7 +42,7 @@ from www.forms import (
     RegistrationServicesFrom,
     RegistrationUserForm,
 )
-from .decorators import self_or_staff_member_required
+from .decorators import self_or_staff_member_required, instructor_or_staff_member_required
 from django.core.mail import send_mail
 
 class AuthenticatedTemplateView(LoginRequiredMixin, TemplateView):
@@ -216,6 +218,102 @@ def applications(request):
 
 
 @login_required
+@instructor_or_staff_member_required
+def instructor_tools(request):
+    """
+    Renders the machine access control instructor/admin page.
+    Only includes devices where allowed permissions require education.
+    """
+    machines = AccessDevice.objects.filter(
+        allowed_permissions__education_required=True).distinct()
+    return render(request, "www/machine_access_control.html", {"machines": machines})
+
+
+@login_required
+@instructor_or_staff_member_required
+def search_member(request):
+    """
+    Searches for a member by member number and last name.
+    Returns JSON containing basic user info, their permissions,
+    and the instructor's authority info (is_admin and accessible permissions).
+    """
+    member_number = request.GET.get("member_number", "").strip()
+    last_name = request.GET.get("last_name", "").strip().lower()
+
+    if not member_number or not last_name:
+        return JsonResponse({"found": False})
+
+    try:
+        member_number = int(member_number)
+    except ValueError:
+        return JsonResponse({"found": False})
+
+    user = (
+        CustomUser.objects
+        .filter(pk=member_number, last_name__iexact=last_name)
+        .first()
+    )
+
+    if not user:
+        return JsonResponse({"found": False})
+
+    user_perms = list(user.access_permissions.values_list("id", flat=True))
+    is_admin = request.user.is_superuser or request.user.is_staff
+
+    # Permissions that the instructor can modify. Admin can modify all permissions.
+    if is_admin:
+        instructor_perms = list(AccessPermission.objects.values_list("id", flat=True))
+    else:
+        instructor_perms = list(request.user.access_permissions.values_list("id", flat=True))
+
+    return JsonResponse({
+        "found": True,
+        "user_id": user.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "allowed_permissions": user_perms,
+        "instructor_permissions": instructor_perms,
+        "is_admin": is_admin,
+    })
+
+
+@login_required
+@instructor_or_staff_member_required
+def update_permission(request):
+    """
+    Updates a user’s machine access permissions when a checkbox is toggled
+    in the UI and if the instructor has authority.
+    """
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid method"}, status=405)
+
+    user_id = request.POST.get("user_id")
+    device_id = request.POST.get("machine_id")
+    checked = request.POST.get("checked") == "true"
+
+    user = get_object_or_404(CustomUser, id=user_id)
+    device = get_object_or_404(AccessDevice, id=device_id)
+
+    perms = device.allowed_permissions.all()
+
+    is_admin = request.user.is_superuser or request.user.is_staff
+
+    if not is_admin:
+        instructor_perm_ids = set(request.user.access_permissions.values_list("id", flat=True))
+        required_perm_ids = set(perms.values_list("id", flat=True))
+
+        if not required_perm_ids.issubset(instructor_perm_ids):
+            return JsonResponse({"success": False, "error": "Not allowed"}, status=403)
+
+    if checked:
+        user.access_permissions.add(*perms)
+    else:
+        user.access_permissions.remove(*perms)
+
+    return JsonResponse({"success": True})
+
+
+@login_required
 @self_or_staff_member_required
 def userdetails(request, id):
     userdetails = CustomUser.objects.get(id=id)
@@ -231,6 +329,32 @@ def userdetails(request, id):
         user=userdetails
     ).first()
     latest_transaction = BankTransaction.objects.order_by("-date").first()
+
+    # Compute machines the user can access according to current access rules
+    accessible_machines = []
+    for device in AccessDevice.objects.filter(device_type=AccessDevice.DEVICE_TYPE_MACHINE):
+        has_access = False
+        # If device has explicit allowed permissions, user needs at least one
+        if getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists():
+            allowed_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            has_access = getattr(userdetails, "access_permissions", None) and userdetails.access_permissions.filter(
+                id__in=allowed_ids
+            ).exists()
+        else:
+            # If device has allowed services, require active subscription
+            if getattr(device, "allowed_services", None) and device.allowed_services.exists():
+                allowed_service_ids = list(device.allowed_services.values_list("id", flat=True))
+                has_access = ServiceSubscription.objects.filter(
+                    user=userdetails,
+                    service__in=allowed_service_ids,
+                    state=ServiceSubscription.ACTIVE,
+                ).exists()
+            else:
+                # Fallback to default door access rules
+                has_access = userdetails.has_door_access()
+
+        if has_access:
+            accessible_machines.append(device)
     return render(
         request,
         "www/user.html",
@@ -241,6 +365,39 @@ def userdetails(request, id):
             "bank_name": config.ACCOUNT_NAME,
             "last_transaction": latest_transaction.date if latest_transaction else "-",
             "hide_custom_invoice": config.HIDE_CUSTOM_INVOICE,
+            "accessible_machines": accessible_machines,
+        },
+    )
+
+
+@login_required
+@self_or_staff_member_required
+def useraccesslogs(request, id):
+    """
+    Show access logs related to a specific user.
+    """
+    user = get_object_or_404(CustomUser, id=id)
+    card_ids = list(user.nfccard_set.values_list("cardid", flat=True))
+    q = Q()
+    if user.phone:
+        q |= Q(method="phone", payload=user.phone)
+    if user.mxid:
+        q |= Q(method="mxid", payload=user.mxid)
+    if card_ids:
+        q |= Q(method="nfc", payload__in=card_ids)
+    q |= Q(nfccard__user=user) | Q(claimed_by=user)
+
+    logs = DeviceAccessLogEntry.objects.filter(q).order_by("-date")
+    paginator = Paginator(logs, 20)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "www/user_access_logs.html",
+        {
+            "userdetails": user,
+            "page_obj": page_obj,
         },
     )
 

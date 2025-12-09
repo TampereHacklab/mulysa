@@ -14,6 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             "phone",
             "is_active",
             "is_staff",
+            "is_instructor",
             "created",
             "last_modified",
             "marked_for_deletion_on",
@@ -24,6 +25,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = (
             "is_active",
             "is_staff",
+            "is_instructor",
             "created",
             "last_modified",
             "marked_for_deletion_on",

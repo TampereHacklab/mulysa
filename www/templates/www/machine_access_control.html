@@ -1,0 +1,160 @@
+{% extends "www/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container">
+    <h1>{% trans 'Machine Access Control' %}</h1>
+
+    <!-- Member search card -->
+    <div class="card p-3">
+        <h4>Search Member</h4>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label>Member number</label>
+                <input id="member_number" class="form-control" type="text">
+            </div>
+            <div class="col-md-4">
+                <label>Last name</label>
+                <input id="last_name" class="form-control" type="text">
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-primary w-100" onclick="searchMember()">Search</button>
+            </div>
+        </div>
+        <div id="search_result" class="mt-3"></div>
+    </div>
+
+    <!-- Permissions table -->
+    <div class="mt-4">
+        <h4>Permissions</h4>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Machine</th>
+                    <th>Allowed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for machine in machines %}
+                <tr>
+                    <td>{{ machine.name }}</td>
+                    <td>
+                        <!-- Checkbox for each machine; disabled by default -->
+                        <input type="checkbox"
+                            class="perm-check"
+                            data-machine="{{ machine.id }}"
+                            data-permissions="{% for p in machine.allowed_permissions.all %}{{ p.id }}{% if not forloop.last %},{% endif %}{% endfor %}"
+                            disabled>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CSRF token as meta tag -->
+<meta name="csrf-token" content="{{ csrf_token }}">
+
+<script>
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+let selectedUserId = null;
+let isAdmin = false;
+
+// Disable all checkboxes (used on error or when no user is found)
+function disableAll() {
+    document.querySelectorAll(".perm-check").forEach(c => {
+        c.checked = false;
+        c.disabled = true;
+    });
+}
+
+// Search for a member
+function searchMember() {
+    const num = document.getElementById("member_number").value;
+    const last = document.getElementById("last_name").value;
+
+    fetch(`/www/machine-access-control/search/?member_number=${num}&last_name=${last}`)
+        .then(r => {
+            // Check HTTP response status
+            if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+            return r.json();
+        })
+        .then(data => {
+            if (!data.found) {
+                // Member not found
+                document.getElementById("search_result").innerHTML =
+                    "<div class='alert alert-danger'>Member not found.</div>";
+                disableAll();
+                return;
+            }
+
+            selectedUserId = data.user_id;
+            isAdmin = data.is_admin; // Whether logged-in user is admin
+
+            // Show success message with member name
+            document.getElementById("search_result").innerHTML =
+                `<div class='alert alert-success'>
+                    Member found: <b>${data.first_name} ${data.last_name}</b> – permissions (changes are saved automatically when you click a checkbox):
+                </div>`;
+
+            const userPermissions = data.allowed_permissions;
+            const instructorPermissions = data.instructor_permissions;
+
+            // Enable checkboxes and mark them according to user's permissions
+            document.querySelectorAll(".perm-check").forEach(c => {
+                const devicePerms = c.dataset.permissions
+                    .split(",")
+                    .filter(x => x.trim().length > 0)
+                    .map(Number);
+
+                const instructorCanEdit = isAdmin || devicePerms.every(p => instructorPermissions.includes(p));
+
+                c.disabled = !instructorCanEdit; // only editable if instructor has authority
+                c.checked = devicePerms.every(p => userPermissions.includes(p));
+            });
+        })
+        .catch(err => { // Show network/server errors
+            disableAll();
+            document.getElementById("search_result").innerHTML =
+                `<div class='alert alert-danger'>Error fetching member data: ${err.message}</div>`;
+        });
+}
+
+// Update permissions when checkbox changes
+document.querySelectorAll(".perm-check").forEach(cb => {
+    cb.addEventListener("change", function() {
+        if (!selectedUserId) return;
+
+        const formData = new URLSearchParams();
+        formData.append("user_id", selectedUserId);
+        formData.append("machine_id", this.dataset.machine);
+        formData.append("checked", this.checked);
+
+        fetch("/www/machine-access-control/update/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": csrftoken
+            },
+            body: formData.toString()
+        })
+        .then(r => {
+            if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+            return r.json();
+        })
+        .then(resp => {
+            if (!resp.success) {
+                alert(resp.error || "Update failed");
+                this.checked = !this.checked;
+            }
+        })
+        .catch(err => {
+            alert("Network or server error: " + err.message);
+            this.checked = !this.checked;
+        });
+    });
+});
+</script>
+
+{% endblock %}

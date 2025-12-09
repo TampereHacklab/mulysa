@@ -90,29 +90,74 @@ class AccessViewSet(LoggingMixin, mixins.ListModelMixin, viewsets.GenericViewSet
         # phone numbers, MXIDs, nfc tags are/will be unique
         user = users.first()
 
-        # user does not have access rights
-        if not user.has_door_access():
-            response_status = 481
+        # Access decision rules:
+        # - If the device has both allowed_permissions and allowed_services configured,
+        #   require the user to satisfy BOTH (permission AND active service).
+        # - If only allowed_permissions is configured, require a matching AccessPermission.
+        # - If only allowed_services is configured, require an active ServiceSubscription.
+        # - If none are configured, fall back to user.has_door_access().
+
+        has_perms_config = getattr(device, "allowed_permissions", None) and device.allowed_permissions.exists()
+        has_services_config = getattr(device, "allowed_services", None) and device.allowed_services.exists()
+
+        if has_perms_config and has_services_config:
+            # both configured -> require both
+            perm_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            svc_ids = list(device.allowed_services.values_list("id", flat=True))
+
+            has_perm = getattr(user, "access_permissions", None) and user.access_permissions.filter(
+                id__in=perm_ids
+            ).exists()
+            has_active = ServiceSubscription.objects.filter(
+                user=user, service__in=svc_ids, state=ServiceSubscription.ACTIVE
+            ).exists()
+
+            if not (has_perm and has_active):
+                response_status = 481
+        elif has_perms_config:
+            # only permissions configured -> require at least one permission
+            perm_ids = list(device.allowed_permissions.values_list("id", flat=True))
+            has_perm = getattr(user, "access_permissions", None) and user.access_permissions.filter(
+                id__in=perm_ids
+            ).exists()
+            if not has_perm:
+                response_status = 481
+        elif has_services_config:
+            # only services configured -> require active service subscription
+            svc_ids = list(device.allowed_services.values_list("id", flat=True))
+            has_active = ServiceSubscription.objects.filter(
+                user=user, service__in=svc_ids, state=ServiceSubscription.ACTIVE
+            ).exists()
+            if not has_active:
+                response_status = 481
+        else:
+            # nothing configured -> legacy fallback
+            if not user.has_door_access():
+                response_status = 481
 
         logentry.granted = response_status == 0
         logentry.save()
 
         if response_status == 0:
+            # Use device type in log message (capitalized)
+            device_label = device.get_device_type_display()
             if method != "phone":
                 # uppercase NFC and MXID
-                user.log(f"Door opened with {method.upper()}")
+                user.log(f"{device_label} opened with {method.upper()}")
             else:
-                user.log(f"Door opened with {method}")
+                user.log(f"{device_label} opened with {method}")
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data)
 
         if response_status == 481:
+            # Use device type in log message (capitalized)
+            device_label = device.get_device_type_display()
             if method != "phone":
                 # uppercase NFC and MXID
-                user.log(f"Door access denied with {method.upper()}")
+                user.log(f"{device_label} access denied with {method.upper()}")
             else:
-                user.log(f"Door access denied with {method}")
-            door_access_denied.send(sender=self.__class__, user=user, method=method)
+                user.log(f"{device_label} access denied with {method}")
+            door_access_denied.send(sender=self.__class__, user=user, method=method, device=device)
             outserializer = UserAccessSerializer(user)
             return Response(outserializer.data, status=response_status)
 

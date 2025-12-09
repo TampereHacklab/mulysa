@@ -109,6 +109,12 @@ class CustomUser(AbstractUser):
         default=config.LANGUAGE_CODE,
     )
 
+    access_permissions = models.ManyToManyField(
+        "api.AccessPermission",
+        blank=True,
+        help_text=_("Access permissions granted to the user, e.g. machine trainings"),
+    )
+
     # some datetime bits
     created = models.DateTimeField(
         auto_now_add=True,
@@ -120,6 +126,15 @@ class CustomUser(AbstractUser):
         auto_now=True,
         verbose_name=_("Last modified datetime"),
         help_text=_("Last time this user was modified"),
+    )
+
+    # Role: Instructor
+    is_instructor = models.BooleanField(
+        default=False,
+        verbose_name=_("Instructor"),
+        help_text=_(
+            "Instructors can manage machine access for members."
+        ),
     )
 
     # when the member wants to leave we will mark now to this field and then have a cleanup script
