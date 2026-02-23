@@ -5,7 +5,7 @@ from nordigenautomation.models import Requisition
 
 
 class Job(DailyJob):
-    help = "Fetch transactions from nordigen"
+    help = "Fetch transactions from Nordigen"
 
     def execute(self):
         requisitions = Requisition.active.all()

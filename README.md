@@ -34,10 +34,20 @@ Most of this works around our "User" model which can do multiple things
 
 In order to run your local development environment of mulysa, there are some prerequisites you first need to install.
 
-## Installing prerequisites on Debian 11.2
+## Installing prerequisites on Linux
+
+### Debian 11.2
 
 ```sh
 sudo apt install git python3-dev gettext pipenv default-libmysqlclient-dev
+```
+
+### Fedora 42
+
+```sh
+sudo dnf install git python3-pip python3.11 python3.11-devel gettext mariadb mariadb-devel
+sudo dnf group install development-tools # installs GNU compilers and common libraries, required for pip to build dependencies
+pip install --user pipenv
 ```
 
 ## Installing prerequisites on Mac OS
@@ -111,7 +121,7 @@ Edit the .po files
 
 Push only the .po files to git, not .mo's!
 
-# to update dependecies
+# to update dependencies
 
 run:
 
@@ -167,7 +177,7 @@ There are multiple api endpoints for checking door access: One phone number, nfc
 
 Phone number based access is based on the users phone number and they must have a active subscription to the default service (on a default installation this would be serviceid=2 "tilankäyttöoikeus"). User can also have multiple NFC cards that check the same service access.
 
-All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with diffrent levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
+All endpoints expect the same data. a device id which needs to be first added to access devices (this is for future, there might be multiple doors with different levels of access for example) and the payload (the phone number, nfc card id or Matrix ID).
 
 Examples:
 

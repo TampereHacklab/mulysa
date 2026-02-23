@@ -1,5 +1,18 @@
 # Changelog
 
+* Bump urllib3 from 2.5.0 to 2.6.0. PR [#625](https://github.com/TampereHacklab/mulysa/pull/625) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump django from 5.2.8 to 5.2.9. PR [#624](https://github.com/TampereHacklab/mulysa/pull/624) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump werkzeug from 3.1.3 to 3.1.4. PR [#623](https://github.com/TampereHacklab/mulysa/pull/623) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Add NFC wiki link to user settings page #521. PR [#612](https://github.com/TampereHacklab/mulysa/pull/612) by [@elinahamalainen](https://github.com/elinahamalainen).
+* Bump django from 5.2.7 to 5.2.8. PR [#615](https://github.com/TampereHacklab/mulysa/pull/615) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Add list of package dependencies for Fedora 42 to README. PR [#608](https://github.com/TampereHacklab/mulysa/pull/608) by [@brndd](https://github.com/brndd).
+* update all dependencies. PR [#590](https://github.com/TampereHacklab/mulysa/pull/590) by [@tswfi](https://github.com/tswfi).
+* First pr just a comment first letter to capital change. PR [#603](https://github.com/TampereHacklab/mulysa/pull/603) by [@Ponolp](https://github.com/Ponolp).
+* Fix spelling //test. PR [#605](https://github.com/TampereHacklab/mulysa/pull/605) by [@elinahamalainen](https://github.com/elinahamalainen).
+* Fix typos. PR [#600](https://github.com/TampereHacklab/mulysa/pull/600) by [@valkanm](https://github.com/valkanm).
+* Fix initialization with empty database. PR [#581](https://github.com/TampereHacklab/mulysa/pull/581) by [@mvirkkunen](https://github.com/mvirkkunen).
+* Bump django from 5.1.8 to 5.1.9. PR [#584](https://github.com/TampereHacklab/mulysa/pull/584) by [@dependabot[bot]](https://github.com/apps/dependabot).
+* Bump h11 from 0.14.0 to 0.16.0. PR [#583](https://github.com/TampereHacklab/mulysa/pull/583) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.1.7 to 5.1.8. PR [#579](https://github.com/TampereHacklab/mulysa/pull/579) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Allow admin to send emails to non staff user. PR [#576](https://github.com/TampereHacklab/mulysa/pull/576) by [@sbeach92](https://github.com/sbeach92).
 * Fix of logout button. PR [#575](https://github.com/TampereHacklab/mulysa/pull/575) by [@sbeach92](https://github.com/sbeach92).
