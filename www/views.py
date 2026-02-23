@@ -244,6 +244,9 @@ def userdetails(request, id):
         },
     )
 
+@login_required
+def mydetails(request):
+    return userdetails(request, request.user.id)
 
 @login_required
 @self_or_staff_member_required
@@ -298,6 +301,10 @@ def usersettings(request, id):
             "matrix_registration_help": config.MATRIX_ACCOUNT_CRETION_HELP
         },
     )
+
+@login_required
+def mysettings(request):
+    return usersettings(request, request.user.id)
 
 
 @login_required
