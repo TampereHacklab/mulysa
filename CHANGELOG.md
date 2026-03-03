@@ -1,5 +1,6 @@
 # Changelog
 
+* Mulysa mypages. PR [#580](https://github.com/TampereHacklab/mulysa/pull/580) by [@sbeach92](https://github.com/sbeach92).
 * Bump urllib3 from 2.5.0 to 2.6.0. PR [#625](https://github.com/TampereHacklab/mulysa/pull/625) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.2.8 to 5.2.9. PR [#624](https://github.com/TampereHacklab/mulysa/pull/624) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump werkzeug from 3.1.3 to 3.1.4. PR [#623](https://github.com/TampereHacklab/mulysa/pull/623) by [@dependabot[bot]](https://github.com/apps/dependabot).
