@@ -490,10 +490,12 @@
         },
         "django-allauth": {
             "hashes": [
-                "sha256:a76ec55935354a1455753601a0a814a4ded368242e8969323480a2810b349183"
+                "sha256:119c0cf1cc2e0d1a0fe2f13588f30951d64989256084de2d60f13ab9308f9fa0",
+                "sha256:7d7b7e7ad603eb3864c142f051e2cce7be2f9a9c6945a51172ec83d48c6c843b"
             ],
             "index": "pypi",
-            "version": "==65.12.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==65.13.0"
         },
         "django-autoslug": {
             "hashes": [
