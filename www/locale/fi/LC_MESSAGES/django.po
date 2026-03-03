@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 11:52+0000\n"
-"PO-Revision-Date: 2025-10-20 15:38+0300\n"
+"POT-Creation-Date: 2026-03-03 17:33+0000\n"
+"PO-Revision-Date: 2025-02-02 20:00+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
 "Language: fi\n"
@@ -783,35 +783,35 @@ msgstr "Hylätty %(name)s:n jäsenhakemus"
 msgid "Accepted member application from %(name)s"
 msgstr "Hyväksytty %(name)sn jäsenhakemus"
 
-#: www/views.py:256
+#: www/views.py:259
 msgid "User details saved"
 msgstr "Käyttäjän tiedot tallennettu"
 
-#: www/views.py:312
+#: www/views.py:319
 msgid "Welcome to member's Matrix space"
 msgstr "Tervetuloa jäsenten Matrix-tilaan"
 
-#: www/views.py:313
+#: www/views.py:320
 msgid "You have been invited"
 msgstr "Sinut on nyt kutsuttu"
 
-#: www/views.py:332
+#: www/views.py:339
 msgid "You already have this service"
 msgstr "Sinulla on jo tämä jäsenpalvelu"
 
-#: www/views.py:335
+#: www/views.py:342
 msgid "This service cannot be self subscribed to"
 msgstr "Tätä palvelua ei voi ottaa käyttöön itsepalveluna"
 
-#: www/views.py:343
+#: www/views.py:350
 msgid "Service subscribed. You may now pay for it."
 msgstr "Palvelu otettu käyttöön. Ole hyvä ja maksa se seuraavaksi."
 
-#: www/views.py:363
+#: www/views.py:370
 msgid "Service unsubscribed"
 msgstr "Palvelu poistettu käytöstä"
 
-#: www/views.py:368
+#: www/views.py:375
 msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
@@ -819,19 +819,19 @@ msgstr ""
 "Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
 "kysyttävää."
 
-#: www/views.py:400
+#: www/views.py:407
 msgid "NFC Card successfully claimed"
 msgstr "NFC-Kortti varattu onnistuneesti"
 
-#: www/views.py:424
+#: www/views.py:431
 msgid "E-mail sent"
 msgstr "Sähköposti lähetetty"
 
-#: www/views.py:446
+#: www/views.py:453
 msgid "NFC Card successfully deleted"
 msgstr "NFC-Kortti poistettu onnistuneesti"
 
-#: www/views.py:558
+#: www/views.py:565
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
 msgstr ""

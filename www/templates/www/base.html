@@ -26,9 +26,9 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             {% if user.is_authenticated %}
-              <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'userdetails' %}active{% endif %}" href="{% url 'userdetails' user.id %}">{% trans 'Show my user information' %}</a></li>
+              <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'mydetails' %}active{% endif %}" href="{% url 'mydetails' %}">{% trans 'Show my user information' %}</a></li>
               {% if user.membershipapplication_set.count == 0%}
-              <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'usersettings' %}active{% endif %}" href="{% url 'usersettings' user.id %}">{% trans 'Change my settings' %}</a></li>
+              <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'mysettings' %}active{% endif %}" href="{% url 'mysettings' %}">{% trans 'Change my settings' %}</a></li>
               <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'graphs' %}active{% endif %}" href="{% url 'graphs' %}">{% trans 'Graphs' %}</a></li>
               {% endif %}
               {% if user.is_staff %}
