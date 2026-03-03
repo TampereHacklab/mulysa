@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump urllib3 from 2.5.0 to 2.6.3. PR [#629](https://github.com/TampereHacklab/mulysa/pull/629) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump aiohttp from 3.13.0 to 3.13.3. PR [#628](https://github.com/TampereHacklab/mulysa/pull/628) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django-allauth from 65.12.0 to 65.13.0. PR [#626](https://github.com/TampereHacklab/mulysa/pull/626) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Mulysa mypages. PR [#580](https://github.com/TampereHacklab/mulysa/pull/580) by [@sbeach92](https://github.com/sbeach92).
