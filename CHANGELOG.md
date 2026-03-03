@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump filelock from 3.20.0 to 3.20.3. PR [#632](https://github.com/TampereHacklab/mulysa/pull/632) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump virtualenv from 20.35.3 to 20.36.1. PR [#631](https://github.com/TampereHacklab/mulysa/pull/631) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump werkzeug from 3.1.4 to 3.1.5. PR [#630](https://github.com/TampereHacklab/mulysa/pull/630) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump urllib3 from 2.5.0 to 2.6.3. PR [#629](https://github.com/TampereHacklab/mulysa/pull/629) by [@dependabot[bot]](https://github.com/apps/dependabot).
