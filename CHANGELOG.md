@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump django from 5.2.11 to 5.2.12. PR [#636](https://github.com/TampereHacklab/mulysa/pull/636) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump django from 5.2.9 to 5.2.11. PR [#633](https://github.com/TampereHacklab/mulysa/pull/633) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump cryptography from 46.0.2 to 46.0.5. PR [#634](https://github.com/TampereHacklab/mulysa/pull/634) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump filelock from 3.20.0 to 3.20.3. PR [#632](https://github.com/TampereHacklab/mulysa/pull/632) by [@dependabot[bot]](https://github.com/apps/dependabot).
