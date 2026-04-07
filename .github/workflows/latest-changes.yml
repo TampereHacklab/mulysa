@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.LATEST_CHANGES_FINEGRAINED_TOKEN }}
       - uses: tiangolo/latest-changes@0.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
