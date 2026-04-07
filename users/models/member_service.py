@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
-
 """
 Class that represents a service for members. For example:
  - Yearly membership

@@ -3,9 +3,10 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from oauth2_provider.urls import app_name, base_urlpatterns, oidc_urlpatterns
 
-from rest_framework.documentation import include_docs_urls
+from rest_framework.schemas import get_schema_view
 
 favicon_view = RedirectView.as_view(url="/static/www/favicon.ico", permanent=True)
+schema_view = get_schema_view(title="mulysa docs")
 
 urlpatterns = [
     path("favicon.ico", favicon_view),
@@ -13,7 +14,7 @@ urlpatterns = [
     path("", RedirectView.as_view(url="www")),
     path("api/v1/", include("api.urls")),
     path("api-auth/", include("rest_framework.urls")),
-    path("docs/", include_docs_urls(title="mulysa docs")),
+    path("docs/", schema_view),
     path("www/", include("www.urls")),
     path("email/", include("emails.urls")),
     path(

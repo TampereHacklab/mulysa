@@ -5,7 +5,6 @@ from users.models import CustomInvoice, CustomUser, MemberService, ServiceSubscr
 import csv
 import io
 
-
 """
 This class contains static members to export data to Mulysa.
 """

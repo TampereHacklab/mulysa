@@ -508,7 +508,7 @@ msgstr "Puhelin"
 
 #: www/templates/www/user.html:24 www/templates/www/users.html:20
 msgid "Matrix ID"
-msgstr ""
+msgstr "Matrix ID"
 
 #: www/templates/www/user.html:31
 msgid ""
@@ -606,15 +606,6 @@ msgid "Comment"
 msgstr "Kommentti"
 
 #: www/templates/www/user.html:161
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "      <strong>NOTE:</strong> Custominvoices are meant for special "
-#| "situations where you are paying for \n"
-#| "      multiple months using one transaction. We suggest using monthly "
-#| "recurring \n"
-#| "      payments for all regular situations.\n"
-#| "    "
 msgid ""
 "\n"
 "        <strong>NOTE:</strong> Custominvoices are meant for special "
@@ -816,7 +807,7 @@ msgid ""
 "Service is not active. You must pay for the service first. Contact staff if "
 "needed."
 msgstr ""
-"Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhtes hallitukseen jos on "
+"Palvelu ei ole aktiivinen. Maksa se ensin. Ota yhteys hallitukseen jos on "
 "kysyttävää."
 
 #: www/views.py:407
@@ -834,4 +825,4 @@ msgstr "NFC-Kortti poistettu onnistuneesti"
 #: www/views.py:565
 #, python-format
 msgid "Updateuser ran for user: %(user)s"
-msgstr ""
+msgstr "Updateuser ajettu käyttäjälle: %(user)s"

@@ -113,9 +113,16 @@ Always start everything by opening the pipenv shell for this project first! (`pi
 ./manage.py makemessages -l fi --no-obsolete
 ```
 
-Edit the .po files
+Check what is missing (www and users are required, other apps are warnings):
 
 ```bash
+./manage.py check_translations --require www users
+```
+
+Edit the .po files, then verify and compile:
+
+```bash
+./manage.py check_translations --require www users
 ./manage.py compilemessages
 ```
 

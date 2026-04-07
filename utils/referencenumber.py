@@ -1,6 +1,5 @@
 import random
 
-
 """
 helper methods for handling reference numbers
 """

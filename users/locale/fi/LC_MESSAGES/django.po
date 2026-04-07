@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-23 13:25+0000\n"
+"POT-Creation-Date: 2026-04-07 12:44+0000\n"
 "PO-Revision-Date: 2025-02-08 15:14+0200\n"
 "Last-Translator: Sami Olmari <sami@olmari.fi>\n"
 "Language-Team: \n"
@@ -26,23 +26,23 @@ msgstr "Sähköpostiosoite vaaditaan"
 
 #: users/filters.py:13
 msgid "Service Subscription Count"
-msgstr ""
+msgstr "Palvelujen määrä"
 
 #: users/filters.py:19
 msgid "0 Subscriptions"
-msgstr ""
+msgstr "0 palvelua"
 
 #: users/filters.py:20
 msgid "1 Subscription"
-msgstr ""
+msgstr "1 palvelu"
 
 #: users/filters.py:21
 msgid "2 Subscriptions"
-msgstr ""
+msgstr "2 palvelua"
 
 #: users/filters.py:22
 msgid "More than 2 Subscriptions"
-msgstr ""
+msgstr "Enemmän kuin 2 palvelua"
 
 #: users/filters.py:47
 msgid "Age"
@@ -73,8 +73,6 @@ msgid "Marked for deletion"
 msgstr "Merkattu poistettavaksi"
 
 #: users/filters.py:99
-#, fuzzy
-#| msgid "Marked for deletion"
 msgid "NOT Marked for deletion"
 msgstr "EI merkattu poistettavaksi"
 
@@ -272,8 +270,6 @@ msgid "User creation date"
 msgstr "Käyttäjän luontipäivä"
 
 #: users/models/custom_user.py:116
-#, fuzzy
-#| msgid "Automatically set to now when user is create"
 msgid "Automatically set to now when user is created"
 msgstr "Asetetaan automaattisesti kun käyttäjä luodaan"
 
@@ -286,47 +282,47 @@ msgid ""
 "Filled if the user has marked themself as wanting to end their membership"
 msgstr "Täytetty, jos käyttäjä on ilmoittanut haluavansa lopettaa jäsenyyden"
 
-#: users/models/member_service.py:15
+#: users/models/member_service.py:14
 msgid "Service name"
 msgstr "Palvelun nimi"
 
-#: users/models/member_service.py:16
+#: users/models/member_service.py:15
 msgid "Name of the service"
 msgstr "Palvelun nimi"
 
-#: users/models/member_service.py:90
+#: users/models/member_service.py:89
 msgid ""
 "True, if this service should not be shown for user member application form "
 "etc."
 msgstr "Tosi, jos palvelua ei pitäisi näyttää jäsenhakemuskaavakkeessa yms."
 
-#: users/models/member_service.py:98
+#: users/models/member_service.py:97
 msgid "Phone number that can be used to use this memberservice"
 msgstr "Puhelinnumero joka on rekisteröity tähän palveluun"
 
-#: users/models/member_service.py:107
+#: users/models/member_service.py:106
 msgid ""
 "True, if this service can be subscribed and unsubscribed by users themselves."
 msgstr ""
 "Tosi, jos käyttäjät voivat omatoimisesti ottaa tämän palvelun käyttöön."
 
-#: users/models/member_service.py:113
+#: users/models/member_service.py:112
 msgid "For accounting export"
 msgstr "Kirjanpitoa varten"
 
-#: users/models/member_service.py:117
+#: users/models/member_service.py:116
 msgid "Member service"
 msgstr "Jäsenpalvelu"
 
-#: users/models/member_service.py:133
+#: users/models/member_service.py:132
 msgid "month"
 msgstr "kuukausi"
 
-#: users/models/member_service.py:135
+#: users/models/member_service.py:134
 msgid "year"
 msgstr "vuosi"
 
-#: users/models/member_service.py:136
+#: users/models/member_service.py:135
 msgid "days"
 msgstr "päivää"
 

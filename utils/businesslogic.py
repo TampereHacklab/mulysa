@@ -475,14 +475,12 @@ class BusinessLogic:
                         - child_days
                     )
 
-                    logger.debug(
-                        f"""Child process add days calculated by
+                    logger.debug(f"""Child process add days calculated by
                               {added_days.days}
                             - {servicesubscription.service.days_per_payment}
                             + {paid_servicesubscription.service.days_per_payment}
                             - {child_days}
-                            = gained {extra_days} days more"""
-                    )
+                            = gained {extra_days} days more""")
 
                     # But if child servie is paid forehand more than custominvoice would pay, paid to date is kept.
 
