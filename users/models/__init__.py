@@ -1,4 +1,5 @@
 from users.models.bank_transaction import BankTransaction
+from users.models.base_service import BaseService
 from users.models.custom_invoice import CustomInvoice
 from users.models.custom_user import CustomUser
 from users.models.membership_application import MembershipApplication
@@ -16,6 +17,7 @@ __all__ = [
     MembershipApplication,
     NFCCard,
     ServiceSubscription,
+    BaseService,
     MemberService,
     UsersLog,
     Statistics,
