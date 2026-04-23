@@ -60,6 +60,12 @@ class Command(BaseCommand):
                 capture_output=True,
                 text=True,
             )
+            if result.returncode != 0:
+                rel = po_file.relative_to(base)
+                self.stderr.write(
+                    self.style.ERROR(f"{rel}: {result.stderr.strip()}")
+                )
+                raise SystemExit(1)
             stats = result.stderr.strip()
             untranslated = re.search(r"(\d+) untranslated", stats)
             fuzzy = re.search(r"(\d+) fuzzy", stats)
