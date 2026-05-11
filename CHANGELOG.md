@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump django from 5.2.13 to 5.2.14. PR [#648](https://github.com/TampereHacklab/mulysa/pull/648) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * update everything. PR [#644](https://github.com/TampereHacklab/mulysa/pull/644) by [@tswfi](https://github.com/tswfi).
 * with token. PR [#643](https://github.com/TampereHacklab/mulysa/pull/643) by [@tswfi](https://github.com/tswfi).
 * Bump requests from 2.32.5 to 2.33.0. PR [#639](https://github.com/TampereHacklab/mulysa/pull/639) by [@dependabot[bot]](https://github.com/apps/dependabot).
