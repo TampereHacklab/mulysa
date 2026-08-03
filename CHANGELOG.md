@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump setuptools from 82.0.1 to 83.0.0. PR [#654](https://github.com/TampereHacklab/mulysa/pull/654) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * update deps. PR [#652](https://github.com/TampereHacklab/mulysa/pull/652) by [@tswfi](https://github.com/tswfi).
 * Bump aiohttp from 3.13.5 to 3.14.0. PR [#651](https://github.com/TampereHacklab/mulysa/pull/651) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump urllib3 from 2.6.3 to 2.7.0. PR [#649](https://github.com/TampereHacklab/mulysa/pull/649) by [@dependabot[bot]](https://github.com/apps/dependabot).
