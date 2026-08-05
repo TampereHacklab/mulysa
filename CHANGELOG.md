@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump aiohttp from 3.14.1 to 3.14.3. PR [#655](https://github.com/TampereHacklab/mulysa/pull/655) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump cryptography from 49.0.0 to 50.0.0. PR [#656](https://github.com/TampereHacklab/mulysa/pull/656) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump setuptools from 82.0.1 to 83.0.0. PR [#654](https://github.com/TampereHacklab/mulysa/pull/654) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * update deps. PR [#652](https://github.com/TampereHacklab/mulysa/pull/652) by [@tswfi](https://github.com/tswfi).
