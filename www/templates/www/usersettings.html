@@ -72,7 +72,12 @@
     {% endfor %}
     {% for ss in unsubscribable_services %}
     <tr>
-      <td>{{ ss.service.name }}</td>
+      <td>
+        {{ ss.service.name }}
+        {% if ss.disable_on_expiry %}
+          <span class="badge badge-warning">{% trans 'Pending unsubscribe' %}</span>
+        {% endif %}
+      </td>
       <td>{{ ss.service.cost_string }} / {{ ss.service.period_string }}</td>
       <td>
         <form action="{% url 'usersettings_unsubscribe_service' userdetails.id  %}" method="post">
@@ -81,7 +86,7 @@
           <input
           type="submit"
           class="btn btn-danger btn-sm"
-          value="{% trans 'Unsubscribe service' %}"
+          value="{% if ss.disable_on_expiry %}{% trans 'Cancel unsubscribe' %}{% else %}{% trans 'Unsubscribe service' %}{% endif %}"
           {% if not ss.is_active %}
           disabled=disabled
           {% endif %}

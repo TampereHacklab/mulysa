@@ -42,6 +42,9 @@
         <td>{% trans 'State' %}</td>
         <td>
           <span class="ss_state_{{subscription.state}}">{{ subscription.statestring }}</span>
+          {% if subscription.disable_on_expiry %}
+            <span class="badge badge-warning">{% trans 'Will auto-unsubscribe on expiry' %}</span>
+          {% endif %}
         </td>
       </tr>
       <tr>
