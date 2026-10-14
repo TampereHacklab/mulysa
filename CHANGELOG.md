@@ -1,5 +1,6 @@
 # Changelog
 
+* Bump werkzeug from 3.1.8 to 3.1.9. PR [#666](https://github.com/TampereHacklab/mulysa/pull/666) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Bump djangorestframework from 3.17.1 to 3.17.2. PR [#660](https://github.com/TampereHacklab/mulysa/pull/660) by [@dependabot[bot]](https://github.com/apps/dependabot).
 * Add log when marked for deletion email is sent. PR [#609](https://github.com/TampereHacklab/mulysa/pull/609) by [@Rikukar](https://github.com/Rikukar).
 * Bump h2 from 4.3.0 to 4.4.1. PR [#657](https://github.com/TampereHacklab/mulysa/pull/657) by [@dependabot[bot]](https://github.com/apps/dependabot).
