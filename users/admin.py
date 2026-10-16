@@ -28,6 +28,7 @@ class ServiceSubscriptionInline(admin.TabularInline):
     model = ServiceSubscription
     exclude = ["paid_until", "last_payment", "reference_number", "reminder_sent"]
     readonly_fields = ("last_payment", "reference_number")
+    fields = ("service", "state", "disable_on_expiry")
 
 
 class CustomUserAdmin(UserAdmin):
@@ -151,7 +152,8 @@ class NFCCardAdmin(admin.ModelAdmin):
 
 
 class ServiceSubscriptionAdmin(admin.ModelAdmin):
-    list_display = ["user", "service", "state", "reference_number"]
+    list_display = ["user", "service", "state", "disable_on_expiry", "reference_number"]
+    list_editable = ["disable_on_expiry"]
     search_fields = (
         "user__email",
         "user__first_name",
@@ -160,7 +162,7 @@ class ServiceSubscriptionAdmin(admin.ModelAdmin):
         "user__mxid",
         "user__nick",
     )
-    list_filter = ("service", "state")
+    list_filter = ("service", "state", "disable_on_expiry")
 
 
 class MemberServiceAdmin(admin.ModelAdmin):

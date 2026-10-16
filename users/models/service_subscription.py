@@ -72,6 +72,15 @@ class ServiceSubscription(models.Model):
         ),
     )
 
+    disable_on_expiry = models.BooleanField(
+        default=False,
+        verbose_name=_("Disable on expiry"),
+        help_text=_(
+            "If true, this subscription will be deleted (instead of going overdue) when paid days run out. "
+            "Automatically set when user self-unsubscribes. Cleared when new payment is received."
+        ),
+    )
+
     SERVICE_STATE_COLORS = {
         ACTIVE: "green",
         OVERDUE: "yellow",
